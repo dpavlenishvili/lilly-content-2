@@ -1,0 +1,42 @@
+@mixin bi-font-face($family,$src,$style: normal,$weight: normal) {
+  @font-face {
+    font-family: $family;
+    font-display: swap;
+    src: url('#{$src}.woff2') format('woff2');
+
+    font-style: $style;
+    font-weight: $weight;
+    //unicode-range: u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc, u+0304, u+0308, u+0329, u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff, u+fffd;
+  }
+}
+
+$font-path: '../../../../fonts/lilly-com/';
+$sans-name: 'ringside-sans-';
+$sans-font-nm: 'Ringside Sans';
+$sans-extra-name: 'ringside-sans-extra-wide-';
+$sans-extra-font-nm: 'Ringside Sans Extra Wide';
+$serif-name: 'garamond-serif-';
+$serif-font-nm: 'ITC Garamond Std';
+//sans
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}400', normal);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}400', normal, 300);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}400', normal, 400);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}400-italic', italic, 400);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}400', normal, 500);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}900', normal, 600);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}900', normal, 700);
+@include bi-font-face('#{$sans-font-nm}', '#{$font-path}#{$sans-name}900', normal, 900);
+//sans-extra
+@include bi-font-face('#{$sans-extra-font-nm}', '#{$font-path}#{$sans-extra-name}400', normal);
+@include bi-font-face('#{$sans-extra-font-nm}', '#{$font-path}#{$sans-extra-name}400', 400);
+@include bi-font-face('#{$sans-extra-font-nm}', '#{$font-path}#{$sans-extra-name}900', 600);
+@include bi-font-face('#{$sans-extra-font-nm}', '#{$font-path}#{$sans-extra-name}900', 700);
+@include bi-font-face('#{$sans-extra-font-nm}', '#{$font-path}#{$sans-extra-name}900', 900);
+//serif
+@include bi-font-face('#{$serif-font-nm}', '#{$font-path}#{$serif-name}400', normal);
+@include bi-font-face('#{$serif-font-nm}', '#{$font-path}#{$serif-name}300', normal, 300);
+@include bi-font-face('#{$serif-font-nm}', '#{$font-path}#{$serif-name}400', normal, 400);
+@include bi-font-face('#{$serif-font-nm}', '#{$font-path}#{$serif-name}400-italic', italic, normal);
+@include bi-font-face('#{$serif-font-nm}', '#{$font-path}#{$serif-name}400-italic', italic, 400);
+
+

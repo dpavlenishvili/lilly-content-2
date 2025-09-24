@@ -1,0 +1,185 @@
+def ENVIRONMENT = JOB_NAME.split("_")[0]
+def PARTNER = "lilly-content"
+def SOURCE_URL = "git@github.com:careboxhealth/lilly-content.git"
+def RELATIVE_DEPLOY_PATH = "${ENVIRONMENT}/web/partnersite/${PARTNER}/"
+def BRANCH_NAME = env.BRANCH_NAME
+def SERVICE_NAME = new carebox.ServiceName().setServiceName("web-partnersite-${PARTNER}-preview", BRANCH_NAME)
+
+def LOCALIZATION_CLI_PATH = "/var/deploy/${ENVIRONMENT}/utilities/localization-cli/"
+def CREDENTIALS = 'jenkins-github'
+def ANGULAR_JSON_PATH = "angular.json"
+PACKAGE_JSON_PATH = "package.json"
+
+
+def with_localization_service = true
+def is_multi_stage_deployment = true
+def should_support_preview = false
+
+/// Internal Global Variables
+def prevEnv = new carebox.Environment().getPreviousEnv(ENVIRONMENT, environments)
+def app_version = ""
+def deployed = false
+
+///
+
+pipeline {
+    agent  { label "${ENVIRONMENT}-generic" }
+
+    environment {
+        branch_name = "${BRANCH_NAME}"
+    }
+
+    stages {
+        stage('start') {
+            steps {
+                script {
+                    new carebox.Notifier().startNotification(JOB_NAME, BUILD_NUMBER, ENVIRONMENT)
+
+                    if( ENVIRONMENT == 'dev' ){
+                        def getAppVersionParams = new carebox.versionManager.GetAppVersionParams(
+                                                                        currentEnvironment: ENVIRONMENT,
+                                                                        previousEnvironment: prevEnv,
+                                                                        packageFilePath: PACKAGE_JSON_PATH,
+                                                                        buildNumber: BUILD_NUMBER,
+                                                                        branchName: branch_name,
+                                                                        credentialsId: CREDENTIALS
+                                                                        )
+
+                        app_version = new carebox.VersionManager().getAppVersion(getAppVersionParams)
+
+                    } else if ( ENVIRONMENT == 'prod' && branch_name.startsWith('hotfix/')){
+                        echo "Remove hotfix prefix"
+                        app_version = branch_name.replaceFirst('\\w+/', "")
+
+                    } else {
+                        echo "Remove environment prefix"
+                        app_version = TAG_NAME.replaceFirst('\\w+-', '')
+                    }
+
+                    echo "Current version is ${app_version}"
+                }
+            }
+        }
+
+        stage('checkout') {
+            steps {
+                script {
+                   def checkout_result = new carebox.Git().checkout(app_version,
+                                                                    ENVIRONMENT,
+                                                                    CREDENTIALS,
+                                                                    SOURCE_URL,
+                                                                    branch_name,
+                                                                    prevEnv)
+                   branch_name = checkout_result.branchName
+                }
+            }
+        }
+
+        stage('set app version') {
+            steps {
+                script {
+                    new carebox.VersionManager().createHtmlVersionPage(
+                                                                       ENVIRONMENT,
+                                                                       PARTNER,
+                                                                       BUILD_NUMBER,
+                                                                       app_version + BUILD_NUMBER)
+                }
+            }
+        }
+        stage('build') {
+            steps {
+                script {
+                    def nodeJsBuildParams = new carebox.builders.NodeJsBuildParams(
+                                                                               currentEnvironment: ENVIRONMENT,
+                                                                               appName: PARTNER,
+                                                                               buildNumber: BUILD_NUMBER,
+                                                                               credentials: CREDENTIALS,
+                                                                               sourceUrl: SOURCE_URL,
+                                                                               branchName: branch_name,
+                                                                               appVersion: app_version,
+                                                                               prevEnv: prevEnv,
+                                                                               packageJasonPath: PACKAGE_JSON_PATH,
+                                                                               angularJsonPath: ANGULAR_JSON_PATH,
+                                                                               withLocalizationService: with_localization_service)
+                    new carebox.builders.NodeJsBuilder().buildInParallel(nodeJsBuildParams)
+                }
+            }
+        }
+
+        stage('package') {
+            steps {
+                script {
+                    new carebox.Copy().copy_nginx( PARTNER, BUILD_NUMBER, ENVIRONMENT)
+                }
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                script {
+                    dir("${WORKSPACE}${PARTNER}${BUILD_NUMBER}") {
+                        dir("config") {
+                            sh "tar -czf ${WORKSPACE}/${PARTNER}${BUILD_NUMBER}-config.tar.gz ."
+                        }
+                        dir("html") {
+                            sh "tar -czf ${WORKSPACE}/${PARTNER}${BUILD_NUMBER}-html.tar.gz ."
+                        }
+                    }
+
+                    def results = []
+                    def deployers = carebox.deployers.DeployerFactory.getDeployers(ENVIRONMENT,JOB_NAME)
+                    def deployParams = new carebox.deployers.DeployParams(deployFilePaths: [
+                                                                                [
+                                                                                    "sourcePath": "${WORKSPACE}/${PARTNER}${BUILD_NUMBER}-config.tar.gz",
+                                                                                    "destPath": "${RELATIVE_DEPLOY_PATH}${app_version}/${PARTNER}${BUILD_NUMBER}-config.tar.gz"
+                                                                                ],
+                                                                                [
+                                                                                    "sourcePath": "${WORKSPACE}/${PARTNER}${BUILD_NUMBER}-html.tar.gz",
+                                                                                    "destPath": "${RELATIVE_DEPLOY_PATH}${app_version}/${PARTNER}${BUILD_NUMBER}-html.tar.gz"
+                                                                                ]
+                                                                            ],
+                                                                            serviceName: SERVICE_NAME,
+                                                                            currentEnvironment: ENVIRONMENT,
+                                                                            buildNumber: BUILD_NUMBER,
+                                                                            appVersion: app_version,
+                                                                            shouldSupportPreview: should_support_preview ,
+                                                                            isMultiStageDeployment: is_multi_stage_deployment,
+                                                                            deployersConfigurationsPath:[
+                                                                                "NOMAD-PACK": "${WORKSPACE}/deploy/${ENVIRONMENT}/nomad/variables.hcl"
+                                                                            ])
+                    deployers.each { item ->
+                        def deployer = carebox.deployers.DeployerFactory.create( item , this)
+                        def deployResult = deployer.deploy(deployParams)
+                        results << [type: item,
+                        deployed: deployResult
+                        ]
+                    }
+                    deployed = results.every { it.deployed }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def gitTagParams = new carebox.git.GitTagParams(currentEnvironment: ENVIRONMENT,
+                                                                               packageJasonPath: PACKAGE_JSON_PATH,
+                                                                               branchName: branch_name,
+                                                                               buildNumber: BUILD_NUMBER,
+                                                                               appVersion: app_version,
+                                                                               credentialsId: CREDENTIALS,
+                                                                               keepEnvironmentTagInProduction: true,
+                                                                               useMerge: false)
+
+                new carebox.Git().tagVersion(gitTagParams)
+            }
+        }
+
+        always {
+            script {
+                new carebox.Notifier().endNotification(JOB_NAME, BUILD_NUMBER, currentBuild.currentResult, ENVIRONMENT)
+            }
+        }
+    }
+}

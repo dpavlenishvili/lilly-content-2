@@ -1,0 +1,33 @@
+@use "_v3/calc" as calc;
+
+$h: 'cb-glossary-tooltip-' !default;
+
+$init: (
+        text-color: var(--#{calc.$cb}body-clr),
+        border: var(--#{calc.$cb}primary),
+        font-size: var(--#{calc.$cb}font-size-base),
+        border-radius: var(--#{calc.$cb}radius-sm)
+) !default;
+
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+
+  .glossary-tooltip-text {
+    text-underline-offset: var(--#{calc.$cb}space-100);
+  }
+
+  .popup--info {
+    font-size: var(--#{$h}font-size);
+    border-radius: var(--#{$h}border-radius);
+
+    &::after {
+      @include calc.square(1rem);
+      left: calc(50% - .5rem);
+      bottom: -9px;
+    }
+
+    .close-icon {
+      @include calc.square(.75rem);
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@use "sass:map";
+@use '_v3/calc' as calc;
+@use '@angular/material' as mat;
+@use "../abstract" as abstract  with (
+$test: 5rem
+);
+
+$project-colors: map.merge(abstract.$colors, (
+)) !default;
+
+
+$project-colors-rgb: calc.config-colors-to-rgb($project-colors);
+$theme-colors: map.merge($project-colors-rgb, $project-colors);
+$init-common: map.merge(abstract.$main-to-css, $theme-colors);
+
+// material theme
+$mat-app-primary: mat.define-palette(abstract.$primary, main) !default;
+$mat-app-accent: mat.define-palette(abstract.$primary, main) !default;
+$mat-app-warn: mat.define-palette(abstract.$danger, 500) !default;
+
+
+//$colors: map.deep-remove($colors, (
+//  accent
+//));
+
+//@debug "test #{$test}";
+
+:root {
+  color-scheme: only light;
+  @include calc.css-initVars($init-common, calc.$cb);
+  @include calc.css-initVars(abstract.$typography-to-css, calc.$typography);
+
+  // statsus
+
+  --#{calc.$cb}status-open-color: var(--#{calc.$cb}success);
+  --#{calc.$cb}status-close-color: var(--#{calc.$cb}danger);
+  --#{calc.$cb}status-color: var(--#{calc.$cb}body-clr);
+  --bs-white-rgb: var(--#{calc.$cb}white-rgb);
+
+
+
+}
+
+
+
+
+

@@ -1,0 +1,171 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$md !default;
+
+
+$init: (
+  //no: ( media-query-up: (
+  //        xs: 1fr,
+  //        xl: 1fr max-content,
+  //)),
+        toggle-height-container: 2rem,
+        toggle-thumb-size: 1.25rem,
+        toggle-height: 1.5rem,
+        toggle-bind-offset: 2px,
+        toggle-subtract-tmb-offset-x: calc((var(--#{$h}toggle-height) - var(--#{$h}toggle-thumb-size)) * .5 + var(--#{$h}toggle-bind-offset)),
+        toggle-subtract-tmb-offset-y: calc((var(--#{$h}toggle-height-container) - var(--#{$h}toggle-thumb-size)) * 0.5),
+        toggle-rel-y: calc((var(--#{$h}toggle-thumb-size) - var(--#{$h}toggle-height)) * 0.5),
+        toggle-thumb-size-offset-x: 0.75rem,
+        toggle-border-radius: calc(toggle-height * .5),
+        toggle-offset-x: calc(var(--#{$h}toggle-thumb-size) + var(--#{$h}toggle-thumb-size-offset-x) * .5),
+        toggle-label-min-width: 3.75rem,
+        toggle-label-font-size: .75rem,
+        toggle-switch-position: relative,
+        toggle-min-width: 2.85rem,
+  //color
+        toggle-bg-color: var(--#{calc.$color}neutral-base-010),
+        toggle-color: var(--#{calc.$cb}neutral-base-070),
+        toggle-bg-color-active: var( --#{calc.$color}neutral-base-060),
+        toggle-color-active: var( --#{calc.$color}neutral-base-010),
+        toggle-thumb-border-color: transparent,
+        toggle-thumb-bg-color: var(--#{calc.$cb}white),
+        toggle-thumb-border-color-active: var(--#{calc.$color}neutral-base-050),
+        toggle-thumb-bg-color-active: var(--#{calc.$color}neutral-base-070),
+) !default;
+
+:root {
+  @include calc.css-initVars($init, $h);
+}
+
+body {
+  .mat-mdc-slide-toggle {
+    &:not(&:disabled) {
+      --mdc-switch-unselected-focus-handle-color: var(--#{$h}toggle-color);
+      --mdc-switch-unselected-focus-track-color: var(--#{$h}toggle-bg-color);
+      --mdc-switch-unselected-hover-track-color: var(--#{$h}toggle-bg-color);
+      --mdc-switch-unselected-pressed-track-color: var(--#{$h}toggle-bg-color);
+      --mdc-switch-unselected-handle-color: var(--#{$h}toggle-color);
+      --mdc-switch-unselected-hover-handle-color: var(--#{$h}toggle-color);
+      --mdc-switch-unselected-pressed-handle-color: var(--#{$h}toggle-color);
+
+
+      --mdc-switch-selected-focus-handle-color: var(--#{$h}toggle-color-active);
+      --mdc-switch-selected-focus-track-color: var(--#{$h}toggle-bg-color-active);
+      --mdc-switch-selected-hover-track-color: var(--#{$h}toggle-bg-color-active);
+      --mdc-switch-selected-pressed-track-color: var(--#{$h}toggle-bg-color-active);
+      --mdc-switch-selected-handle-color: var(--#{$h}toggle-color-active);
+      --mdc-switch-selected-hover-handle-color: var(--#{$h}toggle-color-active);
+      --mdc-switch-selected-pressed-handle-color: var(--#{$h}toggle-color-active);
+
+      --mdc-switch-unselected-track-color: var(--#{$h}toggle-bg-color);
+      --mdc-switch-selected-track-color: var(--#{$h}toggle-bg-color-active);
+    }
+
+    --mdc-switch-track-width: auto;
+    --mdc-switch-track-height: var(--#{$h}toggle-height);
+    --mdc-switch-track-shape: calc(var(--#{$h}toggle-height) * .5);
+    --mat-switch-with-icon-handle-size: var(--#{$h}toggle-thumb-size);
+
+    --mdc-switch-handle-shape: 50%;
+    &, .mat-internal-form-field {
+      position: relative;
+      height: var(--#{$h}toggle-height-container);
+    }
+
+    .mdc-switch {
+      position: var(--#{$h}toggle-switch-position);
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      min-width: var(--#{$h}toggle-min-width);
+      background: transparent;
+      margin: 0;
+      border-radius: 0;
+      overflow-x: clip;
+
+
+      &__ripple {
+        &, &:after{
+          opacity: 0 !important;
+          visibility: hidden !important;
+        }
+
+      }
+
+      &__icons {
+        display: none;
+      }
+    }
+
+    &:not(.mat-mdc-slide-toggle-checked) {
+
+      .mdc-switch__handle {
+        margin-left: 2px !important;
+      }
+
+      .is-checked {
+        display: none;
+      }
+    }
+
+    &.mat-mdc-slide-toggle-checked {
+      .mdc-switch__handle {
+        margin-left: -2px !important;
+      }
+    }
+
+    // md-toggle-text
+    &.md-toggle-text {
+      &:not(&:disabled) {
+        --mdc-switch-selected-pressed-state-layer-color: var(--#{$h}toggle-bg-color-active);
+        --label-color: var(--#{$h}toggle-color);
+
+        &.mat-mdc-slide-toggle-checked {
+          --label-color: var(--#{$h}toggle-color-active);
+        }
+      }
+
+      .mdc-switch {
+        --#{$h}toggle-switch-position: absolute;
+      }
+
+      .mdc-label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: var(--#{$h}toggle-height-container);
+        padding: var(--#{$h}toggle-subtract-tmb-offset-y) 0;
+        margin: 0;
+        user-select: none;
+        font-size: var(--#{$h}toggle-label-font-size);
+        min-width: var(--#{$h}toggle-label-min-width);
+        color: var(--label-color);
+      }
+
+
+      &:not(.mat-mdc-slide-toggle-checked) {
+        .mdc-label {
+          padding-left: var(--#{$h}toggle-offset-x);
+          padding-right: var(--#{$h}toggle-thumb-size-offset-x);
+        }
+
+        .is-checked {
+          display: none;
+        }
+      }
+
+      &.mat-mdc-slide-toggle-checked {
+        .mdc-label {
+          padding-right: var(--#{$h}toggle-offset-x);
+          padding-left: var(--#{$h}toggle-thumb-size-offset-x);
+        }
+
+        .no-checked {
+          display: none;
+        }
+      }
+
+    }
+  }
+}

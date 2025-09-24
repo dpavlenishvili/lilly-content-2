@@ -1,0 +1,50 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+$init: (
+        dialog-w: (media-query-up: (
+                xs: 95%,
+                lg: var(--#{$cb}dialog-confirm-max-width),
+
+        )),
+        dialog-h: (media-query-up: (
+                xs: 90%,
+                lg: auto,
+
+        )),
+) !default;
+
+::ng-deep .leave-lilly-dialog {
+  @include css-initVars($init, $h);
+  height: var(--#{$h}dialog-h);
+  max-width: var(--#{$h}dialog-w) !important;
+
+  .mat-mdc-dialog-container {
+    > * {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .mat-mdc-dialog-content {
+      flex: 1 1 auto;
+      height: auto;
+      scrollbar-width: thin;
+      overflow-y: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: auto;
+    }
+
+    .mat-mdc-dialog-actions {
+      flex: none;
+      button {
+        margin: 0 .5rem .5rem 0 !important;
+      }
+    }
+  }
+
+  .no-line-break {
+    white-space: nowrap;
+  }
+}

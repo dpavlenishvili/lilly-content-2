@@ -1,0 +1,286 @@
+@use "sass:map";
+@use "sass:math";
+@use "../global-vars" as *;
+@use "../vendors/rfc_new" as *;
+@use "../mixins/custom" as *;
+
+$md-var-colors: ("primary") !default;
+
+@mixin set-clr-md-theme($conf:$md-var-colors, $cb: $cb) {
+  //@debug 'k: ' $conf;
+  :root {
+    --mat-option-selected-state-label-text-color: var(--#{$cb}form-primary-clr);
+  }
+  @each $clr in $conf {
+    //@debug 'k: ' $clr;
+    $class: 'mat-' + $clr;
+    //@include set-clr-md-btn($clr, $cb, $class);
+    @include set-clr-md-radio('accent', $cb, $class);
+    @include set-clr-md-checkbox('accent', $cb, $class);
+    @include set-clr-md-badge($clr, $cb, $clr);
+  }
+}
+
+@mixin set-clr-md-badge($clr, $cb, $class) {
+  .mat-badge-#{$class} {
+    --mat-badge-background-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-badge-text-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+  }
+}
+
+@mixin set-clr-md-checkbox($clr, $cb, $class) {
+  .#{$class} {
+    --mat-full-pseudo-checkbox-selected-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-full-pseudo-checkbox-selected-checkmark-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+    --mat-full-pseudo-checkbox-unselected-icon-color: rgba(var(--#{$cb}body-clr-rgb), 0.54);
+    //--mat-full-pseudo-checkbox-disabled-selected-checkmark-color: #fafafa;
+    //--mat-full-pseudo-checkbox-disabled-unselected-icon-color: #b0b0b0;
+    //--mat-full-pseudo-checkbox-disabled-selected-icon-color: #b0b0b0;
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--#{$cb}form-#{$clr}-clr);
+    //--mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color: #b0b0b0;
+  }
+  .mat-mdc-checkbox.#{$class}, .mat-mdc-list-option.#{$class} {
+    --mdc-checkbox-disabled-selected-icon-color: rgba(var(--#{$cb}body-clr-rgb), 0.38);
+    --mdc-checkbox-disabled-unselected-icon-color: rgba(var(--#{$cb}body-clr-rgb), 0.38);
+    //--mdc-checkbox-selected-checkmark-color: white;
+    --mdc-checkbox-selected-focus-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-selected-hover-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-selected-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-selected-pressed-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-unselected-focus-icon-color: var(--#{$cb}body-clr-rgb);
+    --mdc-checkbox-unselected-hover-icon-color: var(--#{$cb}body-clr-rgb);
+    --mdc-checkbox-unselected-icon-color: rgba(var(--#{$cb}body-clr-rgb), 1);
+    --mdc-checkbox-unselected-pressed-icon-color: rgba(var(--#{$cb}body-clr-rgb), 1);
+    --mdc-checkbox-selected-focus-state-layer-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-selected-hover-state-layer-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-selected-pressed-state-layer-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-checkbox-unselected-focus-state-layer-color: var(--#{$cb}body-clr-rgb);
+    --mdc-checkbox-unselected-hover-state-layer-color: var(--#{$cb}body-clr-rgb);
+    --mdc-checkbox-unselected-pressed-state-layer-color: var(--#{$cb}body-clr-rgb);
+    --mdc-checkbox-selected-focus-state-layer-opacity: 0;
+    --mdc-checkbox-selected-hover-state-layer-opacity: 0;
+    --mdc-checkbox-selected-pressed-state-layer-opacity: 0;
+    --mdc-checkbox-unselected-focus-state-layer-opacity: 0;
+    --mdc-checkbox-unselected-hover-state-layer-opacity: 0;
+    --mdc-checkbox-unselected-pressed-state-layer-opacity: 0;
+  }
+
+  //.mat-mdc-list-option {
+  //  --mdc-checkbox-selected-focus-icon-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-hover-icon-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-icon-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-pressed-icon-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-focus-state-layer-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-hover-state-layer-color: var(--cb-form-primary-clr);
+  //  --mdc-checkbox-selected-pressed-state-layer-color: var(--cb-form-primary-clr);
+  //}
+}
+
+
+@mixin set-clr-md-radio($clr, $cb, $class) {
+  .mat-mdc-radio-button.#{$class} {
+    --mdc-radio-disabled-selected-icon-color: var(--#{$cb}body-clr);
+    --mdc-radio-disabled-unselected-icon-color: var(--#{$cb}body-clr);
+    //--mdc-radio-unselected-hover-icon-color: #212121;
+    --mdc-radio-unselected-icon-color: rgba(var(--#{$cb}body-clr-rgb), 1);
+    //--mdc-radio-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+    --mdc-radio-selected-focus-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-radio-selected-hover-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-radio-selected-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-radio-selected-pressed-icon-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-radio-ripple-color: var(--#{$cb}body-clr);
+    --mat-radio-checked-ripple-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-radio-disabled-label-color: rgba(var(--#{$cb}body-clr-rgb), 0.4);
+    --mdc-radio-selected-pressed-icon-color:var(--#{$cb}form-#{$clr}-clr);
+  }
+  .mat-mdc-radio-button.mat-mdc-radio-checked.cdk-keyboard-focused, .mat-mdc-radio-button.cdk-keyboard-focused {
+    .mdc-radio__background {
+      .mdc-radio__outer-circle,   .mdc-radio__inner-circle {
+        outline: rgba(var(--#{$cb}gray-900-rgb), 0.5) solid;
+      }
+
+    }
+  }
+}
+
+@mixin set-clr-md-btn($clr, $cb, $class) {
+  //.mat-mdc-button.#{$class} {
+  //  --mdc-text-button-label-text-color: var(--#{$cb}form-#{$clr}-clr);
+  //  --mat-text-button-state-layer-color: var(--#{$cb}form-#{$clr}-clr);
+  //  --mat-text-button-ripple-color: var(--#{$cb}form-#{$clr}-ripple-clr);
+  //}
+  //.mat-mdc-raised-button.#{$class} {
+  //  --mdc-protected-button-container-color: var(--#{$cb}form-#{$clr}-clr);
+  //  --mdc-protected-button-label-text-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+  //  --mat-protected-button-state-layer-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+  //  --mat-protected-button-ripple-color: rgba(255, 255, 255, 0.05);
+  //}
+  //.mat-mdc-unelevated-button.#{$class} {
+  //  --mdc-filled-button-container-color: var(--#{$cb}form-#{$clr}-clr);
+  //  --mdc-filled-button-label-text-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+  //  --mat-filled-button-state-layer-color: var(--#{$cb}form-#{$clr}-contrast-clr);
+  //  --mat-filled-button-ripple-color: var(--#{$cb}form-#{$clr}-ripple-clr);
+  //}
+  .mat-mdc-outlined-button.#{$class} {
+    --mdc-outlined-button-label-text-color: var(--#{$cb}form-#{$clr}-clr);
+    --mdc-outlined-button-outline-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-outlined-button-state-layer-color: var(--#{$cb}form-#{$clr}-clr);
+    --mat-outlined-button-ripple-color: var(--#{$cb}form-#{$clr}-ripple-clr);
+  }
+}
+
+@mixin md-btn-size($conf, $has-offset-x: true, $has-offset-y: true) {
+  $font-size: map-get($conf, font-size);
+  //$font-weight: map-get($conf, font-weight);
+  $line-height: map-get($conf, line-height);
+  $offset-x: map-get($conf, offset-x);
+  $offset-y: map-get($conf, offset-y);
+  $radius: map-get($conf, radius);
+  $height: map-get($conf, height);
+
+  @include font-size($font-size);
+  min-height: $height;
+  line-height: $line-height;
+  border-radius: $radius;
+  @if $has-offset-x {
+    padding-left: $offset-x;
+    padding-right: $offset-x;
+  }
+  @if $has-offset-y {
+    .mdc-button__label {
+      padding-top: $offset-y;
+      padding-bottom: $offset-y;
+    }
+  }
+}
+
+@mixin md-icon-btn-size($conf) {
+  $size: map-get($conf, icon-size);
+  $thumb-size: map-get($conf, icon-thmb-size);
+  --icon-size: #{map-get($conf, icon-size)};
+  --icon-thmb-size: #{map-get($conf, icon-thmb-size)};
+  $padding: calc((var(--icon-size) - var(--icon-thmb-size)) * 0.5);
+  --mdc-icon-button-icon-size: 100%;
+  @include square(var(--icon-size));
+  padding: $padding;
+  .mat-icon {
+    @include square(var(--icon-thmb-size));
+  }
+}
+
+@mixin md-def-button($color: var(--page-color), $hover-color: var(--page-color-over, color-mix(in srgb, var(--#{$cb}primary) 87%, black 13%)), $color-text: #fff) {
+  color: $color-text;
+  background-color: $color;
+  &:not([disabled]):not(.mat-mdc-outlined-button) {
+    &:hover, &:focus, &:active {
+      background-color: $hover-color;
+    }
+  }
+}
+
+
+@mixin md-btn-disable-hover-focus() {
+  .mat-mdc-button-ripple, .mat-mdc-button-persistent-ripple {
+    display: none !important;
+  }
+}
+
+//%md-btn-size-base {}
+
+
+@mixin remove-button-cdk-focus($bg-color: var(--cb-page-color)) {
+  &:not([disabled]):not(.mat-mdc-outlined-button) {
+    &.cdk-keyboard-focused, &.cdk-program-focused {
+
+      background-color: $bg-color !important;
+
+      .mat-mdc-form-field-focus-overlay {
+        opacity: 0 !important;
+      }
+    }
+  }
+}
+
+
+// input
+
+@mixin md-form-size($conf) {
+ }
+
+
+// set hint margin
+@mixin md-form-hint($hint: 1rem) {
+  --#{$mdf}hint-margin: #{$hint} !important;
+  &:before {
+    display: inline;
+    height: 0;
+  }
+}
+
+@mixin md-clear-mat-form-field-def($has-hint: true, $hint-height: var(--#{$mdf}hint-height), $hint-margin: var(--#{$mdf}hint-margin), $hint-flexible-margin: var(--#{$mdf}hint-flexible-margin)) {
+    &.md-filter-block {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@mixin md-input-form-in-row() {
+  display: inline-flex;
+  width: var(--#{$mdf}row-field-width);
+  min-width: var(--#{$mdf}row-field-min-width);
+  max-width: var(--#{$mdf}row-field-max-width);
+
+  .mat-mdc-form-field-bottom-align {
+    &:before {
+      display: inline;
+    }
+  }
+  &.md-filter-text {
+    .mat-mdc-input-element {
+      width: var(--#{$mdf}row-field-text-width);
+      min-width: 0;
+      max-width: var(--#{$mdf}row-field-text-width);
+    }
+  }
+}
+
+@mixin md-form-row-group-adjust-button( $min-height:  var(--#{$mdf}min-height), $radius: var(--#{$mdf}radius) ) {
+  min-height: #{$min-height};
+  border-radius: #{$radius};
+}
+
+@mixin make-arrow( $rotate: 45) {
+  --arrow-size: var(--#{$mdf}arrow-size);
+  --arrow-sym-size: var(--#{$mdf}arrow-sym-size);
+  --arrow-line-width: var(--#{$mdf}arrow-line-width);
+  --arrow-line-clr: var(--#{$mdf}arrow-line-clr);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  @include square(var(--arrow-size));
+
+
+  &:after {
+    content: '';
+    display: block;
+    @include square(var(--arrow-sym-size));
+    border: solid var(--arrow-line-clr);
+    border-width: 0 var(--arrow-line-width) var(--arrow-line-width) 0;
+    padding: var(--arrow-line-width);
+    @include rotate($rotate);
+    transition: transform .15s ease-out !important;
+  }
+
+  svg {
+    display: none;
+  }
+}
+
+
+@mixin tooltip-max-width() {
+  & {
+    max-width: var(--#{$md}tooltip-max-width);
+    line-height:var(--#{$cb}line-height-sm);
+   }
+}

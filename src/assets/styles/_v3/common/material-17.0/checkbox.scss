@@ -1,0 +1,165 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$md;
+
+$md-checkbox-size: var(--#{calc.$md}checkbox-size);
+$md-checkbox-icon-size: var(--#{calc.$md}checkbox-icon-size);
+$md-checkbox-offset: var(--#{calc.$md}checkbox-list-offset);
+$md-checkmark-size: var(--#{calc.$md}checkbox-checkmark-size);
+
+:root {
+  --mdc-checkbox-state-layer-size: var(--#{calc.$md}checkbox-size);
+}
+
+.mdc-checkbox {
+  padding: calc((var(--mdc-checkbox-state-layer-size) - $md-checkbox-icon-size) / 2) !important;
+  margin: calc((var(--mdc-checkbox-state-layer-size) - var(--mdc-checkbox-state-layer-size)) / 2) !important;
+  @include calc.square($md-checkbox-icon-size, !important);
+  flex: 0 0 $md-checkbox-icon-size !important;
+}
+
+.mdc-checkbox__ripple, .mat-ripple.mat-mdc-checkbox-ripple {
+  opacity: 0 !important;
+}
+
+.mdc-checkbox .mdc-checkbox__background {
+  @include calc.square($md-checkbox-icon-size, !important);
+  border-width: var(--#{calc.$md}checkbox-border-size) !important;
+  top: calc((var(--mdc-checkbox-state-layer-size) - $md-checkbox-icon-size) / 2) !important;
+  left: calc((var(--mdc-checkbox-state-layer-size) - $md-checkbox-icon-size) / 2) !important;
+
+  border-radius: var(--#{calc.$md}checkbox-border-radius) !important;
+}
+
+.mdc-checkbox__checkmark {
+  top: calc(($md-checkbox-icon-size - $md-checkmark-size) / 2 - var(--#{calc.$md}checkbox-border-size)) !important;
+  left: calc(($md-checkbox-icon-size - $md-checkmark-size) / 2 - var(--#{calc.$md}checkbox-border-size)) !important;
+  @include calc.square($md-checkmark-size, !important);
+}
+
+
+.mat-mdc-checkbox.md-checkbox-cond {
+  display: grid;
+  align-items: center;
+
+  .mdc-form-field {
+    display: grid;
+    align-items: start;
+    padding: calc(1rem) 0;
+    white-space: normal;
+    line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+    grid-template-columns: min-content auto;
+    grid-template-areas:"check label";
+    min-height: 2.5rem;
+
+    .mdc-checkbox {
+      grid-area: check;
+      margin: 0 !important;
+    }
+
+    .mdc-label {
+      grid-area: label;
+      padding-top: calc((var(--#{calc.$md}checkbox-size) - var(--#{calc.$md}checkbox-icon-size)) * 0.5);
+    }
+
+  }
+}
+
+
+// radio
+.mat-mdc-radio-button {
+  --mdc-radio-state-layer-size: var(--#{calc.$md}radio-size);
+
+  .mdc-radio {
+    padding: calc((var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
+  }
+}
+
+.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before {
+  top: calc(-1 * (var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
+  left: calc(-1 * (var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
+}
+
+.mdc-radio__background {
+  @include calc.square(var(--#{calc.$md}radio-icon-size), !important);
+}
+
+.mdc-radio {
+  --mat-radio-ripple-color: 0;
+  @include calc.square(var(--#{calc.$md}radio-icon-size), !important);
+}
+
+.mdc-radio__inner-circle {
+  border-width: 0 !important;
+  background: var(--mdc-radio-selected-icon-color) !important;
+}
+
+.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
+  opacity: 0 !important;
+}
+
+.mat-mdc-radio-button .mat-radio-ripple {
+  opacity: 0 !important;
+}
+
+
+
+
+//
+.md-checkbox-custom {
+  .mat-mdc-checkbox {
+    display: grid;
+    align-items: center;
+
+    .mdc-form-field {
+      display: grid;
+      align-items: start;
+      padding: calc(var(--#{calc.$md}list-offset-y) * .5) 0;
+      white-space: normal;
+      line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+      grid-template-columns: min-content auto;
+      grid-template-areas:"check label";
+      min-height: var(--#{calc.$md}list-min-height);
+
+      .mdc-checkbox {
+        grid-area: check;
+        margin: 0 !important;
+      }
+
+      .mdc-label {
+        grid-area: label;
+        padding-top: calc((var(--#{calc.$md}checkbox-size) - var(--#{calc.$md}checkbox-icon-size)) * 0.5);
+      }
+
+    }
+  }
+}
+
+.md-radio-custom {
+  .mat-mdc-radio-button {
+    display: grid;
+    //align-items: center;
+
+    .mdc-form-field {
+      display: grid;
+      align-items: start;
+      padding: calc(var(--#{$h}list-offset-y) * .5) 0;
+      white-space: normal;
+      line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+      grid-template-columns: min-content auto;
+      grid-template-areas:"check label";
+      min-height: var(--#{calc.$md}list-min-height);
+
+      .mdc-radio {
+        grid-area: check;
+        margin: 0 !important;
+      }
+
+      .mdc-label {
+        grid-area: label;
+        padding-top: calc((var(--#{calc.$md}radio-size) - var(--#{calc.$md}radio-icon-size)) * 0.4);
+      }
+    }
+  }
+}
+

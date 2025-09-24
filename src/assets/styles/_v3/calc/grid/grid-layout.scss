@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "sass:string";
+@use "../global-vars" as vars;
+@use "../mixins/breackpoints" as *;
+
+@mixin cb-grid-layout($grid-columns: var(--#{vars.$cb}grid-columns, 12), $column-gap: var(--#{vars.$cb}grid-column-gap, 0) , $row-gap: var(--#{vars.$cb}grid-column-gap, 0)) {
+  --#{vars.$cb}gap-x: #{$column-gap};
+  --#{vars.$cb}gap-y: #{$row-gap};
+
+  display: grid;
+  grid-column-gap: var(--#{vars.$cb}gap-x);
+  grid-row-gap: var(--#{vars.$cb}gap-y);
+  grid-template-columns: repeat(var(--#{vars.$cb}grid-columns), 1fr);
+}
+
+@function templateRow($list) {
+  $resultString: "";
+  @for $i from 1 through length($list) {
+    @if $i % 2 != 0 {
+      $count: nth($list, $i);
+      @for $j from 1 through $count {
+        $resultString: string.quote($resultString + "  " + nth($list, $i+1));
+      }
+    }
+  }
+  @return $resultString;
+}
+
+
+%cb-grid-layout-12 {
+  @include cb-grid-layout();
+}

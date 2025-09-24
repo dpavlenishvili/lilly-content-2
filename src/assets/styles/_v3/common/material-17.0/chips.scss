@@ -1,0 +1,47 @@
+@use "_v3/calc" as calc;
+
+.mat-mdc-chip {
+  --mdc-chip-elevated-container-color: var(--#{calc.$md}chip-bg-color, #f4f4f4);
+  --mdc-chip-container-shape-radius: .25rem;
+  --mdc-chip-label-text-size: var(--#{calc.$md}chip-font-size);
+  --mat-icon-button-state-layer-color: transparent;
+  --mdc-chip-hover-state-layer-opacity: 0;
+  --md-chip-button-w: 2.5rem;
+
+  min-height: var(--#{calc.$md}chip-min-height);
+  font-size: var(--#{calc.$md}chip-font-size);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+
+  &.mat-mdc-standard-chip {
+    --mdc-chip-label-text-color: var(--#{calc.$md}chip-color, initial);
+
+    color: var(--mdc-chip-label-text-color);
+    border: var(--#{calc.$md}chip-border, 0);
+  }
+
+  .mdc-evolution-chip__cell,
+  .mat-mdc-chip-action,
+  .mat-mdc-chip-action-label {
+    width: 100%;
+  }
+
+  .mat-mdc-chip-remove:hover {
+    opacity: 1;
+  }
+
+  .text-chip {
+    display: inline-flex;
+    @include calc.truncate();
+    max-width: var(--#{calc.$md}chip-text-width-max, 13.75rem);
+    width:100%;
+  }
+
+  button.md-btn-chip-clear {
+    @include calc.size_r(var(--#{calc.$md}chip-button-w), var(--#{calc.$md}chip-min-height));
+    border-radius: 0;
+    margin: 0;
+    padding: 0!important;
+    border-left: 1px solid rgba(var(--#{calc.$cb}body-clr-rgb), .15);
+    @include calc.thumb-on-center();
+  }
+}

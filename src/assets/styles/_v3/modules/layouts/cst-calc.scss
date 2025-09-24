@@ -1,0 +1,292 @@
+@use '_v3/calc' as calc;
+
+@mixin cst-configure(
+  $h: '',
+  // should working with global class .cst
+  $class-name: cst--advantage,
+  $content-hero-enable: true,
+  $content-custom-enable: false,
+  $content-media-bg-enabled: true,
+  $content-media-desktop-enabled: true,
+  $overlay-under-header: true,
+  $mwdia-bg-enabled: true,
+
+
+  $background-clr: (media-query-up: (
+          xs:  var(--#{calc.$color}palette-transparent-black-080)  ,
+  )),
+
+  $clr: (media-query-up: (
+          xs: var(--#{calc.$cb}body-clr),
+  )),
+  $title-clr: (media-query-up: (
+          xs: var(--#{$h}clr),
+  )),
+  $link-clr: (media-query-up: (
+          xs: var(--#{calc.$cb}link-clr),
+          lg: var(--#{$h}clr, var(--#{calc.$cb}link-clr)),
+  )),
+  $title-font-size: var(--#{calc.$cb}h1),
+
+  $min-height: (media-query-up: (
+          xs: 5rem,
+          lg: 300px,
+  )),
+  $out-offset: var(--#{calc.$cb}cst-offset-y),
+
+  $inner-offset-y:  (media-query-up: (
+          xs: var(--#{calc.$cb}block-offset-y),
+          lg: upset,
+  )),
+
+
+  $template-areas: (  media-query-up: (
+          xs: ' "#{calc.templateRow((4, "in"))}" ',
+          md: '"#{calc.templateRow((8, "in"))}" ',
+          lg: '"#{calc.templateRow((12, "in"))}" ',
+  )),
+
+  $media-grid-row: (media-query-up: (
+                xs: '-1 / 1',
+  )),
+
+  $media-w: (media-query-up: (
+          xs: 100%,
+  )),
+  $media-h: (media-query-up: (
+          xs: calc(100% + (var(--#{calc.$cb}cst-offset-y) * 1)),
+          //lg: 500px,
+  )),
+   $cst-media-h: (media-query-up: (
+          xs: 100%
+  )),
+
+
+  $media-margin-y: (media-query-up: (
+          xs: calc(var(--#{calc.$cb}cst-offset-y) * -1)
+  )),
+  $media-border-radius: (media-query-up: (
+          xs: 0,
+  )),
+
+  $media__bg_clr: transparent,
+  $media__overlay-bg_clr: rgba(33, 33, 33, 0.8),
+  $media-display: (media-query-up: (
+          xs: grid,
+  )),
+  $media-justify-items: start,
+  $media-z-index: 0,
+  $media-position: (media-query-up: (
+          xs: center center,
+  )),
+
+  $content-template-areas: (media-query-up: (
+          xs: ' "#{calc.templateRow((4, "b"))}" ',
+          md: ' "#{calc.templateRow((8, "b"))}" ',
+          lg: ' "#{calc.templateRow((12, "b"))}" ',
+          xl: ' "#{calc.templateRow(( 8, "b" ))}" ',
+  )),
+
+  $content-bg-clr: (media-query-up: (
+          xs: transparent,
+  )),
+
+  $content-z-index: 2,
+  $block-align-items: center,
+  $block-media-h: (media-query-up: (
+          xs: 140px,
+          sm: 170px,
+          lg: 270px,
+  )),
+  $block-template-areas: (media-query-up: (
+          xs: ' "#{calc.templateRow((4, "m"))}" "#{calc.templateRow((4, "c"))}" ',
+          sm: ' "#{calc.templateRow((12, "m"))}" "#{calc.templateRow((12, "c"))}" ',
+          lg: ' "#{calc.templateRow((5, "m",   7, "c"))}"',
+          xl: ' "#{calc.templateRow((6, "m",  6, "c"))}"',
+  )),
+
+  // $block-text-font-size: (media-query-up: (
+  //        xs: var(--#{calc.$cb}font-size-base),
+  //        md: var(--#{calc.$cb}font-size-lg),
+  //)),
+  $block-text-font-size: inherit,
+
+) {
+  $init: (
+          background-clr: $background-clr,
+          min-height: $min-height,
+          media-grid-row: $media-grid-row,
+          media-grid-column: (media-query-up: (
+                  xs: '-1 / 1',
+          )),
+          media-w: $media-w,
+          media-h: $media-h,
+          cst-media-h: $cst-media-h,
+          media-fit: cover,
+          media-border-radius: $media-border-radius,
+    //
+          template-areas: $template-areas,
+          content-template-areas: $content-template-areas,
+          inner-offset-y: $inner-offset-y,
+          content-bg-clr: $content-bg-clr,
+          media-display: $media-display,
+          media-justify-items: $media-justify-items,
+          media-position: $media-position,
+          media-z-index: $media-z-index,
+          content-z-index: $content-z-index,
+          media__bg_clr: $media__bg_clr,
+          media-margin-y: $media-margin-y,
+          media__overlay-bg_clr: $media__overlay-bg_clr,
+          block-align-items: $block-align-items,
+          block-media-h: $block-media-h,
+          block-template-areas: $block-template-areas,
+          block-text-font-size: $block-text-font-size,
+    //
+          cards-gap: (media-query-up: (
+                  xs: var(--#{calc.$cb}grid-column-gap-mobile, 1rem),
+                  md: var(--#{calc.$cb}grid-column-gap, 1.5rem),
+          )),
+          cards-grid-template-columns: (media-query-up: (
+                  xs: 1fr,
+                  md: repeat(2, 1fr)
+          ))
+  ) !default;
+
+  :host ::ng-deep {
+
+    .#{$class-name} {
+      @include calc.css-initVars($init, $h);
+      @if ($content-media-desktop-enabled) {
+        @media screen and (min-width: map-get(calc.$grid-breakpoints, lg)) and (max-height: map-get(calc.$height-breakpoints, xl)) {
+        }
+      }
+
+      --#{calc.$cb}cst-bg-clr: var(--#{$h}background-clr);
+
+      @if ($overlay-under-header) {
+        margin-top: calc(var(--header-height) * -1);
+        .cst__grid__in {
+          padding-top: var(--header-height);
+        }
+      }
+
+      .cst__grid {
+        min-height: var(--#{$h}min-height);
+        @extend %cb-grid-layout-12;
+        grid-template-areas: var(--#{$h}template-areas);
+        --#{calc.$cb}gap-y: 0;
+
+
+        &__in {
+          display: grid;
+          height: 100%;
+          align-content: center;
+          z-index: var(--#{$h}content-z-index);
+        }
+
+      }
+
+      @if ($content-custom-enable) {
+        .cst__title {
+          .title {
+            font-size: var(--#{$h}title-font-size);
+            font-weight: var(--#{$h}title-font-weight);
+            color: var(--#{$h}title-clr);
+          }
+        }
+
+        .cst__cards-grid {
+          display: grid;
+          grid-template-columns: var(--#{$h}cards-grid-template-columns);
+          align-items: stretch;
+          justify-content: space-between;
+          gap: var(--#{$h}cards-gap);
+
+
+          > * {
+            display: grid;
+            min-height: 100%;
+            min-width: 0;
+          }
+        }
+      }
+
+      @if ($content-hero-enable) {
+
+        .block {
+          align-items: var(--#{$h}block-align-items);
+          font-size: var(--#{$h}block-text-font-size);
+
+
+          .block__ctrl {
+            @include calc.make-row(var(--#{calc.$cb}space-200));
+            gap: var(--#{calc.$cb}space-200);
+
+            > * {
+              @include calc.make-col-auto();
+            }
+
+            #{calc.$btn-selector} {
+              min-width: var(--#{calc.$btn}btn-max-width);
+              max-width: 100%;
+
+            }
+
+          }
+        }
+
+        .cst__content {
+          @extend %cb-grid-layout-12;
+          grid-template-areas: var(--#{$h}content-template-areas);
+          height: 100%;
+
+          > .block {
+            grid-area: b;
+          }
+        }
+      }
+      @if ($content-media-bg-enabled) {
+        .cst__media {
+          position: relative;
+          grid-area: m;
+          display: var(--#{$h}media-display);
+          justify-items: var(--#{$h}media-justify-items);
+
+          height: var(--#{$h}cst-media-h);
+
+          grid-column: var(--#{$h}media-grid-column);
+          grid-row: var(--#{$h}media-grid-row);
+          z-index: var(--#{$h}media-z-index);
+          //
+          --#{calc.$cb}media-object-fit: var(--#{$h}media-fit, cover);
+          --#{calc.$cb}media-w: var(--#{$h}media-w);
+          --#{calc.$cb}media-h: var(--#{$h}media-h);
+          --#{calc.$cb}media-border-radius: var(--#{$h}media-border-radius);
+          --#{calc.$cb}media-object-position: var(--#{$h}media-position);
+
+          .media {
+            position: relative;
+            display: flex;
+            margin: var(--#{$h}media-margin-y) 0 0 0;
+            @if ($mwdia-bg-enabled) {
+              &__bg {
+                background: var(--#{$h}media__overlay-bg_clr);
+
+                height: var(--#{calc.$cb}media-h);
+              }
+            }
+
+            img, &__bg {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+            }
+
+          }
+        }
+      }
+    }
+  }
+}

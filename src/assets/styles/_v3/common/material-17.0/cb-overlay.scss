@@ -1,0 +1,13 @@
+.cb-overlay-panel {
+  pointer-events: all;
+  transform-origin: top left;
+  //transform: scale(.98);
+  opacity: 0;
+  transition: transform 120ms ease, opacity 50ms ease;
+  overflow: auto;
+}
+
+.cb-overlay-open {
+  //transform: scale(1);
+  opacity: 1;
+}

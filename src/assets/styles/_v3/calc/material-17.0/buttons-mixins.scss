@@ -1,0 +1,222 @@
+@use "../global-vars" as vars;
+// ===============================
+// Helpers
+// ===============================
+@function mget($map, $key, $fallback: null) {
+  @if type-of($map) == 'map' and map-has-key($map, $key) {
+    @return map-get($map, $key);
+  }
+  @return $fallback;
+}
+
+// Mirror hover/focus for a set of props (two-way)
+@function mirror-states($hover, $focus, $props) {
+  $hover: if(type-of($hover) == 'map', $hover, ());
+  $focus: if(type-of($focus) == 'map', $focus, ());
+  $out-hover: ();
+  $out-focus: ();
+
+  @each $p in $props {
+    $h: mget($hover, $p, null);
+    $f: mget($focus, $p, null);
+
+    @if $h == null and $f != null {
+      $h: $f;
+    }
+    @if $f == null and $h != null {
+      $f: $h;
+    }
+
+    $out-hover: map-merge($out-hover, ($p: $h));
+    $out-focus: map-merge($out-focus, ($p: $f));
+  }
+
+  @return (hover: $out-hover, focus: $out-focus);
+}
+
+// Emit CSS vars for base + states
+@mixin emit-button-vars($selector, $prefix, $base, $states, $props) {
+  #{$selector} {
+    // base
+    @each $p in $props {
+      $v: mget($base, $p, null);
+      --#{$prefix}#{$p}: #{$v};
+    }
+
+    // states
+    @each $state, $map in $states {
+      @each $p in $props {
+        $v: mget($map, $p, null);
+        --#{$prefix}#{$state}-#{$p}: #{$v};
+      }
+    }
+  }
+}
+
+// Apply color-style properties using a prop->css property map
+// NOTE: only color properties; you can extend this mapping.
+@mixin apply-button-color-styles($selector, $prefix, $prop-to-css, $override-selector: '.mat-mdc-button-base') {
+  #{$selector} {
+    &#{$override-selector} {
+      // base properties
+      &:not([disabled]), &:not(:disabled) {
+        @each $p, $css-prop in $prop-to-css {
+          #{$css-prop}: var(--#{$prefix}#{$p});
+        }
+
+        // hover (fallback to focus -> base via var() chain is already covered by pre-mirroring,
+        // but we keep var() fallbacks for safety if someone overrides partially)
+        &:hover {
+          @each $p, $css-prop in $prop-to-css {
+            #{$css-prop}: var(--#{$prefix}hover-#{$p}, var(--#{$prefix}focus-#{$p}, var(--#{$prefix}#{$p})));
+          }
+        }
+
+        // focus / focus-visible
+        &:focus,
+        &:focus-visible {
+          @each $p, $css-prop in $prop-to-css {
+            #{$css-prop}: var(--#{$prefix}focus-#{$p}, var(--#{$prefix}hover-#{$p}, var(--#{$prefix}#{$p})));
+          }
+        }
+      }
+
+      // disabled
+      &[disabled],
+      &:disabled,
+      &.is-disabled {
+        @each $p, $css-prop in $prop-to-css {
+          #{$css-prop}: var(--#{$prefix}disabled-#{$p}, var(--#{$prefix}#{$p}));
+        }
+        cursor: not-allowed; // remove if you truly want only color properties
+      }
+    }
+  }
+}
+
+// ===============================
+// Public mixins
+// ===============================
+//
+// $props: list of properties you want to support (e.g. (fg, bg, border))
+// $prop-to-css: map from prop -> css property (e.g. (fg: color, bg: background-color, border: border-color))
+// $defaults: map of default tokens for base/disabled (you can override per-project)
+//
+// $vars shape example:
+// (
+//   fg: var(--color-on-surface),
+//   bg: var(--color-surface),
+//   border: var(--color-border),
+//   hover: ( bg: var(--color-surface-hover) ),
+//   focus: ( border: var(--color-primary) ),
+//   disabled: ( fg: var(--color-on-disabled), bg: var(--color-disabled), border: var(--color-border-disabled) )
+// )
+@mixin button-default(
+  $selector: '.btn',
+  $prefix: 'btn-',
+  $vars: (),
+  $props: (fg, bg, border, shadow),
+  $prop-to-css: (fg: color, bg: background-color, border: border-color, shadow: box-shadow),
+  $defaults: (
+    base: (fg: var(--color-text), bg: var(--color-surface), border: var(--color-border)),
+    disabled: (fg: var(--color-on-disabled), bg: var(--color-disabled), border: var(--color-border-disabled))
+  )
+) {
+  // derive base
+  $base-defaults: mget($defaults, base, ());
+  $base: ();
+  @each $p in $props {
+    $base: map-merge($base, ($p: mget($vars, $p, mget($base-defaults, $p, null))));
+  }
+
+  // states (hover/focus with mirroring)
+  $hover-raw: mget($vars, hover, ());
+  $focus-raw: mget($vars, focus, ());
+  $mirrored: mirror-states($hover-raw, $focus-raw, $props);
+  $hover: mget($mirrored, hover, ());
+  $focus: mget($mirrored, focus, ());
+
+  // disabled
+  $dis-defaults: mget($defaults, disabled, ());
+  $disabled-raw: mget($vars, disabled, ());
+  $disabled: ();
+  @each $p in $props {
+    $disabled: map-merge($disabled, ($p: mget($disabled-raw, $p, mget($dis-defaults, $p, null))));
+  }
+
+  // emit variables and styles
+  @include emit-button-vars($selector, $prefix, $base, (hover: $hover, focus: $focus, disabled: $disabled), $props);
+  @include apply-button-color-styles($selector, $prefix, $prop-to-css);
+}
+
+// Overrides only variables (with mirroring) for provided keys
+@mixin button-override(
+  $overrides,
+  $prefix: 'btn-',
+  $props: (fg, bg, border, shadow),
+) {
+  $hover-raw: mget($overrides, hover, null);
+  $focus-raw: mget($overrides, focus, null);
+
+  // mirror the pieces we have (if both null it's fine)
+  $mirrored: mirror-states(if($hover-raw == null, (), $hover-raw), if($focus-raw == null, (), $focus-raw), $props);
+  $hover: mget($mirrored, hover, ());
+  $focus: mget($mirrored, focus, ());
+
+  // base vars
+  @each $p in $props {
+    $v: mget($overrides, $p, null);
+    @if $v != null {
+      --#{$prefix}#{$p}: #{$v};
+    }
+  }
+
+  // state vars
+  @each $p in $props {
+    $hv: mget($hover, $p, null);
+    $fv: mget($focus, $p, null);
+    @if $hv != null {
+      --#{$prefix}hover-#{$p}: #{$hv};
+    }
+    @if $fv != null {
+      --#{$prefix}focus-#{$p}: #{$fv};
+    }
+  }
+
+  // disabled (optional)
+  $disabled: mget($overrides, disabled, null);
+  @if $disabled != null {
+    @each $p in $props {
+      $dv: mget($disabled, $p, null);
+      @if $dv != null {
+        --#{$prefix}disabled-#{$p}: #{$dv};
+      }
+    }
+  }
+}
+
+// reset material
+@mixin check-material-button-variables($h: vars.$btn) {
+  $reset-mat: ("protected", "filled", "outlined") !default;
+  @each $name in $reset-mat {
+    --mat-#{$name}-button-touch-target-display: none;
+    --mat-#{$name}-button-horizontal-padding: var(--#{$h}offset-x);
+    --mat-#{$name}-button-horizontal-shadow: none;
+    --mdc-#{$name}-button-container-color: transparent;
+    --mdc-#{$name}-button-container-height: auto;
+    --mdc-#{$name}-button-container-shape: var(--#{$h}radius);
+    --mdc-#{$name}-button-label-text-transform: normal;
+    --mdc-#{$name}-button-label-text-font: inherit;
+    --mdc-#{$name}-button-label-text-size: var(--#{$h}font-size);
+    --mdc-#{$name}-button-label-text-color: var(--#{$h}fg);
+    --mdc-#{$name}-button-container-color: inherit;
+  }
+
+}
+
+@mixin icon-size($h: vars.$btn, $size: '') {
+  --#{$h}icon-button-size: var(--#{$h}#{$size}-icon-button-size);
+  --#{$h}icon-button-thumb-size: var(--#{$size}sm-icon-button-thumb-size);
+}
+
+

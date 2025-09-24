@@ -1,0 +1,115 @@
+@use "../global-vars" as *;
+
+@function breakpoint-next($name, $breakpoints: breakpoints-object(), $breakpoint-names: map-keys($breakpoints)) {
+  $n: index($breakpoint-names, $name);
+  @return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+@function breakpoint-min($name, $breakpoints: breakpoints-object()) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-max($name, $breakpoints: breakpoints-object()) {
+  $next: breakpoint-next($name, $breakpoints);
+  @return if($next, breakpoint-min($next, $breakpoints) - .02, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: breakpoints-object()) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+@function breakpoints-object($prefix: $cb) {
+  @return $grid-breakpoints;
+}
+
+@function get-media-breakpoint($name, $breakpoints: breakpoints-object()) {
+  $min: breakpoint-min($name, $breakpoints);
+  $res: "#{$min}";
+  @debug "min: #{$res}";
+  @return $res;
+}
+
+@mixin media-breakpoint-loop($values, $direct: min) {
+  @each $key, $value in $values {
+    @if $key {
+      @if ($direcrt == min) {
+        @include media-breakpoint-up($key) {
+          @content;
+        }
+      } @else if ($direcrt == max) {
+        @include media-breakpoint-down($key) {
+          @content;
+        }
+      } @else {
+
+      }
+    }
+  }
+}
+
+
+@mixin media-breakpoint-up($name, $breakpoints: breakpoints-object()) {
+
+  $min: breakpoint-min($name, $breakpoints);
+  //@debug "min: #{$min}";
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: breakpoints-object()) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: breakpoints-object()) {
+  $min: breakpoint-min($lower, $breakpoints);
+  $max: breakpoint-max($upper, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($lower, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($upper, $breakpoints) {
+      @content;
+    }
+  }
+}
+
+
+@mixin media-breakpoint-only($name, $breakpoints: breakpoints-object()) {
+  $min: breakpoint-min($name, $breakpoints);
+  $max: breakpoint-max($name, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($name, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($name, $breakpoints) {
+      @content;
+    }
+  }
+}
+

@@ -1,0 +1,426 @@
+@use '_v3/calc' as calc;
+
+$body-text-align: null !default;
+
+$spacer: 1rem !default;
+
+
+$space: (
+        0: 0,
+        25: 0.125rem,
+        50: 0.25rem,
+        100: 0.5rem,
+        150: 0.75rem,
+        200: 1rem,
+        250: 1.25rem,
+        300: 1.5rem,
+        400: 2rem,
+        500: 2.5rem,
+        600: 3rem,
+        700: 3.5rem,
+        800: 4rem,
+        900: 4.5rem,
+        1000: 5rem,
+        1200: 6rem,
+        1400: 7rem,
+        1500: 7.5rem,
+        1600: 8rem,
+        1700: 8.5rem,
+        1800: 9rem,
+        1900: 9.5rem,
+        2000: 10rem,
+        minus-200: -1rem,
+        minus-100: -0.5rem,
+        minus-050: -0.25rem,
+        minus-025: -0.125rem,
+) !default;
+
+$container-max-width: (
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: calc(1200px + 4rem),
+        xxl: 1400px
+) !default;
+//$container-max-width-query: (media-query-up: $container-max-width) !default;
+$container-max-width-query: 90rem !default;
+$container-margin: (media-query-up: (
+        xs: 1rem,
+        md: 3rem,
+        lg: 4rem,
+)) !default;
+$grid-gutter-width: (media-query-up: (
+        xs: 1rem,
+        sm: 1.25rem,
+        md: 1.5rem,
+        lg: 2rem,
+)) !default;
+$grid-column-gap: $grid-gutter-width !default;
+//$grid-column-gap-half: $grid-gutter-width * .5 !default;
+$grid-desk-columns: 12 !default;
+$grid-tablet-columns: 8 !default;
+$grid-mobile-columns: 4 !default;
+
+$grid-columns: (media-query-up: (
+        xs: $grid-mobile-columns,
+        md: $grid-tablet-columns,
+        lg: $grid-desk-columns,
+)) !default;
+
+$wrap-max-width: 100% !default;
+
+// z-index
+$cookie-banner-z-index: 999 !default;
+
+// globel offset
+$main-offset-y: (media-query-up: (
+        xs: 1rem,
+        md: 1.25rem,
+        lg: 1.5rem,
+)) !default;
+$main-promo-offset-y: (
+        media-query-up: (
+                xs: 2.25rem,
+                md: 2.5rem,
+                lg: 3.5rem,
+                xl: 4rem,
+        )
+) !default;
+
+//type
+$font-family-body: "Ringside Sans", Ringside, "Lato", -apple-system, Arial, sans-serif !default;
+$font-sans-extra-wide: "Ringside Sans Extra Wide", "Ringside Extra Wide", sans-serif !default;
+$font-serif: "ITC Garamond Std", "ITC Garamond Std", Garamond, garamond, serif !default;
+$font-family-head-embedded: $font-family-body !default;
+
+$font-family-head: (media-query-up: (
+        xs: $font-family-body,
+)) !default;
+
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-xs: $font-size-base * .75 !default;
+$font-size-sm: $font-size-base * .875 !default;
+$font-size-lg: $font-size-base * 1.125 !default;
+$font-size-xl: $font-size-base * 1.2 !default;
+$small-font-size: .75rem !default;
+
+$display-1: $font-size-sm !default;
+$display-2: 1.2rem !default;
+$display-3: 1.5rem !default;
+$display-4: 1.75rem !default;
+
+$font-size: (
+        base: $font-size-base,
+        sm: $font-size-sm,
+        lg: $font-size-lg,
+        120: $font-size-base * 1.2,
+        125: $font-size-base * 1.25,
+        150: $font-size-base * 1.50,
+        175: $font-size-base * 1.75,
+        225: $font-size-base * 2.25,
+        xs: $small-font-size,
+) !default;
+
+$h1: (media-query-up: (
+        xs: 3rem,
+        md: 4rem,
+        lg: 5rem,
+        xl: 6.25rem
+)) !default;
+
+$text-display-1: (media-query-up: (
+        xs: '900 6.25rem / 1.0 "Ringside Sans Extra Wide", "Ringside Extra Wide", sans-serif',
+)) !default;
+
+$h2: (
+        media-query-up: (
+                xs: 2rem,
+                lg: 3.5rem,
+                xl: 3.75rem,
+        )
+) !default;
+
+$h3: (
+        media-query-up: (
+                xs: 1.5rem,
+                lg: 2rem
+        )
+) !default;
+
+$h4: (
+        media-query-up: (
+                xs: $font-size-base * 1.25,
+                lg: $font-size-base * 1.75
+        )
+) !default;
+
+$h5: $font-size-base !default;
+$h6-font-size: $font-size-base * .875 !default;
+
+$head-line-height: 1.5 !default;
+$headings-font-weight: var(--#{calc.$cb}font-weight-normal) !default;
+
+$font-weight: (
+        lighter: 300,
+        light: 300,
+        normal: 400,
+        base: 400,
+        middle: 500,
+        bold: 700,
+        bolder: 900
+) !default;
+
+$line-height: (
+        base: 1.5,
+        sm: 1.25,
+        lg: 2,
+        xl: 2.5,
+        xxl: 2.75
+) !default;
+
+// links
+$link: (
+        decoration: underline,
+        hover-decoration: underline,
+        weight: map-get($font-weight, middle),
+) !default;
+
+// icons
+$icon-sizes: (
+        xsss: 0.5rem,
+        xss: .75rem,
+        xs: 1rem,
+        sm: 1.25rem,
+        md: 1.5rem,
+        base: 1.5rem,
+        lg: 2rem,
+        xl: 3rem,
+        xxl: 4.25rem
+) !default;
+
+$icon-offset-x: 1rem !default;
+
+$radius: (
+        0: 0,
+        base: 0.75rem,
+        lg: 1rem,
+        sm: .5rem,
+        xs: .25rem,
+  //
+        1: 0.75rem,
+        2: 1rem,
+        3: 1.25rem,
+        4: 1.5rem,
+        5: 1.75rem,
+        6: 2rem,
+        7: 2.5rem,
+        8: 3rem,
+        full: 624.9375rem
+) !default;
+
+// cards
+$card-offset-y: (
+        "base": 1rem,
+        "lg": 1.25rem,
+        "sm": 1rem,
+) !default;
+
+$card-offset-x: (
+        "base": 1rem,
+        "lg": 1.5rem,
+        "sm": 1rem,
+) !default;
+
+$card-border-radius: (media-query-up: (
+        xs: var(--#{calc.$cb}radius-1),
+)) !default;
+
+
+// dialog
+$dialog-radius: (
+        media-query-up: (
+                xs: .5rem,
+                sm: 1rem
+        )
+) !default;
+
+$dialog-confirm-max-width: 35rem !default;
+$dialog-confirm-max-width-lg: 55rem !default;
+
+$form-label: (
+        font-size: $font-size-base,
+        font-weight: map-get($font-weight, bold),
+        margin: 0 0 1rem
+) !default;
+
+
+// btn
+
+
+$md-card-box-shadow: none !default;
+$body-color-50: rgba(var(--#{calc.$cb}body-clr-rgb), .61) !default;
+$icon-def-clr: var(--#{calc.$cb}primary-500) !default;
+$icon-accent-clr: var(--#{calc.$cb}accent-500) !default;
+
+//nav-arrow
+$nav-arrow-bg-color: transparent !default;
+$nav-arrow-size: .88rem !default;
+$nav-arrow-icon-color: var(--#{calc.$cb}gray-900) !default;
+$nav-arrow-path: 'M7.15.58,4,3.73.85.58,0,1.42l4,4,4-4Z' !default;
+$nav-arrow-icon: str-replace(url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 6'%3e%3cpath fill='#{$nav-arrow-icon-color}' stroke-width='1' d='#{$nav-arrow-path}'/%3e%3c/svg%3e"), "#", "%23") !default;
+
+// header
+$head-toolbar-height: (
+        media-query-up: (
+                xs: 4.5rem,
+                md: 6rem,
+                xl: 8.75rem
+        )
+) !default;
+
+
+$body: (
+        font-family: $font-family-body,
+        font-size: map-get($font-size, base),
+        font-weight: map-get($font-weight, base),
+        line-height: map-get($line-height, base),
+        text-align: start,
+) !default;
+
+$index: (
+        header: 100,
+        cookie: 99
+) !default;
+
+
+$main-to-css: (
+        body: $body, // body font
+        index: $index,
+        font-family-head: $font-family-head,
+        font-family-serif: $font-serif,
+        font-sans-extra-wide: $font-sans-extra-wide,
+        font-size: $font-size,
+        h1: $h1,
+        h2: $h2,
+        h3: $h3,
+        h4: $h4,
+        h5: $h5,
+        display-1: $display-1,
+        display-2: $display-2,
+        display-3: $display-3,
+        display-4: $display-4,
+        small-font-size: $small-font-size,
+        sub-sup-font-size: .75em,
+        line-height: $line-height,
+        head-line-height:$head-line-height,
+        head-margin-y:1rem,
+        headings-font-weight:$headings-font-weight,
+        font-weight: $font-weight,
+        grid-gutter-width: $grid-gutter-width,
+        grid-column-gap: $grid-column-gap,
+        grid-desk-columns: $grid-desk-columns,
+        grid-tablet-columns: $grid-tablet-columns,
+        grid-mobile-columns: $grid-mobile-columns,
+        grid-columns: $grid-columns,
+        container-max-width: $container-max-width,
+        container-margin:$container-margin,
+        container-max-width-query: $container-max-width-query,
+        main-offset-y: $main-offset-y,
+        main-promo-offset-y: $main-promo-offset-y,
+        wrap-max-width: $wrap-max-width,
+        space: $space,
+        link: $link,
+        icon: $icon-sizes,
+        icon-offset-x: $icon-offset-x,
+        radius: $radius,
+        paragraph-margin-bottom: 1rem,
+        card-offset-x: $card-offset-x,
+        card-offset-y: $card-offset-y,
+        card-border-radius: $card-border-radius,
+        dialog-radius: $dialog-radius,
+        dialog-confirm-max-width: $dialog-confirm-max-width,
+        dialog-confirm-max-width-lg: $dialog-confirm-max-width-lg,
+        form-label: $form-label,
+  //
+        btn-active-size: (
+                media-query-up: (
+                        xs: initial,
+                        sm: 12.5rem
+                )
+        ),
+        btn-more-height: 1.75rem,
+        icon-more-size-w: (media-query-up: (
+                xs: 1.75rem,
+                sm: 2rem
+        )),
+        icon-more-propotion-h: 5.666,
+  // result
+        card-pad-y: (media-query-up: (
+                xs: var(--#{calc.$cb}card-offset-y-base),
+        )),
+        card-pad-x: (media-query-up: (
+                xs: var(--#{calc.$cb}card-offset-x-base),
+                md: var(--#{calc.$cb}card-offset-x-lg),
+        )),
+        card-promo-pad-y: (media-query-up: (
+                xs: 2rem,
+                md: 3rem,
+        )),
+        card-promo-pad-x: (media-query-up: (
+                xs: 2rem,
+                md: 3rem,
+        )),
+        rd-width: (media-query-up: (
+                xs: 100%,
+                lg: 68rem,
+        )),
+        listing-col-width: (media-query-up: (
+                xs: 100%,
+                xl: 64rem,
+        )),
+        listing-side-col-width: (media-query-up: (
+                xs: auto,
+                xl: 16.875rem,
+        )),
+  //common
+        md-card-box-shadow: $md-card-box-shadow,
+        body-clr-50: $body-color-50,
+  // header
+        head-toolbar-height :(media-query-up: (
+                xs: 3.5rem,
+                md: 4.0rem,
+                lg: 4.25rem,
+        )),
+        header-top-offset :(media-query-up: (
+                xs: .75rem,
+                sm: 1rem,
+                md: 1.125rem,
+                lg: 1.5rem,
+        )),
+  //
+        headerBottomOffset: 0rem,
+        sticky-bottom-poz: (media-query-up: (
+                xs: calc(var(--headerBottomOffset, 0rem)),
+                lg: 0,
+        )),
+  // query media
+        show-desktop-only: (media-query-up: (
+                xs: none,
+                xl: block,
+        )),
+        show-mobile-only: (media-query-up: (
+                xs: block,
+                xl: none,
+        )),
+  //nav arrow
+        nav-arrow-bg-color: $nav-arrow-bg-color,
+        nav-arrow-size: $nav-arrow-size,
+        nav-arrow-icon-color: $nav-arrow-icon-color,
+        nav-arrow-path: $nav-arrow-path,
+        nav-arrow-icon: $nav-arrow-icon,
+  //
+        brand-w-rel: 1.83206107,
+) !default;
+
+
+$test: 5rem !default;

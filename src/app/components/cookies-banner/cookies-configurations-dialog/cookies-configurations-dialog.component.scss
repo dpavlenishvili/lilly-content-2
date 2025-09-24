@@ -1,0 +1,97 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+$init: (
+        dialog-h: (media-query-up: (
+                xs: 95dvh,
+                lg: 90dvh,
+        )),
+) !default;
+
+
+::ng-deep .cookies-dialog {
+  @include css-initVars($init, $h);
+  max-height: var(--#{$h}dialog-h);
+  width: map-get($container-max-widths, xl);
+
+  .mat-mdc-dialog-container {
+    > * {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .mat-mdc-dialog-content {
+      flex: 0 1 90%;
+      height: auto;
+      scrollbar-width: thin;
+      overflow-y: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: auto;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 2rem;
+
+      .md-dialog-header {
+        padding: 0;
+      }
+    }
+
+    .mat-mdc-dialog-actions {
+      flex: none;
+      button {
+        margin: 0 .5rem .5rem 0 !important;
+        height: auto;
+      }
+    }
+  }
+
+  .es-cookies-body {
+    &__block {
+      display: flex;
+      flex-direction: column;
+      font-size: var(--#{$cb}font-size-sm);
+
+      .checkbox-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      &__note {
+        color: var(--#{$cb}primary);
+        font-size: .75rem;
+        cursor: pointer;
+      }
+
+      .accept-all-checkbox {
+        margin-left: auto;
+      }
+    }
+
+    hr {
+      height: 1px;
+      border: 0;
+      border-top: 1px solid var(--#{$cb}divider);
+      margin: 1.5rem 0;
+    }
+
+    .mdc-label {
+      color: var(--#{$cb}primary);
+      font-weight: bold !important;
+    }
+
+    .mdc-form-field {
+      font-size: var(--#{$cb}font-size-sm);
+    }
+  }
+
+  .md-dialog-action-confirm button {
+    font-size: 1rem !important;
+    @include media-breakpoint-down(md) {
+      margin-left: 0 !important;
+      margin-bottom: .5rem !important;
+    }
+  }
+}

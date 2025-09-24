@@ -1,0 +1,348 @@
+ @use "_v3/calc" as calc;
+
+
+$offset-ng-x: calc(-1 * var(--#{calc.$md}dialog-offset-x));
+$offset-x: var(--#{calc.$md}dialog-offset-x);
+$offset-y: var(--#{calc.$md}dialog-offset-y);
+$multi-5: .5;
+$multi-6: .66;
+$multi-3: .44;
+
+.mat-mdc-dialog-content {
+  position: relative;
+
+  .sidenav-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .mat-drawer-content {
+    @include calc.loc-scroll(auto);
+  }
+
+  .mat-drawer-container {
+    background: transparent;
+  }
+
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: transparent;
+  }
+}
+
+.md-dialog-filters {
+
+  dialog-content {
+    display: grid;
+    grid-template-rows: auto minmax(200px, 100%) auto;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .mat-mdc-dialog-content {
+    display: grid;
+    height: 100%;
+    max-height: 100%;
+    position: relative;
+
+    padding-right: $offset-x;
+    padding-left: $offset-x;
+
+    //padding-right: $offset-x;
+    //padding-left: $offset-x;
+    //margin-left: $offset-ng-x;
+    //margin-right: $offset-ng-x;
+
+    .sidenav-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  .md-dialog-header, .mat-mdc-dialog-actions {
+    position: relative;
+
+    &:before {
+
+      content: '';
+      position: absolute;
+      height: 1px;
+      //width: 100%;
+      left: $offset-ng-x;
+      right: $offset-ng-x;
+      background-color: var(--#{calc.$cb}divider);
+    }
+  }
+
+  .md-dialog-header {
+    display: grid;
+    align-items: center;
+    grid-gap: var(--#{calc.$cb}space-100);
+    grid-template-columns:  min-content auto;
+    padding: calc(#{$offset-y} * .5) $offset-x;
+    min-height: 3rem;
+    //margin: 0 calc(#{$offset-x} * #{$multi-5} * -1);
+
+
+    .md-header-c {
+      grid-row: 1;
+      margin-left: calc(#{$offset-x} * #{$multi-5} * -1);
+    }
+
+    .md-header-t {
+      display: grid;
+      align-items: center;
+    }
+
+    .mat-mdc-dialog-title {
+      margin: 0;
+      padding: 0;
+
+      &:before {
+        height: auto;
+      }
+    }
+
+    &:before {
+      bottom: 0;
+    }
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: calc(#{$offset-y} * .5) $offset-x;
+
+    &:before {
+      top: 0;
+    }
+
+    .md-footer {
+      padding: $offset-y 0;
+      width: 100%;
+    }
+  }
+
+  .mdc-list-item--with-leading-checkbox .mdc-list-item__start {
+    margin-left: 0;
+    margin-right: .75em;
+  }
+
+
+  @include calc.media-breakpoint-down(sm) {
+    .mat-mdc-dialog-container {
+      border-radius: 0 !important;
+    }
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh;
+  }
+}
+
+// all filters
+.md-dialog-more {
+  width: var(--#{calc.$md}mat-dialog-more-width) !important;
+  height: var(--#{calc.$md}mat-dialog-more-height);
+
+  .mdc-dialog__surface {
+    overflow-x: hidden;
+  }
+
+  .filters-content > * {
+    display: block;
+    position: relative;
+
+    & + * {
+      &:before {
+        left: $offset-x;
+        right: $offset-x;
+      }
+    }
+
+    & + * {
+      border-top: 1px solid transparent;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        height: 1px;
+        background: var(--#{calc.$cb}divider);
+      }
+    }
+  }
+
+  .filter-ctrl-b {
+    margin-left: $offset-ng-x;
+    margin-right: $offset-ng-x;
+    padding-left: $offset-x;
+    padding-right: $offset-x;
+
+    &.is-sticky {
+      position: sticky;
+      bottom: 0;
+      background-color: rgba(var(--#{calc.$cb}body-bg-clr-rgb), .88);
+    }
+
+    > .row {
+      --#{calc.$cb}gutter-x: .5rem;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      --#{calc.$cb}btn-base-font-size: var(--#{calc.$cb}font-size-sm);
+      --#{calc.$cb}btn-base-offset-x: .75rem;
+      --#{calc.$cb}btn-base-font-weight: var(--#{calc.$cb}font-weight-base);
+      --#{calc.$cb}btn-base-height: 2.25rem;
+      color: var(--#{calc.$cb}form-primary-clr);
+      @include calc.md-btn-disable-hover-focus();
+      a {
+        color: currentColor;
+      }
+    }
+  }
+
+  .mat-sidenav {
+    width: var(--#{calc.$md}mat-dialog-sidenav-width);
+    background-color: var(--#{calc.$cb}lighter-clr);
+
+    .cb-nav-text {
+      padding: 1rem $offset-x;
+    }
+
+    .mat-mdc-list-base {
+      padding-top: .5rem;
+
+      & + .mat-mdc-list-base {
+        margin-top: 1rem;
+      }
+
+      .mat-mdc-list-item {
+        height: 2.5rem;
+        padding-left: $offset-x;
+        padding-right: calc(#{$offset-x} * #{$multi-5});
+
+        .row {
+          --#{calc.$cb}gutter-x: 0;
+          align-items: center;
+          width: 100%;
+        }
+
+        .small {
+          display: inline-flex;;
+          font-size: .85rem;
+          margin: 0 .25rem;
+        }
+
+
+        &.is-active {
+          //font-weight: var(--#{calc.$cb}font-weight-bold);
+          --mdc-list-list-item-label-text-color: var(--#{calc.$cb}form-primary-clr);
+          --mdc-list-list-item-label-text-weight: var(--#{calc.$cb}font-weight-bold);
+        }
+      }
+
+      .mat-mdc-chip-set {
+        margin-left: calc(#{$offset-x} * #{$multi-6});
+        margin-right: calc(#{$offset-x} * #{$multi-6});
+        margin-top: calc(#{$offset-y} * .5);
+        margin-bottom: calc(#{$offset-y} * .5);
+      }
+    }
+  }
+
+  .md-dialog-section {
+    position: relative;
+    padding: calc(#{$offset-y} + 1px) $offset-x $offset-y;
+
+
+    .filter-subhead {
+      margin: 0;
+    }
+
+    &.is-active {
+      .filter-subhead {
+        position: relative;
+
+        &:before {
+          content: '';
+          position: absolute;
+          @include calc.square(4px);
+          left: -1rem;
+          top: 50%;
+          margin-top: -2px;
+          border-radius: 50%;
+          background-color: var(--#{calc.$cb}primary);
+        }
+      }
+    }
+
+  }
+
+  .filters-content {
+    .mat-mdc-list-base {
+      position: relative;
+      padding: 0;
+      margin-left: calc(8px * -1);
+      margin-right: calc(var(--#{calc.$md}mat-dialog-in-offset-x) * -1);
+      width: calc(100% + var(--#{calc.$md}mat-dialog-in-offset-x) * 2);
+
+      @include calc.media-breakpoint-up(lg) {
+        & > .row > * {
+          @include calc.make-col(6);
+        }
+      }
+
+    }
+  }
+}
+
+.mat-mdc-chip.md-filter-chip {
+  @include calc.font-size(.85rem);
+  margin: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: var(--#{calc.$cb}body-clr);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, .15);
+  font-weight: var(--#{calc.$cb}font-weight-normal);
+
+  .mdc-evolution-chip__text-label {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+
+    > * {
+      min-width: 0;
+    }
+
+    .md-chip-value {
+      @include calc.truncate();
+    }
+  }
+
+}
+
+button {
+  &.md-btn-chip-toggle, &.md-btn-chip-clear-no {
+    --mdc-icon-button-icon-size: 1.25rem;
+
+    .mat-icon {
+      @include calc.square(1.25rem);
+    }
+  }
+
+  &.md-btn-chip-toggle {
+    &.is-more {
+      .mat-icon {
+        @include calc.rotate(180);
+      }
+    }
+  }
+}
+
+

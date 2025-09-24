@@ -1,0 +1,80 @@
+@use "_v3/calc" as calc;
+
+@use "../../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel" as owl;
+@use "../../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default" as owl-theme;
+
+$arrow-padding: 1.75rem;
+$arrow-border-width: 3px;
+$arrow-border-radius: 3px;
+
+owl-carousel-o {
+  display: block;
+  // padding: 0 $arrow-padding;
+
+  .owl-carousel {
+    .owl-stage {
+      display: flex;
+    }
+
+    .owl-nav {
+      overflow: hidden;
+      height: 0;
+      margin: 0;
+
+      .owl-prev,
+      .owl-next {
+        width: 37px;
+        height: 50px;
+        background-color: var(--#{calc.$cb}black);
+        top: 35%;
+        position: absolute;
+        opacity: 0.2;
+
+        &:after {
+          content: "";
+          @include calc.square(13px);
+          position: absolute;
+          top: 35%;
+          background: none;
+          border: solid var(--#{calc.$cb}white);
+          border-width: $arrow-border-width 0px 0px $arrow-border-width;
+          display: inline-block;
+          margin: 0;
+          padding: 3px;
+        }
+
+        &.disabled {
+          pointer-events: none;
+        }
+      }
+
+      .owl-prev {
+        left: -$arrow-padding;
+        border-radius: $arrow-border-radius 0px 0px $arrow-border-radius;
+
+        &:after {
+          left: 1rem;
+          transform: rotate(-45deg);
+        }
+      }
+
+      .owl-next {
+        right: -$arrow-padding;
+        border-radius: 0 $arrow-border-radius $arrow-border-radius 0px;
+
+        &:after {
+          right: 1rem;
+          transform: rotate(135deg);
+        }
+      }
+    }
+
+    .owl-dots {
+      .owl-dot {
+        &.active span {
+          background: var(--page-color);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,280 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+$init: (
+        base-clr: #000,
+        ck-primary-clr:  #254059,
+        ck-link-clr: #0078a3,
+        ck-w-max: (media-query-up: (
+                xs: 80vw,
+                lg: 80vw,
+                xl: 80vw,
+                xxl: 50vw,
+        )),
+        ck-offset-x: (media-query-up: (
+                xs: 30px,
+        )),
+        ck-offset-y: var(--#{$h}ck-offset-x),
+        ck-offset: var(--#{$h}ck-offset-x),
+        ck-border-radius: 6px,
+        ck-font-size: (media-query-up: (
+                xs: 12px,
+        )),
+        ck-action-max-width: (media-query-up: (
+                xs: 100%,
+                lg: 80%,
+        )),
+        ck-action-grid-template: (media-query-up: (
+                xs: 1fr,
+                md: repeat(auto-fill, minmax(250px, 30%)),
+        )),
+        ck-action-setings-grid-template: (media-query-up: (
+                xs: 1fr,
+                md: repeat(auto-fit, minmax(250px, 280px)),
+        )),
+        ck-txt-display: (media-query-up: (
+                xs: none,
+                md: inline,
+        )),
+        ck-ctrl-display: (media-query-up: (
+                xs: inline,
+                md: none,
+        )),
+) !default;
+
+::ng-deep {
+  .cookies-dialog {
+    @include css-initVars($init, $h, $grid-breakpoints);
+    max-width: var(--#{$h}ck-w-max) !important;
+
+    p {
+      margin-top: 10px;
+    }
+
+    .mat-mdc-dialog-surface {
+      border-radius: var(--#{$h}ck-border-radius) !important;
+      padding: var(--#{$h}ck-offset) !important;
+      color: var(--#{$h}base-clr);
+
+      a {
+        color: var(--#{$h}ck-link-clr);
+        font-weight: 500;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      button {
+        &.mat-mdc-unelevated-button:not([disabled]) {
+          border: 2px solid transparent;
+          border-radius: 4px;
+          box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
+
+          color: #fff;
+          display: inline-block;
+          font-size: 1.125rem;
+          font-weight: 700;
+          line-height: 1.5rem;
+          padding: calc(.5rem - 2px) calc(1.5rem - 2px);
+          transition: background-color .25s ease, color .25s ease;
+        }
+      }
+
+      > * {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 100%;
+
+      }
+
+      .mat-mdc-dialog-content {
+        --mdc-dialog-supporting-text-size: var(--#{$h}ck-font-size);
+        --mat-dialog-with-actions-content-padding: 0 24px;
+        margin: 0 -24px;
+        flex: 0 1 75%;
+        height: auto;
+        scrollbar-width: thin;
+        overflow-y: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: auto;
+      }
+
+      .mat-mdc-dialog-actions {
+        --mat-dialog-actions-padding: 8px 0;
+        display: block;
+        flex: none;
+        margin-bottom: 0;
+
+        &:not(.is-settings) {
+          .mat-dialog-actions__1 {
+            display: grid;
+            grid-template-columns: var(--#{$h}ck-action-grid-template);
+            gap: .5rem;
+            margin-bottom: .5rem;
+
+            > * {
+              margin: 0;
+              display: block;
+            }
+          }
+        }
+
+        &.is-settings {
+          .mat-dialog-actions__1 {
+            display: grid;
+            grid-template-columns: var(--#{$h}ck-action-setings-grid-template);
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: .5rem;
+
+            > * {
+              margin: 0;
+              display: block;
+            }
+          }
+        }
+      }
+
+      .mat-dialog-actions__2 {
+        font-size: var(--#{$h}ck-font-size);
+
+        a {
+          display: inline-flex;
+          padding: .5rem 0;
+          font-weight: normal;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    h2.title {
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+      margin-bottom: 0;
+    }
+
+    .txt {
+      &__more {
+        display: var(--#{$h}ck-txt-display);
+
+        &.is-show {
+          --#{$h}ck-txt-display: inline;
+        }
+      }
+
+      &__ctrl {
+        display: var(--#{$h}ck-ctrl-display);
+
+        > * {
+          display: inline-flex;
+        }
+      }
+    }
+
+    .usa-cookies-body {
+      &__block {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.5rem;
+
+        > p {
+          width: 80%;
+          margin: 0;
+        }
+
+        .checkbox-wrapper {
+          margin: 0 0 .5rem;
+          > p:first-child {
+            font-size: 1rem;
+          }
+
+          .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            line-height: normal;
+          }
+        }
+
+        .checkbox-wrapper,
+        .checkbox-on {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .checkbox-on {
+          mat-icon {
+            background-color: var(--#{$cb}success-dark);
+            border-radius: 50%;
+            fill: var(--#{$cb}white);
+
+            svg {
+              padding: 0.25rem;
+            }
+          }
+        }
+
+        .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+          background: var(--#{$cb}primary);
+        }
+      }
+
+      hr {
+        height: 1px;
+        border: 0;
+        border-top: 1px solid var(--#{$cb}divider);
+        margin: 1rem 0;
+      }
+
+      h2 + hr {
+        margin: 0;
+      }
+
+      .mat-mdc-slide-toggle {
+        position: relative;
+        --w-slider: 48px;
+        --h-slider: 24px;
+
+        &:not(.mat-checked) {
+
+          .mat-slide-toggle-bar {
+            background-color: #4f4f50;
+          }
+        }
+      }
+
+      .mat-mdc-slide-toggle.mat-primary.mat-checked {
+        .mat-slide-toggle-thumb,
+        .mat-ripple-element {
+          background-color: var(--#{$cb}white);
+        }
+        .mat-slide-toggle-bar {
+          background-color: var(--#{$cb}success-dark);
+        }
+        .mat-slide-toggle-thumb-container {
+          transform: translate3d(1.5rem, 0, 0);
+        }
+      }
+      .mat-slide-toggle-bar {
+        height: 1.5rem;
+        width: 3rem;
+        border-radius: 100px;
+
+        .mat-slide-toggle-thumb-container {
+          top: 2px;
+          left: 2px;
+        }
+      }
+
+      .mat-slide-toggle-content {
+        color: var(--#{$cb}primary);
+      }
+    }
+  }
+}

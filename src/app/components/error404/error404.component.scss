@@ -1,0 +1,64 @@
+@use "_v3/calc" as *;
+
+:host ::ng-deep {
+  .main-404-wrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+    @include media-breakpoint-up(lg) {
+      p {
+        @include font-size(1.125rem);
+      }
+    }
+  }
+
+  .row-404 {
+    display: flex;
+    margin: 0;
+
+    @include media-breakpoint-down(lg) {
+      flex-direction: column;
+    }
+
+    & > * {
+      position: relative;
+
+      @include media-breakpoint-up(xl) {
+        padding: 0 3rem;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding: 0 2rem;
+        min-height: 1.8rem;
+        &:not(:last-child)::after {
+          content: "";
+          display: block;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          height: 90%;
+          width: 1px;
+          background: var(--#{$cb}gray-300);
+        }
+      }
+
+      @include media-breakpoint-down(lg) {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        &:not(:last-child)::after {
+          display: none;
+        }
+        &:not(:first-child)::after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 1px;
+          width: 8rem;
+          background: var(--#{$cb}gray-300);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,212 @@
+@use '_v3/calc' as calc;
+
+$h: calc.$mdf !default;
+$selector: calc.$mdf-selector !default;
+
+$init-text-field: (
+  // typography
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base, 1rem),
+        )),
+        font-serif-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-150),
+                lg: var(--#{calc.$cb}font-size-175),
+        )),
+        font-family: inherit,
+        line-height: (media-query-up: (
+                xs: 1.5,
+        )),
+        label-weight: var(--#{calc.$cb}font-weight-normal),
+        font-weight: var(--#{calc.$cb}font-weight-normal),
+        font-weight-active: var(--#{calc.$cb}font-weight-noemal),
+  //
+        min-height: (media-query-up: (
+                xs: 3.625rem,
+          //lg: 3.25rem,
+        )),
+        offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                lg: var(--#{calc.$cb}space-250)
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-100),
+        )),
+        gap: (media-query-up: (
+                xs: var(--#{calc.$cb}space-150),
+                xl: var(--#{calc.$cb}space-200),
+        )),
+        radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-3),
+        )),
+        icon-size: (media-query-up: (
+                xs: 1.5rem,
+        )),
+  //
+  // sizes
+  // lg
+        lg-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base, 1rem),
+                lg: 1.75rem,
+        )),
+        lg-min-height: (media-query-up: (
+                xs: 3.625rem,
+                lg: 4.5rem,
+        )),
+        lg-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-3),
+                lg: var(--#{calc.$cb}radius-4),
+        )),
+        lg-icon-size: (media-query-up: (
+                xs: 1.5rem,
+                sm: 1.75rem,
+        )),
+  //sm
+        sm-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-sm),
+        )),
+        sm-min-height: (media-query-up: (
+                xs: 2.5rem,
+        )),
+        sm-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-2),
+                lg: var(--#{calc.$cb}radius-3),
+        )),
+        sm-icon-size: (media-query-up: (
+                xs: 1.15rem,
+
+        )),
+  //
+        border-width: 2px,
+  //arrow
+        arrow-size: 1.5rem,
+        arrow-border-radius: 0,
+        arrow-sym-size: 0.75rem,
+        arrow-line-width: 1.75px,
+  //btn
+        btn-icon-size: 1.5rem,
+        btn-icon-clear-thumb-size: 42%,
+        btn-icon-radius: calc(var(--#{$h}radius) * 1.05),
+        hint-height: 1.5rem,
+        hint-margin: 2rem,
+        hint-flexible-margin: 1rem,
+  //colors
+        fg: var(--#{calc.$cb}text-strong),
+        active-fg: var(--#{calc.$cb}text-strong),
+        bg: var(--#{calc.$color}neutral-base-000),
+        active-bg: var(--#{$h}bg),
+        filled-bg: var(--#{calc.$color}neutral-base-005),
+        active-filled-bg: var(--#{calc.$color}neutral-base-010),
+        label-fg: var(--#{calc.$color}neutral-base-060),
+        label-active-fg: var(--#{calc.$color}neutral-base-070),
+        disabled-label-fg: var(--#{calc.$color}neutral-base-030),
+  //
+        border-clr: var(--#{calc.$color}neutral-base-030),
+        border-clr-focus: var(--#{calc.$color}neutral-base-050),
+        border-clr-active: var(--#{calc.$color}neutral-base-050),
+        prefix-icon-color: rgba(var(--#{calc.$cb}form-primary-clr-rgb), 0.98),
+        btn-icon-location-bg-color:rgba(var(--#{calc.$cb}form-accent-clr-rgb), .15),
+        btn-icon-location-color:var(--#{calc.$cb}form-primary-clr),
+  //arrow
+        arrow-bg: transparent,
+        arrow-line-clr: currentColor,
+        arrow-bg-active: transparent,
+        arrow-line-clr-active: currentColor,
+  //
+        disable-opacity: .51,
+        color-danger: var(--#{calc.$cb}danger),
+  //
+        row-field:(
+                width: 10rem,
+                min-width: 5rem,
+                text-width: 8rem,
+        ),
+        row-field-max-width:(media-query-up: (
+                xs: 12rem,
+                xl: 8rem,
+                gl: 18rem
+        )),
+) !default;
+:root {
+  @include calc.css-initVars($init-text-field, $h);
+
+  .theme--dark {
+    #{$selector} {
+      --#{$h}label-fg: var(--#{calc.$cb}white);
+      --#{$h}fg: var(--#{calc.$cb}white);
+      --#{$h}active-fg: var(--#{calc.$cb}white);
+      --#{$h}border-clr: var(--#{calc.$cb}white);
+      --#{$h}border-clr-focus: var(--#{calc.$cb}white);
+      --#{$h}border-clr-active: var(--#{calc.$cb}white);
+      --#{$h}bg: transparent;
+      --#{$h}active-bg: transparent;
+    }
+  }
+
+}
+
+
+// ------------------------------
+// DEFAULT PRESET MAPS
+// ------------------------------
+$my-form-field-colors: (
+  // Defaults
+        outlined-outline-color: rgba(0, 0, 0, .38),
+        outlined-hover-outline-color: rgba(0, 0, 0, .54),
+        outlined-focus-outline-color: var(--#{calc.$cb}primary),
+        outlined-disabled-outline-color: rgba(0, 0, 0, .12),
+        filled-active-indicator-color: currentColor,
+        filled-hover-active-indicator-color: currentColor,
+        filled-focus-active-indicator-color: currentColor,
+        outlined-caret-color: var(--#{$h}fg),
+        filled-caret-color: var(--#{$h}fg),
+        outlined-label-text-color: rgba(0, 0, 0, .6),
+        outlined-focus-label-text-color: var(--#{calc.$cb}primary),
+        filled-label-text-color: var(--#{calc.$cb}label-fg),
+        filled-focus-label-text-color: var(--#{calc.$cb}active-label-fg),
+        input-text-color: var(--#{$h}fg),
+        filled-container-color: var(--#{$h}bg),
+        filled-disabled-container-color: rgba(0, 0, 0, 0.02),
+  // Error
+        outlined-error-outline-color: #b00020,
+        outlined-error-focus-outline-color: #b00020,
+        subscript-error-text-color: #b00020,
+  // Subscript
+        subscript-text-color: var(--#{calc.$cb}label-fg),
+);
+
+$my-form-field-structure: (
+        container-height: var(--#{$h}min-height),
+        container-vertical-padding: var(--#{$h}offset-y),
+        outlined-outline-width: 1px,
+        outlined-focus-outline-width: 2px,
+        outlined-container-shape: var(--#{$h}radius),
+        filled-container-shape: var(--#{$h}radius)
+);
+
+$my-form-field-typography: (
+        container-text-font: var(--#{$h}font-family),
+        container-text-size: var(--#{$h}font-size),
+        container-text-weight: var(--#{$h}font-weight),
+        container-text-tracking: 0.015em,
+        label-text-size: 14px,
+        label-text-weight: 500,
+        subscript-text-size: 11px,
+        subscript-text-weight: 400,
+        subscript-text-font: var(--#{$h}font-family),
+        select-trigger-text-size: var(--#{$h}font-size),
+);
+$my-select-colors: (
+        placeholder-text-color: var(--#{calc.$cb}label-fg)
+);
+
+$my-select-typography: (
+        trigger-font: var(--#{$h}font-family),
+        trigger-size: var(--#{$h}font-size),
+        trigger-weight: var(--#{$h}font-weight),
+        option-font: var(--#{$h}font-family),
+        option-size: inherit,
+        option-weight: inherit
+);
+
+
+

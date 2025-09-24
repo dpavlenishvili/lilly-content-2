@@ -1,0 +1,393 @@
+@use "_v3/calc" as calc;
+@use "./prop-status" as status;
+
+$h: #{calc.$browse-trials} !default;
+$fc: cb-filter-gridR !default;
+$f-selector: calc.$filters-class !default;
+$db: lg !default;
+
+$mn-section-vertical-offset: (media-query-up: (
+        xs: 1.5rem,
+        md: 1.5rem,
+        lg: 3rem,
+)) !default;
+$filter-lb-row-gutter: 1rem !default;
+$offset-x: 1rem !default;
+
+$init: (
+        card-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                sm: var(--#{calc.$cb}space-400),
+                lg: var(--#{calc.$cb}space-500),
+        )),
+        offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                #{$db}: var(--#{calc.$cb}space-300),
+        )),
+        lg-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                #{$db}: var(--#{calc.$cb}space-600),
+        )),
+        main-grid-cols: (media-query-up: (
+                xs: 1fr,
+                #{$db}: repeat(2, minmax(290px, 1fr)),
+        )),
+        second-grid-cols: (media-query-up: (
+                xs: repeat(2, minmax(150px, 1fr)),
+        )),
+        trinity-grid-cols: (media-query-up: (
+                xs: repeat(1, 1fr),
+                md: repeat(2, 1fr),
+                #{$db}: repeat(6, 1fr)
+        )),
+        trinity-grid-col-span-1: (media-query-up: (
+                xs: auto,
+                #{$db}: span 3
+        )),
+        trinity-grid-col-span-2: (media-query-up: (
+                xs: auto,
+                #{$db}: span 2
+        )),
+  //
+        count-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                #{$db}: var(--#{calc.$cb}font-size-125)
+        )),
+        count-gap: (media-query-up: (
+                xs: var(--#{calc.$cb}space-50),
+                #{$db}: var(--#{calc.$cb}space-100)
+        )),
+  //
+        card-mobile: (media-query-up: (
+                xs: block,
+                sm: none,
+        )),
+        card-desktop: (
+                media-query-up: (
+                        xs: none,
+                        sm: block,
+                )
+        ),
+        card-results-header-bg-color: rgba(var(--#{calc.$cb}gray-200-rgb), .61),
+        card-results-border-color: var(--#{calc.$cb}gray-200),
+        card-results-margin-bottom: var(--#{calc.$cb}space-200),
+        card-border-radius: .25rem,
+        odd-trial-list-offset-y: (
+                media-query-up: (
+                        xs: var(--#{calc.$cb}space-300),
+                        md: var(--#{calc.$cb}space-200),
+                )
+        ),
+        rdc-0-offset-y: (
+                media-query-up: (
+                        xs: var(--#{calc.$cb}space-200),
+                        md: var(--#{calc.$cb}space-300),
+                )
+        ),
+        clear-btn-offset-x: (
+                media-query-up: (
+                        xs: 0,
+                        sm: var(--#{calc.$cb}space-200),
+                        lg: var(--#{calc.$cb}space-300),
+                )
+        ),
+        clear-btn-offset-y: (
+                media-query-up: (
+                        xs: var(--#{calc.$cb}space-300),
+                        sm: 0,
+                )
+        ),
+        filters-panel-direction: (
+                media-query-up: (
+                        xs: column,
+                        sm: row,
+                )
+        ), results-only-width: (
+                media-query-up: (
+                        xs: 100%,
+                        xl: 58rem,
+                )
+        ),
+        title-font-size: (
+                media-query-up: (
+                        xs: calc(var(--#{calc.$cb}font-size-base) * 2.25),
+                        md: calc(var(--#{calc.$cb}font-size-base) * 3.75),
+                )
+        ),
+  // hero
+        hero-content-template-areas: (media-query-up: (
+                xs: ' "#{calc.templateRow((4, "b"))}" ',
+                md: ' "#{calc.templateRow((8, "b"))}" ',
+                lg: ' "#{calc.templateRow((10, "b"))}" ',
+                xl: ' "#{calc.templateRow((7, "b" ))}" ',
+        )),
+) !default;
+
+
+:root {
+  @include calc.css-initVars($init, $h);
+
+  .result-common {
+    .#{calc.$cst--hero-class} {
+      --#{calc.$cst--hero-prefix}content-template-areas: var(--#{$h}hero-content-template-areas);
+    }
+
+    .block {
+      &__title .title {
+        font-size: var(--#{$h}title-font-size);
+      }
+
+      &__thumb {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--#{calc.$cb}color-palette-sage-040);
+
+        .thumb__text {
+          font-size: var(--#{calc.$cb}font-size-150);
+          font-weight: var(--#{calc.$cb}font-weight-bolder);
+        }
+      }
+
+      &__text {
+        font-size: var(--#{calc.$cb}font-size-lg);
+      }
+    }
+  }
+
+  .cst.cst--listing {
+    .cst__header {
+      margin-bottom: 0;
+    }
+
+
+    &.is-completed-list {
+      .browse-filters__main {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // filters
+  .#{$f-selector} {
+    --md-field-hint-margin: 0;
+
+    &__main, &__second, &__trinity {
+    }
+
+    .#{$fc} {
+      display: grid;
+      row-gap: var(--#{$h}offset-y);
+      column-gap: var(--#{$h}offset-x);
+
+      & > dynamic-filters {
+        width: 100% !important;
+        padding: 0 !important;
+      }
+    }
+
+
+    &__main {
+      .#{$fc} {
+        grid-template-columns: var(--#{$h}main-grid-cols);
+      }
+
+      margin-bottom: var(--#{$h}offset-y);
+    }
+
+    &__second {
+      .#{$fc} {
+        grid-template-columns: var(--#{$h}second-grid-cols);
+      }
+
+      margin-bottom: var(--#{$h}offset-y);
+    }
+
+    &__trinity {
+      .#{$fc} {
+        grid-template-columns: var(--#{$h}trinity-grid-cols);
+
+        & > * {
+          grid-column: var(--#{$h}trinity-grid-col-span-1);
+
+          &:nth-child(5), &:nth-child(6), &:nth-child(7) {
+            grid-column: var(--#{$h}trinity-grid-col-span-2);
+          }
+        }
+      }
+    }
+
+
+  }
+
+  .cb-filter-counts {
+    @include calc.make-row(0);
+    align-items: baseline;
+    margin: var(--#{$h}lg-offset-y) 0;
+    font-size: var(--#{$h}count-font-size);
+
+    > * {
+      display: inline-flex;
+      align-items: baseline;
+      @include calc.make-col-auto();
+
+      > * {
+        display: inline-flex;
+      }
+
+      & + *:before {
+        content: "/";
+        display: inline-flex;
+        padding: 0 var(--#{$h}count-gap);
+        font-size: .8em;
+      }
+    }
+
+    &__info {
+      font-size: var(--#{calc.$cb}font-size-lg);
+      font-weight: var(--#{calc.$cb}font-weight-middle);
+    }
+  }
+
+
+  .trials-results-wrap {
+    .md-card-result {
+      padding-bottom: var(--#{$h}card-offset-y);
+      border-bottom: 1px solid var(--#{calc.$cb}divider);
+
+    }
+
+    & > * {
+      display: block;
+
+      &:not(:nth-child(1)):not(:nth-child(2)):not(.cb-filter-counts):not(&#alertme-banner), &:not(&#alertme-banner) {
+        margin-top: var(--#{$h}card-offset-y);
+
+
+      }
+
+      &#alertme-banner {
+      }
+
+      .md-card-promo, .md-card-promo-strip, .add__more_trials {
+        margin: var(--#{$h}lg-offset-y) 0;
+      }
+
+    }
+  }
+
+  .md-card-no-results {
+    margin: var(--#{$h}lg-offset-y) 0;
+
+
+  }
+
+  .#{calc.$card-class}.md-card-no-results {
+    @include calc.md-card-promo($h: 'no-result-', $bg: var(--#{calc.$color}neutral-base-010));
+  }
+
+  //listing layout
+
+  //expansion panel
+  .md-expansion-filters.mat-expansion-panel {
+    border-bottom: 1px solid var(--#{calc.$cb}divider);
+
+    .mat-expansion-panel-header, .mat-expansion-panel-body, .mat-expansion-panel-body .cb-wrap-cnt {
+      border-radius: 0 !important;
+      padding-left: var(--#{$h}offset-x);
+      padding-right: calc(var(--#{$h}offset-x) * .25);
+
+    }
+
+    .mat-expansion-panel-header {
+      border-top: 1px solid var(--#{calc.$cb}divider);
+      padding: var(--#{$h}offset-y) 0;
+      user-select: none;
+
+      .mat-expansion-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include calc.square(1.5rem);
+        background-color: var(--#{calc.$cb}body-bg-clr);
+        border: 1px solid var(--#{calc.$cb}body-clr);
+        color: var(--#{calc.$cb}body-clr);
+        border-radius: 50%;
+        text-align: center;
+
+        &:after {
+          border-color: currentColor;
+          margin-bottom: 2px;
+        }
+      }
+
+      &, &:hover:not([aria-disabled=true]), &:focus {
+        background: transparent;
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 0 var(--#{$h}offset-y) 0;
+    }
+
+    // Clear button positioning
+    .mat-expansion-panel-header {
+
+      .mat-content {
+        flex-direction: var(--#{$h}filters-panel-direction);
+
+        .md-btn-clear {
+          margin: 0 var(--#{$h}clear-btn-offset-x) var(--#{$h}clear-btn-offset-y);
+        }
+
+        .mat-expansion-panel-header-title {
+          font-weight: normal;
+          font-size: var(--#{calc.$cb}font-size-sm);
+          text-transform: uppercase;
+          color: var(--#{calc.$color}neutral-base-050);
+          min-height: var(--mat-expansion-header-collapsed-state-height);
+        }
+      }
+
+      @include calc.media-breakpoint-down(xs) {
+        --mat-expansion-header-expanded-state-height: auto;
+
+        &.mat-expanded {
+
+
+          .mat-expansion-indicator {
+            align-self: flex-start;
+            position: relative;
+            top: calc(var(--mat-expansion-header-collapsed-state-height) / 2 - 1rem);
+          }
+
+          .md-btn-clear {
+            font-size: var(--#{calc.$cb}font-size-sm);
+          }
+        }
+      }
+    }
+  }
+
+  //card
+  //.mat-mdc-card {
+  //  &.md-card-promo-strip {
+  //    @include calc.md-card-promo-strip();
+  //  }
+  //}
+
+  //.md-card-content {
+  //  .desktop {
+  //    display: var(--#{$h}card-desktop);
+  //  }
+  //
+  //  .mobile {
+  //    display: var(--#{$h}card-mobile);
+  //  }
+  //}
+
+
+}

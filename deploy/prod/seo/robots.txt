@@ -1,0 +1,10 @@
+# All robots allowed
+User-agent: *
+
+Disallow: */404
+Disallow: /*404
+Disallow: */message
+Disallow: /*message
+
+# Sitemap files
+Sitemap: https://trials.lilly.com/sitemap.xml

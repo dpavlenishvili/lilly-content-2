@@ -1,0 +1,126 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$md !default;
+$init: (
+        expansion-title-font-size: (media-query-up: (
+                xs: 1.25rem,
+                lg: 1.5rem,
+        )),
+        expansion-body-font-size: (media-query-up: (
+                xs: 1em
+        )),
+        expansion-panel-padding: (media-query-up: (
+                xs: 1.5rem 0,
+                lg: 2rem 0,
+        )),
+
+) !default;
+
+
+:root {
+  @include calc.css-initVars($init, $h);
+}
+
+
+.accordion {
+  &.mat-expansion-panel {
+    background: inherit;
+    border-bottom: 1px solid var(--#{calc.$cb}divider);
+    border-radius: 0;
+    box-shadow: none !important;
+
+    &:first-of-type {
+      border-top: 1px solid var(--#{calc.$cb}divider);
+    }
+
+    .mat-expansion-panel-header,
+    .mat-expansion-panel-body {
+      height: auto !important;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .mat-expansion-panel-header {
+      min-height: 3.5rem;
+
+      &:hover {
+        background: transparent !important;
+      }
+
+      .mat-expansion-panel-header-title {
+        font-size: var(--#{$h}expansion-title-font-size);
+        font-weight: var(--#{calc.$cb}font-weight-light);
+        line-height: 2.2rem;
+        padding: var(--#{$h}expansion-panel-padding);
+
+        @include calc.media-breakpoint-down(sm) {
+          line-height: 1.5;
+        }
+
+        > div > p {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .mat-expansion-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include calc.square(1.75rem);
+        background-color: var(--#{calc.$cb}body-bg-clr);
+        border: 1px solid var(--#{calc.$cb}body-clr);
+        color: var(--#{calc.$cb}body-clr);
+        border-radius: 50%;
+        text-align: center;
+
+        &:after {
+          border-color: currentColor;
+
+        }
+      }
+    }
+    &, &:hover:not([aria-disabled=true]), &:focus {
+      background-color: transparent;
+    }
+    .mat-expansion-panel-content {
+      padding: 0 !important;
+    }
+
+    .mat-expansion-panel-body {
+      padding-top: 1rem;
+
+
+      font-size: var(--#{$h}expansion-body-font-size);
+      line-height: var(--#{calc.$cb}line-height-base);
+      ul {
+        @include calc.cb-list($bullet-color: currentColor);
+      }
+
+      ol {
+        @include calc.cb-list-num($bullet-color: currentColor);
+      }
+    }
+  }
+
+  &.mat-expanded {
+    .mat-expansion-panel-header {
+      border-bottom: 1px solid var(--#{calc.$cb}divider);
+
+      .mat-expansion-panel-header-title {
+        //color: var(--page-color);
+        //font-weight: var(--cb-font-weight-bold);
+      }
+    }
+
+    .mat-expansion-panel-body {
+
+    }
+  }
+}
+
+.mat-expansion-panel {
+  border-radius: 0 !important;
+}
+
+

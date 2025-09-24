@@ -1,0 +1,45 @@
+{
+  "/app": {
+    "target": "http://192.168.100.186:10113/",
+    "secure": false,
+    "proxyTimeout": 60000
+  },
+  "/customers": {
+    "target": "http://192.168.100.186:10113/",
+    "secure": false,
+    "proxyTimeout": 60000
+  },
+  "/login/*": {
+    "target": "http://192.168.100.186:10112",
+    "pathRewrite": {
+      "^/login/(.*)": "/$1"
+    },
+    "secure": false,
+    "logLevel": "debug",
+    "proxyTimeout": 60000
+  },
+  "/web": {
+    "target": "http://192.168.100.186:10199/",
+    "secure": false,
+    "proxyTimeout": 60000
+  },
+  "/anonymous": {
+    "target": "http://192.168.100.186:10199/",
+    "secure": false,
+    "proxyTimeout": 60000
+  },
+  "/translate": {
+    "target": "http://192.168.100.186:10199/",
+    "secure": false,
+    "pathRewrite": {
+      "^/translate": "/admin/v1"
+    }
+  },
+  "/configuration": {
+    "target": "http://app-studiescenter.service.consul:10199/",
+    "secure": false,
+    "pathRewrite": {
+      "^/configuration": "/configuration/v1"
+    }
+  }
+}

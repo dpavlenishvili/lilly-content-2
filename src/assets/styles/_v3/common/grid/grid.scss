@@ -1,0 +1,40 @@
+@use '_v3/calc' as calc;
+@use "../../abstract" as abstract;
+
+@if calc.$enable-grid-classes {
+  // container
+
+  // Single container class with breakpoint max-widths
+  .container,
+    // 100% wide container at all breakpoints
+  .container-fluid {
+    @include calc.make-container();
+  }
+  .container {
+    max-width: var(--#{calc.$cb}container-max-width-query);
+  }
+  .cb-max-view {
+    max-width: 100%;
+    width: var(--#{calc.$cb}wrap-max-width, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  // Rows contain your columns.
+  .row {
+    //@debug "row-enabled: " $enable-grid-classes;
+    @extend %row-ext;
+  }
+  .col-auto {
+    @extend %col-auto ;
+  }
+  .col {
+    @extend %col ;
+  }
+  .g-0, .no-gutters {
+    @extend %no-gutter ;
+  }
+
+  @include calc.make-grid-columns($gutters: abstract.$space);
+}

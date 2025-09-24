@@ -1,0 +1,31 @@
+@use "_v3/calc" as calc;
+@use "../../abstract" as vars;
+
+
+svg-icon,   .mat-icon {
+  color: inherit;
+  vertical-align: middle;
+  fill: currentColor;
+  stroke: none;
+
+  &, &[_nghost-rdg-c0] {
+    display: inline-flex;
+  }
+
+  svg {
+    @include calc.square(100%);
+  }
+}
+
+svg {
+  vertical-align: top;
+}
+
+svg-icon, mat-icon.mat-icon {
+  display: inline-flex;
+  --icon-size: var(--#{calc.$cb}icon-md);
+  @include calc.square(var(--icon-size));
+ --mdc-icon-button-icon-size: var(--icon-size);
+
+
+}

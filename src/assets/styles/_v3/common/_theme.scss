@@ -1,0 +1,63 @@
+@use '_v3/calc' as calc;
+@use "./init-vars" as init;
+@use '@angular/material' as mat;
+
+
+$custom-typography: mat.define-typography-config(
+        $font-family:   var(--#{calc.$cb}body-font-family),
+        $headline-6:     mat.define-typography-level(var(--#{calc.$cb}display-4), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal), $letter-spacing: -0.05em),
+        $headline-5:     mat.define-typography-level(var(--#{calc.$cb}display-3), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal), $letter-spacing: -0.02em),
+        $headline-4:     mat.define-typography-level(var(--#{calc.$cb}display-2), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal), $letter-spacing: -0.005em),
+        $headline-3:     mat.define-typography-level(var(--#{calc.$cb}display-1), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal)),
+        $headline-2:      mat.define-typography-level(var(--#{calc.$cb}h1), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal)),
+        $headline-1:         mat.define-typography-level(var(--#{calc.$cb}h2), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal)),
+        $subtitle-2:  mat.define-typography-level(var(--#{calc.$cb}font-size-base), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal)),
+        $subtitle-1:  mat.define-typography-level(var(--#{calc.$cb}h4), var(--#{calc.$cb}head-line-height), var(--#{calc.$cb}font-weight-normal)),
+        $body-2:        mat.define-typography-level(var(--#{calc.$cb}font-size-base), var(--#{calc.$cb}line-height-sm), var(--#{calc.$cb}font-weight-normal)),
+        $body-1:        mat.define-typography-level(var(--#{calc.$cb}font-size-base), var(--#{calc.$cb}line-height-sm), var(--#{calc.$cb}font-weight-normal)),
+        $caption:       mat.define-typography-level(var(--#{calc.$cb}small-font-size), var(--#{calc.$cb}line-height-sm),  var(--#{calc.$cb}font-weight-normal)),
+        $button:        mat.define-typography-level(var(--#{calc.$cb}btn-base-font-size), var(--#{calc.$cb}btn-base-line-height), var(--#{calc.$cb}btn-base-font-weight)),
+) !default;
+
+// Create the theme object (a Sass map containing all of the palettes).
+$mat-app-theme: mat.define-light-theme((
+        color: (
+                primary: init.$mat-app-primary,
+                accent: init.$mat-app-accent,
+                warn: init.$mat-app-warn
+        ),
+        typography: $custom-typography,
+        density: 2
+));
+//@include mat.all-component-themes($mat-app-theme);
+
+@include mat.core();
+@include mat.core-theme($mat-app-theme);
+
+//@include mat.button-theme($mat-app-theme);
+@include mat.menu-theme ($mat-app-theme);
+@include mat.dialog-theme($mat-app-theme);
+@include mat.divider-theme($mat-app-theme);
+@include mat.list-theme($mat-app-theme);
+//@include mat.card-theme($mat-app-theme);
+@include mat.tooltip-theme($mat-app-theme);
+@include mat.select-theme($mat-app-theme);
+@include mat.checkbox-theme($mat-app-theme);
+@include mat.radio-theme($mat-app-theme);
+@include mat.input-theme($mat-app-theme);
+@include mat.form-field-theme($mat-app-theme);
+@include mat.slide-toggle-theme($mat-app-theme);
+//@include mat.form-field-standard-theme($mat-app-theme);
+@include mat.autocomplete-theme($mat-app-theme);
+//@include mat.option-theme($mat-app-theme);
+//@include mat.optgroup-theme($mat-app-theme);
+@include mat.grid-list-theme($mat-app-theme);
+@include mat.fab-theme($mat-app-theme);
+@include mat.chips-theme($mat-app-theme);
+@include mat.slider-theme($mat-app-theme);
+//@include mat.toolbar-theme($mat-app-theme);
+//@include mat.toolbar-theme($mat-app-theme);
+//@include mat.button-toggle-theme($mat-app-theme);
+//@include mat.badge-theme($mat-app-theme);
+//@include calc.angular-material-theme($mat-app-theme);
+

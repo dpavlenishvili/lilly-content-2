@@ -1,0 +1,311 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$btn !default;
+$selector: calc.$btn-selector !default;
+
+$init: (
+        display: inline-flex,
+        min-h: (media-query-up: (
+                xs: 2.75rem,
+                sm: 3rem,
+        )),
+        offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-250),
+                sm: var(--#{calc.$cb}space-300),
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-25),
+                sm: var(--#{calc.$cb}space-50),
+        )),
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+        )),
+        btn-link-font-size: (media-query-up: (
+                xs: 1em,
+        )),
+        radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-6),
+        )),
+        icon-size: (media-query-up: (
+                xs: 1.5rem,
+        )),
+        icon-radius: 50%,
+        border-width: 1px,
+  // lg
+        lg-min-h: (media-query-up: (
+                xs: 3.25rem,
+                sm: 3.75rem,
+        )),
+        lg-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                sm: 1.5rem,
+        )),
+        lg-icon-size: (media-query-up: (
+                xs: 1.5rem,
+                sm: 1.75rem,
+        )),
+        icon-button-size: (media-query-up: (
+                xs: 3rem,
+        )),
+        icon-button-thumb-size: (media-query-up: (
+                xs: 1.5rem,
+        )),
+        sm-icon-button-size: (media-query-up: (
+                xs: 2rem,
+        )),
+        sm-icon-button-thumb-size: (media-query-up: (
+                xs: 1.25rem,
+        )),
+        xs-icon-button-size: (media-query-up: (
+                xs: 1rem,
+        )),
+        xs-icon-button-thumb-size: (media-query-up: (
+                xs: .85rem,
+        )),
+  // default
+        fg: var(--#{calc.$cb}fg-strong),
+        bg: transparent,
+        border: var(--#{calc.$cb}fg-strong),
+  // primary fill
+        #{calc.$btn-fill-primary}fg: var(--#{calc.$color}neutral-base-000),
+        #{calc.$btn-fill-primary}bg: var(--#{calc.$color}brand-base-060),
+        #{calc.$btn-fill-primary}hover-bg: var(--#{calc.$color}brand-base-070),
+        #{calc.$btn-outline}fg: var(--#{calc.$color}brand-base-060),
+        #{calc.$btn-outline}hover-fg: var(--#{calc.$color}brand-base-070),
+        #{calc.$btn-outline}border: var(--#{calc.$color}brand-base-060),
+        #{calc.$btn-outline}border-hover: var(--#{calc.$color}brand-base-070),
+        btn-max-width: (media-query-up: (
+                xs: 100%,
+                sm: 12.89∂rem,
+        )),
+) !default;
+
+
+:root {
+  @include calc.css-initVars($init, $h);
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+
+#{$selector} {
+  @include calc.btn-mixins-check-material-button-variables();
+  display: var(--#{$h}display);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  white-space: normal;
+  position: relative;
+  max-width: 100%;
+  font-family: inherit;
+  transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease, transform .02s ease;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: var(--#{$h}radius);
+  text-decoration: none;
+
+
+
+  .mdc-button__label {
+    display: flex;
+    row-gap: .25rem;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+
+    & > *:not(:first-child) {
+      margin-left: var(--#{calc.$cb}space-100);
+    }
+
+    .btn-value {
+      width: 100%;
+    }
+  }
+
+  &.mat-mdc-button-base {
+
+    font-size: var(--#{$h}font-size);
+    padding: var(--#{$h}offset-y) var(--#{$h}offset-x);
+    min-height: var(--#{$h}min-h);
+
+    & .mat-icon, & > .mat-icon {
+      display: inline-flex;
+      @include calc.square(var(--#{$h}icon-size));
+    }
+
+    &.is-lg {
+      --#{$h}font-size: var(--#{$h}lg-font-size);
+      --#{$h}min-h: var(--#{$h}lg-min-h);
+      --#{$h}icon-size: var(--#{$h}lg-icon-size);
+    }
+
+    //
+
+    //--mdc-outlined-button-container-shape: var(--#{$h}radius);
+
+    &.mat-mdc-raised-button, &.mat-mdc-unelevated-button {
+      &.mat-primary {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{$h}#{calc.$btn-fill-primary}fg),
+                bg: var(--#{$h}#{calc.$btn-fill-primary}bg),
+                hover: (
+                        bg: var(--#{$h}#{calc.$btn-fill-primary}hover-bg),
+                )
+        ));
+      }
+    }
+
+
+    &.mat-mdc-outlined-button {
+      border-width: var(--#{$h}border-width);
+      @include calc.btn-mixins-button-override($overrides: (
+              border: var(--#{$h}border)
+      ));
+
+      &.mat-primary {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{$h}#{calc.$btn-outline}fg),
+                border: var(--#{$h}#{calc.$btn-outline}border),
+                hover: (
+                        fg: var(--#{$h}#{calc.$btn-outline}hover-fg),
+                        border: var(--#{$h}#{calc.$btn-outline}border-hover),
+                )
+        ));
+      }
+
+
+    }
+
+    &.mdc-icon-button, &.mdc-fab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      --#{$h}radius: var(--#{$h}icon-radius);
+      --#{$h}offset-x: 0;
+      --#{$h}offset-y: 0;
+      --#{$h}min-h: auto;
+      padding: 0;
+      @include calc.square(var(--#{$h}icon-button-size));
+
+      .mat-icon {
+        @include calc.square(var(--#{$h}icon-button-thumb-size));
+      }
+
+      --mdc-icon-button-state-layer-size: var(--#{$h}icon-button-size);
+
+      &.is-sm {
+        @include calc.btn-mixins-icon-size($size: 'sm');
+      }
+
+      &.is-xs {
+        @include calc.btn-mixins-icon-size($size: 'xs');
+      }
+
+
+      &.mat-primary {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{$h}#{calc.$btn-fill-primary}fg),
+                bg: var(--#{$h}#{calc.$btn-fill-primary}bg),
+                hover: (
+                        bg: var(--#{$h}#{calc.$btn-fill-primary}hover-bg),
+                )
+        ));
+      }
+    }
+
+    &.btn--link {
+      --#{$h}offset-x: 0;
+      --#{$h}radius: 0;
+      --#{$h}font-size: var(--#{$h}btn-link-font-size);
+      text-align: start;
+      justify-content: initial;
+
+      &:not([disabled]):not(:disabled) {
+        text-decoration: var(--#{calc.$cb}link-decoration);
+        text-underline-offset: 24%;
+        text-decoration-thickness: 4%;
+
+        &:hover, &:focus, &:focus-visible {
+          text-decoration: var(--#{calc.$cb}link-hover-decoration);
+        }
+      }
+      .mdc-button__label {
+        width: 100%;
+      }
+
+    }
+
+
+  }
+}
+
+@include calc.btn-mixins-button-default($selector: #{$selector}, $vars: (
+        fg: var(--#{$h}fg),
+        bg: var(--#{$h}bg),
+        border: transparent,
+        shadow: none,
+        hover: (
+                fg: inherit,
+                bg: inherit,
+                border: inherit,
+                shadow: inherit,
+        ),
+));
+
+
+.theme--dark {
+  #{$selector} {
+    &.mat-mdc-button-base {
+      &.mat-mdc-outlined-button {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{calc.$cb}white),
+                bg: transparent,
+                border: var(--#{calc.$cb}white),
+                hover: (
+                        fg: inherit,
+                        bg: inherit,
+                        border: inherit,
+                        shadow: inherit,
+                ),
+        ));
+      }
+
+
+      &.mdc-icon-button:not(.mat-primary) {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{calc.$cb}white),
+                bg: transparent,
+        ));
+      }
+
+      &.mdc-icon-button.btn--inform:not(.mat-primary) {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{calc.$cb}primary),
+                bg: transparent,
+        ));
+      }
+    }
+  }
+}
+
+.btn__grid {
+  display: grid;
+  row-gap: .001rem;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  align-items: center;
+
+  & > *:not(:first-child) {
+    margin-left: var(--#{calc.$cb}space-100);
+  }
+
+  .btn-value {
+    width: 100%;
+  }
+}
+
+
+

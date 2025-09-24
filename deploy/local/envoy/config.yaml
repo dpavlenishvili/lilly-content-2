@@ -1,0 +1,28 @@
+admin: 
+  address: 
+    socket_address:
+      address: "127.0.0.1"
+      port_value: 9092
+static_resources:
+  listeners:
+    - name: local-lilly_careboxhealth_com_listener
+      address:
+        socket_address:
+          address: "0.0.0.0"
+          port_value: 80
+  virtual_hosts:
+    - name: local_lliy_ssr
+      domains: ["local-lilly.careboxhealth.com"]
+      routes:
+      - name: route_to_lilly_ssr_cluster
+        match:
+          prefix: "/"
+        route:
+          cluster: lilly_ssr_cluster
+  clusters:
+    - name: lilly_ssr_cluster
+      connect_config:
+        destination_address: "web-partnersite-lilly.dev.marathon.mesos"
+        port_value: 4200
+  
+ 

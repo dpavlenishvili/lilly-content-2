@@ -1,0 +1,102 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$status-open-color: #3A9C6B !default;
+$status-close-color: rgba(var(--#{calc.$cb}gray-900-rgb), .32) !default;
+$status-font-color: rgba(var(--#{calc.$cb}body-clr-rgb), .88) !default;
+
+$init: (
+        status-open-color: $status-open-color,
+        status-close-color: $status-close-color,
+        status-font-color: $status-font-color
+) !default;
+
+.cb-prop-status {
+  @include calc.css-initVars($init, $h);
+
+  display: inline-flex;
+  
+  &:not(.cb-filter-counts) {
+
+    color: var(--#{$h}status-font-color);
+    @include calc.font-size(calc(var(--#{calc.$cb}font-size-base) * .875));
+
+    .thumb-status {
+      @include calc.square(.938rem);
+      margin-right: .5rem;
+    }
+  }
+
+  &.cb-filter-counts {
+    .thumb-status {
+      @include calc.media-breakpoint-up(sm) {
+        @include calc.square(1rem);
+        margin-right: 1rem;
+      }
+      @include calc.media-breakpoint-down(sm) {
+        @include calc.square(.9rem);
+        margin-right: .5rem;
+      }
+    }
+
+    .row-value {
+      > * {
+        &.is-active {
+          font-weight: var(--#{calc.$cb}font-weight-bold);
+        }
+        &:not(.is-active), .cb-filter-counts__info {
+          color: var(--#{calc.$cb}gray-800);
+        }
+        display: inline-flex;
+        position: relative;
+        min-width: 0;
+  
+  
+        &:not(:last-child) {
+          padding-right: .75rem;
+          margin-right: .75rem;
+  
+          &:after {
+            content: '/';
+            display: block;
+            position: absolute;
+            right: -0.35rem;
+            text-align: center;
+            color: var(--#{calc.$cb}divider);
+          }
+        }
+  
+        @include calc.media-breakpoint-up(sm) {
+          &:not(:last-child) {
+            padding-right: 1rem;
+            margin-right: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .thumb-status {
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  &.is-enroll {
+    .thumb-status {
+      background: var(--#{$h}status-open-color);
+    }
+  }
+
+  &.is-not-yet-enroll {
+    .thumb-status {
+      border: 2px solid var(--#{$h}status-open-color);
+    }
+  }
+
+  &.is-completed {
+    .thumb-status {
+      border: 2px solid var(--#{$h}status-close-color);
+    }
+  }
+}

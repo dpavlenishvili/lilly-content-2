@@ -1,0 +1,255 @@
+@use "sass:map";
+@use "sass:string";
+@use "global-vars" as *;
+@use "mixins/breackpoints" as *;
+
+$media-string: 'media-query';
+$container-string: 'container-query';
+$up-string: 'up';
+$down-string: 'down';
+$up: '#{$media-string}-#{$up-string}';
+$down: '#{$media-string}-#{$down-string}';
+
+$container-up: '#{$container-string}-#{$up-string}';
+$container-down: '#{$container-string}-#{$down-string}';
+
+@mixin initVars($object, $prefix: '', $breakpoints: breakpoints-object(), $containers: (xs: 0px)) {
+  $map-init: ();
+  $map-init: map.merge($map-init, set-map-init($breakpoints));
+  @if ($containers) {
+    $map-init: map.merge($map-init, set-map-containers-init($containers));
+  }
+  //@debug '$map-init:' $map-init;
+
+  @each $key, $value in $object {
+    $type: type-of($value);
+    @if type-of($value) == map {
+      $map-init: set-map-structure($map-init, $key, $value);
+    } @else {
+      $map-init: map.merge($map-init, ($key : $value));
+    }
+  }
+  //@debug '$map-init' $map-init;
+  @each $k, $v in $map-init {
+    //@debug 'k: ' $k;
+    @if type-of($v) == map {
+
+      @if str-index($k, $media-string) or str-index($k, $container-string){
+
+        @if str-index($k, $container-string) {
+
+          @each $container, $container-value in $containers {
+            @if (str-index($k, $container)) {
+              @if (str-index($k, $up-string)) {
+                @container (min-width: #{$container-value}) {
+                  @each $k1, $v1 in $v {
+                    //@debug 'key: ' $k1 ':' $v1;
+                    @include setVar(#{$k1}, $v1, $prefix);
+                  }
+                }
+              }
+              @if (str-index($k, $down-string)) {
+                @container (max-width: #{$container-value}) {
+                  @each $k1, $v1 in $v {
+                    //@debug 'key: ' $k1 ':' $v1;
+                    @include setVar(#{$k1}, $v1, $prefix);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        //@debug 'key: ' $k 'value:' $v type-of($v);
+        @if str-index($k, $media-string) {
+          @each $breakpoint, $breakpoint-value in $breakpoints {
+            @if (str-index($k, $breakpoint)) {
+              @if (str-index($k, $up-string)) {
+                //@debug $up-string ':' $breakpoint;
+                @include media-breakpoint-up($breakpoint, $breakpoints) {
+                  @each $k1, $v1 in $v {
+                    @include setVar(#{$k1}, $v1, $prefix);
+                  }
+                }
+              }
+              @if (str-index($k, $down-string)) {
+                //@debug $down-string ':' $breakpoint;
+                @include media-breakpoint-down($breakpoint, $breakpoints) {
+                  @each $k1, $v1 in $v {
+                    @include setVar(#{$k1}, $v1, $prefix);
+                  }
+                }
+              }
+            }
+          }
+        }
+      } @else {
+        @each $k1, $v1 in $v {
+          @include setVar(#{$k}-#{$k1}, $v1, $prefix);
+        }
+      }
+
+    } @else if (type-of($v) == list) {
+      //@debug 'key: ' $k 'value:' $v type-of($v);
+      @if $v != () {
+        @include setVar($k, $v, $prefix);
+      }
+    } @else {
+      @include setVar($k, $v, $prefix);
+    }
+  }
+}
+
+@function set-map-containers-init($containers) {
+  $map: ();
+  //$breakpoints: breakpoints-object();
+  @each $key, $value in map-reverse($containers) {
+    $ob: ();
+    $ob: map.merge($ob, ("#{$container-up}-#{$key}": ()));
+    $ob: map.merge($ob, ("#{$container-down}-#{$key}": ()));
+    $map: map-merge($ob, $map);
+    //@debug '$map:' $map;
+  }
+  @return $map;
+}
+
+@function set-map-init($breakpoints) {
+  $map: ();
+  //$breakpoints: breakpoints-object();
+  @each $key, $value in map-reverse($breakpoints) {
+    $ob: ();
+    $ob: map.merge($ob, ("#{$up}-#{$key}": ()));
+    $ob: map.merge($ob, ("#{$down}-#{$key}": ()));
+    $map: map-merge($ob, $map);
+    //@debug '$map:' $map;
+  }
+  @return $map;
+}
+
+@function set-map-structure($map, $key, $value) {
+  @each $k, $v in $value {
+    $t: type-of($v);
+    @if $t == map {
+      @if $k ==  $container-up or $k ==  $container-down {
+        @each $breakpoint, $value in $v {
+          $map-key: null;
+          @if $k ==  $container-up {
+            $map-key: "#{$container-up}-#{$breakpoint}";
+          }
+          @if $k ==  $container-down {
+            $map-key: "#{$container-down}-#{$breakpoint}";
+          }
+          @if map.has-key($map, $map-key) {
+            $map: map-deep-set($map, $map-key $key, $value);
+          }
+        }
+      }
+      @if $k ==  $up or $k ==  $down {
+        @each $breakpoint, $value in $v {
+          $map-key: null;
+          @if $k ==  $up {
+            $map-key: "#{$up}-#{$breakpoint}";
+          }
+          @if $k ==  $down {
+            $map-key: "#{$down}-#{$breakpoint}";
+          }
+          @if map.has-key($map, $map-key) {
+            $map: map-deep-set($map, $map-key $key, $value);
+          }
+        }
+      }
+    } @else {
+      $map: map.merge($map, ($key: $value));
+    }
+  }
+  //@debug 'map' $map;
+  @return $map;
+}
+
+
+@mixin setVar($name, $value, $prefix: $cb) {
+  --#{$prefix}#{$name}: #{$value};
+  //@debug type-of($value);
+}
+
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function map-deep-set($map, $keys, $value) {
+  $maps: ($map,);
+  $result: null;
+
+  // If the last key is a map already
+  // Warn the user we will be overriding it with $value
+  @if type-of(nth($keys, -1)) == "map" {
+    @warn "The last key you specified is a map; it will be overrided with `#{$value}`.";
+  }
+
+  // If $keys is a single key
+  // Just merge and return
+  @if length($keys) == 1 {
+    //@debug 'deep: ' map-merge($map, ($keys: $value));
+    @return map-merge($map, ($keys: $value));
+  }
+
+  // Loop from the first to the second to last key from $keys
+  // Store the associated map to this key in the $maps list
+  // If the key doesn't exist, throw an error
+  @for $i from 1 through length($keys) - 1 {
+    $current-key: nth($keys, $i);
+    $current-map: nth($maps, -1);
+    $current-get: map-get($current-map, $current-key);
+    @if $current-get == null {
+      @error "Key `#{$key}` doesn't exist at current level in map.";
+    }
+    $maps: append($maps, $current-get);
+  }
+
+  // Loop from the last map to the first one
+  // Merge it with the previous one
+  @for $i from length($maps) through 1 {
+    $current-map: nth($maps, $i);
+    $current-key: nth($keys, $i);
+    $current-val: if($i == length($maps), $value, $result);
+    $result: map-merge($current-map, ($current-key: $current-val));
+  }
+
+  // Return result
+  //@debug 'deeep res' $result;
+  @return $result;
+}
+
+
+@function find-ends-with($string, $find) {
+  @return str-length($string) >= str-length($find) & & str-slice($string, (str-length($string) - str-length($find) + 1)) == $find;
+}
+
+@function map-reverse ($map) {
+  $result: null;
+
+  @if type-of($map) == "map" {
+    $keys: map-keys($map);
+    $map-reversed: ();
+
+    @for $i from length($keys) through 1 {
+      $map-reversed: map-merge(
+                      $map-reversed,
+                      (nth($keys, $i): map-get($map, nth($keys, $i)))
+      );
+    }
+
+    @if type-of($map-reversed) == "map" {
+      $result: $map-reversed;
+    } @else {
+      @warn 'There was an error reversing the order of "#{$map}"';
+    }
+  } @else {
+    @warn '"#{$map}" is not a valid map';
+  }
+
+  @return $result;
+}

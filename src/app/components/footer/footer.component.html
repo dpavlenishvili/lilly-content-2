@@ -1,0 +1,154 @@
+<footer class="footer-main theme--dark d-print-none">
+  <div class="container">
+    <div class="block is-grid block--structure is-grid" #languageSwitcher>
+      <div class="block__brand">
+        <ng-container [ngTemplateOutlet]="logo"></ng-container>
+      </div>
+      <div class="block__content">
+        <div class="block is-grid">
+          <div>
+            <ng-container
+              *ngTemplateOutlet="menu1; context: {rowClass: 'wrapper-links', colClass: '', overlayContainer: languageSwitcher}"></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<ng-template #logo>
+  <a class="brand disable-user-select"
+     (click)="goToLink(newRoutes.Home)"
+     routerLinkActive="home"
+     aria-label="Lilly logo (opens in new tab)"
+     i18n-aria-label="@@footer.lilly_logo_arialabel"
+     tabindex="0">
+    <mat-icon svgIcon="logo-footer"></mat-icon>
+  </a>
+</ng-template>
+
+<ng-template #menu1 let-rowClass="rowClass" let-colClass="colClass" let-overlayContainer="overlayContainer">
+  <div class="block block---links">
+    <h4 class="footer-title" i18n="@@footer.terms_and_conditions">Terms & Conditions</h4>
+    <div [ngClass]="rowClass">
+      <div [ngClass]="colClass">
+        <a class="md-btn-link"
+           [routerLink]="[clientLocalRoutes.FAQ]"
+           (click)="onFAQClick()"
+           itemprop="url"
+           routerLinkActive="is-active"
+           tabindex="0"
+        >
+          <div i18n="@@extended-footer.FAQ">FAQ</div>
+        </a>
+      </div>
+      <div [ngClass]="colClass">
+        <a class="md-btn-link"
+           (click)="goToLink(newRoutes.TermsOfUse)"
+           itemprop="url"
+           routerLinkActive="is-active"
+           aria-label="Terms of use (opens in new tab)"
+           i18n-aria-label="@@footer.terms_of_use_arialabel"
+           tabindex="0"
+        >
+          <div i18n="@@extended-footer.terms_and_conditions">Terms of Use</div>
+        </a>
+      </div>
+      <div [ngClass]="colClass">
+        <a class="md-btn-link"
+           (click)="goToLink(newRoutes.Privacy)"
+           itemprop="url"
+           routerLinkActive="is-active"
+           aria-label="Privacy statement (opens in new tab)"
+           i18n-aria-label="@@footer.privacy_policy_arialabel"
+           tabindex="0"
+        >
+          <div i18n="@@extended-footer.privacy_policy">Privacy Statement</div>
+        </a>
+      </div>
+      <div [ngClass]="colClass">
+        <a class="md-btn-link"
+           (click)="goToLink(newRoutes.ConsumerHealthPrivacyNotice)"
+           itemprop="url"
+           routerLinkActive="is-active"
+           aria-label="Consumer Health Privacy Notice (opens in new tab)"
+           i18n-aria-label="@@footer.consumer_health_privacy_arialabel"
+           tabindex="0"
+        >
+          <div i18n="@@extended-footer.consumer_health_privacy_notice">Consumer Health Privacy Notice</div>
+        </a>
+      </div>
+      <div [ngClass]="colClass">
+        <a class="md-btn-link"
+           [routerLink]="[clientLocalRoutes.Sitemap]"
+           itemprop="url"
+           routerLinkActive="is-active"
+           (click)="onSitemapClick()"
+           tabindex="0"
+        >
+          <div i18n="@@extended-footer.sitemap">Sitemap</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="block is-grid block--3col">
+      <div>
+        <h4 class="footer-title" i18n="@@footer.privacy">Privacy</h4>
+        <div [ngClass]="rowClass">
+          <a class="md-btn-link"
+             itemprop="url"
+             routerLinkActive="is-active"
+             (click)="goToLink(newRoutes.YourPrivacyChoice)"
+             aria-label="Your Privacy Choices (opens in new tab)"
+             i18n-aria-label="@@footer.your_privacy_choices_arialabel"
+             tabindex="0"
+          >
+            <div class="btn__grid">
+
+              <img alt="Privacy options image" width="33"
+                   class="link-list__logo link-list__logo--decorative"
+                   src="https://delivery-p137454-e1438138.adobeaemcloud.com/adobe/assets/urn:aaid:aem:ce2fd3c5-be0b-42de-ac6e-5c88e0112a57">
+
+
+              <div i18n="@@extended-footer.your_privacy_choices">Your Privacy Choices</div>
+            </div>
+          </a>
+
+        </div>
+        @if (isCookieAccepted) {
+          <div [ngClass]="rowClass">
+            <div>
+              <a class="md-btn-link"
+                 itemprop="url"
+                 routerLinkActive="is-active"
+                 (click)="showCookiesSettings()"
+                 tabindex="0"
+              >
+                <div i18n="@@extended-footer.cookie_settings">Cookie Settings</div>
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+      <div>
+        <h4 class="footer-title" i18n="@@footer.social">Social</h4>
+        <ng-container
+          *ngTemplateOutlet="share; context: {alignClass: ''}"></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #share let-alignClass="alignClass">
+  <div class="row g-2 align-items-center" [ngClass]="alignClass">
+    <div class="col-auto">
+      <a [href]="newRoutes.Facebook" target="_blank" mat-icon-button
+         class="md-social mat-elevation-z0" (click)="onSocialLogoClick('FB')"
+         aria-label="Facebook (opens in new tab)" i18n-aria-label="@@footer.facebook_arialabel">
+        <img alt="Facebook Logo" class="link-list__logo"
+             src="https://delivery-p137454-e1438138.adobeaemcloud.com/adobe/assets/urn:aaid:aem:a7cfbc95-1bbb-4c0e-b89d-50e427bad4cb">
+      </a>
+    </div>
+  </div>
+</ng-template>

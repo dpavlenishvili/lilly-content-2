@@ -1,0 +1,142 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$select-offset-y: (media-query-up: (
+        xs: .0 .125rem,
+)) !default;
+$select-offset-x: (media-query-up: (
+        xs: 0rem,
+)) !default;
+$select-margin-x: (media-query-up: (
+        xs: -0.25rem,
+)) !default;
+
+
+$quest-offset-y: (
+        media-query-up: (
+                xs: .25rem,
+                md: .5rem,
+        )
+) !default;
+
+
+$init: (
+        quest-offset-y: $quest-offset-y,
+        controls-grid-template-columns: (
+                media-query-up: (
+                        xs: 1fr,
+                        lg: repeat(2, 1fr),
+                )
+        ),
+        control-column-gap: 1rem,
+        control-min-height: (
+                media-query-up: (
+                        xs: 1.5rem,
+                )
+        ),
+        select-offset-x: $select-offset-x,
+        select-offset-y: $select-offset-y,
+        select-margin-x: $select-margin-x,
+) !default;
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+::ng-deep {
+
+  .md-group {
+    display: grid;
+    column-gap: var(--#{$h}control-column-gap);
+
+    .md-radio-wrap, .md-checkbox-wrap {
+      position: relative;
+      padding: var(--#{$h}select-offset-y) var(--#{$h}select-offset-x);
+
+      > * {
+        margin-left: var(--#{$h}select-margin-x);
+      }
+
+    }
+
+    &.cl--2 {
+      grid-template-columns: var(--#{$h}controls-grid-template-columns);
+    }
+  }
+
+  .md-checkbox-wrap {
+    .mat-mdc-checkbox {
+      display: grid;
+      align-items: center;
+
+      .mdc-form-field {
+        display: grid;
+        align-items: start;
+        padding: calc(var(--#{$h}quest-offset-y) * .5) 0;
+        white-space: normal;
+        line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+        grid-template-columns: min-content auto;
+        grid-template-areas:"check label";
+        min-height: var(--#{$h}control-min-height);
+
+        .mdc-checkbox {
+          grid-area: check;
+          margin: 0 !important;
+        }
+
+        .mdc-label {
+          grid-area: label;
+          padding-top: calc((var(--#{calc.$md}checkbox-size) - var(--#{calc.$md}checkbox-icon-size)) * 0.5);
+        }
+
+      }
+    }
+  }
+
+  .md-radio-wrap {
+    .mat-mdc-radio-button {
+      display: grid;
+
+      .mdc-form-field {
+        display: grid;
+        align-items: start;
+        padding: calc(var(--#{$h}quest-offset-y) * .5) 0;
+        white-space: normal;
+        line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+        grid-template-columns: min-content auto;
+        grid-template-areas:"check label";
+        min-height: var(--#{$h}control-min-height);
+
+        .mdc-radio {
+          grid-area: check;
+          margin: 0 !important;
+        }
+
+        .mdc-label {
+          grid-area: label;
+          padding-top: calc((var(--#{calc.$md}radio-size) - var(--#{calc.$md}radio-icon-size)) * 0.4);
+        }
+      }
+    }
+  }
+
+  .md-checkbox-wrap .mat-mdc-checkbox-checked, .md-radio-wrap .mat-mdc-radio-checked {
+    --mdc-form-field-label-text-weight: var(--#{calc.$cb}font-weight-bold) !important;
+  }
+
+  .questionnaire-it-year, bmi-questionnaire .questionnaire-it-number {
+    display: grid;
+
+    .mat-mdc-form-field {
+      width: 100%;
+      max-width: 225px;
+    }
+  }
+
+  .bmi-quest {
+    margin-bottom: var(--#{calc.$cb}space-100);
+
+    .cb-hint-wrapper {
+      min-height: 1.5rem;
+    }
+  }
+}

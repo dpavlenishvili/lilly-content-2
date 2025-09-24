@@ -1,0 +1,155 @@
+@use "sass:map";
+@use "../global-vars" as *;
+@use "../vendors/bootstrap" as *;
+@use "../mixins/breackpoints" as *;
+
+$columns-flex: 12;
+@mixin make-row($gutter: var(--#{$cb}grid-gutter-width), $gutter-mobile: var(--#{$cb}grid-gutter-mobile)) {
+  --#{$cb}gutter-x: #{$gutter};
+  --#{$cb}gutter-y: #{$gutter};
+  column-gap: var(--#{$cb}gutter-x);
+  row-gap: var(--#{$cb}gutter-y);
+
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {
+    @include make-col-ready();
+  }
+}
+
+@mixin make-col-ready() {
+
+  //box-sizing: if(variable-exists(include-column-box-sizing) and $include-column-box-sizing, border-box, null);
+
+  flex-shrink: 0;
+  width: 100%;
+
+
+}
+
+//--cb-grid-columns
+@mixin make-col-auto() {
+  flex: 0 0 auto;
+  width: auto;
+
+}
+
+@mixin make-col-offset($size, $columns: 12) {
+  $num: divide($size, $columns);
+  margin-left: if($num == 0, 0, percentage($num));
+}
+
+@mixin make-col($size: false, $columns: 12) {
+  @if $size {
+    flex: 0 0 auto;
+    width: percentage(divide($size, $columns));
+
+  } @else {
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+}
+
+
+// Row columns
+//
+// Specify on a parent element(e.g., .row) to force immediate children into NN
+// numberof columns. Supports wrapping to new lines, but does not do a Masonry
+// style grid.
+@mixin row-cols($count) {
+  > * {
+    flex: 0 0 auto;
+    width: divide(100%, $count);
+  }
+}
+
+@mixin no-gutter($value) {
+  --#{$cb}gutter-x: #{$value};
+  --#{$cb}gutter-y: #{$value};
+}
+
+@mixin col() {
+  flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+}
+
+
+@mixin make-grid-columns($columns: 12, $grid-row-columns: 6, $gutter: 2rem, $breakpoints: $grid-breakpoints, $gutters: null, $variable-prefix: $cb) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `.col-{bp}` classes for equal-width flexbox columns
+      .col#{$infix} {
+        flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+      }
+
+      .row-cols#{$infix}-auto > * {
+        @include make-col-auto();
+      }
+
+      @if $grid-row-columns > 0 {
+        @for $i from 1 through $grid-row-columns {
+          .row-cols#{$infix}-#{$i} {
+            @include row-cols($i);
+          }
+        }
+      }
+
+      .col#{$infix}-auto {
+        @include make-col-auto();
+      }
+
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+          .col#{$infix}-#{$i} {
+            @include make-col($i, $columns);
+          }
+        }
+
+        // `$columns - 1` because offsetting by the width of an entire row isn't possible
+        @for $i from 0 through ($columns - 1) {
+          @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
+            .offset#{$infix}-#{$i} {
+              @include make-col-offset($i, $columns);
+            }
+          }
+        }
+      }
+
+      // Gutters
+      //
+      // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
+      @each $key, $value in $gutters {
+        .g#{$infix}-#{$key},
+        .gx#{$infix}-#{$key} {
+          --#{$variable-prefix}gutter-x: #{$value};
+        }
+
+        .g#{$infix}-#{$key},
+        .gy#{$infix}-#{$key} {
+          --#{$variable-prefix}gutter-y: #{$value};
+        }
+      }
+    }
+  }
+}
+
+%row-ext {
+  @include make-row();
+}
+
+%no-gutter {
+  @include no-gutter(0);
+}
+
+%col {
+  @include col();
+  //flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+}
+
+%col-auto {
+  @include make-col-auto();
+}
+
+

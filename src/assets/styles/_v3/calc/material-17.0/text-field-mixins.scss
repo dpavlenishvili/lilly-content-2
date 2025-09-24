@@ -1,0 +1,165 @@
+@use "../global-vars" as vars;
+
+// form-field-overrides.scss
+// Angular Material 17+ form-field overrides WITHOUT relying on Material Sass mixins.
+// Uses CSS custom properties consumed by MDC Text Field + Angular Material tokens.
+//
+// Usage options:
+// 1) GLOBAL (styles.scss):
+//    :root { @include ff-colors($my-form-field-colors); @include ff-structure($my-form-field-structure); @include ff-typography($my-form-field-typography); }
+// 2) PER COMPONENT (component.scss):
+//    :host { .mat-mdc-form-field { @include ff-colors($my-form-field-colors-alt); } }
+//
+// Notes:
+// - Keys are optional. Only provided keys will be emitted.
+// - Feel free to add/remove mappings to match your needs.
+// - Tested with Angular Material 17+ (MDC).
+
+// ------------------------------
+// Helpers
+// ------------------------------
+@function mget($map, $key, $fallback: null) {
+  @if type-of($map) == 'map' and map-has-key($map, $key) {
+    @return map-get($map, $key);
+  }
+  @return $fallback;
+}
+
+// Emit a single CSS variable if the map has that key
+@mixin _emit-var($map, $key, $css-var) {
+  $val: mget($map, $key, null);
+  @if $val != null {
+    #{$css-var}: #{$val};
+  }
+}
+
+// ------------------------------
+// COLORS (filled + outlined + states)
+// ------------------------------
+@mixin ff-colors($map) {
+  // Outlined
+  @include _emit-var($map, outlined-outline-color, --mdc-outlined-text-field-outline-color);
+  @include _emit-var($map, outlined-hover-outline-color, --mdc-outlined-text-field-hover-outline-color);
+  @include _emit-var($map, outlined-focus-outline-color, --mdc-outlined-text-field-focus-outline-color);
+  @include _emit-var($map, outlined-disabled-outline-color, --mdc-outlined-text-field-disabled-outline-color);
+  @include _emit-var($map, outlined-error-outline-color, --mdc-outlined-text-field-error-outline-color);
+  @include _emit-var($map, outlined-error-focus-outline-color, --mdc-outlined-text-field-error-focus-outline-color);
+
+  // Filled underline / indicator
+  @include _emit-var($map, filled-active-indicator-color, --mdc-filled-text-field-active-indicator-color);
+  @include _emit-var($map, filled-hover-active-indicator-color, --mdc-filled-text-field-hover-active-indicator-color);
+  @include _emit-var($map, filled-focus-active-indicator-color, --mdc-filled-text-field-focus-active-indicator-color);
+
+  // Caret
+  @include _emit-var($map, outlined-caret-color, --mdc-outlined-text-field-caret-color);
+  @include _emit-var($map, filled-caret-color, --mdc-filled-text-field-caret-color);
+
+  // Label colors
+  @include _emit-var($map, outlined-label-text-color, --mdc-outlined-text-field-label-text-color);
+  @include _emit-var($map, outlined-focus-label-text-color, --mdc-outlined-text-field-focus-label-text-color);
+  @include _emit-var($map, filled-label-text-color, --mdc-filled-text-field-label-text-color);
+  @include _emit-var($map, filled-focus-label-text-color, --mdc-filled-text-field-focus-label-text-color);
+
+  // Text colors (input area)
+  @include _emit-var($map, input-text-color, --mdc-text-field-input-text-color);
+
+  // Container / background (filled)
+  @include _emit-var($map, filled-container-color, --mdc-filled-text-field-container-color);
+  @include _emit-var($map, filled-disabled-container-color, --mdc-filled-text-field-disabled-container-color);
+
+  // Subscript (hint/error) text colors
+  @include _emit-var($map, subscript-text-color, --mat-form-field-subscript-text-color);
+  @include _emit-var($map, subscript-error-text-color, --mat-form-field-error-text-color);
+}
+
+// ------------------------------
+// STRUCTURE (spacing, shape, outline widths)
+// ------------------------------
+@mixin ff-structure($map) {
+  // Height + padding
+  @include _emit-var($map, container-height, --mat-form-field-container-height);
+  @include _emit-var($map, container-vertical-padding, --mat-form-field-container-vertical-padding);
+
+  // Outline widths (outlined)
+  @include _emit-var($map, outlined-outline-width, --mdc-outlined-text-field-outline-width);
+  @include _emit-var($map, outlined-focus-outline-width, --mdc-outlined-text-field-focus-outline-width);
+
+  // Shape (border-radius)
+  @include _emit-var($map, outlined-container-shape, --mdc-outlined-text-field-container-shape);
+  @include _emit-var($map, filled-container-shape, --mdc-filled-text-field-container-shape);
+
+  // Density (label offset etc.) — optional common tokens (uncomment if desired)
+  // @include _emit-var($map, container-with-label-offset, --mat-form-field-container-with-label-offset);
+}
+
+// ------------------------------
+// TYPOGRAPHY
+// ------------------------------
+@mixin ff-typography($map) {
+  // Input text
+  @include _emit-var($map, container-text-font, --mat-form-field-container-text-font);
+  @include _emit-var($map, container-text-size, --mat-form-field-container-text-size);
+  @include _emit-var($map, container-text-weight, --mat-form-field-container-text-weight);
+  @include _emit-var($map, container-text-tracking, --mat-form-field-container-text-tracking);
+
+  // Floating label
+  @include _emit-var($map, label-text-size, --mat-form-field-label-text-size);
+  @include _emit-var($map, label-text-weight, --mat-form-field-label-text-weight);
+
+  // Subscript (hint/error)
+  @include _emit-var($map, subscript-text-size, --mat-form-field-subscript-text-size);
+  @include _emit-var($map, subscript-text-weight, --mat-form-field-subscript-text-weight);
+  @include _emit-var($map, subscript-text-font, --mat-form-field-subscript-text-font);
+}
+
+@mixin ms-colors($map) {
+  @include _emit-var($map, placeholder-text-color, --mat-select-placeholder-text-color);
+}
+
+@mixin ms-typography($map) {
+  @include _emit-var($map, trigger-font, --mat-select-trigger-text-font);
+  @include _emit-var($map, trigger-size, --mat-select-trigger-text-size);
+  @include _emit-var($map, trigger-weight, --mat-select-trigger-text-weight);
+
+  @include _emit-var($map, option-font, --mat-option-label-text-font);
+  @include _emit-var($map, option-size, --mat-option-label-text-size);
+  @include _emit-var($map, option-weight, --mat-option-label-text-weight);
+}
+
+
+@mixin ff-size($h: vars.$mdf, $size: lg) {
+  --#{$h}min-height: var(--#{$h}#{$size}-min-height) !important;
+  --#{$h}font-size: var(--#{$h}#{$size}-font-size) !important;
+  --#{$h}radius: var(--#{$h}#{$size}-radius);
+  --#{$h}icon-size: var(--#{$h}#{$size}-icon-size);
+}
+
+@mixin ff-serif-typography($h: vars.$mdf) {
+  --#{$h}font-family: var(--#{vars.$cb}font-family-serif) !important;
+
+}
+
+@mixin ff-update-props($h: vars.$mdf) {
+  --mdc-filled-text-field-input-text-color: var(--#{$h}fg);
+  --mat-select-enabled-trigger-text-color: var(--#{$h}fg);
+  --mat-select-enabled-arrow-color: var(--#{$h}fg);
+  --mat-select-focused-arrow-color: var(--#{$h}fg);
+}
+
+@mixin ff-filters-style($h: vars.$mdf, $selector: vars.$mdf-selector) {
+  #{$selector} {
+    --#{$h}border-width: 0;
+    --#{$h}bg: var(--#{$h}filled-bg);
+    --#{$h}active-bg: var(--#{$h}active-filled-bg);
+  }
+}
+
+@mixin ff-quest-style($h: vars.$mdf, $selector: vars.$mdf-selector) {
+  #{$selector} {
+    --#{$h}border-width: 0;
+    //--#{$h}bg: var(--#{$h}filled-bg);
+    //--#{$h}active-bg: var(--#{$h}active-filled-bg);
+  }
+}
+
+

@@ -1,0 +1,61 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$md !default;
+
+$init: (
+  toaster-border-color: var(--#{calc.$cb}primary),
+  thumb-icon-color: var(--#{calc.$cb}danger),
+  thumb-icon-size: 2.125rem,
+) !default;
+
+:root {
+  @include calc.css-initVars($init, $h);
+
+  .cdk-overlay-pane:has(.md-toaster--v2) {
+    width: 100%;
+    margin-top: var(--#{calc.$cb}head-toolbar-height) !important;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  background: var(--#{calc.$cb}white);
+  border-top: 3px solid var(--#{$h}toaster-border-color);
+  --mdc-snackbar-container-color: var(--#{calc.$cb}gray-50);
+  --mdc-snackbar-supporting-text-color: var(--#{calc.$cb}body-clr);
+
+  .thumb-icon {
+    @include calc.square(var(--#{$h}thumb-icon-size));
+    color: var(--#{$h}thumb-icon-color);
+    margin-right: 1rem;
+    min-width: fit-content;
+  }
+
+  &.md-toaster--v2 {
+    --#{$h}toaster-border-color: var(--#{calc.$cb}link-clr);
+    --#{$h}thumb-icon-color: var(--#{calc.$cb}link-clr);
+    --#{$h}thumb-icon-size: 1.5rem;
+    --mdc-snackbar-container-shape: 0;
+    margin: 0;
+
+    .mdc-snackbar__surface {
+      max-width: 100%;
+      width: 100%;
+      box-shadow: none;
+      border-bottom: 1px solid var(--#{calc.$cb}divider);
+
+      .row {
+        column-gap: 1rem;
+        align-items: center;
+      }
+
+      .col {
+        display: flex;
+        align-items: center;
+      }
+
+      .mdc-snackbar__label {
+        padding: 1.25rem 0;
+      }
+    }
+  }
+}

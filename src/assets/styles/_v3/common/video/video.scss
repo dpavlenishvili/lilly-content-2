@@ -1,0 +1,32 @@
+
+.video-wrapper {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: 56.25%;
+
+  video,
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+  }
+}
+
+lilly-youtube {
+  youtube-player > div:first-child {
+    width: 100%;
+    height: 100%;
+  }
+  .youtube-player-placeholder {
+    width: 100% !important;
+    height: 100% !important;
+    .youtube-player-placeholder-button {
+      cursor: pointer;
+    }
+  }
+
+}

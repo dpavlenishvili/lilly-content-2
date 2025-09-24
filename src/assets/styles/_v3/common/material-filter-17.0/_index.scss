@@ -1,0 +1,4 @@
+@forward './init-vars' as init-*;
+@forward './select-panel' as panel-*;
+@forward './select-panel-search' as select-panel-search-*;
+@forward './dialogs' as dialog-*;

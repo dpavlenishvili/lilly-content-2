@@ -1,0 +1,188 @@
+@use "_v3/calc" as calc;
+
+
+@mixin make-que-stepper() {
+  --step-size: 1.75rem;
+  --step-size-multi-active: 1.15;
+  --step-divide-line: 4.125rem;
+  --step-icon-size: 1rem;
+  --step-border-size: 0.125rem;
+  --step-border-color: var(--#{calc.$cb}gray-500);
+  --step-color-divider: var(--#{calc.$cb}gray-500);
+  --step-bg-color: var(--#{calc.$cb}white);
+  --step-color: var(--#{calc.$cb}gray-700);
+  --step-font-size: var(--#{calc.$cb}font-size-sm);
+  --step-animation-time: .31s;
+
+  --step-active-color: var(--#{calc.$cb}success-dark);
+  --step-active-bg-color: var(--#{calc.$cb}white);
+  --step-active-border-color: var(--#{calc.$cb}success-dark);
+
+  --step-complete-color: var(--#{calc.$cb}success-dark);
+
+  @include calc.media-breakpoint-up(md) {
+    --step-size: 2rem;
+    --step-divide-line: 5.25rem;
+  }
+  @include calc.media-breakpoint-up(lg) {
+    --step-divide-line: 7.25rem;
+  }
+  //
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  position: relative;
+  user-select: none;
+  .step {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    @include calc.square(var(--step-size));
+    border-radius: 50%;
+    border: var(--step-border-size) solid var(--step-border-color);
+    color: var(--step-color);
+    background-color: var(--step-bg-color);
+    font-size: var(--step-font-size);
+    font-weight: var(--#{calc.$cb}font-weight-bold);
+    z-index: 2;
+
+    &:first-child, &:last-child {
+      z-index: 4;
+    }
+
+    .mat-icon {
+      @include calc.square(var(--step-icon-size));
+
+      svg {
+        display: block;
+      }
+    }
+
+    &.active {
+      --step-bg-color: var(--step-active-bg-color);
+      --step-color:  var(--step-active-color);
+      --step-border-color: var(--step-active-border-color);
+    }
+
+    &.completed {
+      --step-bg-color: var(--step-complete-color);
+      --step-color: var(--#{calc.$cb}white);
+      --step-border-size: 0;
+    }
+
+  }
+  .animated-hidden-prev-number, .animated-hidden-next-number {
+    position: absolute;
+    z-index: 1;
+  }
+  .animated-number {
+    position: absolute;
+    z-index: 3;
+  }
+  .divider {
+    display: grid;
+    background-color: var(--step-color-divider);
+    &.active{
+    --step-color-divider: var(--step-active-border-color);
+    }
+  }
+  hr {
+    display: grid;
+    border-color: var(--step-color-divider);
+  }
+}
+
+@mixin make-que-stepper-position($position: 'horizontal') {
+  $move-1: calc(var(--step-divide-line) + (var(--step-size) * 0.5));
+  $move-2: calc((var(--step-divide-line) + (var(--step-size) * 0.5)) * 2);
+  $move-end: calc((var(--step-divide-line) + (var(--step-size) * 0.5)) * -1);
+  $start: left;
+  $end: right;
+  @if ($position == 'horizontal') {
+    grid-auto-flow: column;
+    .divider {
+      height: var(--step-border-size);
+      width: var(--step-divide-line);
+    }
+  }
+  @if ($position == 'vertical') {
+    $start: top;
+    $end: bottom;
+    .divider {
+      width: 1px;
+      height: var(--step-divide-line);
+      margin: 0 auto;
+    }
+  }
+
+  .animated-hidden-prev-number {
+    #{$start}: 0;
+  }
+
+  .animated-hidden-next-number {
+    #{$end}: 0;
+  }
+  .animated-number {
+    #{$end}: $move-1;
+
+    &.is-last-question {
+      #{$end}: auto;
+      #{$start}: $move-1;
+    }
+  }
+  .animated-hidden-prev-number.slide-right {
+    animation: var(--step-animation-time) slide-right-prev-number;
+    animation-fill-mode: forwards;
+    z-index: 3;
+  }
+  @keyframes slide-right-prev-number {
+    from {
+      #{$start}: 0;
+    }
+    to {
+      #{$start}: $move-1;
+    }
+  }
+  .animated-hidden-next-number.slide-left, .animated-hidden-next-number.test {
+    animation: var(--step-animation-time) slide-left-next-number;
+    animation-fill-mode: forwards;
+    z-index: 3;
+  }
+
+  @keyframes slide-left-next-number {
+    from {
+      #{$end}: 0;
+    }
+    to {
+      #{$end}: $move-1;
+    }
+  }
+  .animated-number.slide-left {
+    animation: var(--step-animation-time) slide-left-number;
+    animation-fill-mode: forwards;
+    z-index: 3;
+  }
+  @keyframes slide-left-number {
+    from {
+      #{$end}: $move-1;
+    }
+    to {
+      #{$end}: $move-2;
+    }
+  }
+  .animated-number.slide-right {
+    animation: var(--step-animation-time) slide-right-number;
+    animation-fill-mode: forwards;
+    z-index: 3;
+  }
+  @keyframes slide-right-number {
+    from {
+      #{$end}: $move-1;
+    }
+    to {
+      #{$end}: 0;
+    }
+  }
+}
+

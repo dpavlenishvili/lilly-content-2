@@ -1,0 +1,30 @@
+ENVIRONMENT = JOB_NAME.split('_')[0]
+PARTNER = 'lilly-content'
+SERVICE_NAME = "web-partnersite-${PARTNER}"
+deployed = false
+
+pipeline {
+    agent { label "${ENVIRONMENT }-generic" }
+
+    stages {
+        stage('Publish') {
+            steps {
+                script {
+                    def results = []
+                    def deployers = carebox.deployers.DeployerFactory.getDeployers(ENVIRONMENT, JOB_NAME)
+                    def deployParams = new carebox.deployers.DeployParams(
+                                                        serviceName: SERVICE_NAME,
+                                                        currentEnvironment: ENVIRONMENT)
+                    deployers.each { item ->
+                        def deployer = carebox.deployers.DeployerFactory.create(item , this)
+                        def deployResult = deployer.deploy(deployParams)
+                        results << [type: item,
+                            deployed: deployResult
+                        ]
+                    }
+                    deployed = results.every { it.deployed }
+                }
+            }
+        }
+    }
+}

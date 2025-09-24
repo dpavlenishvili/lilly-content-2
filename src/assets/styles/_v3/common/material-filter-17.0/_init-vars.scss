@@ -1,0 +1,9 @@
+@use "sass:map";
+ @use "_v3/calc" as calc;
+// @use "_v3/calc" as calc;
+@use "../../abstract/material/material-main-filters" as ft;
+
+
+:root {
+  @include calc.css-initVars(ft.$init, calc.$md);
+}

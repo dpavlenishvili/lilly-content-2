@@ -1,0 +1,212 @@
+@use "../global-vars" as *;
+@use "../vendors/rfc_new" as *;
+@use "./transition.scss" as *;
+@use "./breackpoints.scss" as *;
+
+@mixin size_r($width, $height, $important: null) {
+  width: $width $important;
+  height: $height $important;
+}
+
+@mixin square($size, $important: null) {
+  @include size_r($size, $size, $important);
+}
+
+@mixin transform($transforms) {
+  transform: $transforms;
+}
+
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+@mixin set_input_icon($state, $size, $offset-x, $offset-y, $x-padding) {
+  position: relative;
+  .form-control {
+    padding-#{$state}: $x-padding !important;
+  }
+  .thumb {
+    display: block;
+    margin: 0 !important;
+    #{$state}: $offset-x;
+    top: $offset-y;
+    @include square($size);
+  }
+}
+
+@mixin truncate-inline($font-size, $line-height, $lines-to-show) {
+  display: block;
+  display: -webkit-box;
+  max-width: 100%;
+  max-height: calc(#{$font-size}*#{$line-height}*#{$lines-to-show}); // Fallback for non-webkit
+  @include font-size($font-size);
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin truncate() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+
+@mixin thumb-on-center($position:relative, $align-items:center, $justify-content:center) {
+  position: $position;
+  flex-direction: column;
+  display: flex;
+  align-items: $align-items;
+  justify-content: $justify-content;
+  & > * {
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+}
+
+@mixin loc-scroll($overflow-x: hidden) {
+  // padding-right:1px;
+  direction: ltr;
+  overflow-y: auto;
+  overflow-x: $overflow-x;
+  scrollbar-width: thin;
+}
+
+@mixin badge() {
+  --padding-x: var(--#{$cb}space-100);
+  --padding-y: var(--#{$cb}space-100);
+  --color: var(--#{$cb}body-clr);
+  --bg-color: var(--#{$cb}lighter-clr);
+  --border-radius: .25rem;
+  --font-size: .75rem;
+  --font-weight: var(--#{$cb}font-weight-bold);
+  display: inline-block;
+  color: var(--color);
+  background-color: var(--bg-color);
+  padding: var(--padding-y) var(--padding-x);
+  @include font-size(var(--font-size));
+  font-weight: var(--font-weight);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--border-radius);
+
+  @at-root a#{&} {
+    &:hover, &:focus{
+      text-decoration: none;
+    }
+  }
+
+  // Empty badges collapse automatically
+  &:empty {
+    display: none;
+  }
+}
+
+
+@mixin cb-list($margin-bottom: 1rem, $bullet-offset: 1rem,  $bullet-color: var(--#{$cb}body-clr), $bullet-content: "\2022") {
+  --bulet-color: #{$bullet-color};
+  --bulet-content: #{$bullet-content};
+  --bulet-offset-y: #{$bullet-offset};
+  list-style: none;
+  padding-left: 0;
+
+  > li {
+    position: relative;
+    padding-left: var(--bulet-offset-y);
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: $bullet-content;
+      color: var(--bulet-color);
+      font-weight: 900;
+      display: inline-block;
+      width: 1em;
+    }
+  }
+}
+@mixin cb-list-num($margin-bottom: 0, $bullet-offset: 1.75rem,  $bullet-color: var(--#{$cb}primary)) {
+  --bulet-color: #{$bullet-color};
+  --bulet-offset-y: #{$bullet-offset};
+  list-style: none;
+  counter-reset: steps;
+  padding-left: 0;
+
+  > li {
+    position: relative;
+
+    counter-increment: steps;
+
+    &::before {
+      display: inline-flex;
+      //position: absolute;
+      //top: 0;
+      //left: 0;
+      min-width: var(--bulet-offset-y);
+      font-size: .9em;
+      content: counter(steps)".  ";
+      color: var(--bulet-color);
+      font-weight: 700;
+      display: inline-block;
+      width: 1.5em;
+    }
+  }
+}
+
+@mixin md-arrow($size: var(--#{$cb}nav-arrow-size )) {
+  $size-icon: var(--#{$cb}nav-arrow-size);
+  .mat-select-arrow {
+    flex-direction: column;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include square($size);
+    background: var(--#{$cb}nav-arrow-bg-color);
+    border-radius: 0;
+    border: 0;
+
+    &:after {
+      content: '';
+      flex: 0 0 auto;
+      max-width: 100%;
+      @include square($size-icon);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+      background-image: var(--#{$cb}nav-arrow-icon);
+      border: 0;
+      opacity: .5;
+      transition: transform .15s ease-out !important;
+    }
+  }
+}
+
+
+
+@mixin questionnaire-required-field-error {
+  mat-error {
+    display: flex;
+    align-items: center;
+    margin-top: 3rem;
+    margin-left: 1rem;
+  
+    mat-icon {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+@mixin reset-link-view {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+}

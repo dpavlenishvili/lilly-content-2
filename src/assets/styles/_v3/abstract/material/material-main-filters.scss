@@ -1,0 +1,71 @@
+@use '_v3/calc' as calc;
+
+$filter-panel: (
+        btn-base-height: 2.5rem
+) !default;
+
+$filter-panel-with: (
+        media-query-up: (
+                xs: 20rem,
+                sm: 30rem,
+                lg: 40rem
+        )
+) !default;
+
+$filter-panel-min-with: (
+        media-query-up: (
+                xs: auto,
+                sm: 100%,
+                lg: 20rem,
+                xl: 25rem,
+        )
+) !default;
+
+$filter-panel-text-with: (
+        media-query-up: (
+                xs: 20rem,
+                sm: 25rem,
+                lg: 30.26rem
+        )
+) !default;
+
+$more-info-menu-with: (
+        media-query-up: (
+                xs: 20rem,
+                lg: 32em
+        )
+) !default;
+
+//  dialog
+$dialog-more-height: (
+        media-query-up: (
+                xs: 95vh,
+                md: 85vh,
+        )
+) !default;
+
+$dialog-sidenav-width: (
+        media-query-up: (
+                xs: 12.75rem,
+                md: 16.25rem,
+        )
+) !default;
+
+$init: (
+        filter-panel: $filter-panel,
+        filter-panel-with: $filter-panel-with,
+        filter-panel-min-with: $filter-panel-min-with,
+        filter-panel-text-with: $filter-panel-text-with,
+        more-info-menu-with: $more-info-menu-with,
+        filter-panel-with-2rows-lg: 35rem,
+        // filter dialog
+        mat-dialog-more-width: 61.25rem,
+        mat-dialog-more-height: $dialog-more-height,
+        mat-dialog-sidenav-width: $dialog-sidenav-width,
+        mat-dialog-in-offset-x: 1rem,
+        mat-dialog-in-offset-y: .5rem,
+        //
+        mat-menu-side-offset-multiply: .75,
+        //btn-icon-clear-color:
+)
+!default;

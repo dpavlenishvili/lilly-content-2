@@ -1,0 +1,22 @@
+.md-to-html-pipe-link {
+  * {
+    pointer-events: none;
+  }
+}
+
+.md-to-html-pipe-strong {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--page-color);
+
+  span {
+    font-weight: 400;
+    font-size: 1rem;
+    pointer-events: none;
+  }
+
+  svg {
+    pointer-events: none;
+    fill: var(--page-color);
+  }
+}

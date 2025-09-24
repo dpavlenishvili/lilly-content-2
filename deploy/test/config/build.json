@@ -1,0 +1,5 @@
+{
+  "jobs": {
+    "jenkins-test-global": {"node_type": "test-generic-extra", "npm_registry": "github"}
+  }
+}

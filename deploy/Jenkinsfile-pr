@@ -1,0 +1,47 @@
+// /**
+//      * pulling functions from jenkins-shared-libraries repository.
+//  */
+// @Library('jenkins-shared-libraries') _
+
+// ENVIRONMENT = JOB_NAME.split("_")[0]
+// PARTNER = "lilly"
+// SOURCE_URL = "ssh://gitolite@tasks.careboxhealth.com/ctnet/${PARTNER}"
+// ROOTDEPLOYPATH = "/var/deploy/${ENVIRONMENT}/web/partnersite/${PARTNER}/"
+// SERVICE_NAME = "web-partnersite-${PARTNER}"
+
+
+// LOCALIZATION_CLI_PATH = "/var/deploy/${ENVIRONMENT}/utilities/localization-cli/"
+// CREDENTIALS = "tuleap-git"
+// PACKAGE_JSON_PATH = "package.json"
+
+
+// with_localization_service = true
+// is_multi_stage_deployment = true
+// should_support_preview = true
+
+// /// Internal Global Variables
+// prevEnv = new carebox.Environment().getPreviousEnv(ENVIRONMENT, environments)
+// app_version = ""
+// deployed = false
+
+// ///
+
+// pipeline {
+//     agent  { label "${ENVIRONMENT}-generic" }
+
+//     environment {
+//         branch_name = "develop"
+//     }
+
+//     stages {
+//         stage('checkout') {
+//             steps {
+//                 script {
+//                     echo 1
+//                 }
+//             }
+//         }
+
+
+//     }
+// }

@@ -1,0 +1,14 @@
+@use "_v3/calc" as *;
+
+::ng-deep  .leave-lilly-dialog {
+  max-width: var(--#{$cb}dialog-confirm-max-width) !important;
+
+  .md-dialog-header {
+    --mat-dialog-headline-padding: var(--#{$md}dialog-offset-y) var(--#{$md}dialog-offset-x) 0;
+  }
+
+  .mat-mdc-dialog-content {
+    --mat-dialog-with-actions-content-padding: 0 var(--#{$md}dialog-offset-x);
+    --mdc-dialog-supporting-text-size: var(--#{$cb}font-size-base);
+  }
+}

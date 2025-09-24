@@ -1,0 +1,46 @@
+@use "_v3/calc" as calc;
+
+$shadow-padding: 4px;
+
+.owl-full-size {
+  @include calc.media-breakpoint-up(lg) {
+    padding: 0;
+
+    &::ng-deep {
+      .owl-item {
+        width: initial !important;
+        flex: 1 !important;
+
+        .card-with-padding, .article-card-slider {
+          padding-left: calc(1rem - $shadow-padding); 
+          padding-right: calc(1rem - $shadow-padding);
+        }
+        
+        &:first-child .card-with-padding, &:first-child .article-card-slider {
+          padding-left: $shadow-padding; 
+          padding-right: 1rem;
+        }
+
+        &:last-child .card-with-padding, &:last-child .article-card-slider {
+          padding-right: $shadow-padding;
+          padding-left: 1rem;
+        }
+      }
+
+      .owl-stage {
+        width: 100% !important;
+
+        // in case of there are more then 2 cards
+        &:has(>:nth-child(3)) {
+          .owl-item:first-child .card-with-padding, .owl-item:first-child .article-card-slider {
+            padding-right: calc(1rem + $shadow-padding);
+          }
+          
+          .owl-item:last-child .card-with-padding,  .owl-item:last-child .article-card-slider  {
+            padding-left: calc(1rem + $shadow-padding);
+          }
+        }
+      }
+    }
+  }
+}

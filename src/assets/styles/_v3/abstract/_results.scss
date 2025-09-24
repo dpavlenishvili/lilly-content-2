@@ -1,0 +1,254 @@
+@use '_v3/calc' as calc;
+
+$h: calc.$cb-res;
+
+$md-card-font-size: (
+        media-query-up: (
+                sm: var(--#{calc.$cb}font-size-sm, .875rem),
+                md: var(--#{calc.$cb}font-size-base, 1rem),
+        )) !default;
+$md-card-title-font-size: (
+        media-query-up: (
+                xs: 1.125rem,
+                lg: 1.5rem,
+        )) !default;
+$md-card-border-radius: (
+        media-query-up: (
+                xs: var(--#{calc.$cb}radius-sm),
+                md: var(--#{calc.$cb}radius-1),
+        )) !default;
+
+$md-card-offset-y: var(--#{calc.$cb}card-pad-y) !default;
+$md-card-offset-x: var(--#{calc.$cb}card-pad-x) !default;
+$prop-0-icon-size-header: (
+        media-query-up: (
+                xs: var(--#{calc.$cb}icon-sm, .85rem),
+                lg: var(--#{calc.$cb}icon-lg, 2rem),
+        )) !default;
+
+
+// cards
+
+$req-card-bg: var(--#{calc.$cb}primary) !default;
+$req-card-border: 1px solid var(--#{calc.$cb}primary) !default;
+$req-card-color: var(--#{calc.$cb}white) !default;
+$req-card-link-color: var(--#{calc.$cb}white) !default;
+$req-card-under-line-color: var(--#{calc.$cb}accent-200) !default;
+$req-card-box-shadow: none !default;
+$req-card-align-text: center !default;
+$req-card-border-radius: var(--#{calc.$cb}card-border-radius);
+$req-card-thumb-color: var(--#{calc.$cb}icon-def-clr);
+$req-card-thumb-add-color: var(--#{calc.$cb}icon-accent-clr);
+
+$noty-card-bg: var(--#{calc.$cb}accent-100) !default;
+$noty-card-border: 2px solid rgba(var(--#{calc.$cb}accent-200), .8) !default;
+$noty-card-color: var(--#{calc.$cb}body-clr) !default;
+$noty-card-link-color: var(--#{calc.$cb}link-clr) !default;
+$noty-card-under-line-color: var(--#{calc.$cb}accent) !default;
+$noty-card-box-shadow: none !default;
+$noty-card-align-text: center !default;
+$noty-card-border-radius: var(--#{calc.$cb}card-border-radius) !default;
+$noty-card-thumb-color: var(--#{calc.$cb}accent) !default;
+$noty-card-thumb-add-color: var(--#{calc.$cb}primary) !default;
+
+
+$pre-card-bg: var(--#{calc.$cb}white) !default;
+$pre-card-border: 2px solid var(--#{calc.$cb}card-border-clr) !default;
+$pre-card-color: var(--#{calc.$cb}body-clr) !default;
+$pre-card-link-color: var(--#{calc.$cb}link-clr) !default;
+$pre-card-under-line-color: var(--#{calc.$cb}accent) !default;
+//$pre-card-box-shadow: '0px 15px 30px rgba(102, 44, 145, 0.07), 0px 4px 30px rgba(102, 44, 145, 0.07)' !default;
+$pre-card-box-shadow: none !default;
+$pre-card-align-text: center !default;
+$pre-card-border-radius: var(--#{calc.$cb}card-border-radius) !default;
+$pre-card-thumb-color: $noty-card-thumb-color !default;
+$pre-card-thumb-add-color: $noty-card-thumb-add-color !default;
+
+
+$listing-card-bg-color: var(--#{calc.$cb}accent-50) !default;
+$listing-card-color: inherit !default;
+$listing-card-border: 0 !default;
+
+$no-result-card-bg-color:var(--#{calc.$cb}gray-50, #ededed)  !default;
+$no-result-card-color: inherit !default;
+$no-result-card-border: var(--#{$h}border-size) solid var(--#{$h}border-color) !default;
+
+$init: (
+        bg-color: var(--#{calc.$cb}body-bg-clr),
+        head-bg-color: var(--#{calc.$cb}light),
+        head-border-color: var(--#{calc.$cb}light),
+        border-size: 0.156rem,
+        head-color: var(--#{calc.$cb}body-clr),
+        head-title-font-size: $md-card-title-font-size,
+        border-color: var(--#{calc.$cb}light),
+        content-border-color: var(--#{$h}border-color),
+        box-shadow: none,
+  //
+        title-font-weight: var(--#{calc.$cb}font-weight-middle, 500),
+        title-margin-bottom: var(--#{calc.$cb}space-0),
+        line-height: 1.5,
+        title-grid-areas: (media-query-up: (
+                xs: '"t t"',
+                lg: '"t i"',
+        )),
+        title-grid-columns: (media-query-up: (
+                xs: 1fr,
+                lg: 1fr max-content,
+        )),
+        title-grid-gap: 1.5rem,
+        title-thumb-position: (media-query-up: (
+                xs: absolute,
+                lg: relative,
+        )),
+        title-thumb-label-display: (media-query-up: (
+                xs: none,
+                lg: block,
+        )),
+        title-thumb-label-font: (media-query-up: (
+                xs: 'italic  500 0.75rem/1 sans'
+        )),
+        title-thumb-size: (media-query-up: (
+                xs: 2.25rem,
+                lg: 2.75rem,
+        )),
+        title-thumb-icon-size: (media-query-up: (
+                xs: 1.5rem,
+                lg: 2.5rem,
+        )),
+        title-thumb-column: (media-query-up: (
+                xs: ' t-start / t-end',
+                lg: none,
+        )),
+        title-thumb-offset-y: (media-query-up: (
+                xs: calc((var(--#{$h}title-thumb-size) * .5 + var(--#{$h}head-padding-bottom)) * -1),
+                lg: 0,
+        )),
+        title-thumb-offset-x: (media-query-up: (
+                xs: calc((var(--#{$h}offset-x) * .5) * -1),
+                lg: 0,
+        )),
+        title-thumb-clr:(media-query-up: (
+                xs: var(--#{calc.$cb}white),
+                lg: var(--#{calc.$cb}icon-def-clr),
+        )),
+        title-thumb-add-clr:(media-query-up: (
+                xs: var(--#{calc.$cb}accent-200),
+                lg: var(--#{calc.$cb}icon-accent-clr),
+        )),
+        title-thumb-bg-clr:(media-query-up: (
+                xs: var(--#{calc.$cb}primary),
+                lg: transparent,
+        )),
+        title-thumb-border:(media-query-up: (
+                xs: 0, //1px solid var(--#{calc.$cb}gray-200),
+                lg: 0,
+        )),
+
+        //bookmark-thumb-bg-color:var(--#{calc.$cb}white),
+        //bookmark-thumb-border-color: var(--#{calc.$cb}gray-200),
+        //bookmark-thumb-color:var(--#{calc.$cb}gray-500),
+        //bookmark-thumb-bg-color-active:var(--#{calc.$cb}accent),
+        //bookmark-thumb-color-active:var(--#{calc.$cb}yellow-100),
+        //bookmark-thumb-border-color-active: transparent,
+  //
+        grid-head-0-gap-x: (media-query-up: (
+                xs: 1.25rem,
+                lg: 1.5rem,
+        )),
+        grid-head-0-gap-y: (media-query-up: (
+                xs: .5rem,
+        )),
+        grid-head-0-weight: var(--#{calc.$cb}font-weight-normal),
+        grid-head-0-font-size: var(--#{calc.$cb}font-size-xs, .75rem),
+        grid-head-0-color: var(--#{calc.$cb}body-clr-50),
+        btn-info-size: 1.45rem,
+        btn-info-icon-size: .8rem,
+        btn-info-bg-color:rgba(var(--#{calc.$cb}gray-300-rgb), .54),
+        btn-info-color:var(--#{calc.$cb}gray-800),
+        btn-info-block: (media-query-up: (
+                xs: none,
+                md: grid,
+        )),
+  //
+        grid-0-gap-x: (media-query-up: (
+                xs: .5rem,
+                md: .75rem,
+        )),
+        grid-0-gap-y: (media-query-up: (
+                xs: .5rem,
+                md: .75rem,
+        )),
+        grid-0-1-template-columns: (media-query-up: (
+                xs: repeat(2, 1fr),
+                lg: repeat(4, 1fr),
+        )),
+        prop-0-gap: .25rem,
+        prop-line-height: var(--#{calc.$cb}line-height-sm, 1.2),
+        prop-0-label-weight: var(--#{calc.$cb}font-weight-light),
+        prop-0-value-weight: var(--#{calc.$cb}font-weight-middle),
+        prop-0-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-sm),
+                md: var(--#{calc.$cb}font-size-base),
+        )),
+        prop-0-icon-size: (media-query-up: (
+                xs: 1.25rem,
+                md: 1.5rem,
+        )),
+        prop-0-icon-size-header: var(--#{calc.$cb}icon-base, 1.5rem),
+        prop-0-icon-color: var(--#{calc.$cb}icon-def-clr),
+        prop-0-icon-color-add: var(--#{calc.$cb}icon-accent-clr),
+        prop-0-icon-color-header: var(--#{$h}head-color, #ffffff),
+        prop-0-font-size-header: $md-card-font-size,
+  //
+        prop-1-font-size: var(--#{$h}prop-0-font-size),
+        prop-1-label-weight: var(--#{calc.$cb}font-weight-bold, 600),
+        prop-1-value-weight: var(--#{calc.$cb}font-weight-normal, 400),
+  //
+        font-size:$md-card-font-size,
+        border-radius: $md-card-border-radius,
+        offset-y: $md-card-offset-y,
+        offset-x: $md-card-offset-x,
+        margin-bottom: var(--#{calc.$cb}space-300),
+        thumb-close-size:2rem,
+        thumb-close-icon-size: 1rem,
+  //cards
+        req-card-bg: $req-card-bg,
+        req-card-color: $req-card-color,
+        req-card-border:$req-card-border,
+        req-card-link-color: $req-card-link-color,
+        req-card-under-line-color: $req-card-under-line-color,
+        req-card-box-shadow: $req-card-box-shadow,
+        req-card-align-text: $req-card-align-text,
+        req-card-border-radius: $req-card-border-radius,
+        req-card-thumb-color: $req-card-thumb-color,
+        req-card-thumb-add-color: $req-card-thumb-add-color,
+        noty-card-bg: $noty-card-bg,
+        noty-card-color: $noty-card-color,
+        noty-card-border:$noty-card-border,
+        noty-card-link-color: $noty-card-link-color,
+        noty-card-under-line-color: $noty-card-under-line-color,
+        noty-card-box-shadow: $noty-card-box-shadow,
+        noty-card-align-text: $noty-card-align-text,
+        noty-card-border-radius: $noty-card-border-radius,
+        noty-card-thumb-color : $noty-card-thumb-color,
+        noty-card-thumb-add-color : $noty-card-thumb-add-color,
+        pre-card-bg: $pre-card-bg,
+        pre-card-color: $pre-card-color,
+        pre-card-border:$pre-card-border,
+        pre-card-link-color: $pre-card-link-color,
+        pre-card-under-line-color: $pre-card-under-line-color,
+        pre-card-box-shadow: $pre-card-box-shadow,
+        pre-card-align-text: $pre-card-align-text,
+        pre-card-border-radius: $pre-card-border-radius,
+        pre-card-thumb-color : $pre-card-thumb-color,
+        pre-card-thumb-add-color : $pre-card-thumb-add-color,
+
+        listing-card-bg-color: $listing-card-bg-color,
+        listing-card-color: $listing-card-color,
+        listing-card-border: $listing-card-border,
+        no-result-card-bg-color: $no-result-card-bg-color,
+        no-result-card-color: $no-result-card-color,
+        no-result-card-border: $no-result-card-border,
+
+
+) !default;

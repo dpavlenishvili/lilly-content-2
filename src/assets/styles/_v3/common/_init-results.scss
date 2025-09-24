@@ -1,0 +1,5 @@
+@use '_v3/calc' as calc;
+@use "../abstract/results" as ft;
+:root {
+  @include calc.css-initVars(ft.$init, ft.$h);
+}

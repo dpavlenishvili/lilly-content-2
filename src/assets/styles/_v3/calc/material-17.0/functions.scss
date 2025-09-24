@@ -1,0 +1,10 @@
+@function get-form-max-height($conf) {
+  $border-size: map-get($conf, border-size);
+
+  @return map-get($conf, height) + $border-size;
+}
+
+
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}

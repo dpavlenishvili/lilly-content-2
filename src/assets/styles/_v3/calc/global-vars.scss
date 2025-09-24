@@ -1,0 +1,107 @@
+$cb: cb- !default;
+$cb-subject-logo: #{$cb}subject-logo- !default;
+$cb-res: #{$cb}res- !default;
+$cb-sum: #{$cb}sum- !default;
+$cb-que: #{$cb}que- !default;
+
+$cb-research: #{$cb}research- !default;
+
+$color: #{$cb}color- !default;
+$typography: #{$cb}typography- !default;
+
+$md: md- !default;
+
+$mdf: md-field- !default;
+$mdf-selector: '.mat-mdc-form-field' !default;
+$mdcf: md-field- !default;
+
+//button style
+$btn: #{$cb}btn- !default;
+$btn-selector: 'button, a[role="button"]' !default;
+//type of buttons
+$btn-fill: fill- !default;
+$btn-fill-primary: #{$btn-fill}primary- !default;
+$btn-outline: outline-  !default;
+$btn-icon: icon- !default;
+//
+$mdc-ft: --mdc-filled-text- !default;
+
+// cards
+$card: #{$cb}card- !default;
+$cards: #{$cb}cards- !default;
+$card-class: #{$cb}card !default;
+
+$prop: #{$cb}prop- !default;
+$prop-class: #{$cb}prop !default;
+
+// browse-trials
+
+$browse-trials: #{$cb}browse-trials- !default;
+$browse-trials-class: #{$cb}browse-trials !default;
+
+// filters
+$filter: #{$cb}filter- !default;
+$filters: #{$cb}filters- !default;
+$filters-class: browse-filters !default;
+
+// tag
+$tag: #{$cb}tag- !default;
+$tag-class: #{$cb}tag !default;
+
+// intro
+$cst--intro-class:  cst--intro !default;
+$cst--intro-prefix:  intro-- !default;
+
+// hero
+$cst--hero-class:  cst--hero !default;
+$cst--hero-prefix:  hero-- !default;
+
+// scss-docs-start grid-breakpoints
+//$wrap-max-width: 1460px  !default;
+$grid-breakpoints: (
+        xs: 0,
+        sm: 575.99px,
+        md: 767.99px,
+        lg: 1199.99px,
+        xl: 1399.99px,
+        xxl: 9999px
+) !default;
+
+$container-max-widths: (
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1400px
+) !default;
+
+$height-breakpoints: (
+        xs: 0,
+        sm: 400px,
+        md: 500px,
+        lg: 768px,
+        xl: 1080px,
+        xxl: 1124px,
+) !default;
+
+//
+$font-size-root: null !default;
+$black: #000000 !default;
+$white: #ffffff !default;
+
+
+$enable-rounded: true !default;
+$enable-shadows: false !default;
+$enable-gradients: false !default;
+$enable-transitions: true !default;
+$enable-reduced-motion: true !default;
+$enable-smooth-scroll: true !default;
+$enable-grid-classes: true !default;
+$enable-cssgrid: false !default;
+$enable-button-pointers: true !default;
+$enable-rfs: true !default;
+$enable-validation-icons: true !default;
+$enable-negative-margins: false !default;
+$enable-deprecation-messages: true !default;
+$enable-important-utilities: true !default;
+

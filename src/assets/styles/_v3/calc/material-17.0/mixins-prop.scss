@@ -1,0 +1,58 @@
+@use "../global-vars" as *;
+@use "../mixins/custom" as *;
+
+@mixin accordion-default() {
+
+
+  .mat-expansion-panel {
+    border-radius: 0;
+
+    .mat-expansion-panel-body {
+      padding: 1rem 0 0 0;
+    }
+
+    .mat-expansion-panel-header {
+      --mat-expansion-header-text-weight: var(--#{$cb}font-weight-base);
+      padding: .25rem 1rem;
+      height: auto !important;
+      min-height: 4.25rem;
+      border: 1px solid  var(--#{$cb}gray-sm-clr);
+      border-radius: var(--#{$cb}radius-sm);
+
+
+      .thumb {
+        color:  var(--#{$cb}primary);
+        @include square(2rem);
+        margin-right: 1rem;
+      }
+    }
+
+    .mat-expansion-panel-content {
+      padding-right: .5rem;
+      padding-left: .5rem;
+      line-height: var(--#{$cb}line-height-base);
+      font-weight:  var(--#{$cb}font-weight-base);
+    }
+
+    &:not(.mat-expanded) {
+      & + * {
+        margin-top: .4125rem;
+      }
+    }
+
+    &.mat-expanded {
+      .mat-expansion-panel-header-title {
+        color:  var(--#{$cb}primary);
+        font-weight: var(--#{$cb}font-weight-bold);
+      }
+
+      .mat-expansion-panel-body {
+        position: relative;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--#{$cb}gray-md-clr);
+
+      }
+    }
+  }
+
+}

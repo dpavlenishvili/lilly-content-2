@@ -1,0 +1,77 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$title-line-clr: var(--#{calc.$cb}primary) !default;
+
+$init: (
+    image-height: ( media-query-down: (
+            xs: 16rem,
+            md: 19.2rem,
+            lg: 27.5rem,
+            xl: 12rem,
+            xxl: 14.7rem,
+    )),
+    title-line-clr: $title-line-clr,
+) !default;
+
+.card {
+  @include calc.css-initVars($init, $h);
+
+  @include calc.square(100%);
+  display: flex;
+  border-radius: var(--#{calc.$cb}radius-1);
+  background-color: var(--#{calc.$cb}white);
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+
+  .media {
+    width: 100%;
+    max-width: 25%;
+    flex-shrink: 0;
+    overflow: hidden;
+  
+    &--vertical,
+    &--vertical-reverse {
+      max-width: 100%;
+      height: var(--#{$h}image-height);
+    }
+  }
+
+  .img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    padding: var(--#{calc.$cb}block-offset-y) var(--#{calc.$cb}block-offset-x);
+
+    .content {
+      width: 100%;
+      flex-direction: column;
+      text-align: center;
+
+      .title {
+        text-align: center;
+        font-weight: var(--#{calc.$cb}font-weight-normal);
+        margin-bottom: var(--#{calc.$cb}space-300);
+        font-size: 1.5rem;
+
+        &::after {
+          display: block;
+          content: '';
+          width: 4rem;
+          height: 0.25rem;
+          background-color: var(--#{$h}title-line-clr);
+          margin: var(--#{calc.$cb}space-100) auto var(--#{calc.$cb}space-200);
+        }
+      }
+    }
+    
+    .description {
+      font-weight: var(--#{calc.$cb}font-weight-light);
+      text-align: center;
+    }
+  }
+}

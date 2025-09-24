@@ -1,0 +1,66 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$selector: 'nav--tabs' !default;
+$init: (
+        display-mobile: (media-query-up: (
+                xs: none,
+                lg: block,
+        )),
+) !default;
+
+:host ::ng-deep {
+  .#{$selector} {
+    display: flex;
+    justify-content: center;
+    @include calc.css-initVars($init, $h);
+
+    &.mobile-hidden {
+      display: var(--#{$h}display-mobile);
+    }
+
+    z-index: 9;
+
+    .#{$selector}__container {
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      background-color: var(--#{calc.$color}neutral-base-000);
+      border: 1px solid var(--#{calc.$color}neutral-base-030);
+      border-radius: var(--#{calc.$cb}radius-6);
+      padding: var(--#{calc.$cb}space-100);
+    }
+
+    .#{$selector}__content {
+      display: flex;
+      justify-content: flex-start;
+
+    }
+
+    .#{$selector}__item {
+      min-width: fit-content;
+      border-radius: var(--#{calc.$cb}radius-4);
+      min-height: 4rem;
+      &:not(.selected) {
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{calc.$color}neutral-base-060),
+                hover: (
+                        fg: var(--#{calc.$color}neutral-base-060),
+                )
+        ));
+      }
+
+      &.selected{
+        @include calc.btn-mixins-button-override($overrides: (
+                fg: var(--#{calc.$color}neutral-base-000),
+                bg: var(--#{calc.$color}palette-red-060),
+        ));
+      }
+
+    }
+
+
+
+  }
+}
+

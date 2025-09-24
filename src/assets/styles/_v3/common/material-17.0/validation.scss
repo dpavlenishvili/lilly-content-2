@@ -1,0 +1,16 @@
+@use "_v3/calc" as calc;
+
+
+.mat-mdc-checkbox.is-invalid {
+  --mdc-form-field-label-text-color: var(--#{calc.$cb}danger) !important;
+  --mdc-checkbox-unselected-icon-color: var(--#{calc.$cb}danger) !important;
+}
+.mat-mdc-radio-button.is-invalid{
+  --mdc-radio-unselected-icon-color: var(--#{calc.$cb}danger) !important;
+  --mdc-form-field-label-text-color: var(--#{calc.$cb}danger) !important;
+}
+
+
+.mat-error {
+  color: var(--#{calc.$cb}danger);
+}

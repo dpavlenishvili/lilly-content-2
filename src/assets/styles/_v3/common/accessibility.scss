@@ -1,0 +1,113 @@
+@use '_v3/calc' as calc;
+
+$outline-width-bold: 3px;
+$outline-border-color: var(--#{calc.$color}palette-transparent-black-060);
+
+@mixin outline($outline-width: 1px) {
+  outline: $outline-width solid $outline-border-color;
+}
+
+
+*:not(button):not(input):focus-visible {
+  @include outline();
+}
+
+conditions-filter *,
+app-autocomplete-term-search *,
+disease-sub-disease-filter-questionnaire-intro *,
+.blog-articles mat-form-field .mdc-text-field,
+button.sub-menu {
+  outline: none !important;
+}
+
+mat-form-field.mat-mdc-form-field-type-mat-input
+  :not(.md-search-menu-field)
+  :not(.md-filter-geo)
+  :not(.md-filter-sub)
+  :not(.md-filter-an) {
+  &.mat-focused {
+    .mdc-text-field {
+      @include outline($outline-width-bold);
+
+      * {
+        outline: none;
+      }
+    }
+  }
+}
+
+.questionnaire-it-year mat-form-field.mat-mdc-form-field-type-mat-input.mat-focused {
+  .mdc-text-field.mdc-text-field--filled {
+    @include outline();
+  }
+}
+
+.mat-mdc-form-field.cdk-keyboard-focused {
+  .mdc-text-field {
+    @include outline($outline-width-bold);
+
+    * {
+      outline: none;
+    }
+  }
+}
+
+button.cdk-keyboard-focused:not(.mat-icon-button):not(.mat-menu-item),
+.mat-icon-button.cdk-keyboard-focused .indicator,
+.mat-icon-button.cdk-keyboard-focused:not(.md-social):not(.mat-select-search-clear) mat-icon {
+  @include outline();
+
+  &:focus-within {
+    @include outline();
+  }
+
+  &.mat-primary, &.button, .show-all & {
+    @include outline($outline-width-bold);
+  }
+
+  * {
+    outline: none;
+  }
+}
+
+
+button.cdk-keyboard-focused.mat-mdc-outlined-button:focus-within {
+  .mat-mdc-button-persistent-ripple {
+    opacity: 0;
+  }
+}
+
+button {
+  &.mat-raised-button.mat-primary, &.mat-flat-button.mat-primary {
+    &:not([disabled]):not(.mat-stroked-button) {
+      &:focus-visible {
+        @include outline($outline-width-bold);
+      }
+    }
+  }
+}
+
+
+.mat-expansion-panel {
+  &:has(.cdk-keyboard-focused) {
+    border: 1px solid $outline-border-color !important;
+
+    .mat-expansion-panel-header {
+      background-color: var(--mat-expansion-header-focus-state-layer-color) !important;
+
+      &.mat-expanded {
+        margin-bottom: var(--#{calc.$cb}space-100);
+      }
+    }
+  }
+
+  .mat-expansion-panel-header {
+    &.cdk-keyboard-focused {
+      border-top: 0 !important;
+    }
+  }
+}
+
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(:indeterminate)~.mdc-checkbox__background {
+  @include outline();
+}

@@ -1,0 +1,284 @@
+/* For use in src/lib/core/theming/_palette.scss */
+@use '_v3/calc' as calc;
+@use '@angular/material' as mat;
+
+$primary: (
+        100 : #f9eeed,
+        main : #d31710,
+        700 : #9f180f,
+        contrast: (
+                100 : #000000,
+                main : #ffffff,
+                700 : #ffffff,
+        )
+) !default;
+
+//
+:root {
+  --#{calc.$color}brand-base-100: #3d0101;
+  --#{calc.$color}brand-base-105: #2d0000;
+  --#{calc.$color}brand-base-090: #501009;
+  --#{calc.$color}brand-base-080: #6e1911;
+  --#{calc.$color}brand-base-070: #9f180f;
+  --#{calc.$color}brand-base-060: #d31710;
+  --#{calc.$color}brand-base-050: #f7513f;
+  --#{calc.$color}brand-base-040: #fd9485;
+  --#{calc.$color}brand-base-030: #f6b8ae;
+  --#{calc.$color}brand-base-020: #ffdad4;
+  --#{calc.$color}brand-base-010: #f9eeed;
+  --#{calc.$color}brand-base-005: #fbf5f4;
+  //
+  --#{calc.$color}neutral-base-100: #191919;
+  --#{calc.$color}neutral-base-105: #111;
+  --#{calc.$color}neutral-base-090: #282828;
+  --#{calc.$color}neutral-base-080: #3a3a3a;
+  --#{calc.$color}neutral-base-070: #505050;
+  --#{calc.$color}neutral-base-060: #6a6a6a;
+  --#{calc.$color}neutral-base-050: #8a8a8a;
+  --#{calc.$color}neutral-base-040: #afafaf;
+  --#{calc.$color}neutral-base-030: #c5c5c5;
+  --#{calc.$color}neutral-base-020: #e2e2e2;
+  --#{calc.$color}neutral-base-010: #f0f0f0;
+  --#{calc.$color}neutral-base-005: #f5f5f5;
+  --#{calc.$color}neutral-base-000: #fff;
+  //
+  --#{calc.$color}palette-stone-100: #0f1b21;
+  --#{calc.$color}palette-stone-105: #071218;
+  --#{calc.$color}palette-stone-090: #1e2a30;
+  --#{calc.$color}palette-stone-080: #303b42;
+  --#{calc.$color}palette-stone-070: #465158;
+  --#{calc.$color}palette-stone-060: #606c73;
+  --#{calc.$color}palette-stone-050: #818c94;
+  --#{calc.$color}palette-stone-040: #a5b1b9;
+  --#{calc.$color}palette-stone-030: #bbc7cf;
+  --#{calc.$color}palette-stone-020: #d8e4ec;
+  --#{calc.$color}palette-stone-010: #ebf2f7;
+  --#{calc.$color}palette-stone-005: #f3f7fa;
+  //
+  --#{calc.$color}palette-red-100: #3d0101;
+  --#{calc.$color}palette-red-105: #2d0000;
+  --#{calc.$color}palette-red-090: #501009;
+  --#{calc.$color}palette-red-080: #6e1911;
+  --#{calc.$color}palette-red-070: #9f180f;
+  --#{calc.$color}palette-red-060: #d31710;
+  --#{calc.$color}palette-red-050: #f7513f;
+  --#{calc.$color}palette-red-040: #fd9485;
+  --#{calc.$color}palette-red-030: #f6b8ae;
+  --#{calc.$color}palette-red-020: #ffdad4;
+  --#{calc.$color}palette-red-010: #f9eeed;
+  --#{calc.$color}palette-red-005: #fbf5f4;
+  //
+  --#{calc.$color}palette-blue-100: #031c28;
+  --#{calc.$color}palette-blue-105: #00131d;
+  --#{calc.$color}palette-blue-090: #012c3f;
+  --#{calc.$color}palette-blue-080: #003e57;
+  --#{calc.$color}palette-blue-070: #025676;
+  --#{calc.$color}palette-blue-060: #00729e;
+  --#{calc.$color}palette-blue-050: #0696cc;
+  --#{calc.$color}palette-blue-040: #4bbbf3;
+  --#{calc.$color}palette-blue-030: #90cef4;
+  --#{calc.$color}palette-blue-020: #cde6f9;
+  --#{calc.$color}palette-blue-010: #e8f2fa;
+  --#{calc.$color}palette-blue-005: #f2f7fc;
+  //
+  --#{calc.$color}palette-transparent-black-0: transparent;
+  --#{calc.$color}palette-transparent-black-100: #000;
+  --#{calc.$color}palette-transparent-black-090: rgba(0, 0, 0, 0.9);
+  --#{calc.$color}palette-transparent-black-080: rgba(0, 0, 0, 0.8);
+  --#{calc.$color}palette-transparent-black-070: rgba(0, 0, 0, 0.7);
+  --#{calc.$color}palette-transparent-black-060: rgba(0, 0, 0, 0.6);
+  --#{calc.$color}palette-transparent-black-050: rgba(0, 0, 0, 0.5);
+  --#{calc.$color}palette-transparent-black-040: rgba(0, 0, 0, 0.4);
+  --#{calc.$color}palette-transparent-black-030: rgba(0, 0, 0, 0.3);
+  --#{calc.$color}palette-transparent-black-020: rgba(0, 0, 0, 0.2);
+  --#{calc.$color}palette-transparent-black-010: rgba(0, 0, 0, 0.1);
+  --#{calc.$color}palette-transparent-black-005: rgba(0, 0, 0, 0.05);
+  --#{calc.$color}palette-transparent-white-0: hsla(0, 0%, 100%, 0);
+  --#{calc.$color}palette-transparent-white-100: #fff;
+  --#{calc.$color}palette-transparent-white-090: hsla(0, 0%, 100%, 0.9);
+  --#{calc.$color}palette-transparent-white-080: hsla(0, 0%, 100%, 0.8);
+  --#{calc.$color}palette-transparent-white-070: hsla(0, 0%, 100%, 0.7);
+  --#{calc.$color}palette-transparent-white-060: hsla(0, 0%, 100%, 0.6);
+  --#{calc.$color}palette-transparent-white-050: hsla(0, 0%, 100%, 0.5);
+  --#{calc.$color}palette-transparent-white-040: hsla(0, 0%, 100%, 0.4);
+  --#{calc.$color}palette-transparent-white-030: hsla(0, 0%, 100%, 0.3);
+  --#{calc.$color}palette-transparent-white-020: hsla(0, 0%, 100%, 0.2);
+  --#{calc.$color}palette-transparent-white-010: hsla(0, 0%, 100%, 0.1);
+  --#{calc.$color}palette-transparent-white-005: hsla(0, 0%, 100%, 0.05);
+
+  --#{calc.$color}border-1: var(--#{calc.$color}neutral-base-105);
+  --#{calc.$color}border-2: var(--#{calc.$color}neutral-base-060);
+  --#{calc.$color}border-3: var(--#{calc.$color}neutral-base-030);
+
+  --#{calc.$color}palette-sage-060: #007773;
+  --#{calc.$color}palette-sage-050: #299b93;
+  --#{calc.$color}palette-sage-040: #54c2b9;
+  --#{calc.$color}palette-green-010: #e7f4ea;
+  --#{calc.$color}palette-teal-010: #e5f3f9;
+  --#{calc.$color}palette-teal-030: #87d1e6;
+  --#{calc.$color}palette-teal-050: #1899b3;
+
+  --#{calc.$color}palette-blue-070: #025676;
+  --#{calc.$color}palette-pink-060: #ce1562;
+  --#{calc.$color}lilly-brand-red: #E1251B;
+
+}
+
+
+//
+
+
+$accent: (
+        50 : #ededed,
+        100 : #d3d3d3,
+        200 : #b6b6b6,
+        300 : #989898,
+        400 : #828282,
+        500 : #6c6c6c,
+        600 : #646464,
+        700 : #595959,
+        800 : #4f4f4f,
+        900 : #3d3d3d,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #000000,
+                400 : #000000,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+        )
+) !default;
+
+
+$danger: (
+        50 : #fbe3ea,
+        100 : #f4b9ca,
+        200 : #ed8aa7,
+        300 : #e65b84,
+        400 : #e03869,
+        500 : #db154f,
+        600 : #d71248,
+        700 : #d20f3f,
+        800 : #cd0c36,
+        900 : #c40626,
+        A100 : #ffedef,
+        A200 : #ffbac3,
+        A400 : #ff8796,
+        A700 : #ff6e7f,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #000000,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #000000,
+                A400 : #000000,
+                A700 : #000000,
+        )
+);
+
+
+$gray: (
+        30 : #FAFAFA,
+        20 : #F5F5F5,
+        50 : #F5F5F5,
+        100 : #f5f5f5,
+        200 : #eeeeee,
+        300 : #e0e0e0,
+        400 : #bdbdbd,
+        500 : #9e9e9e,
+        600 : #616161,
+        700 : #757575,
+        800 : #424242,
+        900 : #212121,
+) !default;
+
+
+$colors: (
+        black: #000000,
+        white: #ffffff,
+        "body-bg-clr": #ffffff,
+        "body-clr": #191919,
+  //
+        "primary" : map-get($primary, main),
+        "primary-contast": mat.get-contrast-color-from-palette($primary, main),
+        "accent": map-get($accent, 500),
+        "accent-contast" : mat.get-contrast-color-from-palette($accent, 500),
+        "link-clr": var(--#{calc.$color}brand-base-060),
+        "link-hover-clr":var(--#{calc.$color}brand-base-070),
+        "link-1-clr": #00749E,
+        "success": #3da470,
+        "success-dark": #31855B,
+        "brand_clr":#E1251B,
+        "danger": var(--#{calc.$color}palette-red-050),
+        fg-strong: var(--#{calc.$color}neutral-base-100),
+        fg-weak: var(--#{calc.$color}neutral-base-080),
+        fg-weaker: var(--#{calc.$color}neutral-base-050),
+        stroke-strong:var(--#{calc.$color}neutral-base-030),
+        icon-strong:var(--#{calc.$color}neutral-base-100),
+  // inversce
+        fg-inverse-strong: var(--#{calc.$color}neutral-base-000),
+        fg-inverse-weak: var(--#{calc.$color}neutral-base-000),
+        fg-inverse-weaker: var(--#{calc.$color}neutral-base-010),
+        link-inverse-strong: var(--#{calc.$color}neutral-base-000),
+        stroke-inverse-strong:var(--#{calc.$color}neutral-base-000),
+        icon-inverse-strong:var(--#{calc.$color}neutral-base-000),
+        "divider": var(--#{calc.$color}neutral-base-030),
+        // statuses
+        fg-matched: var(--#{calc.$color}palette-sage-060),
+        bg-matched: var(--#{calc.$color}palette-green-010),
+
+        fg-enrolling: var(--#{calc.$color}palette-teal-050),
+        bg-enrolling: var(--#{calc.$color}palette-teal-010),
+  //loaders
+        loader-border: var(--#{calc.$cb}palette-transparent-black-030),
+        loader-bg-1: var(--#{calc.$cb}palette-transparent-black-010),
+        loader-bg-2: var(--#{calc.$cb}palette-transparent-black-020),
+  //
+          "form-primary-clr": var(--#{calc.$cb}primary),
+          "form-primary-clr-rgb": var(--#{calc.$cb}primary-rgb),
+          "form-primary-contrast-clr": var(--#{calc.$cb}primary-contast),
+          "form-primary-ripple-clr": rgba(var(--#{calc.$cb}white), 0.02),
+          "form-accent-clr": var(--#{calc.$cb}primary),
+          "form-accent-clr-rgb":  var(--#{calc.$cb}primary-rgb),
+          "form-accent-contrast-clr": var(--#{calc.$cb}primary-contast),
+          "form-accent-ripple-clr": rgba(var(--#{calc.$cb}white), 0.02),
+          "form-icon-color": var(--#{calc.$color}palette-transparent-black-090),
+          "form-border-focused": var(--#{calc.$color}neutral-base-060),
+  //        //
+  //
+  ////connect
+  //        "icon-def-clr": var(--#{calc.$cb}primary),
+  //        "icon-def-contrast-clr": var(--#{calc.$cb}primary-contast),
+  //        "icon-accent-clr": var(--#{calc.$cb}accent),
+  //        "icon-accent-contrast-clr": var(--#{calc.$cb}accent-contast),
+  //
+  //"danger": map-get($danger, 500),
+  //"danger-50": map-get($danger, 50),
+  //"danger-100": map-get($danger, 100),
+  //"warning": #F69A1A,
+  //"body-bg-clr": #ffffff,
+  //"body-clr":  #212121,
+  //"light-clr": var(--#{calc.$cb}gray-100),
+  //"lighter-clr": var(--#{calc.$cb}gray-50),
+  //"dark": map-get($primary, 700),
+  //"link-clr": #00749E,
+  //"link-hover-clr": #00749E,
+  //"link-visited-clr": #551a8b,
+  //"gray": $gray,
+  //"card-border-clr": var(--#{calc.$cb}gray-100),
+  //"gray-xs-clr": var(--#{calc.$cb}gray-200),
+  //"gray-sm-clr": var(--#{calc.$cb}gray-300),
+  //"gray-md-clr": var(--#{calc.$cb}gray-400),
+  //"gray-lg-clr": var(--#{calc.$cb}gray-600),
+) !default;

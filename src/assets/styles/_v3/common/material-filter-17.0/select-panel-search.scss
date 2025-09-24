@@ -1,0 +1,61 @@
+@use "_v3/calc" as calc;
+
+$h: calc.$mdf !default;
+$l: '';
+$init: (
+        width-lg: (
+                media-query-up: (
+                        xs: 100%,
+                        lg: 25rem,
+                )
+        ),
+        width-sm: (
+                media-query-up: (
+                        xs: 13rem,
+                        lg: 19rem,
+                )
+        ),
+
+) !default;
+
+@include calc.form-field-mixins-ff-filters-style( $selector: '.mat-mdc-form-field.md-search-menu-field' );
+.mat-mdc-form-field {
+  &.md-search-menu-field.mat-form-field-appearance-fill {
+    @include calc.css-initVars($init, $l );
+    @include calc.form-field-mixins-ff-size($h: calc.$mdf, $size: sm);
+    @include calc.md-form-hint(0);
+    &.is-wide {
+      --width: var(--width-lg);
+    }
+
+    &.is-small {
+      --width: var(--width-sm);
+    }
+
+    //
+    //
+    .mat-mdc-form-field-infix {
+      width: 100%;
+    }
+
+  }
+}
+
+.mat-mdc-select-panel {
+  --max-height: 350px;
+
+  .mat-select-search-hidden {
+    visibility: hidden;
+    position: absolute;
+    height: 0 !important;
+    margin: 0 !important;
+  }
+
+  &.mat-select-search-panel {
+    max-height: var(--max-height)!important;
+  }
+}
+
+.mat-mdc-select-panel-above .md-filter-panel {
+  max-height: 50vh !important;
+} 

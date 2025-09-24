@@ -1,0 +1,5 @@
+{
+  "jobs": {
+    "jenkins-dev-global": {"node_type": "dev-generic-extra", "npm_registry": "github"}
+  }
+}

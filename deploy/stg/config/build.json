@@ -1,0 +1,5 @@
+{
+  "jobs": {
+    "jenkins-stg-global": {"node_type": "stg-generic-extra", "npm_registry": "github"}
+  }
+}

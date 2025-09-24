@@ -1,0 +1,307 @@
+@use '_v3/calc' as calc;
+@use '@angular/material' as mat;
+@use './form-field-overrides' as ffo;
+
+$h: calc.$mdf !default;
+
+$selector: calc.$mdf-selector !default;
+
+
+:root {
+  #{$selector} {
+
+    @include calc.form-field-mixins-ff-colors(ffo.$my-form-field-colors);
+    @include calc.form-field-mixins-ff-structure(ffo.$my-form-field-structure);
+    @include calc.form-field-mixins-ff-typography(ffo.$my-form-field-typography);
+    // mat-select
+    @include calc.form-field-mixins-ms-colors(ffo.$my-select-colors);
+    @include calc.form-field-mixins-ms-typography(ffo.$my-select-typography);
+    @include calc.form-field-mixins-ff-update-props();
+    // main block
+
+    //colors
+
+
+    .mdc-text-field {
+      border-width: var(--#{$h}border-width);
+      border-style: solid;
+      border-color: var(--#{$h}border-clr);
+      border-radius: var(--#{$h}radius);
+
+      padding-left: var(--#{$h}offset-x);
+      padding-right: var(--#{$h}offset-x);
+
+
+      #{$selector}-icon-prefix {
+        padding: 0 var(--#{$h}gap) 0 0;
+
+        > .mat-icon {
+          //
+          padding: 0;
+        }
+
+        .mat-icon {
+          @include calc.square(var(--#{$h}icon-size));
+        }
+      }
+
+      #{$selector}-icon-suffix {
+      }
+
+      &:not(.mdc-text-field--no-label) {
+        --mat-select-trigger-text-size: var(--#{$h}font-size-sm);
+      }
+
+
+      &--no-label {
+        .mat-mdc-form-field-infix {
+          display: flex;
+        }
+
+        .mat-mdc-select {
+          display: flex;
+        }
+      }
+
+    }
+
+
+    .mdc-text-field:not(.mdc-text-field--disabled) {
+
+    }
+
+
+    input::placeholder, .mdc-floating-label, .mat-mdc-select-placeholder {
+      font-weight: var(--#{calc.$cb}font-weight-light);
+    }
+
+
+    input, .mat-mdc-select-value-text {
+      font-weight: var(--#{$h}value-weight);
+      color: var(--#{calc.$color}neutral-base-060);
+    }
+
+
+    &.is-invalid:not(.mdc-text-field--disabled), &.ng-invalid:not(.mdc-text-field--disabled).mat-form-field-invalid {
+
+    }
+
+    .mat-mdc-select-disable, .mdc-text-field--disabled, &.is-condition-filter.is-active {
+      .mat-mdc-select-arrow-wrapper {
+        display: none !important;
+      }
+    }
+    .mat-mdc-select-disable, .mdc-text-field--disabled {
+      --#{$h}label-fg: var(--#{$h}disabled-label-fg);
+    }
+
+    .mat-mdc-select-arrow-wrapper {
+      margin-left: var(--#{$h}gap);
+    }
+
+    .mat-mdc-select-arrow {
+      background-color: var(--#{$h}arrow-bg);
+      border-radius: var(--#{$h}arrow-border-radius);
+
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      @include calc.make-arrow();
+
+    }
+
+    &.mat-form-field-appearance-fill {
+      display: block;
+    }
+
+
+    &:not(.mdc-text-field--disabled) {
+
+
+      input::placeholder, .mdc-floating-label, .mat-mdc-select-placeholder {
+        color: var(--#{$h}label-fg);
+        --mat-select-placeholder-text-color: var(--#{$h}label-fg);
+      }
+
+      &:not(.is-active):hover, &:not(.is-active):focus {
+        --#{$h}border-clr: var(--#{$h}border-clr-focus);
+        --#{$h}bg: var(--#{$h}active-bg);
+      }
+
+      //&.mat-focused, &[aria-expanded="true"] {
+      //  --#{$h}border-clr: var(--#{$h}border-clr-focus);
+      //}
+    }
+
+
+    &.mat-focused, &[aria-expanded="true"] {
+      .mat-mdc-select-arrow {
+        &:after {
+          @include calc.rotate(-135);
+        }
+      }
+
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      display: none !important;
+    }
+
+    //
+    .mat-mdc-icon-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+
+      &, & .mat-icon {
+        @include calc.square(var(--#{$h}btn-icon-size));
+      }
+
+      .mat-ripple, .mat-mdc-button-persistent-ripple {
+        display: none;
+      }
+
+      .mat-icon {
+        svg {
+          @include calc.square(100%);
+        }
+      }
+
+    }
+
+    conditions-filter & {
+      &.is-active {
+        .mat-mdc-select-arrow-wrapper {
+          display: none;
+        }
+      }
+    }
+
+    // overflow ellipsis for long placeholder
+    .mdc-floating-label:not(.mdc-floating-label--float-above):has(.label-init) {
+      display: block;
+      width: 100%;
+
+      & > * {
+        display: block;
+        width: 100%;
+      }
+
+      .label-init {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .mdc-line-ripple {
+      display: none !important;
+    }
+
+    //end
+
+
+    .mdc-floating-label {
+
+      .label-init {
+        display: inline-block;
+      }
+
+      .label-float {
+        display: none;
+      }
+
+      &--float-above {
+        .label-init {
+          display: none;
+        }
+
+        .label-float {
+          display: inline-block;
+        }
+      }
+    }
+
+
+    .mat-mdc-select-arrow {
+      background-color: var(--#{$h}arrow-bg);
+      border-radius: var(--#{$h}arrow-border-radius);
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      @include calc.make-arrow();
+    }
+
+
+    &:not(.has-flexible-hint) {
+      margin-bottom: var(--#{$h}hint-margin);
+
+      .mat-mdc-form-field-bottom-align {
+        &:before {
+          display: inline;
+          height: 0;
+        }
+      }
+    }
+
+    &.has-out-hint {
+      @include calc.md-form-hint(0);
+    }
+  }
+
+  .cb-main-filters #{$selector}, #{$selector}.is-lg {
+    @include calc.form-field-mixins-ff-size($h: calc.$mdf);
+    //@include calc.form-field-mixins-ff-serif-typography($h: calc.$mdf);
+  }
+
+
+  .label--external {
+    display: block;
+    color: var(--#{calc.$color}neutral-base-060);
+    font-weight: var(--#{calc.$cb}font-weight-normal);
+    font-size: var(--#{calc.$cb}font-size-sm);
+    margin: 0 0 var(--#{calc.$cb}space-200);
+    font-feature-settings: 'ss02' on;
+    text-align: start;
+  }
+  .mat-mdc-form-field-hint {
+    font-size: var(--#{calc.$cb}font-size-xs);
+  }
+
+
+  .theme--dark {
+    #{$selector} {
+      #{calc.$btn-selector} {
+        &.btn-my-location {
+          @include calc.btn-mixins-button-override($overrides: (
+                  fg: var(--#{calc.$cb}white),
+                  bg: transparent,
+          ));
+        }
+      }
+    }
+  }
+
+  .form--font-serif {
+    #{$selector} {
+      .mat-mdc-select, .mdc-text-field__input {
+        //--mat-select-trigger-text-font: var(--#{calc.$cb}font-family-serif);
+        font-family: var(--#{calc.$cb}font-family-serif);
+        --mat-form-field-container-text-tracking: -0.015em;
+        //--#{$h}font-size: var(--#{$h}font-serif-size);
+        --#{$h}font-weight: var(--#{calc.$cb}font-weight-light);
+        font-size: var(--#{$h}font-serif-size);
+      }
+    }
+  }
+
+  .form--filters {
+    @include calc.form-field-mixins-ff-filters-style();
+  }
+  .form--quest {
+    @include calc.form-field-mixins-ff-quest-style();
+  }
+}
+
+

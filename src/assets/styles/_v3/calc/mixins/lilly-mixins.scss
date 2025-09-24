@@ -1,0 +1,69 @@
+@use "../global-vars" as vars;
+@use "../css-vars" as css;
+
+//promo card
+@mixin md-card-promo-layout() {
+}
+
+@mixin md-card-promo-thumb($thumb-width) {
+}
+
+@mixin md-card-promo-strip() {
+
+}
+
+@mixin md-card-promo(
+  $h: 'card-pro-',
+  $bg: var(--#{vars.$color}palette-red-010),
+  $fg: var(--#{vars.$color}neutral-base-105),
+  $thumb-width: 25%,
+) {
+
+  $init: (
+          padding-y: (media-query-up: (
+                  xs: var(--#{vars.$cb}space-700),
+                  lg: var(--#{vars.$cb}space-800),
+          )),
+          padding-x: (media-query-up: (
+                  xs: var(--#{vars.$cb}space-200),
+                  lg: var(--#{vars.$cb}space-900),
+                  xl: var(--#{vars.$cb}space-1200),
+          )),
+          radius: (media-query-up: (
+                  xs: var(--#{vars.$cb}radius-4),
+                  lg: var(--#{vars.$cb}radius-8),
+          )),
+          font-size: (media-query-up: (
+                  xs: var(--#{vars.$cb}font-size-xs),
+                  sm: var(--#{vars.$cb}font-size-sm),
+                  lg: var(--#{vars.$cb}font-size-base),
+          )),
+          body-max-width: 40.5rem,
+          bg: #{$bg},
+          fg: #{$fg},
+  ) !default;
+
+  @include css.initVars($init, $h);
+  --#{vars.$card}bg: var(--#{$h}bg);
+  --#{vars.$card}fg: var(--#{$h}fg);
+  --#{vars.$card}padding-x: var(--#{$h}padding-x);
+  --#{vars.$card}padding-y: var(--#{$h}padding-y);
+  --#{vars.$card}radius: var(--#{$h}radius);
+  --#{vars.$card}display: flex;
+  --#{vars.$cb}block-text-align: center;
+  --#{vars.$cb}block-offset-y: 0;
+  font-size: var(--#{$h}font-size);
+  justify-content: center;
+  .#{vars.$card-class}__body {
+    max-width: var(--#{vars.$card}body-max-width);
+
+    .block__title {
+      margin-bottom: var(--#{vars.$cb}space-150);
+    }
+
+    .block__ctrl {
+      margin-top: var(--#{vars.$cb}space-300);
+    }
+  }
+
+}
