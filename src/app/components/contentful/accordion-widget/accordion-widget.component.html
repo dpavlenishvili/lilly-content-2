@@ -1,0 +1,15 @@
+<mat-expansion-panel #matExpansionPanel class="accordion" [ngClass]="{ first: isFirst() }">
+  <mat-expansion-panel-header (click)="checkTarget($event)">
+    <mat-panel-title>
+      {{ accordionWidgetFields()?.title }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  @if (hasBody()) {
+    <div class="accordion-body" [innerHTML]="accordionWidgetFields()?.body | mdToHtml"></div>
+  }
+  @if (hasContent()) {
+    @for (content of accordionWidgetFields()?.content; track content.sys.id) {
+      <lilly-content-image-tile-widget [imageTileWidgetFields]="content?.fields"></lilly-content-image-tile-widget>
+    }
+  }
+</mat-expansion-panel>

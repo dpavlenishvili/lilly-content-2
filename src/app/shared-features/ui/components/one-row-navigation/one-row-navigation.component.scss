@@ -1,0 +1,107 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+  nav-width: (media-query-up: (xs: 2rem,
+    )),
+ 
+  ) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  .host {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    white-space: nowrap;
+
+    >* {
+      min-width: 0;
+    }
+
+    &__content {
+      display: grid;
+      align-items: center;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      overflow-x: auto;
+      white-space: nowrap;
+      z-index:0;
+
+      &--scrolled {
+        margin: 0 var(--#{$h}nav-width);
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &::scrollbar {
+        display: none;
+      }
+    }
+
+    &__nav {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      z-index:1;
+
+      &--left {
+        left: 0;
+
+        button.mat-mdc-icon-button {
+          justify-content: center;
+          background: linear-gradient(
+                          90deg,
+                          rgba(var(--#{calc.$cb}body-bg-clr-rgb), 1) 60%,
+                          rgba(var(--#{calc.$cb}body-bg-clr-rgb), .2) 100%
+          );
+          
+      
+
+          .thumb--arrow {
+            @include calc.rotate(90);
+          }
+        }
+      }
+
+      &--right {
+        right: 0;
+
+        button.mat-mdc-icon-button {
+          justify-content: center;
+          background: linear-gradient(
+                          270deg,
+                          rgba(var(--#{calc.$cb}body-bg-clr-rgb), 1) 60%,
+                          rgba(var(--#{calc.$cb}body-bg-clr-rgb), .2) 100%
+          );
+
+          .thumb--arrow {
+            @include calc.rotate(-90);
+          }
+        }
+      }
+
+      button.mat-mdc-icon-button {
+        display: grid;
+        align-items: center;
+        width: var(--#{$h}nav-width);
+        height: 100%;
+        padding: 0;
+        color: rgba(var(-#{calc.$cb}body-clr-rgb), .74);
+        --icon-thmb-size: var(-#{calc.$cb}icon-xs, 1rem);
+        border-radius: 2rem;
+        //background-color: var(-#{calc.$cb}body-bg-clr);
+        @include calc.md-btn-disable-hover-focus();
+      }
+
+    }
+
+  }
+}

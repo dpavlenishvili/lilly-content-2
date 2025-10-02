@@ -6,6 +6,7 @@ import {
   LocationService,
   PrivacyProtection
 } from '@careboxhealth/core';
+import { LinkTarget } from '@careboxhealth/layout1-shared';
 import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -49,6 +50,7 @@ export class CookiesBannerComponent implements OnInit {
 
   public visible = false;
   public readonly externalRoutes: Record<string, string> = externalRoutes;
+  public readonly LinkTarget = LinkTarget;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private readonly cookieConsentService: CookieConsentService = inject(CookieConsentService);

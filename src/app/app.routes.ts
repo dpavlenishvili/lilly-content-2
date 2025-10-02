@@ -5,8 +5,11 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
-    pathMatch: 'full',
-    data: {seoPageKey: SeoPageKey.HOME}
+    pathMatch: 'full'
+  },
+  {
+    path: 'modules',
+    loadComponent: () => import('./components/modules/modules.component').then(m => m.ModulesComponent)
   },
   {
     path: '**',

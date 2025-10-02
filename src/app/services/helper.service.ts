@@ -1,7 +1,8 @@
 import { inject, Injectable, Type } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LeaveLillyDialogComponent } from '../components/leave-lilly-dialog/leave-lilly-dialog.component';
-import { AnalyticsService, ConfigurationProvider, LanguageCode } from '@careboxhealth/core';
+import { AnalyticsService, ConfigurationProvider, LanguageCode, LinkBehavior } from '@careboxhealth/core';
 import {
   LeaveToLillySiteDialogComponent
 } from '../components/leave-to-lilly-site-dialog/leave-to-lilly-site-dialog.component';
@@ -9,19 +10,15 @@ import { take } from 'rxjs/operators';
 import { LeaveCountryDialogComponent } from '../components/leave-country-dialog/leave-country-dialog.component';
 import { LinkTarget, HelperService as SharedHelperService } from '@careboxhealth/layout1-shared';
 import { BehaviorSubject } from 'rxjs';
-import { ViewportScroller } from '@angular/common';
+import { Location, LocationStrategy, ViewportScroller } from '@angular/common';
 
+const ROUTES_SEPARATOR = '/';
 
 export enum LeaveDialogType {
   LEAVE = 'leave',
+  PREQUALIFY = 'preQualify',
 }
 
-export type LinkBehavior =
-  | 'sameTab'
-  | 'newTab'
-  | 'interstitial'
-  | 'interstitialCollaboration'
-  | 'external';
 
 type LeaveDialogComponent =
   LeaveCountryDialogComponent
@@ -39,6 +36,77 @@ export class HelperService {
   private readonly dialog: MatDialog = inject(MatDialog);
   private readonly analytics: AnalyticsService = inject(AnalyticsService);
   private readonly sharedHelperService: SharedHelperService = inject(SharedHelperService);
+  private readonly router: Router = inject(Router);
+  protected readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly location: Location = inject(Location);
+  protected locationStrategy = inject(LocationStrategy);
+
+  goToLink(link: string, linkBehavior: LinkBehavior | string, analyticsObj?: {[key: string]: unknown}): void {
+    this.sendAnalytics(analyticsObj, analyticsObj?.actionsArr[0]);
+
+    if (linkBehavior === LinkBehavior.SameTab) {
+      if (link[0] === ROUTES_SEPARATOR) {
+        this.goToRouterLink(link);
+        return;
+      }
+
+      this.openDialog(link, LinkTarget.Self, null, null, analyticsObj);
+      return;
+
+    } else if (linkBehavior === LinkBehavior.Interstitial || linkBehavior === 'external') {
+      this.openDialog(link, LinkTarget.Blank, {}, LeaveDialogType.LEAVE, analyticsObj);
+      return;
+
+    } else if (linkBehavior === 'interstitialCollaboration') {
+      this.openDialog(link, LinkTarget.Blank, {}, LeaveDialogType.PREQUALIFY, analyticsObj);
+      return;
+    }
+
+    this.openDialog(link, LinkTarget.Blank, null, null, analyticsObj);
+  }
+
+  private goToRouterLink(link: string): void {
+    const linkSegments = link.split(/[?#]/);
+    const routes = linkSegments[0].split(ROUTES_SEPARATOR);
+    routes.shift();
+
+    // It means that url doesn't include query params and hash
+    if (linkSegments.length === 1) {
+      void this.router.navigate(routes);
+      return;
+    }
+
+    // It means that url includes query params and hash
+    if (linkSegments.length === 3) {
+      void this.router.navigate(routes, {
+        queryParams: this.parseQueryParams(linkSegments[1]),
+        fragment: linkSegments[2]
+      });
+      return;
+    }
+
+    // It means that url includes query params
+    if (link.includes('?')) {
+      void this.router.navigate(routes, { queryParams: this.parseQueryParams(linkSegments[1]) });
+      return;
+    }
+
+    // It means that url includes hash
+    if (link.includes('#')) {
+      void this.router.navigate(routes, { fragment: linkSegments[1] });
+      return;
+    }
+  }
+
+  parseQueryParams(queryParams: string): Params {
+    const params = new URLSearchParams(queryParams);
+    const result: Params = {};
+    params.forEach((value, key) => {
+      result[key] = value;
+    });
+
+    return result;
+  }
 
   shouldOpenLeavingCountryPopup(link: string): boolean {
     if (this.disabledConfirmLeaveCountry) {
@@ -73,9 +141,17 @@ export class HelperService {
     return currentCountry && toCountry && toCountry !== currentCountry;
   }
 
+  prepareContentfulLink(link: string): string {
+    if (link.startsWith('/')) {
+      return this.locationStrategy.prepareExternalUrl(link);
+    }
+
+    return link;
+  }
+
   openDialog(
     link: string,
-    target: string = '_blank',
+    target: LinkTarget = LinkTarget.Blank,
     data: {[key: string]: unknown} = {},
     type?: LeaveDialogType,
     analyticsObj?: {[key: string]: unknown},
@@ -114,7 +190,7 @@ export class HelperService {
       });
       this.handleDialogRef(dialogRef, analyticsObj);
     } else {
-      this.sharedHelperService.windowOpen(link, target as LinkTarget);
+      this.sharedHelperService.windowOpen(link, target);
     }
     return dialogRef;
   }

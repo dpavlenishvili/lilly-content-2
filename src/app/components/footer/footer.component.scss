@@ -65,7 +65,8 @@ $init: (
     }
 
     .brand {
-      .mat-icon {
+      .mat-icon,
+      .footer-logo {
         align-self: stretch;
         aspect-ratio: 112/51;
         height: var(--#{$h}logo-icon-size);

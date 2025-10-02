@@ -5,7 +5,7 @@ import {
 } from '../usa-cookie-configuration-dialog-settings/usa-cookie-configuration-dialog-settings.component';
 import { CookieConsentService, AnalyticsService } from '@careboxhealth/core';
 import { externalRoutes } from '../../../../configurations/links';
-import { OrderableMatDialog } from '@careboxhealth/layout1-shared';
+import { OrderableMatDialog, LinkTarget } from '@careboxhealth/layout1-shared';
 import { ClientRoutes } from '../../../../common/client-routes';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -31,6 +31,7 @@ export class UsaCookieConfigurationDialogHomeComponent extends OrderableMatDialo
   showTextMoreMobile = false;
   public readonly externalRoutes: Record<string, string> = externalRoutes;
   public readonly ClientRoutes: Record<string, string> = ClientRoutes;
+  public readonly LinkTarget = LinkTarget;
 
   constructor(
     private dialog: MatDialog,

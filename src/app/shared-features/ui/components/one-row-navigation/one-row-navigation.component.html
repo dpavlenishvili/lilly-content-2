@@ -1,0 +1,21 @@
+<div class="host" #menuWrapper [ngClass]="{'is-sticky': isMenuSticky}">
+  <div class="host__content" [ngClass]="{'host__content--scrolled': showScroll()}" #menuContainer>
+    <div class="host__menu" #menu>
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  @if (showScroll()) {
+    <div class="host__nav host__nav--left">
+      <button mat-icon-button class="is-sm" (click)="scrollLeft()" aria-label="Scroll left" i18n-aria-label="@@one-row-navigation.scroll_left" data-cb-id="zQNRVSVOawF-">
+          <div class="thumb--arrow"></div>
+      </button>
+    </div>
+    
+    <div class="host__nav host__nav--right">
+      <button mat-icon-button class="is-sm" (click)="scrollRight()" aria-label="Scroll right" i18n-aria-label="@@one-row-navigation.scroll_right" data-cb-id="-Zrg-rhLmlaq">
+          <div class="thumb--arrow"></div>
+      </button>
+    </div>
+  }
+</div>

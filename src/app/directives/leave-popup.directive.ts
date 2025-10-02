@@ -26,8 +26,8 @@ export class LeavePopup {
     // We should open link here, not in afterClosed subscription, because safari allows to open tabs only in the same frame with click
     // So, we can't loose time and should open link right after click
     if (this.data?.link) {
-      const target = this.data.target ?? '_blank';
-      this.helperService.windowOpen(this.data.link, target as LinkTarget);
+      const target = (this.data.target as LinkTarget) ?? LinkTarget.Blank;
+      this.helperService.windowOpen(this.data.link, target);
     }
     this.dialogRef.close(true);
   }

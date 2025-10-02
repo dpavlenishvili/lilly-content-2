@@ -1,0 +1,28 @@
+<cst-wrapper [id]="section()?.fields?.sectionId" [showHeaderContent]="showTitle()">
+  <ng-container cst-title>
+    {{ section()?.fields?.title }}
+  </ng-container>
+  <ng-container cst-label>
+    {{ section()?.fields?.label }}
+  </ng-container>
+
+  <div class="widget-container">
+    @for (widget of section()?.fields?.widgets; track widget.sys.id) {
+      @switch (widget?.sys?.contentType?.sys?.id) {
+        @case ('imageTileWidget') {
+          <lilly-content-image-tile-widget [imageTileWidgetFields]="widget?.fields"></lilly-content-image-tile-widget>
+        }
+        @case ('accordionWidget') {
+          <lilly-content-accordion-widget [accordionWidgetFields]="widget?.fields">
+          </lilly-content-accordion-widget>
+        }
+        @case ('textWidget') {
+          <lilly-text-widget [textWidgetFields]="widget?.fields"></lilly-text-widget>
+        }
+        @case ('modulesNavigationBar') {
+          <lilly-content-modules-navigation-bar [modulesNavigationBarFields]="widget?.fields"></lilly-content-modules-navigation-bar>
+        }
+      }
+    }
+  </div>
+</cst-wrapper>

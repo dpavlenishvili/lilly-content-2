@@ -5,7 +5,7 @@ import { CookieConsentService } from '@careboxhealth/core';
 import { CookiePermissions } from '@careboxhealth/core';
 import { externalRoutes } from '../../../../configurations/links';
 import { Subject } from 'rxjs';
-import { OrderableMatDialog } from '@careboxhealth/layout1-shared';
+import { OrderableMatDialog, LinkTarget } from '@careboxhealth/layout1-shared';
 import { ClientRoutes } from '../../../../common/client-routes';
 import { MatButton } from '@angular/material/button';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -38,6 +38,7 @@ export class UsaCookieConfigurationDialogSettingsComponent extends OrderableMatD
 
   public readonly externalRoutes: Record<string, string> = externalRoutes;
   public readonly ClientRoutes: Record<string, string> = ClientRoutes;
+  public readonly LinkTarget = LinkTarget;
 
   public readonly ariaLabelMarketing: string = $localize`:@@usa-cookies-banner.settings.advertising-title:Advertising and Marketing Cookies`;
   public readonly ariaLabelFunctional: string = $localize`:@@usa-cookies-banner.settings.functional-title:Functional Cookies`;

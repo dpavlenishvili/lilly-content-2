@@ -2,21 +2,158 @@
 
 import { Asset, Entry } from 'contentful';
 
+export interface IAccordionWidgetFields {
+  /** Key */
+  key: string;
+
+  /** Title */
+  title?: string | undefined;
+
+  /** Content */
+  content?: IImageTileWidget[] | undefined;
+
+  /** Body */
+  body?: string | undefined;
+}
+
+/** Accordion widget to organize content into collapsible sections.   */
+
+export interface IAccordionWidget extends Entry<IAccordionWidgetFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'accordionWidget';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IButtonFields {
+  /** Text */
+  text: string;
+
+  /** Link */
+  link: string;
+
+  /** Link Behavior */
+  linkBehavior?:
+    | 'sameTab'
+    | 'newTab'
+    | 'interstitial'
+    | 'interstitialCollaboration'
+    | undefined;
+}
+
+/** Button with text, link and link behavior */
+
+export interface IButton extends Entry<IButtonFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'button';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface ICardFields {
+  /** Title */
+  title: string;
+
+  /** Body Text */
+  bodyText: string;
+
+  /** Button */
+  button?: IButton | undefined;
+}
+
+/** Part of layout that includes icon, title, body text, action button etc... */
+
+export interface ICard extends Entry<ICardFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'card';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IDayProgramFields {
+  /** Day Label */
+  dayLabel: string;
+
+  /** Heading */
+  heading: string;
+
+  /** Body Text */
+  bodyText: string;
+
+  /** Action Icons */
+  actionIcons?: Asset[] | undefined;
+}
+
+/** includes content per day */
+
+export interface IDayProgram extends Entry<IDayProgramFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'dayProgram';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IFooterFields {
   /** Entry Name */
   entryName: string;
 
+  /** Key */
+  key: string;
+
   /** Logo Image */
   logoImage: Asset;
 
-  /** Logo Link URL */
-  logoLinkUrl: string;
+  /** Logo Link */
+  logoLink?: ILink | undefined;
+
+  /** Logo Image Alt */
+  logoImageAlt: string;
 
   /** Contact Section Title */
   contactSectionTitle: string;
 
   /** Navigation Links */
-  navigationLinks: Entry<{ [fieldId: string]: unknown }>[];
+  navigationLinks: ILink[];
 
   /** Customer Support Content */
   customerSupportContent: string;
@@ -25,13 +162,13 @@ export interface IFooterFields {
   privacySectionTitle: string;
 
   /** Privacy Links */
-  privacyLinks: Entry<{ [fieldId: string]: unknown }>[];
+  privacyLinks: ILink[];
 
   /** Social Section Title */
   socialSectionTitle: string;
 
   /** Social Links */
-  socialLinks: Entry<{ [fieldId: string]: unknown }>[];
+  socialLinks: ILink[];
 }
 
 /** Footer content */
@@ -71,6 +208,9 @@ export interface IHeroSectionFields {
 
   /** Scroll label */
   scrollLabel?: string | undefined;
+
+  /** Card */
+  card?: ICard | undefined;
 }
 
 /** Top banner with headline, subheadline, background image */
@@ -104,6 +244,9 @@ export interface IHomePageFields {
 
   /** Metadata */
   metadata: IMetaAndShare;
+
+  /** Sections */
+  sections: ISection[];
 }
 
 /** Main page that defines the title, slug, metadata, sections and etc... Sections are ordered to build the page layout. */
@@ -125,9 +268,65 @@ export interface IHomePage extends Entry<IHomePageFields> {
   };
 }
 
+export interface IImageTileWidgetFields {
+  /** Heading */
+  heading: string;
+
+  /** Hide Heading */
+  hideHeading?: boolean | undefined;
+
+  /** Description */
+  description: string;
+
+  /** Image */
+  image: Asset;
+
+  /** Image Position */
+  imagePosition?: 'left' | 'right' | undefined;
+
+  /** Alt Text */
+  altText: string;
+
+  /** Button Text */
+  buttonText?: string | undefined;
+
+  /** Button Link */
+  buttonLink?: string | undefined;
+
+  /** Link Behavior */
+  linkBehavior?:
+    | 'sameTab'
+    | 'newTab'
+    | 'interstitial'
+    | 'interstitialCollaboration'
+    | undefined;
+
+  /** Hide Button */
+  hideButton?: boolean | undefined;
+}
+
+/** Widget that displays an image with a title, description, and link. Successive uses of this widget start with the image on the left for the first widget and then alternate layout orientations. */
+
+export interface IImageTileWidget extends Entry<IImageTileWidgetFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'imageTileWidget';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface ILinkFields {
-  /** Link Name */
-  linkName: string;
+  /** Entry Name */
+  entryName: string;
 
   /** Display Text */
   displayText: string;
@@ -135,11 +334,18 @@ export interface ILinkFields {
   /** URL */
   url: string;
 
+  /** Link Behavior */
+  linkBehavior:
+    | 'sameTab'
+    | 'newTab'
+    | 'interstitial'
+    | 'interstitialCollaboration';
+
   /** Icon */
   icon?: Asset | undefined;
 
-  /** Link Behavior */
-  linkBehavior: 'sameTab' | 'newTab';
+  /** Icon Alt */
+  iconAlt?: string | undefined;
 }
 
 export interface ILink extends Entry<ILinkFields> {
@@ -195,14 +401,208 @@ export interface IMetaAndShare extends Entry<IMetaAndShareFields> {
   };
 }
 
+export interface IModuleFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Key */
+  key: string;
+
+  /** Title */
+  title: string;
+
+  /** Introduction */
+  introduction: IImageTileWidget;
+}
+
+/** Content displayed for each module */
+
+export interface IModule extends Entry<IModuleFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'module';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IModulesNavigationBarFields {
+  /** Key */
+  key: string;
+
+  /** Menu */
+  menu: IModule[];
+
+  /** Mobile Dropdown Label */
+  mobileDropdownLabel?: string | undefined;
+}
+
+export interface IModulesNavigationBar
+  extends Entry<IModulesNavigationBarFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'modulesNavigationBar';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IModulesPageFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Key */
+  key: string;
+
+  /** Hero section */
+  heroSection: IHeroSection;
+
+  /** Metadata */
+  metadata: IMetaAndShare;
+
+  /** Modules Navigation */
+  modulesNavigation: IModulesNavigationBar;
+}
+
+/** Container Page for multiple wellness modules with tabbed navigation. */
+
+export interface IModulesPage extends Entry<IModulesPageFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'modulesPage';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface ISectionFields {
+  /** Title */
+  title?: string | undefined;
+
+  /** Label */
+  label?: string | undefined;
+
+  /** Section Id */
+  sectionId: string;
+
+  /** Widgets */
+  widgets: (
+    | IImageTileWidget
+    | ITextWidget
+    | IAccordionWidget
+    | IModulesNavigationBar
+  )[];
+
+  /** Hide Title */
+  hideTitle?: boolean | undefined;
+}
+
+/** Represents a section block on a page */
+
+export interface ISection extends Entry<ISectionFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'section';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface ITextWidgetFields {
+  /** Key */
+  key: string;
+
+  /** Text align */
+  textAlign: boolean;
+
+  /** Text */
+  text: string;
+}
+
+/** Widget that creates a text block */
+
+export interface ITextWidget extends Entry<ITextWidgetFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'textWidget';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export type CONTENT_TYPE =
+  | 'accordionWidget'
+  | 'button'
+  | 'card'
+  | 'dayProgram'
   | 'footer'
   | 'heroSection'
   | 'homePage'
+  | 'imageTileWidget'
   | 'link'
-  | 'metaAndShare';
+  | 'metaAndShare'
+  | 'module'
+  | 'modulesNavigationBar'
+  | 'modulesPage'
+  | 'section'
+  | 'textWidget';
 
-export type IEntry = IFooter | IHeroSection | IHomePage | ILink | IMetaAndShare;
+export type IEntry =
+  | IAccordionWidget
+  | IButton
+  | ICard
+  | IDayProgram
+  | IFooter
+  | IHeroSection
+  | IHomePage
+  | IImageTileWidget
+  | ILink
+  | IMetaAndShare
+  | IModule
+  | IModulesNavigationBar
+  | IModulesPage
+  | ISection
+  | ITextWidget;
 
 export type LOCALE_CODE = 'en-US' | 'es-US';
 

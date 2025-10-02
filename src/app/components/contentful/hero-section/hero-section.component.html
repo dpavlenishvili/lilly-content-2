@@ -1,0 +1,51 @@
+<section class="cst cst--intro sb-max-width">
+  <div class="cst__grid">
+    <div class="cst__grid__in">
+      <div class="cst__content cst__content--container">
+        <div class="block block--lg is_grid">
+          <div class="block__content">
+            <div class="block__title">
+              <h1>
+                {{ heroFields?.headline }}
+              </h1>
+            </div>
+            <div class="block__forms">
+              <h3>{{ heroFields?.subheadline }}</h3>
+            </div>
+          </div>
+          <div class="block__forms">
+            <div>{{ heroFields?.scrollLabel }}</div>
+            <div class="scroll-down">
+              <mat-icon svgIcon="straight" class="arrow-down"></mat-icon>
+            </div>
+            @if (heroFields?.card?.fields) {
+                <div class="hero-card">
+                  <h4>{{ heroFields?.card?.fields?.title }}</h4>
+                  <div class="hero-card__body" [innerHTML]="heroFields?.card?.fields?.bodyText | mdToHtml"></div>
+                  @if (heroFields?.card?.fields?.button) {
+                    <div class="hero-card__actions">
+                      <button mat-flat-button color="primary" (click)="goToLink(heroFields?.card?.fields?.button)">
+                        <div class="btn__grid">
+                          <div>
+                            {{ heroFields?.card?.fields?.button?.fields?.text }}
+                          </div>
+                          <mat-icon svgIcon="arrow_forward"></mat-icon>
+                        </div>
+                      </button>
+                    </div>
+                  }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cst__media">
+      <picture class="media">
+        <img width="220" 
+        [src]="heroFields?.backgroundImage?.fields?.file?.url" 
+        [alt]="heroFields?.altText">
+      </picture>
+    </div>
+  </div>
+</section>

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ContentfulService, GlobalSeoService } from '@careboxhealth/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IHomePage, IMetaAndShare } from '../components/contentful/models/contentful';
+import { IMetaAndShare } from '../components/contentful/models/contentful';
 
 
 @Injectable({
@@ -30,9 +30,9 @@ export class ExtendedContentfulService extends ContentfulService {
     return super.getEntry(entryId, this.languageService.selected.cmsCode, payload);
   }
 
-  getHomePage(): Observable<IHomePage> {
-    return this.getEntries({ content_type: 'homePage', 'fields.key': 'home-page' }).pipe(
-      map((res: { total: number; items: IHomePage[] }) => res?.items?.[0])
+  getEntryByKey<T>(contentType: string, key: string): Observable<T> {
+    return this.getEntries({ content_type: contentType, 'fields.key': key }).pipe(
+      map((res: { total: number; items: T[] }) => res?.items?.[0] as T)
     );
   }
 

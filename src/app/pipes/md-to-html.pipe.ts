@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LinkBehavior } from '../services/helper.service';
+import { LinkBehavior } from '@careboxhealth/core';
 import { ConfigurationProvider, LanguageCode } from '@careboxhealth/core';
 
 export const MD_TO_HTML_PIPE_LINK_CLASS = 'md-to-html-pipe-link';
@@ -74,9 +74,9 @@ export class MdToHtmlPipe implements PipeTransform {
       const hrefValue = href.length ? href[1] : '';
 
       if (hrefValue[0] === '/') {
-        linkBehaviorValue = 'sameTab';
+        linkBehaviorValue = LinkBehavior.SameTab;
       } else {
-        linkBehaviorValue = 'interstitial';
+        linkBehaviorValue = LinkBehavior.Interstitial;
       }
     }
 
