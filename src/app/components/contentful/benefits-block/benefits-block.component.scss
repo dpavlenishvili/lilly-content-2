@@ -1,0 +1,36 @@
+@use '_v3/calc' as calc;
+
+:host {
+  display: block;
+}
+
+:host ::ng-deep {
+  .cst {
+    --#{calc.$cb}cst-bg-clr: var(--#{calc.$color}palette-red-005);
+  }
+
+  .block__title {
+    p {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--#{calc.$cb}space-200);
+    }
+  }
+
+  .block__action {
+    text-align: center;
+
+    button[mat-flat-button] {
+      mat-icon {
+        color: currentColor;
+      }
+    }
+  }
+
+  .btn__grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: var(--#{calc.$cb}space-200);
+  }
+}

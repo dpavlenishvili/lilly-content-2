@@ -14,4 +14,13 @@
       }
     </div>
   }
+  @if (fields()?.microstepsBlock?.fields) {
+    <lilly-content-microsteps-block [microstepsBlockFields]="fields()?.microstepsBlock?.fields"></lilly-content-microsteps-block>
+  }
+  @if (fields()?.imageCoverBlock) {
+    <lilly-content-image-cover-block [imageCoverBlockFields]="fields()?.imageCoverBlock?.fields"></lilly-content-image-cover-block>
+  }
+  @if (fields()?.benefitsBlock?.fields) {
+    <lilly-content-benefits-block [benefitsBlockFields]="fields()?.benefitsBlock?.fields"></lilly-content-benefits-block>
+  }
 </div>

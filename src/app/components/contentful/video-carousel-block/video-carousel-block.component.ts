@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal, ViewChild } from '@angular/core';
 import { IVideoCarouselBlockFields, IVideoCard, IVideoCategoryTab } from '../models/contentful';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatFormField } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { NgClass } from '@angular/common';
 import { HelperService } from '../../../services/helper.service';
 import { LinkBehavior } from '@careboxhealth/core';
+import { CarouselModule, OwlOptions, CarouselComponent, NavData, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { OneRowNavigationComponent } from '../../../shared-features/ui/components/one-row-navigation/one-row-navigation.component';
 
 @Component({
   selector: 'lilly-content-video-carousel-block',
@@ -18,39 +20,71 @@ import { LinkBehavior } from '@careboxhealth/core';
     MatButton,
     MatIconButton,
     MatIcon,
-    MatFormField,
-    MatSelect,
-    MatOption,
-    NgClass
+    NgClass,
+    CarouselModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    OneRowNavigationComponent
   ]
 })
 export class VideoCarouselBlockComponent {
+  @ViewChild('owlCarousel', { static: true }) owlCarousel?: CarouselComponent;
+
   readonly videoCarouselBlockFields = input.required<IVideoCarouselBlockFields>();
   readonly fields = computed(() => this.videoCarouselBlockFields());
-
   readonly selectedCategory = signal<string>('all');
-
-  @ViewChild('carousel', { read: ElementRef }) carousel?: ElementRef<HTMLDivElement>;
+  readonly isPrevDisabled = signal(true);
+  readonly isNextDisabled = signal(false);
+  readonly scrollProgress = signal<number>(0);
 
   private readonly helperService = inject(HelperService);
+
+  readonly maxVisibleCards = computed(() => this.fields()?.maxVisibleCards || 3);
 
   readonly filteredVideos = computed(() => {
     const fields = this.fields();
     const category = this.selectedCategory();
-
     if (!fields?.videoCards) return [];
-
     if (category === 'all') {
       return fields.videoCards;
     }
-
-    return fields.videoCards.filter(card =>
-      card.fields.filterTag === category
-    );
+    return fields.videoCards.filter(card => card.fields.filterTag === category);
   });
+
+  readonly customOptions = computed<OwlOptions>(() => ({
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1,
+        slideBy: 1,
+        dots: true,
+        stagePadding: 20
+      },
+      600: {
+        items: 2,
+        slideBy: 2,
+        dots: true,
+        stagePadding: 40
+      },
+      992: {
+        items: this.maxVisibleCards(),
+        slideBy: this.maxVisibleCards(),
+        dots: false,
+        stagePadding: 0
+      }
+    },
+    nav: false
+  }));
 
   onCategoryClick(category: IVideoCategoryTab): void {
     this.selectedCategory.set(category.fields.filterValue);
+    this.owlCarousel?.to(0);
   }
 
   onVideoClick(video: IVideoCard): void {
@@ -69,17 +103,35 @@ export class VideoCarouselBlockComponent {
     }
   }
 
-  scrollCarousel(direction: 'next' | 'prev'): void {
-    const carouselEl = this.carousel?.nativeElement;
-    if (!carouselEl) return;
+  onNavData(data: NavData): void {
+    this.isPrevDisabled.set(data.prev.disabled);
+    this.isNextDisabled.set(data.next.disabled);
+  }
 
-    const scrollAmount = direction === 'next'
-      ? carouselEl.offsetWidth
-      : -carouselEl.offsetWidth;
+  onChanged(data: SlidesOutputData): void {
+    if (data.startPosition !== undefined && this.owlCarousel) {
+      const totalSlides = this.filteredVideos().length;
+      const visibleSlides = this.owlCarousel.slidesData.itemsCount;
 
-    carouselEl.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth'
-    });
+      if (totalSlides > visibleSlides) {
+        const lastPossibleStartPosition = totalSlides - visibleSlides;
+        if (lastPossibleStartPosition > 0) {
+          const progress = (data.startPosition / lastPossibleStartPosition) * 100;
+          this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
+        } else {
+          this.scrollProgress.set(data.startPosition > 0 ? 100 : 0);
+        }
+      } else {
+        this.scrollProgress.set(0);
+      }
+    }
+  }
+
+  next(): void {
+    this.owlCarousel?.next();
+  }
+
+  prev(): void {
+    this.owlCarousel?.prev();
   }
 }

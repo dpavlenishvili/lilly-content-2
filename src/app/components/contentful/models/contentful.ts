@@ -767,7 +767,7 @@ export interface IVideoCardFields {
   videoUrl: string;
 
   /** Filter Tag */
-  filterTag: string;
+  filterTag: 'all' | 'short-form' | 'recipe' | 'food-reset';
 }
 
 /** Individual video card */
@@ -851,7 +851,7 @@ export interface IVideoCategoryTabFields {
   label: string;
 
   /** Filter Value */
-  filterValue: string;
+  filterValue: 'all' | 'short-form' | 'recipe' | 'food-reset';
 }
 
 /** Category tab for filtering videos */

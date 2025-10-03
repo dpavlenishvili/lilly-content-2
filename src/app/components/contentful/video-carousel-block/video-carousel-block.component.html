@@ -1,5 +1,4 @@
 <div class="video-carousel-block">
-  <!-- Header Section -->
   <div class="video-carousel-block__header">
     @if (fields()?.label) {
       <div class="video-carousel-block__label">{{ fields()?.label }}</div>
@@ -12,27 +11,36 @@
     }
   </div>
 
-  <!-- Filter Tabs and CTA Row -->
   <div class="video-carousel-block__controls">
-    <!-- Desktop Category Filter Pills -->
     @if (fields()?.categoryTabs?.length) {
-      <div class="is-nav-desktop">
-        <div class="filter-pills">
-          <!-- Category pills -->
-          @for (tab of fields()?.categoryTabs; track tab.sys.id) {
-            <button
-              class="filter-pills__item"
-              [class.is-active]="selectedCategory() === tab.fields.filterValue"
-              (click)="onCategoryClick(tab)">
-              {{ tab.fields.label }}
-            </button>
-          }
+      <!-- Desktop Category Filter Pills -->
+      <div class="nav--tabs is-nav-desktop">
+        <div class="nav--tabs__container">
+          <lilly-one-row-navigation>
+            <div class="nav--tabs__content">
+              @for (tab of fields()?.categoryTabs; track tab.sys.id) {
+                <button
+                  mat-button
+                  class="nav--tabs__item"
+                  [class.selected]="selectedCategory() === tab.fields.filterValue"
+                  [attr.aria-selected]="selectedCategory() === tab.fields.filterValue"
+                  [attr.aria-label]="tab.fields.label"
+                  (click)="onCategoryClick(tab)"
+                  tabindex="0">
+                  <span>{{ tab.fields.label }}</span>
+                </button>
+              }
+            </div>
+          </lilly-one-row-navigation>
         </div>
       </div>
 
       <!-- Mobile Category Dropdown -->
-      <div class="is-nav-mobile">
-        <mat-form-field class="category-dropdown">
+      <div class="form-group is-nav-mobile">
+        @if (fields()?.categoryMobileDropdownLabel) {
+          <div class="label--external">{{ fields()?.categoryMobileDropdownLabel }}</div>
+        }
+        <mat-form-field class="category-dropdown has-out-hint">
           <mat-select [value]="selectedCategory()" (selectionChange)="selectedCategory.set($event.value)">
             @for (tab of fields()?.categoryTabs; track tab.sys.id) {
               <mat-option [value]="tab.fields.filterValue">{{ tab.fields.label }}</mat-option>
@@ -42,7 +50,6 @@
       </div>
     }
 
-    <!-- CTA Button -->
     @if (fields()?.ctaButton?.fields) {
       <button
         class="return-home-btn"
@@ -53,60 +60,69 @@
     }
   </div>
 
-  <!-- Video Cards Carousel -->
   <div class="video-carousel-block__wrapper">
-    <div class="video-carousel" #carousel>
+    <owl-carousel-o #owlCarousel [options]="customOptions()" (navigated)="onNavData($event)" (changed)="onChanged($event)">
       @for (video of filteredVideos(); track video.sys.id) {
-        <div
-          class="video-card"
-          (click)="onVideoClick(video)"
-          (keydown.enter)="onVideoClick(video)"
-          tabindex="0"
-          role="button"
-          [attr.aria-label]="'Play video: ' + video.fields.title">
+        <ng-template carouselSlide [id]="video.sys.id">
+          <div
+            class="video-card"
+            (click)="onVideoClick(video)"
+            (keydown.enter)="onVideoClick(video)"
+            tabindex="0"
+            role="button"
+            [attr.aria-label]="'Play video: ' + video.fields.title">
 
-          <!-- Category Label -->
-          <div class="video-card__category">{{ video.fields.categoryLabel }}</div>
+            <div class="video-card__category">{{ video.fields.categoryLabel }}</div>
 
-          <!-- Background Image -->
-          <img
-            class="video-card__image"
-            [src]="video.fields.thumbnail.fields.file.url"
-            [alt]="video.fields.title"
-            loading="lazy"
-            decoding="async" />
+            <img
+              class="video-card__image"
+              [src]="video.fields.thumbnail.fields.file.url"
+              [alt]="video.fields.title"
+              loading="lazy"
+              decoding="async" />
 
-          <!-- Card Footer -->
-          <div class="video-card__footer">
-            <!-- Title with Icon -->
-            <div class="video-card__title">
-              @if (video.fields.icon?.fields?.file?.url) {
-                <img
-                  class="video-card__icon"
-                  [src]="video.fields.icon.fields.file.url"
-                  alt=""
-                  loading="lazy" />
-              }
-              <span>{{ video.fields.title }}</span>
+            <div class="video-card__footer">
+              <div class="video-card__title">
+                @if (video.fields.icon?.fields?.file?.url) {
+                  <img
+                    class="video-card__icon"
+                    [src]="video.fields.icon.fields.file.url"
+                    alt=""
+                    loading="lazy" />
+                }
+                <span>{{ video.fields.title }}</span>
+              </div>
+
+              <button class="video-card__play-btn" aria-label="Play video">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
             </div>
-
-            <!-- Play Button -->
-            <button class="video-card__play-btn" aria-label="Play video">
-              <mat-icon>play_arrow</mat-icon>
-            </button>
           </div>
-        </div>
+        </ng-template>
       }
-    </div>
+    </owl-carousel-o>
 
-    <!-- Navigation Arrow (Desktop Only) -->
-    @if (filteredVideos().length > 3) {
-      <button
-        class="carousel-nav carousel-nav--next"
-        (click)="scrollCarousel('next')"
-        aria-label="Next videos">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+    @if (filteredVideos().length > maxVisibleCards()) {
+        <button
+                class="carousel-nav carousel-nav--prev"
+                (click)="prev()"
+                [disabled]="isPrevDisabled()"
+                aria-label="Previous videos">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button
+                class="carousel-nav carousel-nav--next"
+                (click)="next()"
+                [disabled]="isNextDisabled()"
+                aria-label="Next videos">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
     }
   </div>
+
+  @if (filteredVideos().length > maxVisibleCards()) {
+    <div class="carousel-progress">
+      <div class="carousel-progress__bar" [style.width.%]="scrollProgress()"></div>
+    </div>
+  }
 </div>

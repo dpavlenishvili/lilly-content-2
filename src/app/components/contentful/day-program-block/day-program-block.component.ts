@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, input, inject } from '@angular/core';
-import { IIcon } from '../models/contentful';
+import { IIcon, IDayProgramFields } from '../models/contentful';
 import { PrintService } from '@careboxhealth/core';
 import { HelperService } from '../../../services/helper.service';
 import { LinkTarget } from '@careboxhealth/layout1-shared';
-import { IDayProgramFields } from '../models/contentful';
 import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
+import { MicrostepsBlockComponent } from '../microsteps-block/microsteps-block.component';
+import { ImageCoverBlockComponent } from '../image-cover-block/image-cover-block.component';
+import { BenefitsBlockComponent } from '../benefits-block/benefits-block.component';
 
 @Component({
   selector: 'lilly-content-day-program-block',
   standalone: true,
-  imports: [MdToHtmlPipe],
+  imports: [MdToHtmlPipe, MicrostepsBlockComponent, ImageCoverBlockComponent, BenefitsBlockComponent],
   templateUrl: './day-program-block.component.html',
   styleUrls: ['./day-program-block.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

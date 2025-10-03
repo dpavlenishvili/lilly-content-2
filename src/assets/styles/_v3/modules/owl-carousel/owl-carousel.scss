@@ -13,7 +13,7 @@ owl-carousel-o {
 
   .owl-carousel {
     .owl-stage {
-      display: flex;
+      display: flex !important;
     }
 
     .owl-nav {
