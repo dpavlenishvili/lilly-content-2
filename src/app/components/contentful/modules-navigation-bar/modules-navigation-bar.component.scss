@@ -28,6 +28,7 @@
 
     .selected-content {
       margin-top: var(--#{calc.$cb}space-400);
+      overflow-x: hidden;
     }
   }
 }

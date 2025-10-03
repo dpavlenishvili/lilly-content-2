@@ -1,0 +1,363 @@
+@use '_v3/calc' as calc;
+
+$h: 'cb-video-carousel-';
+
+$init: (
+  container-spacing: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    lg: var(--#{calc.$cb}space-800)
+  )),
+  card-width: (media-query-up: (
+    xs: 280px,
+    sm: 320px,
+    lg: 360px
+  )),
+  card-height: (media-query-up: (
+    xs: 400px,
+    sm: 450px,
+    lg: 500px
+  )),
+  card-gap: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: var(--#{calc.$cb}space-400)
+  )),
+);
+
+:host {
+  @include calc.css-initVars($init, $h);
+  display: block;
+  width: 100%;
+  padding: var(--#{$h}container-spacing) 0;
+}
+
+:host ::ng-deep {
+  .video-carousel-block {
+    // Header Section
+    &__header {
+      margin-bottom: var(--#{calc.$cb}space-600);
+
+      @include calc.media-breakpoint-down(md) {
+        text-align: center;
+      }
+    }
+
+    &__label {
+      font-size: var(--#{calc.$cb}font-size-sm);
+      color: var(--#{calc.$cb}text-secondary);
+      margin-bottom: var(--#{calc.$cb}space-200);
+    }
+
+    &__title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: var(--#{calc.$cb}font-weight-black);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: var(--#{calc.$cb}space-200);
+      color: var(--#{calc.$cb}black);
+    }
+
+    &__subtitle {
+      font-family: var(--#{calc.$cb}font-family-serif);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-style: italic;
+      font-weight: var(--#{calc.$cb}font-weight-light);
+      line-height: 1.3;
+      margin: 0;
+      color: var(--#{calc.$cb}text-primary);
+    }
+
+    // Controls Row (Filters + CTA)
+    &__controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--#{calc.$cb}space-600);
+      gap: var(--#{calc.$cb}space-400);
+      flex-wrap: wrap;
+
+      @include calc.media-breakpoint-down(md) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    // Carousel Wrapper
+    &__wrapper {
+      position: relative;
+      margin: 0 calc(-1 * var(--#{calc.$cb}grid-gutter-width));
+      padding: 0 var(--#{calc.$cb}grid-gutter-width);
+    }
+  }
+
+  // Desktop/Mobile Toggle
+  .is-nav-desktop {
+    @include calc.media-breakpoint-down(md) {
+      display: none;
+    }
+    @include calc.media-breakpoint-up(lg) {
+      display: block;
+    }
+  }
+
+  .is-nav-mobile {
+    @include calc.media-breakpoint-up(xs) {
+      display: block;
+    }
+    @include calc.media-breakpoint-up(lg) {
+      display: none;
+    }
+  }
+
+  // Filter Pills (Desktop)
+  .filter-pills {
+    display: flex;
+    gap: var(--#{calc.$cb}space-200);
+    flex-wrap: wrap;
+    background-color: var(--#{calc.$cb}white);
+    padding: var(--#{calc.$cb}space-150);
+    border-radius: var(--#{calc.$cb}radius-pill);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    &__item {
+      padding: var(--#{calc.$cb}space-200) var(--#{calc.$cb}space-500);
+      border-radius: var(--#{calc.$cb}radius-pill);
+      border: none;
+      background-color: transparent;
+      color: var(--#{calc.$cb}text-primary);
+      font-size: var(--#{calc.$cb}font-size-base);
+      font-weight: var(--#{calc.$cb}font-weight-medium);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: var(--#{calc.$color}palette-gray-010);
+      }
+
+      &.is-active {
+        background-color: var(--#{calc.$cb}primary);
+        color: var(--#{calc.$cb}white);
+
+        &:hover {
+          background-color: var(--#{calc.$cb}primary-dark);
+        }
+      }
+    }
+  }
+
+  // Category Dropdown (Mobile)
+  .category-dropdown {
+    width: 100%;
+
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+  }
+
+  // Return Home Button
+  .return-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--#{calc.$cb}space-200);
+    padding: var(--#{calc.$cb}space-250) var(--#{calc.$cb}space-500);
+    border: 2px solid var(--#{calc.$cb}primary);
+    border-radius: var(--#{calc.$cb}radius-pill);
+    background-color: transparent;
+    color: var(--#{calc.$cb}primary);
+    font-size: var(--#{calc.$cb}font-size-base);
+    font-weight: var(--#{calc.$cb}font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: var(--#{calc.$cb}primary);
+      color: var(--#{calc.$cb}white);
+    }
+
+    mat-icon {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    @include calc.media-breakpoint-down(md) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  // Video Carousel
+  .video-carousel {
+    display: flex;
+    gap: var(--#{$h}card-gap);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--#{calc.$cb}space-400);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include calc.media-breakpoint-up(lg) {
+      overflow-x: visible;
+    }
+  }
+
+  // Video Card
+  .video-card {
+    position: relative;
+    flex: 0 0 var(--#{$h}card-width);
+    height: var(--#{$h}card-height);
+    border-radius: var(--#{calc.$cb}radius-4);
+    overflow: hidden;
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+
+      .video-card__play-btn {
+        background-color: var(--#{calc.$cb}primary);
+        transform: scale(1.1);
+      }
+    }
+
+    &:focus {
+      outline: 3px solid var(--#{calc.$cb}primary);
+      outline-offset: 2px;
+    }
+
+    // Background Image
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    // Category Label
+    &__category {
+      position: absolute;
+      top: var(--#{calc.$cb}space-300);
+      left: var(--#{calc.$cb}space-300);
+      padding: var(--#{calc.$cb}space-150) var(--#{calc.$cb}space-300);
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: var(--#{calc.$cb}radius-pill);
+      font-size: var(--#{calc.$cb}font-size-sm);
+      font-weight: var(--#{calc.$cb}font-weight-medium);
+      color: var(--#{calc.$cb}text-primary);
+      z-index: 2;
+    }
+
+    // Footer Section
+    &__footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--#{calc.$cb}space-400);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.4) 50%,
+          transparent 100%
+      );
+      z-index: 2;
+    }
+
+    // Title with Icon
+    &__title {
+      display: flex;
+      align-items: center;
+      gap: var(--#{calc.$cb}space-200);
+      color: var(--#{calc.$cb}white);
+      font-size: var(--#{calc.$cb}font-size-xl);
+      font-weight: var(--#{calc.$cb}font-weight-bold);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    &__icon {
+      width: 2rem;
+      height: 2rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    // Play Button
+    &__play-btn {
+      flex-shrink: 0;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      border: 2px solid var(--#{calc.$cb}white);
+      background-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+
+      mat-icon {
+        color: var(--#{calc.$cb}white);
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
+  // Carousel Navigation
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--#{calc.$cb}white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+
+    &:hover {
+      background-color: var(--#{calc.$cb}primary);
+
+      mat-icon {
+        color: var(--#{calc.$cb}white);
+      }
+    }
+
+    mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      color: var(--#{calc.$cb}text-primary);
+    }
+
+    &--next {
+      right: var(--#{calc.$cb}space-300);
+    }
+
+    @include calc.media-breakpoint-down(lg) {
+      display: none;
+    }
+  }
+}

@@ -808,6 +808,9 @@ export interface IVideoCarouselBlockFields {
   /** Category Tabs */
   categoryTabs: IVideoCategoryTab[];
 
+  /** Category Mobile Dropdown Label */
+  categoryMobileDropdownLabel?: string | undefined;
+
   /** CTA Button */
   ctaButton?: IButton | undefined;
 

@@ -40,4 +40,11 @@
             [weekPlannerNavigationBarFields]="selectedMenuItem()?.fields?.weekPlannerNavigation?.fields"></lilly-content-week-planner-navigation-bar>
     </div>
     }
+
+    @if (selectedMenuItem()?.fields?.videoCarouselBlock?.fields) {
+      <div class="selected-content">
+        <lilly-content-video-carousel-block
+          [videoCarouselBlockFields]="selectedMenuItem()?.fields?.videoCarouselBlock?.fields"></lilly-content-video-carousel-block>
+      </div>
+    }
 </div>
