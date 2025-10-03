@@ -7,11 +7,12 @@ import { ImageTileWidgetComponent } from '../image-tile-widget/image-tile-widget
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
+import { WeekPlannerNavigationBarComponent } from '../week-planner-navigation-bar/week-planner-navigation-bar.component';
 
 @Component({
   selector: 'lilly-content-modules-navigation-bar',
-  templateUrl: './modules-widget.component.html',
-  styleUrls: ['./modules-widget.component.scss'],
+  templateUrl: './modules-navigation-bar.component.html',
+  styleUrls: ['./modules-navigation-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OneRowNavigationComponent,
@@ -19,7 +20,8 @@ import { MatButton } from '@angular/material/button';
     MatFormField,
     MatSelect,
     MatOption,
-    MatButton
+    MatButton,
+    WeekPlannerNavigationBarComponent
   ],
   standalone: true
 })

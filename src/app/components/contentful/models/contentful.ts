@@ -35,6 +35,39 @@ export interface IAccordionWidget extends Entry<IAccordionWidgetFields> {
   };
 }
 
+export interface IBenefitsBlockFields {
+  /** Label */
+  label: string;
+
+  /** Title */
+  title: string;
+
+  /** Body Text */
+  bodyText: string;
+
+  /** Button */
+  button?: IButton | undefined;
+}
+
+/** Includes label, title, body text and button */
+
+export interface IBenefitsBlock extends Entry<IBenefitsBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'benefitsBlock';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IButtonFields {
   /** Text */
   text: string;
@@ -101,8 +134,11 @@ export interface ICard extends Entry<ICardFields> {
 }
 
 export interface IDayProgramFields {
-  /** Day Label */
-  dayLabel: string;
+  /** Tab Name */
+  tabName: string;
+
+  /** Label */
+  label: string;
 
   /** Heading */
   heading: string;
@@ -111,7 +147,16 @@ export interface IDayProgramFields {
   bodyText: string;
 
   /** Action Icons */
-  actionIcons?: Asset[] | undefined;
+  actionIcons?: IIcon[] | undefined;
+
+  /** Microsteps Block */
+  microstepsBlock?: IMicrostepsBlock | undefined;
+
+  /** Image Cover Block */
+  imageCoverBlock?: IImageCoverBlock | undefined;
+
+  /** Benefits Block */
+  benefitsBlock: IBenefitsBlock;
 }
 
 /** includes content per day */
@@ -268,6 +313,69 @@ export interface IHomePage extends Entry<IHomePageFields> {
   };
 }
 
+export interface IIconFields {
+  /** Alt Text */
+  altText: string;
+
+  /** Icon */
+  icon: Asset;
+
+  /** Type */
+  type: string;
+}
+
+/** Includes Icon and Alt Text */
+
+export interface IIcon extends Entry<IIconFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'icon';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IImageCoverBlockFields {
+  /** Label */
+  label: string;
+
+  /** Heading */
+  heading: string;
+
+  /** Background */
+  background: Asset;
+
+  /** Alt Text */
+  altText: string;
+}
+
+/** Includes label, heading and  image as a background */
+
+export interface IImageCoverBlock extends Entry<IImageCoverBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'imageCoverBlock';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IImageTileWidgetFields {
   /** Heading */
   heading: string;
@@ -401,6 +509,66 @@ export interface IMetaAndShare extends Entry<IMetaAndShareFields> {
   };
 }
 
+export interface IMicrostepCardFields {
+  /** Label */
+  label?: string | undefined;
+
+  /** Title */
+  title: string;
+
+  /** Body Text */
+  bodyText: string;
+}
+
+/** Each card contains a label, short title and description to encourage simple, healthy habits. */
+
+export interface IMicrostepCard extends Entry<IMicrostepCardFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'microstepCard';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IMicrostepsBlockFields {
+  /** Label */
+  label: string;
+
+  /** Microsteps Card */
+  microstepsCard?: IMicrostepCard[] | undefined;
+
+  /** Button */
+  button?: IButton | undefined;
+}
+
+/** Block Contains label, cards and the button */
+
+export interface IMicrostepsBlock extends Entry<IMicrostepsBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'microstepsBlock';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IModuleFields {
   /** Entry Name */
   entryName: string;
@@ -413,6 +581,12 @@ export interface IModuleFields {
 
   /** Introduction */
   introduction: IImageTileWidget;
+
+  /** Week Planner Navigation */
+  weekPlannerNavigation?: IWeekPlannerNavigation | undefined;
+
+  /** Video Carousel Block */
+  videoCarouselBlock?: IVideoCarouselBlock | undefined;
 }
 
 /** Content displayed for each module */
@@ -570,39 +744,217 @@ export interface ITextWidget extends Entry<ITextWidgetFields> {
   };
 }
 
+export interface IVideoCardFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Key */
+  key: string;
+
+  /** Title */
+  title: string;
+
+  /** Category Label */
+  categoryLabel: string;
+
+  /** Thumbnail */
+  thumbnail: Asset;
+
+  /** Icon */
+  icon?: Asset | undefined;
+
+  /** Video URL */
+  videoUrl: string;
+
+  /** Filter Tag */
+  filterTag: string;
+}
+
+/** Individual video card */
+
+export interface IVideoCard extends Entry<IVideoCardFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'videoCard';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IVideoCarouselBlockFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Key */
+  key: string;
+
+  /** Label */
+  label?: string | undefined;
+
+  /** Title */
+  title: string;
+
+  /** Subtitle */
+  subtitle?: string | undefined;
+
+  /** Category Tabs */
+  categoryTabs: IVideoCategoryTab[];
+
+  /** CTA Button */
+  ctaButton?: IButton | undefined;
+
+  /** Video Cards */
+  videoCards: IVideoCard[];
+
+  /** Max Visible Cards */
+  maxVisibleCards?: number | undefined;
+}
+
+/** Video carousel block with filtering tabs */
+
+export interface IVideoCarouselBlock extends Entry<IVideoCarouselBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'videoCarouselBlock';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IVideoCategoryTabFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Key */
+  key: string;
+
+  /** Label */
+  label: string;
+
+  /** Filter Value */
+  filterValue: string;
+}
+
+/** Category tab for filtering videos */
+
+export interface IVideoCategoryTab extends Entry<IVideoCategoryTabFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'videoCategoryTab';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IWeekPlannerNavigationFields {
+  /** Key */
+  key: string;
+
+  /** Label */
+  label: string;
+
+  /** Days */
+  days: IDayProgram[];
+
+  /** Mobile Dropdown Label */
+  mobileDropdownLabel: string;
+}
+
+/** tabbed day navigation */
+
+export interface IWeekPlannerNavigation
+  extends Entry<IWeekPlannerNavigationFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'weekPlannerNavigation';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export type CONTENT_TYPE =
   | 'accordionWidget'
+  | 'benefitsBlock'
   | 'button'
   | 'card'
   | 'dayProgram'
   | 'footer'
   | 'heroSection'
   | 'homePage'
+  | 'icon'
+  | 'imageCoverBlock'
   | 'imageTileWidget'
   | 'link'
   | 'metaAndShare'
+  | 'microstepCard'
+  | 'microstepsBlock'
   | 'module'
   | 'modulesNavigationBar'
   | 'modulesPage'
   | 'section'
-  | 'textWidget';
+  | 'textWidget'
+  | 'videoCard'
+  | 'videoCarouselBlock'
+  | 'videoCategoryTab'
+  | 'weekPlannerNavigation';
 
 export type IEntry =
   | IAccordionWidget
+  | IBenefitsBlock
   | IButton
   | ICard
   | IDayProgram
   | IFooter
   | IHeroSection
   | IHomePage
+  | IIcon
+  | IImageCoverBlock
   | IImageTileWidget
   | ILink
   | IMetaAndShare
+  | IMicrostepCard
+  | IMicrostepsBlock
   | IModule
   | IModulesNavigationBar
   | IModulesPage
   | ISection
-  | ITextWidget;
+  | ITextWidget
+  | IVideoCard
+  | IVideoCarouselBlock
+  | IVideoCategoryTab
+  | IWeekPlannerNavigation;
 
 export type LOCALE_CODE = 'en-US' | 'es-US';
 

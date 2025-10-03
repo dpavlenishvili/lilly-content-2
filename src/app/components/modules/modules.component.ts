@@ -3,7 +3,7 @@ import { HeroSectionComponent } from '../contentful/hero-section/hero-section.co
 import { ExtendedContentfulService } from '../../services/contentful.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IModulesPage } from '../contentful/models/contentful';
-import { ModulesNavigationBarComponent } from '../contentful/modules-widget/modules-widget.component';
+import { ModulesNavigationBarComponent } from '../contentful/modules-navigation-bar/modules-navigation-bar.component';
 
 @Component({
   selector: 'lilly-content-modules',
