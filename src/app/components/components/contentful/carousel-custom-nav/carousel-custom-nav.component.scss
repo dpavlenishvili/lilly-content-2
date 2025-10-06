@@ -1,0 +1,108 @@
+@use "_v3/calc" as calc;
+
+:host ::ng-deep {
+  .carousel-navigation {
+    width: 100%;
+    margin-top: var(--cb-space-400);
+
+    &__desktop {
+      @include calc.media-breakpoint-down(lg) {
+        display: none;
+      }
+    }
+
+    &__mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--cb-space-400);
+
+      @include calc.media-breakpoint-up(lg) {
+        display: none;
+      }
+
+      &--only {
+        @include calc.media-breakpoint-up(lg) {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  .carousel-pagination {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--cb-space-150);
+
+    &__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--cb-color-neutral-base-030);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+
+      &.is-active {
+        background-color: var(--cb-color-neutral-base-100);
+        width: 32px;
+        height: 8px;
+        border-radius: 4px;
+      }
+
+      &:hover:not(.is-active) {
+        background-color: var(--cb-color-neutral-base-050);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--cb-color-brand-base-060);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .nav-arrow {
+    width: 2rem;
+    height: 2rem;
+    background: var(--cb-color-neutral-base-005);
+    border: none;
+    border-radius: var(--cb-radius-full);
+    padding: 0;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--cb-color-neutral-base-010);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cb-color-brand-base-060);
+      outline-offset: 2px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      width: 0.5rem;
+      height: 0.5rem;
+      border: solid var(--cb-color-neutral-base-080);
+      border-width: 1px 0 0 1px;
+    }
+
+    &--next::after {
+      transform: translate(-50%, -50%) rotate(135deg);
+    }
+  }
+}

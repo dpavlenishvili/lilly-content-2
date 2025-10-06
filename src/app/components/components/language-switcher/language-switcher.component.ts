@@ -8,16 +8,16 @@ import {
   ChangeDetectionStrategy,
   ViewChild
 } from '@angular/core';
-import { LanguageService } from '../../shared-features/ui/language.service';
+import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
-import { OverlayTriggerDirective } from '../../shared-features/ui/directives/overlay-trigger.directive';
+import { OverlayTriggerDirective } from '../../directives/overlay-trigger.directive';
 
 @Component({
-  selector: 'lilly-language-switcher',
+  selector: 'lilly-content-language-switcher',
   templateUrl: './language-switcher.component.html',
   styleUrls: ['./language-switcher.component.scss'],
   imports: [
@@ -43,7 +43,7 @@ export class LanguageSwitcherComponent {
   ) {}
 
   setLanguage(language): void {
-    this.languageService.setLanguageWithConfirm(language, this.router.url);
+    this.languageService.setLanguageWithConfirm(language);
   }
 
   onEscape(): void {

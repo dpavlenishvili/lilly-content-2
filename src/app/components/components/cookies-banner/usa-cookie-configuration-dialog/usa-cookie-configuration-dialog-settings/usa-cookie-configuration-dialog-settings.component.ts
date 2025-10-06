@@ -1,20 +1,20 @@
-import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular/core';
 import { MatDialogRef, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieConsentService } from '@careboxhealth/core';
 import { CookiePermissions } from '@careboxhealth/core';
 import { externalRoutes } from '../../../../configurations/links';
 import { Subject } from 'rxjs';
-import { OrderableMatDialog } from '@careboxhealth/layout1-shared';
+import { OrderableMatDialog, LinkTarget } from '@careboxhealth/layout1-shared';
 import { ClientRoutes } from '../../../../common/client-routes';
 import { MatButton } from '@angular/material/button';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AppIconRegistry } from '../../../../services/app-icon-registry.service';
 
 @Component({
-  selector: 'lilly-usa-cookie-configuration-dialog-settings',
+  selector: 'lilly-content-usa-cookie-configuration-dialog-settings',
   templateUrl: './usa-cookie-configuration-dialog-settings.component.html',
   styleUrls: ['../scss/usa-cookie-configuration-dialog.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +25,6 @@ import { RouterLink } from '@angular/router';
     MatDialogContent,
     RouterLink,
     MatIcon,
-    NgIf,
     MatSlideToggle,
     MatDialogActions,
     MatButton,
@@ -37,19 +36,21 @@ export class UsaCookieConfigurationDialogSettingsComponent extends OrderableMatD
   private saveSettingClickSubject = new Subject();
   saveSettingClick$ = this.saveSettingClickSubject.asObservable();
 
-  public readonly externalRoutes = externalRoutes;
-  public readonly ClientRoutes = ClientRoutes;
+  public readonly externalRoutes: Record<string, string> = externalRoutes;
+  public readonly ClientRoutes: Record<string, string> = ClientRoutes;
+  public readonly LinkTarget = LinkTarget;
 
-  public ariaLabelMarketing = $localize`:@@usa-cookies-banner.settings.advertising-title:Advertising and Marketing Cookies`;
-  public ariaLabelFunctional = $localize`:@@usa-cookies-banner.settings.functional-title:Functional Cookies`;
-  public ariaLabelPerformance = $localize`:@@usa-cookies-banner.settings.performance-title:Performance Cookies (Analytics)`;
+  public readonly ariaLabelMarketing: string = $localize`:@@usa-cookies-banner.settings.advertising-title:Advertising and Marketing Cookies`;
+  public readonly ariaLabelFunctional: string = $localize`:@@usa-cookies-banner.settings.functional-title:Functional Cookies`;
+  public readonly ariaLabelPerformance: string = $localize`:@@usa-cookies-banner.settings.performance-title:Performance Cookies (Analytics)`;
 
-  constructor(
-    private dialogRef: MatDialogRef<UsaCookieConfigurationDialogSettingsComponent>,
-    private cookieConsentService: CookieConsentService,
-    elementRef: ElementRef
-  ) {
+  private readonly dialogRef: MatDialogRef<UsaCookieConfigurationDialogSettingsComponent> = inject(MatDialogRef<UsaCookieConfigurationDialogSettingsComponent>);
+  private readonly cookieConsentService: CookieConsentService = inject(CookieConsentService);
+  private readonly iconRegistry: AppIconRegistry = inject(AppIconRegistry);
+
+  constructor(elementRef: ElementRef) {
     super(elementRef);
+    this.registerIcons();
     const currentCookies: Partial<CookiePermissions> = this.cookieConsentService.currentCookiePermissions ?? {};
     this.cookieSettings = new UntypedFormGroup({
       necessary: new UntypedFormControl(true),
@@ -57,6 +58,10 @@ export class UsaCookieConfigurationDialogSettingsComponent extends OrderableMatD
       statistics: new UntypedFormControl(currentCookies.statistics ?? true),
       marketing: new UntypedFormControl(currentCookies.marketing ?? true),
     });
+  }
+
+  registerIcons(): void {
+    this.iconRegistry.addSvgIcon('check', '/assets/svg/lilly/check.svg');
   }
 
   getZIndex(): number {

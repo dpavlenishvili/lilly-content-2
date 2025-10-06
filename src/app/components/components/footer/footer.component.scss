@@ -34,27 +34,6 @@ $init: (
                 xs: 1fr,
                 lg: 1fr 1fr auto,
         )),
-        x-gap-links: (media-query-up: (
-                xs: var(--#{calc.$cb}space-200),
-                md: var(--#{calc.$cb}space-400),
-        )),
-        y-gap-links: (media-query-up: (
-                xs: var(--#{calc.$cb}space-100),
-                md: var(--#{calc.$cb}space-200),
-        )),
-        links-margin-bottom: (media-query-up: (
-                xs: var(--#{calc.$cb}space-100),
-                md: var(--#{calc.$cb}space-150),
-        )),
-        blocks-margin-bottom: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-                md: var(--#{calc.$cb}space-600),
-        )),
-        col3-y-gap: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-                md: var(--#{calc.$cb}space-600),
-        )),
-
 ) !default;
 
 
@@ -69,6 +48,7 @@ $init: (
         color: var(--#{calc.$cb}white);
       }
 
+      //border-top: 1px solid var(--#{calc.$cb}gray-400);
       background-color: var(--#{calc.$cb}primary);
       padding: var(--#{$h}offset-y) var(--#{$h}offset-x);
     }
@@ -85,7 +65,8 @@ $init: (
     }
 
     .brand {
-      .mat-icon {
+      .mat-icon,
+      .footer-logo {
         align-self: stretch;
         aspect-ratio: 112/51;
         height: var(--#{$h}logo-icon-size);
@@ -107,7 +88,7 @@ $init: (
         grid-area: c;
 
         .is-grid {
-          margin-bottom: var(--#{$h}blocks-margin-bottom);
+          margin-bottom: var(--#{calc.$cb}space-600);
         }
       }
     }
@@ -115,20 +96,16 @@ $init: (
     .block--3col {
       grid-template-columns: var(--#{$h}col-3);
       column-gap: var(--#{calc.$cb}space-400);
-      margin-bottom: var(--#{$h}blocks-margin-bottom) !important;
-      row-gap: var(--#{$h}col3-y-gap);
-      
-      .link-box {
-        margin-bottom: var(--#{$h}links-margin-bottom);
-      }
+      margin-bottom: var(--#{calc.$cb}space-600) !important;
     }
 
     .wrapper-links {
       display: flex;
       flex-wrap: wrap;
-      column-gap: var(--#{$h}x-gap-links);
-      row-gap: var(--#{$h}y-gap-links);
+      column-gap: var(--#{calc.$cb}space-400);
+      row-gap: var(--#{calc.$cb}space-200);
       max-width: 70%;
+      margin-bottom: var(--#{calc.$cb}space-150);
 
       > * {
         @include calc.make-col-auto();
@@ -138,8 +115,6 @@ $init: (
     .footer-title {
       font-size: var(--#{calc.$cb}font-size-125);
       font-weight: var(--#{calc.$cb}font-weight-bolder);
-      margin-bottom: var(--#{calc.$cb}space-200) !important;
     }
-
   }
 }

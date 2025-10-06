@@ -1,0 +1,57 @@
+@use '_v3/calc' as calc;
+
+$h: calc.$cb-subject-logo !default;
+$init: (
+        fg: var(--#{calc.$cb}primary),
+        font-size: 2rem,
+        font-weight : var(--#{calc.$cb}font-weight-middle),
+        gap: 1rem,
+        brand-h:(media-query-up: (
+                xs: 3.502rem,
+        )),
+        brand-h--sm:(media-query-up: (
+                xs: 2.25rem,
+        )),
+        font-size--sm:(media-query-up: (
+                xs: 1.25rem,
+        )),
+        display-text: block
+) !default;
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+:host  {
+  &.is-sm {
+    --#{$h}font-size: var(--#{$h}font-size--sm);
+    --#{$h}brand-h: var(--#{$h}brand-h--sm);
+  }
+
+  ::ng-deep {
+
+    & {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--#{$h}fg);
+      font-weight: var(--#{$h}font-weight);
+      font-size: var(--#{$h}font-size);
+      user-select: none;
+
+
+      & > * + * {
+        display: inline-flex;
+        margin-left: var(--#{$h}gap);
+      }
+
+      .mat-icon {
+        @include calc.size_r(calc(var(--#{$h}brand-h) * var(--#{calc.$cb}brand-w-rel)), var(--#{$h}brand-h));
+      }
+
+      .subject__text {
+        display: var(--#{$h}display-text);
+        font-size: var(--#{$h}font-size);
+      }
+    }
+  }
+}

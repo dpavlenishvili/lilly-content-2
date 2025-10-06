@@ -1,0 +1,48 @@
+<div class="md-dialog-header text-center">
+    @if (!data?.isNoLogo) {
+        <img src="assets/images/lilly-logo.svg" width="88px" alt="Lilly logo">
+    }
+    <button mat-icon-button mat-dialog-close class="md-btn-close" [aria-label]="DIALOG_KEY.Close">
+        <mat-icon svgIcon="close"></mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content class="text-center mb-3">
+    <h2 i18n="@@leave_to_lilly_site_dialog.title" id="leaveLillyDialogLabel">
+        You are now leaving Lilly Trials UK and being redirected to a Lilly-owned website intended for audiences in a different geography.
+    </h2>
+    <p i18n="@@leave_to_lilly_site_dialog.subtitle">
+        Please note that such website and its content have been construed in accordance with local laws and regulations,
+        which may differ from the ones applicable to Lilly Trials UK.
+        <br/><br/><br/>
+        Please make sure to review the Terms of Use and the Privacy
+        and Security policies of any website located in a different geography before you provide personal or confirmation information.
+        <br/><br/><br/>
+        Click “Continue” to leave site or “Return to Lilly Trials” to close this window and return to Lilly Trials UK.
+    </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="md-dialog-action-confirm w-100">
+        <div class="row g-md-3 g-3 justify-content-center align-items-center ">
+            <div class="col-auto col-sm-auto">
+                <button mat-stroked-button
+                        mat-dialog-close
+                        color="primary"
+                        i18n="@@leave_to_lilly_site_dialog.cancel_button_title">
+                    Return to Lilly Trials
+                </button>
+            </div>
+            <div class="col-auto col-sm-auto">
+                <button mat-flat-button
+                        color="primary"
+                        class="md-btn-submit"
+                        (click)="leaveLillyTrials()"
+                        i18n="@@leave_to_lilly_site_dialog.submit_button_title">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-dialog-actions>
+

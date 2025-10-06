@@ -1,9 +1,7 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input} from '@angular/core';
-import {ITextWidgetFields} from '../models/contentful';
-import {ICmsAnalytics} from '../models/cmsanalytics';
-import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
-
+import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
+import { ITextWidgetFields } from '../models/contentful';
 
 @Component({
   selector: 'lilly-text-widget',
@@ -17,8 +15,11 @@ import { NgClass } from '@angular/common';
   standalone: true
 })
 export class TextWidgetComponent {
-  @Input() textWidgetFields: ITextWidgetFields;
-  @Input() cmsAnalytics: ICmsAnalytics;
+  readonly textWidgetFields = input.required<ITextWidgetFields>();
+  readonly elementRef = inject(ElementRef);
 
-  constructor(public elementRef: ElementRef) {}
+  readonly textAlignment = computed(() => ({
+    'text-left': !this.textWidgetFields()?.textAlign,
+    'text-center': this.textWidgetFields()?.textAlign
+  }));
 }

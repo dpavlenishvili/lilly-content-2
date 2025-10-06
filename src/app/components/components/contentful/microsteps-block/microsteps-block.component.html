@@ -1,0 +1,26 @@
+<div class="block__content">
+  <div class="block__title">
+    <p>{{ fields()?.label }}</p>
+  </div>
+
+  <div class="microsteps-grid">
+    @for (card of fields()?.microstepsCard; track card.sys.id) {
+      <div class="microstep-card">
+        @if (card.fields.label) {
+          <p class="card-label">{{ card.fields.label }}</p>
+        }
+        <h3 class="card-title">{{ card.fields.title }}</h3>
+        <div class="card-text" [innerHTML]="card.fields.bodyText | mdToHtml"></div>
+      </div>
+    }
+  </div>
+
+  @if (fields()?.button?.fields) {
+    <button mat-flat-button color="primary" (click)="onButtonClick(fields()?.button)">
+      <div class="btn__grid">
+        <div>{{ fields()?.button?.fields?.text }}</div>
+        <mat-icon svgIcon="arrow-down"></mat-icon>
+      </div>
+    </button>
+  }
+</div>

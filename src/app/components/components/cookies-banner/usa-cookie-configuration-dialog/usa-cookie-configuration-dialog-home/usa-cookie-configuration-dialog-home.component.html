@@ -18,11 +18,11 @@
                     marketing, and advertising partners for purposes of targeted advertising and analyzing website
                     metrics. Please visit our
                     <a [routerLink]="ClientRoutes.CookieNotice" class="font-weight-bold"
-                       target="_blank">Cookie Notice</a>,
-                    <a [href]="externalRoutes.Privacy" class="font-weight-bold" target="_blank">
+                       [target]="LinkTarget.Blank">Cookie Notice</a>,
+                    <a [href]="externalRoutes.Privacy" class="font-weight-bold" [target]="LinkTarget.Blank">
                         Privacy Statement</a>,
                     and
-                    <a [href]="externalRoutes.ConsumerHealthPrivacyNotice" class="font-weight-bold" target="_blank">
+                    <a [href]="externalRoutes.ConsumerHealthPrivacyNotice" class="font-weight-bold" [target]="LinkTarget.Blank">
                         Consumer Health Privacy Notice
                     </a>
                     for more information. Certain laws require consent to collect and share information. You can
@@ -32,21 +32,22 @@
                     >Cookie Settings</a>
                     or
                     <a [href]="externalRoutes.YourPrivacyChoice" class="font-weight-bold"
-                       target="_blank">Your
+                       [target]="LinkTarget.Blank">Your
                         Privacy Choices</a>
                     in our website footer.
                 </span>
                 <span class="txt__ctrl">
                     <span>
-                        <span *ngIf="!showTextMoreMobile">...</span>
-                        <a (click)="showTextMoreMobile = ! showTextMoreMobile" *ngIf="!showTextMoreMobile"
-                           i18n="@@usa-cookies-banner.home.view_more">
-                            View More
+                      @if (!showTextMoreMobile) {
+                        <span>...</span>
+                        <a (click)="showTextMoreMobile = !showTextMoreMobile" i18n="@@usa-cookies-banner.home.view_more">
+                          View More
                         </a>
-                        <a (click)="showTextMoreMobile = ! showTextMoreMobile" *ngIf="showTextMoreMobile"
-                           i18n="@@usa-cookies-banner.home.view_less">
-                            View Less
+                      } @else {
+                        <a (click)="showTextMoreMobile = !showTextMoreMobile" i18n="@@usa-cookies-banner.home.view_less">
+                          View Less
                         </a>
+                      }
                     </span>
                 </span>
             </p>

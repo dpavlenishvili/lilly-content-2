@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import {
   AnalyticsService,
   ConfigurationProvider,
@@ -7,14 +6,14 @@ import {
   LocationService,
   PrivacyProtection
 } from '@careboxhealth/core';
+import { LinkTarget } from '@careboxhealth/layout1-shared';
 import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
   CookiesConfigurationsDialogComponent
 } from './cookies-configurations-dialog/cookies-configurations-dialog.component';
-import { Subject } from 'rxjs';
 import { CookieBannerService } from '../../services/cookie-banner.service';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import {
   UsaCookieConfigurationDialogHomeComponent
 } from './usa-cookie-configuration-dialog/usa-cookie-configuration-dialog-home/usa-cookie-configuration-dialog-home.component';
@@ -25,19 +24,18 @@ import { ComponentType } from '@angular/cdk/portal';
 import { NEVADA_CITIES, WASHINGTON_CITIES } from '../../constants/cities';
 import { MatButton } from '@angular/material/button';
 import { externalRoutes } from '../../configurations/links';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'lilly-cookies-banner',
+  selector: 'lilly-content-cookies-banner',
   templateUrl: './cookies-banner.component.html',
   styleUrls: ['./cookies-banner.component.scss'],
   imports: [
-    NgIf,
     MatButton
   ],
   standalone: true
 })
-export class CookiesBannerComponent implements OnInit, OnDestroy {
-
+export class CookiesBannerComponent implements OnInit {
   static isNevadaWashington(city: string): boolean {
     if (!city) {
       return false;
@@ -51,20 +49,17 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
   }
 
   public visible = false;
-  public readonly externalRoutes = externalRoutes;
+  public readonly externalRoutes: Record<string, string> = externalRoutes;
+  public readonly LinkTarget = LinkTarget;
 
-  destroy$ = new Subject();
-
-  constructor(
-        private cookieConsentService: CookieConsentService,
-        private helperService: HelperService,
-        private configuration: ConfigurationProvider,
-        public dialog: MatDialog,
-        private cookieBannerService: CookieBannerService,
-        private analyticsService: AnalyticsService,
-        private locationService: LocationService
-  ) {
-  }
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly cookieConsentService: CookieConsentService = inject(CookieConsentService);
+  private readonly helperService: HelperService = inject(HelperService);
+  private readonly configuration: ConfigurationProvider = inject(ConfigurationProvider);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly cookieBannerService: CookieBannerService = inject(CookieBannerService);
+  private readonly analyticsService: AnalyticsService = inject(AnalyticsService);
+  private readonly locationService: LocationService = inject(LocationService);
 
   get cookieBannerType(): PrivacyProtection {
     return this.configuration.getConfigurationEntry('privacyProtection');
@@ -80,7 +75,7 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.cookieConsentService.accepted) {
-      this.analyticsService.geoCity$?.subscribe(city => {
+      this.analyticsService.geoCity$?.subscribe((city: string) => {
         if (CookiesBannerComponent.isNevadaWashington(city)) {
           this.cookieConsentService.acceptOnlyNecessary();
         }
@@ -95,7 +90,7 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
     this.setVisibilityState();
     this.cookieBannerService.showCookieBanner.pipe(
       filter((isShow: boolean) => isShow),
-      takeUntil(this.destroy$)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.showCookieBanner();
     });
@@ -116,10 +111,11 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
   }
 
   showUSACookieBanner(): void {
-    // eslint-disable-next-line max-len
-    const DialogComponent: ComponentType<UsaCookieConfigurationDialogSettingsComponent | UsaCookieConfigurationDialogHomeComponent> = this.cookieConsentService.accepted
-      ? UsaCookieConfigurationDialogSettingsComponent
-      : UsaCookieConfigurationDialogHomeComponent;
+    const DialogComponent: ComponentType<
+      UsaCookieConfigurationDialogSettingsComponent
+      | UsaCookieConfigurationDialogHomeComponent> = this.cookieConsentService.accepted 
+        ? UsaCookieConfigurationDialogSettingsComponent
+        : UsaCookieConfigurationDialogHomeComponent;
     this.dialog.open(DialogComponent, {
       panelClass: ['cookies-dialog', 'usa-cookies-dialog'],
       autoFocus: false,
@@ -133,7 +129,7 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
       });
   }
 
-  setVisibilityState() {
+  setVisibilityState(): void {
     if (this.cookieConsentService.accepted) {
       this.visible = false;
       this.helperService.setBannerStatus({ status: this.visible });
@@ -163,12 +159,12 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
     this.onConfigure(true);
   }
 
-  private close() {
+  private close(): void {
     this.visible = false;
     this.helperService.setBannerStatus({ status: this.visible });
   }
 
-  public onConfigure(isAutoOpen = false) {
+  public onConfigure(isAutoOpen = false): void {
     const dialogRef = this.dialog.open(CookiesConfigurationsDialogComponent, {
       panelClass: 'cookies-dialog',
       autoFocus: false
@@ -188,10 +184,5 @@ export class CookiesBannerComponent implements OnInit, OnDestroy {
     window.requestAnimationFrame(() => {
       this.helperService.scrollToSection(this.locationService.hash.substring(1));
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

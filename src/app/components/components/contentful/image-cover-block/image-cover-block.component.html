@@ -1,0 +1,23 @@
+<div class="cst cst--intro sb-max-width">
+  <div class="cst__grid">
+    <div class="cst__media">
+      <div class="media">
+        <img [src]="imageCoverBlockFields()?.background?.fields?.file?.url"
+             [alt]="imageCoverBlockFields()?.altText">
+      </div>
+    </div>
+    <div class="cst__grid__in">
+      <div class="cst__content cst__content--container">
+        <div class="block">
+          <div class="block__title">
+            <p class="label">{{ imageCoverBlockFields()?.label }}</p>
+          </div>
+
+          <div class="block__heading">
+            <h1>{{imageCoverBlockFields()?.heading}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

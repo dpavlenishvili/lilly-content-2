@@ -1,0 +1,43 @@
+@if (video()) {
+  <div
+    class="video-card"
+    tabindex="0"
+    role="button"
+    [attr.aria-label]="video()?.fields?.title">
+
+<!--    <img-->
+<!--      class="video-card__image"-->
+<!--      [src]="video()?.fields?.thumbnail?.fields?.file?.url"-->
+<!--      [alt]="video()?.fields?.title"-->
+<!--      loading="lazy"-->
+<!--      decoding="async"/>-->
+
+    @if (isPlaying()) {
+      <lilly-media-content
+        [mediaType]="video().fields?.video.fields?.displayMedia"
+        [mediaId]="video().fields.video.fields.kalturaId"
+        [videoConfig]="video().fields.video?.fields.videoConfig"
+      ></lilly-media-content>
+    }
+
+    <div class="video-card__category">{{ video()?.fields?.categoryLabel }}</div>
+
+    <div class="video-card__footer">
+      <div class="video-card__title">
+        @if (video()?.fields?.icon?.fields?.file?.url) {
+          <img
+            class="video-card__icon"
+            [src]="video()?.fields?.icon?.fields?.file?.url"
+            [alt]="video()?.fields?.icon?.fields?.description"
+            loading="lazy"/>
+        }
+        <span>{{ video()?.fields?.title }}</span>
+      </div>
+
+      <button class="video-card__play-btn" (click)="togglePlay($event)">
+        P
+<!--        <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>-->
+      </button>
+    </div>
+  </div>
+}

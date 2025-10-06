@@ -219,7 +219,7 @@ $init: (
             }
           }
         }
-        /*TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
+
         .mat-checkbox-checked.mat-primary .mat-checkbox-background {
           background: var(--#{$cb}primary);
         }
@@ -242,7 +242,7 @@ $init: (
         --h-slider: 24px;
 
         &:not(.mat-checked) {
-          /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
+
           .mat-slide-toggle-bar {
             background-color: #4f4f50;
           }
@@ -250,33 +250,28 @@ $init: (
       }
 
       .mat-mdc-slide-toggle.mat-primary.mat-checked {
-        /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
         .mat-slide-toggle-thumb,
         .mat-ripple-element {
           background-color: var(--#{$cb}white);
         }
-        /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
         .mat-slide-toggle-bar {
           background-color: var(--#{$cb}success-dark);
         }
-        /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
         .mat-slide-toggle-thumb-container {
           transform: translate3d(1.5rem, 0, 0);
         }
       }
-      /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
-      /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
       .mat-slide-toggle-bar {
         height: 1.5rem;
         width: 3rem;
         border-radius: 100px;
-        /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
+
         .mat-slide-toggle-thumb-container {
           top: 2px;
           left: 2px;
         }
       }
-      /*TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
+
       .mat-slide-toggle-content {
         color: var(--#{$cb}primary);
       }

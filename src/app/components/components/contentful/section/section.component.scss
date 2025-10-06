@@ -1,23 +1,6 @@
 @use "_v3/calc" as calc;
 
-$h: '' !default;
-$init: (
-        text-widget-custom-margin-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-600),
-                lg: var(--#{calc.$cb}space-700),
-                xl: var(--#{calc.$cb}space-900),
-        )),
-        text-widget-margin-top: (media-query-up: (
-                xs: calc((var(--#{$h}text-widget-custom-margin-y) - var(--#{calc.$cb}cst-header-gap) ) * -1 ),
-        )),
-        widget-item-font-size: (media-query-up: (
-                xs: var(--#{calc.$cb}font-size-lg),
-                lg: var(--#{calc.$cb}font-size-125),
-        )),
-) !default;
-
 :host {
-  @include calc.css-initVars($init, $h);
   ::ng-deep {
     p,
     h1,
@@ -34,7 +17,6 @@ $init: (
         }
       }
     }
-
 
       .accordion-widget {
         .mat-expansion-panel {
@@ -53,33 +35,6 @@ $init: (
       }
     }
 
-  ::ng-deep {
-    .cst.cst--custom {
-      &:not(.cst--without-title ){
-        .widget-container {
-          & > *:first-child {
-            &.widget-item {
-              margin-top: var(--#{$h}text-widget-margin-top);
-            }
-          }
-        }
-      }
-      &.cst--empty-content {
-        .widget-item {
-          --#{$h}text-widget-margin-top: var(--#{calc.$cb}space-300);
-        }
-      }
-    }
-
-    .widget-item {
-      .text-wrapper {
-        p {
-          font-size: var(--#{$h}widget-item-font-size);
-        }
-      }
-    }
-  }
-
   &.blog-section {
     padding: 0 0 var(--#{calc.$cb}space-200);
 
@@ -93,31 +48,37 @@ $init: (
   }
 
   .widget-container {
-
-    > * + * {
-      display: block;
-      margin-top: var(--#{calc.$cb}cst-in-margin-y);
-    }
-
-
-    .widget-item--image-tile + .widget-item--image-tile {
+    lilly-content-image-tile-widget + lilly-content-image-tile-widget {
       display: block;
       border-top: 1px solid var(--#{calc.$color}palette-red-030);
       margin-top: var(--#{calc.$cb}cst-in-margin-y);
       padding-top: var(--#{calc.$cb}cst-in-margin-y);
     }
 
-
     lilly-accordion-widget + lilly-accordion-widget {
       margin-top: 0 !important;
     }
+  }
 
-    &:has(lilly-image-link-widget) {
-      text-align: center;
+  @include calc.media-breakpoint-up(lg) {
+    &.has-sidemenu {
+      background-color: var(--#{calc.$cb}white) !important;
     }
+  }
 
-    lilly-image-link-widget {
-      display: inline-block !important;
+  @include calc.media-breakpoint-down(lg) {
+    .section-cont {
+      h2 {
+        padding: 2rem 0 1.5rem;
+      }
+
+      &.blog-section {
+        .title-container {
+          h2 {
+            padding: 0.25rem 0;
+          }
+        }
+      }
     }
   }
 }

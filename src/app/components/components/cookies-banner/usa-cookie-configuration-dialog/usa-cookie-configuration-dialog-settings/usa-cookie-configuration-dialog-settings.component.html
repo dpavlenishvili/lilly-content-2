@@ -5,7 +5,7 @@
         <p i18n="@@usa-cookies-banner.settings.description">
             For more information about Lilly's cookies, tracking technologies and third-party cookies, see our
             <a [routerLink]="ClientRoutes.CookieNotice" class="font-weight-bold"
-               target="_blank">Cookie Notice</a>.
+               [target]="LinkTarget.Blank">Cookie Notice</a>.
         </p>
 
         <div class="usa-cookies-body__block">
@@ -34,8 +34,11 @@
                 <p class="font-weight-bold mb-0" i18n="@@usa-cookies-banner.settings.functional-title">Functional
                     Cookies</p>
                 <div class="toggle-wrapper">
-                    <span *ngIf="cookieSettings?.controls?.preferences?.value" i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
-                    <span *ngIf="!cookieSettings?.controls?.preferences?.value" i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    @if (cookieSettings?.controls?.preferences?.value) {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
+                    } @else {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    }
                     <mat-slide-toggle color="primary"
                                       (keydown.enter)="$event.preventDefault(); switchToggle('preferences')"
                                       formControlName="preferences"
@@ -56,8 +59,11 @@
                 <p class="font-weight-bold mb-0" i18n="@@usa-cookies-banner.settings.performance-title">Performance
                     Cookies (Analytics)</p>
                 <div class="toggle-wrapper">
-                    <span *ngIf="cookieSettings?.controls?.statistics?.value" i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
-                    <span *ngIf="!cookieSettings?.controls?.statistics?.value" i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    @if (cookieSettings?.controls?.statistics?.value) {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
+                    } @else {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    }
                     <mat-slide-toggle color="primary"
                                       (keydown.enter)="$event.preventDefault(); switchToggle('statistics')"
                                       formControlName="statistics"  [aria-label]="ariaLabelPerformance">
@@ -77,8 +83,11 @@
                 <p class="font-weight-bold mb-0" i18n="@@usa-cookies-banner.settings.advertising-title">Advertising and
                     Marketing Cookies</p>
                 <div class="toggle-wrapper">
-                    <span *ngIf="cookieSettings?.controls?.marketing?.value" i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
-                    <span *ngIf="!cookieSettings?.controls?.marketing?.value" i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    @if (cookieSettings?.controls?.marketing?.value) {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-on">On</span>
+                    } @else {
+                        <span i18n="@@usa-cookies-banner.settings.toggle-off">Off</span>
+                    }
                     <mat-slide-toggle color="primary"
                                       (keydown.enter)="$event.preventDefault(); switchToggle('marketing')"
                                       [aria-label]="ariaLabelMarketing"

@@ -1,53 +1,50 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, Subject } from 'rxjs';
-import { startWith, takeUntil } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { ClientRoutes } from '../../../common/client-routes';
 import { HelperService } from 'src/app/services/helper.service';
-import { CookieConsentService, CookiePermissions } from '@careboxhealth/core';
+import { CookieConsentService, CookiePermissions, LanguageCode } from '@careboxhealth/core';
 import { OrderableMatDialog, HideForRegionsDirective, ShowForRegionsDirective } from '@careboxhealth/layout1-shared';
 import { externalRoutes } from 'src/app/configurations/links';
-import { Language } from '../../../enums/language';
 import { MatButton } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
-  selector: 'lilly-cookies-configurations-dialog',
+  selector: 'lilly-content-cookies-configurations-dialog',
   templateUrl: './cookies-configurations-dialog.component.html',
   styleUrls: ['./cookies-configurations-dialog.component.scss'],
   standalone: true,
   imports: [
     MatDialogContent, FormsModule, ReactiveFormsModule, HideForRegionsDirective,
-    ShowForRegionsDirective, MatSlideToggle, NgIf, MatDialogActions, MatButton
+    ShowForRegionsDirective, MatSlideToggle, MatDialogActions, MatButton
   ]
 })
-export class CookiesConfigurationsDialogComponent extends OrderableMatDialog implements OnInit, OnDestroy {
-
+export class CookiesConfigurationsDialogComponent extends OrderableMatDialog implements OnInit {
   form: FormGroup;
-
   showMoreFirst = false;
   showMoreSecond = false;
   showMoreThird = false;
-  destroy$ = new Subject();
 
-  readonly clientRoutes = ClientRoutes;
-  readonly externalRoutes = externalRoutes;
-  readonly Language = Language;
+  readonly clientRoutes: Record<string, string> = ClientRoutes;
+  readonly externalRoutes: Record<string, string> = externalRoutes;
+  readonly Language: typeof LanguageCode = LanguageCode;
+
+  public readonly dialogRef: MatDialogRef<CookiesConfigurationsDialogComponent> = inject(MatDialogRef<CookiesConfigurationsDialogComponent>);
+  protected readonly helperService: HelperService = inject(HelperService);
+  protected readonly cookieConsentService: CookieConsentService = inject(CookieConsentService);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   getZIndex(): number {
     return 10000;
   }
 
-  constructor(public dialogRef: MatDialogRef<CookiesConfigurationsDialogComponent>,
-              protected helperService: HelperService,
-              protected cookieConsentService: CookieConsentService,
-              elementRef: ElementRef
-  ) {
+  constructor(elementRef: ElementRef) {
     super(elementRef);
-    dialogRef.disableClose = true;
+    this.dialogRef.disableClose = true;
     const currentCookies: Partial<CookiePermissions> = this.cookieConsentService.currentCookiePermissions ?? {};
     this.form = new FormGroup({
       acceptAllCookies: new FormControl<boolean>(!!(currentCookies.statistics && currentCookies.marketing)),
@@ -60,7 +57,7 @@ export class CookiesConfigurationsDialogComponent extends OrderableMatDialog imp
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.form.get('acceptAllCookies').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.form.get('acceptAllCookies').valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
       this.form.patchValue({
         performanceCookies: data,
         analyticsCookies: data
@@ -107,12 +104,7 @@ export class CookiesConfigurationsDialogComponent extends OrderableMatDialog imp
     }
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  accept() {
+  accept(): void {
     if (this.form.value.acceptAllCookies) {
       this.acceptAll();
       return;
@@ -127,15 +119,15 @@ export class CookiesConfigurationsDialogComponent extends OrderableMatDialog imp
     this.cookieConsentService.setSelectedCookiePermissions(cookiePermissions);
   }
 
-  acceptAll() {
+  acceptAll(): void {
     this.cookieConsentService.accept();
   }
 
-  reject() {
+  reject(): void {
     this.cookieConsentService.decline();
   }
 
-  openLink(link) {
+  openLink(link: string): void {
     this.helperService.openDialog(link);
   }
 }

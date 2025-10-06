@@ -1,0 +1,54 @@
+<mat-dialog-content class="text-center mb-3">
+    <div class="md-dialog-header text-center">
+        <img src="assets/images/lilly-logo.svg" width="88px" alt="Lilly logo">
+        <button mat-icon-button mat-dialog-close class="md-btn-close" [aria-label]="DIALOG_KEY.Close">
+            <mat-icon svgIcon="close"></mat-icon>
+        </button>
+    </div>
+  <h2 id="leaveLillyDialogLabel">
+    <span i18n="@@leave_lilly_country_dialog.title_1">
+      You are leaving
+    </span>
+    {{ ' ' }}
+    <span class="d-inline-block" i18n="@@leave_lilly_country_dialog.title_2">
+       Lilly Trials {{regionLabel}}
+    </span>
+
+  </h2>
+  <p>
+    <span i18n="@@leave_lilly_country_dialog.body">You are now leaving the Lilly Trials {{regionLabel}} website. Please note that the Lilly Trials website you will be taken to has content construed in accordance with local laws and regulations, which may differ from the ones applicable to Lilly Trials {{regionLabel}}. Please make sure to review the Terms of Use and the Privacy and Security policies of any website located in a different geography before you provide personal or confirmation information.
+    <br/><br/><br/>
+    </span>
+    <span i18n="@@leave_lilly_country_dialog.body_2">
+    <br/><br/><br/>
+    </span>
+    <span i18n="@@leave_lilly_country_dialog.body_3">Click “Continue” to leave site or “Return to Lilly Trials {{regionLabel}}” to close this window and return to Lilly Trials {{regionLabel}}.</span>
+  </p>
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <div class="md-dialog-action-confirm w-100">
+    <div class="row g-md-3 g-3 justify-content-center align-items-center ">
+      <div class="col-auto col-sm-auto">
+        <button mat-stroked-button
+                mat-dialog-close
+                i18n="@@leave_lilly_country_dialog.cancel_button_title"
+                color="primary">
+          Return To Lilly Trials {{regionLabel}}
+        </button>
+      </div>
+      <div class="col-auto col-sm-auto">
+        <button mat-flat-button
+                color="primary"
+                class="md-btn-submit"
+                (click)="leaveLillyTrials()"
+                i18n="@@leave_lilly_country_dialog.submit_button_title"
+                role="link">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-actions>
+

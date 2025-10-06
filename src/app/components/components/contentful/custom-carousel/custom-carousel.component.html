@@ -1,0 +1,40 @@
+@if (carouselWasLoaded() && items()?.length) {
+  <div class="carousel-wrapper">
+    <owl-carousel-o
+      #owlCar
+      [options]="carouselOptions()"
+      (changed)="onCarouselChanged($event)"
+      [ngClass]="customCarouselStyleClass()">
+      @for (item of items(); track $index) {
+        <ng-template carouselSlide>
+          <ng-container
+            [ngTemplateOutlet]="slideTemplate"
+            [ngTemplateOutletContext]="{$implicit: item}">
+          </ng-container>
+        </ng-template>
+      }
+    </owl-carousel-o>
+
+    @if (shouldShowProgressBar()) {
+      <div class="carousel-progress">
+        <div class="carousel-progress__bar" [style.width.%]="progressPercentage()"></div>
+      </div>
+    }
+
+    @if (shouldShowNavigation() && items()?.length > 1 && totalPages() > 1) {
+      <div class="carousel-controls">
+        <app-carousel-custom-nav
+          [isPrevDisabled]="isPrevDisabled()"
+          [isNextDisabled]="isNextDisabled()"
+          [paginationPages]="paginationPages()"
+          [currentPage]="currentPage()"
+          [showProgressBar]="shouldShowProgressBar()"
+          [progressPercentage]="progressPercentage()"
+          (goPrevEmit)="goPrev()"
+          (goNextEmit)="goNext()"
+          (goToPageEmit)="goToPage($event)"
+        />
+      </div>
+    }
+  </div>
+}

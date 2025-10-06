@@ -1,0 +1,101 @@
+<div class="video-carousel-block">
+  <div class="video-carousel-block__header">
+    @if (fields()?.label) {
+      <div class="video-carousel-block__label">{{ fields()?.label }}</div>
+    }
+    <h1 class="video-carousel-block__title">
+      {{ fields()?.title }}
+    </h1>
+    @if (fields()?.subtitle) {
+      <p class="video-carousel-block__subtitle">{{ fields()?.subtitle }}</p>
+    }
+  </div>
+
+  <div class="video-carousel-block__controls">
+    @if (fields()?.categoryTabs?.length) {
+      <div class="nav--tabs is-nav-desktop">
+        <div class="nav--tabs__container">
+          <lilly-one-row-navigation>
+            <div class="nav--tabs__content">
+              @for (tab of fields()?.categoryTabs; track tab?.sys?.id) {
+                <button
+                  mat-button
+                  class="nav--tabs__item"
+                  [class.selected]="selectedCategory() === tab?.fields?.filterValue"
+                  [attr.aria-selected]="selectedCategory() === tab?.fields?.filterValue"
+                  [attr.aria-label]="tab?.fields?.label"
+                  (click)="onCategoryClick(tab)"
+                  tabindex="0">
+                  <span>{{ tab?.fields?.label }}</span>
+                </button>
+              }
+            </div>
+          </lilly-one-row-navigation>
+        </div>
+      </div>
+
+      <div class="form-group is-nav-mobile">
+        @if (fields()?.categoryMobileDropdownLabel) {
+          <div class="label--external">{{ fields()?.categoryMobileDropdownLabel }}</div>
+        }
+        <mat-form-field class="category-dropdown has-out-hint">
+          <mat-select [value]="selectedCategory()" (selectionChange)="onCategoryChange($event.value)">
+            @for (tab of fields()?.categoryTabs; track tab?.sys?.id) {
+              <mat-option [value]="tab?.fields?.filterValue">{{ tab?.fields?.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    }
+
+    @if (fields()?.ctaButton?.fields) {
+      <button
+        class="return-home-btn"
+        (click)="onCtaClick()">
+        {{ fields()?.ctaButton?.fields?.text }}
+        <mat-icon svgIcon="arrow_forward"></mat-icon>
+      </button>
+    }
+  </div>
+
+  <div class="video-carousel-block__wrapper">
+    <app-custom-carousel
+      #customCarousell
+      [items]="filteredVideos()"
+      [maxVisibleCards]="fields()?.maxVisibleCards || 3"
+      [shouldShowNavigation]="false"
+      [shouldShowProgressBar]="true"
+      [breakpoints]="carouselBreakpoints">
+      <ng-template #slideTemplate let-video>
+        <lilly-video-card
+          [video]="video"
+          (cardClick)="onVideoClick($event)"
+          (playClick)="$event.stopPropagation(); onVideoClick(video)"/>
+      </ng-template>
+    </app-custom-carousel>
+
+    @if (customCarousel() && filteredVideos().length > 1) {
+      <div class="carousel-controls-wrapper">
+        <!-- Navigation Component -->
+        <app-carousel-custom-nav
+          [isPrevDisabled]="customCarousel()!.isPrevDisabled()"
+          [isNextDisabled]="customCarousel()!.isNextDisabled()"
+          [paginationPages]="customCarousel()!.paginationPages()"
+          [currentPage]="customCarousel()!.currentPage()"
+          (goPrevEmit)="customCarousel()!.goPrev()"
+          (goNextEmit)="customCarousel()!.goNext()"
+          (goToPageEmit)="customCarousel()!.goToPage($event)"
+        />
+
+        <!-- View All Link -->
+        @if (fields()?.viewAllButton?.fields) {
+          <div class="carousel-view-all">
+            <a (click)="onViewAllClick($event)">
+              {{ fields()?.viewAllButton?.fields?.text }}
+            </a>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,5 +1,4 @@
-<header class="header cb-max-view" id="lilly-header" header-height
-        [ngClass]="{'has-long-strings': checkLongStringLanguage(languageService.selected.key, languageService.longStringLanguages) }">
+<header class="header cb-max-view" id="lilly-header" header-height>
     <div class="container header__container">
         <div #menu class="header__grid theme--dark" [ngClass]="{'is-hidden': isFloatMenuOpen}">
 
@@ -7,7 +6,7 @@
                 <a class="header__grid__item brand header__brand__logo"
                    [routerLink]="[ClientRoutes.Home]"
                    routerLinkActive="home">
-                    <app-logo-subject text="Trials"/>
+                    <lilly-content-logo-subject text="Trials"/>
                 </a>
                 <div class="show-desktop-only">
                     <nav class="nav header__grid__item" role="navigation">
@@ -30,10 +29,10 @@
             </div>
             <div class="header__ctrl">
                 <nav class="nav header__grid__item globe-menu" role="navigation">
-                    <div class="show-desktop-only" *hideForRegions="[Language.ja_JP]">
-                      <lilly-language-switcher [overlayContainer]="menu"
+                    <div class="show-desktop-only">
+                      <lilly-content-language-switcher [overlayContainer]="menu"
                                                (menuOpen)="isFloatMenuOpen = $event">
-                      </lilly-language-switcher>
+                      </lilly-content-language-switcher>
                     </div>
                     <div class="show-mobile-only">
                         <button
@@ -68,7 +67,7 @@
                            routerLinkActive="home"
                            [id]="startMenuId"
                         >
-                            <app-logo-subject [hideText]="true" class="is-sm"/>
+                            <lilly-content-logo-subject [hideText]="true" class="is-sm"/>
                         </a>
                     } @else {
                         <a role="button" mat-icon-button
@@ -102,89 +101,22 @@
     <ng-template #menuMobileT>
         @if (!isSubMenuMobile) {
             <ul class="menu menu--level-1">
-                @for (menuItem of navigationListsDataService.headerMenu$ | async; track menuItem; let index = $index; ) {
-                    @if (menuItem.item) {
-                        <li>
-                            <a role="button" mat-button
-                               [routerLink]="[menuItem.item.link]"
-                               [state]="{ referrer: headerReferrer}"
-                               [deepGtmTrigger]="menuItem.item.gtmId"
-                               itemprop="url"
-                               [attr.aria-label]="menuItem.item.label"
-                               (click)="sendAnalyticsMenuItemSingle(menuItem)"
-                               class="btn--link"
-                            >
-                                <div [title]="menuItem.item.label">
-                                    {{ menuItem.item.label }}
-                                </div>
-
-                            </a>
-                        </li>
-                    }
-                    @if (menuItem?.items?.length) {
-                        <li>
-                            <a role="button" mat-button class="btn--link"
-                               [id]="'menuMobile-'+ index"
-                               (click)="onMenuMobile($event)"
-                            >
-                                <div class="btn__grid">
-                                    <div class="btn__value">
-
-                                        {{ menuItem.title }}
-                                    </div>
-                                    <div class="btn__thumb">
-                                        <mat-icon svgIcon="ar_forward"></mat-icon>
-                                    </div>
-                                </div>
-
-                            </a>
-
-
-                        </li>
-                    }
-                }
-                @if (navigationListsDataService.showBlogNavItem$ | async) {
-                    <li>
-                        <a role="button" mat-button
-                           [id]="'menuMobile-'+langMobileNumId"
-                           [routerLink]="[ClientRoutes.Blog]"
-                           itemprop="url"
-                           (click)="sendAnalyticsMenuItemBlog()"
-                           class="btn--link"
-                        >
-                            <div title="View" i18n-title="@@header.blog" i18n="@@header.blog">Blog</div>
-
-                        </a>
-                    </li>
-                }
-
-                <mat-divider/>
-                <div *hideForRegions="[Language.ja_JP]">
+                <div>
                     <ng-container [ngTemplateOutlet]="languageSelectorMobileT"></ng-container>
                 </div>
             </ul>
         }
-        @for (menuItem of navigationListsDataService.headerMenu$ | async; track menuItem; let index = $index; ) {
-            @if (menuItem?.items?.length) {
-                <ng-container [ngTemplateOutlet]="subMenuMobileT"
-                              [ngTemplateOutletContext]="{ menuItem: menuItem, title: menuItem.title, ID: 'tabMobile-'+ index }"></ng-container>
-            }
-        }
-        <div *hideForRegions="[Language.ja_JP]">
+        <div>
             <ng-container [ngTemplateOutlet]="subMenuMobileT"
                           [ngTemplateOutletContext]="{ menuT: LangMenu, titleT: LangTitleMenu, ID: 'tabMobile-'+ langMobileNumId, class: 'block--lang' }"></ng-container>
         </div>
-
-
     </ng-template>
 
     <ng-template #subMenuMobileT
-                 let-menuItem="menuItem"
                  let-menuT="menuT"
                  let-title="title"
                  let-titleT="titleT"
                  let-subTitle="subTitle"
-                 let-subTitleT="subTitleT"
                  let-ID="ID"
                  let-class="class"
     >
@@ -203,71 +135,12 @@
                         </div>
                         @if (subTitle) {
                             <div class="block__text">
-                              @if (subTitle) {
                                 {{ subTitle }}
-                              } @else {
-                                <ng-container [ngTemplateOutlet]="subTitleT"></ng-container>
-                              }
                             </div>
                         }
                     </div>
                 </div>
                 <div class="block__content">
-                    @if (menuItem) {
-                        <ul class="menu menu--level-2">
-                            <mat-accordion>
-                                @for (item of menuItem.items; track item; let index = $index) {
-                                    @if (item.hrefMenuTarget === 'internal' && item.subMenu.length > 0) {
-                                        <li>
-                                            <a role="button" class="btn--link" mat-button
-                                               (click)="browseCategory.navigateToCriteria(item, true, headerReferrer); $event.preventDefault()"
-                                               itemprop="url"
-                                               routerLinkActive="is-active"
-                                               [routerLinkActiveOptions]="{exact:true}"
-                                               [deepGtmTrigger]="item.gtmId"
-                                               [href]="helperService.prepareContentfulLink(item.link)"
-                                            >
-                                                {{ item.label }}
-                                            </a>
-
-                                            <ul class="menu menu--level-3">
-                                                @for (subItem of item.subMenu; track subItem) {
-                                                    <li>
-                                                        <a role="button" class="btn--link" mat-button
-                                                           (click)="browseCategory.navigateToCriteria(subItem, true, headerReferrer); $event.preventDefault()"
-                                                           itemprop="url"
-                                                           routerLinkActive="is-active"
-                                                           [routerLinkActiveOptions]="{exact:true}"
-                                                           [deepGtmTrigger]="subItem.gtmId"
-                                                           [href]="helperService.prepareContentfulLink(subItem.link)"
-                                                        >
-                                                            {{ subItem.label }}
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    }
-                                    @if (item.hrefMenuTarget === 'external') {
-                                        <li>
-                                            <a role="button" mat-button class="btn--link"
-                                               (click)="browseCategory.navigateToCriteria(item, true, headerReferrer); $event.preventDefault()"
-                                               itemprop="url"
-                                               routerLinkActive="is-active"
-                                               [routerLinkActiveOptions]="{exact:true}"
-                                               [deepGtmTrigger]="item.gtmId"
-                                               [routerLink]="item.link"
-                                            >
-                                                <ng-container
-                                                        *ngTemplateOutlet="subMenuButtonContentT; context: {item: item}"></ng-container>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </mat-accordion>
-                        </ul>
-
-                    }
                     @if (menuT) {
                         <ng-container [ngTemplateOutlet]="menuT"></ng-container>
                     }
@@ -278,7 +151,7 @@
     </ng-template>
 
     <ng-template #languageSelectorMobileT>
-        <li *hideForRegions="[Language.ja_JP]">
+        <li>
             <a role="button" class="btn--link btn--link--lang" mat-button
                [id]="'menuMobile-'+ langMobileNumId"
                (click)="onMenuMobile($event)"
@@ -320,100 +193,25 @@
                    [id]="startMenuId"
                    (mouseenter)="onMenuHover($event)"
                 >
-                  <app-logo-subject text="Trials"/>
+                  <lilly-content-logo-subject text="Trials"/>
                 </a>
             </li>
-
-            @for (menuItem of navigationListsDataService.headerMenu$ | async; track menuItem; let index = $index; ) {
-                @if (menuItem.item) {
-                    <li>
-                        <a role="button"
-                           mat-button
-                           class="nav__btn"
-                           [routerLink]="[menuItem.item.link]"
-                           [state]="{ referrer: headerReferrer}"
-                           [deepGtmTrigger]="menuItem.item.gtmId"
-                           itemprop="url"
-                           [attr.aria-label]="menuItem.item.label"
-                           (click)="sendAnalyticsMenuItemSingle(menuItem)"
-                           [id]="'menu-'+index"
-                           (focus)="onMenuHover($event)"
-                           (mouseenter)="onMenuHover($event)"
-                        >
-                            <div [title]="menuItem.item.label">
-                                {{ menuItem.item.label }}
-                            </div>
-
-                        </a>
-                    </li>
-                }
-                @if (menuItem?.items?.length) {
-                    <li>
-                        <a role="button"
-                           mat-button
-                           class="nav__btn"
-                           aria-haspopup="true"
-                           [id]="'menu-'+index"
-                           (focus)="onMenuHover($event)"
-                           (mouseenter)="onMenuHover($event)"
-                        >
-                            <div [title]="menuItem.title ">{{ menuItem.title }}</div>
-                        </a>
-                    </li>
-                }
-            }
-            @if ((navigationListsDataService.showBlogNavItem$ | async) && headerMenuLength > 0) {
-                <li>
-                    <a role="button"
-                       mat-button
-                       class="nav__btn"
-                       [routerLink]="[ClientRoutes.Blog]"
-                       itemprop="url"
-                       [id]="'menu-'+headerMenuLength"
-                       (focus)="onMenuHover($event)"
-                       (mouseenter)="onMenuHover($event)"
-                       (click)="sendAnalyticsMenuItemBlog()"
-                    >
-
-                        <ng-container [ngTemplateOutlet]="blogTitle"></ng-container>
-                    </a>
-                </li>
-            }
         </ul>
     </div>
 
     <div class="h-overlay__content">
         <ng-container [ngTemplateOutlet]="subMenuDesktopT"
-                      [ngTemplateOutletContext]="{ menuLink: ClientRoutes.Home, titleT: logoTitle, subTitleT: logoSubTitle, ID: startTabId }"></ng-container>
-        @for (menuItem of navigationListsDataService.headerMenu$ | async; track menuItem) {
-            @if (menuItem.item) {
-                <ng-container [ngTemplateOutlet]="subMenuDesktopT"
-                              [ngTemplateOutletContext]="{ menuLink: menuItem.item.link, title: menuItem.item.label, subTitle: menuItem.item.subLabel, ID: 'tab-'+$index }"></ng-container>
-            }
-            @if (menuItem?.items?.length) {
-                <ng-container [ngTemplateOutlet]="subMenuDesktopT"
-                              [ngTemplateOutletContext]="{ menuItem: menuItem, title: menuItem.title, subTitle: menuItem.subTitle, ID: 'tab-'+$index }"></ng-container>
-            }
-
-        }
-        @if ((navigationListsDataService.showBlogNavItem$ | async) && headerMenuLength > 0) {
-            <ng-container [ngTemplateOutlet]="subMenuDesktopT"
-                          [ngTemplateOutletContext]="{ titleT: blogTitle, subTitleT: blogSubTitle, ID: 'tab-'+ headerMenuLength}"></ng-container>
-        }
+                      [ngTemplateOutletContext]="{ title: 'Lilly Trials', subTitle: 'We\'re a medicine company turning science into healing for people around the world.', ID: startTabId }"></ng-container>
     </div>
     <ng-template #subMenuDesktopT
                  let-menuItem="menuItem"
-                 let-menuLink="menuLink"
                  let-title="title"
                  let-titleT="titleT"
                  let-subTitle="subTitle"
-                 let-subTitleT="subTitleT"
                  let-ID="ID">
 
         @if (isActive(ID) && ID) {
-            <div class="h-overlay__content__grid block is-grid"
-                 [id]="ID"
-                 [@fadeAnimation]>
+            <div class="h-overlay__content__grid block is-grid" [id]="ID">
                 <div class="block__header">
                     <div class="block block-xs">
                         <div class="block__title">
@@ -429,139 +227,10 @@
                         </div>
                     </div>
                     <div class="block__text">
-                      @if (subTitle) {
                         {{ subTitle }}
-                      } @else {
-                        <ng-container [ngTemplateOutlet]="subTitleT"></ng-container>
-                      }
                     </div>
                 </div>
-                <div class="block__content" [ngClass]="{'block__content--menu': menuItem}">
-                    @if (menuItem) {
-                        <ul class="menu menu--level-2" [ngClass]="{'multi-column': menuItem.items?.length > 4}">
-                            @for (item of menuItem.items; track item) {
-
-                                @if (item.hrefMenuTarget === 'internal' && item.subMenu.length > 0) {
-                                    <li>
-                                        <a role="button" class="btn--link" mat-button
-                                           (click)="browseCategory.navigateToCriteria(item, true, headerReferrer); $event.preventDefault()"
-                                           itemprop="url"
-                                           routerLinkActive="is-active"
-                                           [routerLinkActiveOptions]="{exact:true}"
-                                           [deepGtmTrigger]="item.gtmId"
-                                           [href]="helperService.prepareContentfulLink(item.link)"
-                                        >
-                                            {{ item.label }}
-                                        </a>
-
-                                        <ul class="menu menu--level-3">
-                                            @for (subItem of item.subMenu; track subItem) {
-                                                <li>
-                                                    <a role="button" class="btn--link" mat-button
-                                                       (click)="browseCategory.navigateToCriteria(subItem, true, headerReferrer); $event.preventDefault()"
-                                                       itemprop="url"
-                                                       routerLinkActive="is-active"
-                                                       [routerLinkActiveOptions]="{exact:true}"
-                                                       [deepGtmTrigger]="subItem.gtmId"
-                                                       [href]="helperService.prepareContentfulLink(subItem.link)"
-                                                    >
-                                                        {{ subItem.label }}
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-                                @if (item.hrefMenuTarget === 'external') {
-                                    <li>
-                                        <a role="button" class="btn--link" mat-button
-                                           (click)="browseCategory.navigateToCriteria(item, true, headerReferrer); $event.preventDefault()"
-                                           itemprop="url"
-                                           routerLinkActive="is-active"
-                                           [routerLinkActiveOptions]="{exact:true}"
-                                           [deepGtmTrigger]="item.gtmId"
-                                           [href]="helperService.prepareContentfulLink(item.link)"
-                                        >
-                                            {{ item?.label }}
-                                        </a>
-                                    </li>
-                                }
-                            }
-                        </ul>
-                    }
-                  @if (MenuImageList[menuLink]; as imageInfo) {
-                    <ng-container [ngTemplateOutlet]="menuImage" [ngTemplateOutletContext]="{ imageInfo: imageInfo }"></ng-container>
-                  }
-                </div>
             </div>
         }
-
     </ng-template>
-
-</ng-template>
-
-<ng-template #logoTitle>
-  <ng-container title="Lilly Trials" i18n-title="@@header.logo_title" i18n="@@header.logo_title">Lilly Trials</ng-container>
-</ng-template>
-
-<ng-template #logoSubTitle>
-  <ng-container i18n="@@header.logo_sub-title">
-    Lilly Trials helps patients, their loved ones, and healthcare providers find and match to a Lilly clinical trial.
-    You can learn what clinical trials are and see which trials you might match to.
-  </ng-container>
-</ng-template>
-
-<ng-template #blogTitle>
-    <ng-container title="Blog" i18n-title="@@header.blog" i18n="@@header.blog">Blog</ng-container>
-</ng-template>
-
-<ng-template #blogSubTitle>
-  <ng-container i18n="@@header.blog_sub-title">
-    Read blog posts that share information about Lilly clinical trials, new medicines, and the people whose lives are
-    being helped. Whether you are a patient, a loved one, or healthcare provider, these stories can help you learn more
-    and stay connected.
-  </ng-container>
-</ng-template>
-
-
-<ng-template #subMenuButtonContentT let-item="item" let-showArrow="showArrow">
-    <div class="btn__grid">
-        <!--           TODO Not clear if needs category icons
-                    @if (item.icon) {
-                        <div class="col-auto thumb me-1">
-                            <img [src]="item.icon"
-                                 [alt]="item.altText">
-                        </div>
-                    }
-                 -->
-        <div class="btn__value">{{ item.label }}</div>
-        @if (showArrow) {
-            <div class="btn__thumb">
-                <mat-icon svgIcon="ar_forward"></mat-icon>
-            </div>
-        }
-    </div>
-</ng-template>
-
-<ng-template #menuImage let-imageInfo="imageInfo">
-    <cb-card class="card--postal" [routerLink]="imageInfo.link">
-      <cb-card-body>
-        <div class="block is-grid block--xs">
-          <div class="block__content">
-            <div class="block__title">
-              <h4 class="title">{{ imageInfo.title }}</h4>
-            </div>
-            <div class="block__text">
-              {{ imageInfo.subtitle }}
-            </div>
-          </div>
-          <div class="block__thumb">
-            <mat-icon svgIcon="arrow_forward"></mat-icon>
-          </div>
-        </div>
-      </cb-card-body>
-      <div class="media">
-        <img [src]="imageInfo.image" [alt]="imageInfo.imageAlt" width="200"/>
-      </div>
-    </cb-card>
 </ng-template>

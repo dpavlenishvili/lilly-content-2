@@ -1,25 +1,11 @@
-<lilly-hero-section [pageFields]="pageFields" [noIntro]="true"></lilly-hero-section>
-
-<cst-wrapper hostSizeClass="cst--md" [showTitle]="false" [showLogoSubject]="false">
-    <div class="block">
-        <div class="block__title">
-            <div class="error-icon-wrapper">
-                <mat-icon [svgIcon]="'error404'" class="sm"></mat-icon>
+<section class="main-wrapper main-404-wrapper h-100 row g-0  justify-content-center align-items-center">
+    <div class="col col-lg-10  py-5 py-lg-6">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="h2" i18n="@@error_component.page_not_exist_description">
+                  The page you are looking for doesn't exist.
+                </h1>
             </div>
-            <h1 class="title h2-garamond-heading">Hmm…something isn't right&nbsp;here</h1>
-        </div>
-        <div class="block__text">
-            <p class="description">
-                This page no longer exists or is having an issue.
-            </p>
-        </div>
-        <div class="block__ctrl">
-            <button mat-flat-button color="primary" class="mb-button-main" [routerLink]="[ClientRoutes.Home]">
-                <div class="btn__grid">
-                    <div>Take me home</div>
-                    <mat-icon [svgIcon]="'arrow_forward'" class="sm"></mat-icon>
-                </div>
-            </button>
         </div>
     </div>
-</cst-wrapper>
+</section>

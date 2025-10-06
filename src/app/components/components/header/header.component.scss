@@ -95,6 +95,7 @@ $init: (
                 xs: var(--#{calc.$cb}font-size-225),
                 #{$m-up}: var(--#{calc.$cb}font-size-base),
         )),
+        menu-level-3-margin: 0 0 .5rem 1rem,
         menu-font-size:(media-query-up: (
                 xs: var(--#{calc.$cb}font-size-120),
 
@@ -124,23 +125,16 @@ $init: (
 ::ng-deep :root {
   @include calc.css-initVars($init, $h);
 }
-:host {
-  display: block;
-  pointer-events: none;
-}
 
 :host ::ng-deep {
-
+  pointer-events: none;
 
   .#{$class} {
-    //border-bottom: 1px solid var(--#{calc.$cb}divider);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: var(--#{calc.$cb}head-toolbar-height);
     padding-top: var(--#{calc.$cb}header-top-offset);
-    pointer-events: none;
-
 
     &__container {
       z-index: 5;
@@ -150,7 +144,6 @@ $init: (
       @media only screen and (max-width: 1340px) {
         --#{$h}menu-font-size: var(--#{$h}menu-font-size-long-string);
       }
-
     }
 
 
@@ -208,7 +201,6 @@ $init: (
         left: 0;
         bottom: 0;
         right: 0;
-
         cursor: pointer;
         background-color: transparent;
       }
@@ -252,10 +244,6 @@ $init: (
 
   .nav {
     display: flex;
-  }
-
-  .#{$class}__grid__item {
-
   }
 
   #{calc.$btn-selector} {
@@ -328,7 +316,6 @@ $init: (
       display: grid;
       column-gap: var(--#{$h}menu-gap-x);
       row-gap: var(--#{$h}menu-gap-y);
-      //width: 100%;
       margin: 0;
       padding: 0;
       font-size: var(--#{$h}menu-font-size);
@@ -364,15 +351,8 @@ $init: (
           margin: var(--#{calc.$cb}space-300) 0;
         }
       }
-
-      &--level-2 a {
-        align-items: flex-end;
-        --cb-btn-min-h: 3.5rem;
-      }
-
-      &--level-3 a {
-        font-size: var(--#{calc.$cb}font-size-sm);
-        --cb-btn-min-h: var(--#{calc.$cb}font-size-sm);
+      &--level-3 {
+        margin: var(--#{$h}menu-level-3-margin);
       }
 
       .btn--title {
@@ -394,6 +374,7 @@ $init: (
             @include font-level-2-serif();
           }
         }
+
       }
 
       .menu {
@@ -436,11 +417,7 @@ $init: (
 
             &.block__content--menu {
               justify-content: center;
-
-              .menu--level-2 {
-              }
             }
-
           }
         }
       }
@@ -473,16 +450,6 @@ $init: (
       --#{calc.$cb}media-radius: var(--#{calc.$cb}radius-3);
       --#{calc.$cb}media-h: 100%;
       --#{calc.$cb}media-w: 100%;
-      transition: all .2s ease-in-out;
-
-      img {
-        transition: all .2s ease-in-out;
-        filter: brightness(.5);
-      }
-
-      &:hover img {
-        filter: brightness(.4);
-      }
 
       .#{calc.$card-class}__body {
         display: grid;
@@ -521,9 +488,6 @@ $init: (
     }
   }
 }
-
-
-
 
 .seo-language-buttons {
   visibility: hidden;
