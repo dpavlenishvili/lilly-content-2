@@ -819,6 +819,9 @@ export interface IVideoCarouselBlockFields {
 
   /** Max Visible Cards */
   maxVisibleCards?: number | undefined;
+
+  /** View All Button */
+  viewAllButton?: IButton | undefined;
 }
 
 /** Video carousel block with filtering tabs */

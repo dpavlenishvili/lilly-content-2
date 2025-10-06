@@ -1,0 +1,34 @@
+@if (video()) {
+  <div
+      class="video-card"
+      tabindex="0"
+      role="button"
+      [attr.aria-label]="video()?.fields?.title">
+
+      <div class="video-card__category">{{ video()?.fields?.categoryLabel }}</div>
+
+      <img
+        class="video-card__image"
+        [src]="video()?.fields?.thumbnail?.fields?.file?.url"
+        [alt]="video()?.fields?.title"
+        loading="lazy"
+        decoding="async"/>
+
+      <div class="video-card__footer">
+        <div class="video-card__title">
+          @if (video()?.fields?.icon?.fields?.file?.url) {
+            <img
+              class="video-card__icon"
+              [src]="video()?.fields?.icon?.fields?.file?.url"
+              [alt]="video()?.fields?.icon?.fields?.description"
+              loading="lazy"/>
+          }
+          <span>{{ video()?.fields?.title }}</span>
+        </div>
+
+        <button class="video-card__play-btn" (click)="playClick.emit($event)">
+          <mat-icon svgIcon="play"></mat-icon>
+        </button>
+      </div>
+    </div>
+}
