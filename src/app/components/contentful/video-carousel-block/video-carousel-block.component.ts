@@ -1,31 +1,20 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  input,
-  signal,
-  viewChild
-} from '@angular/core';
-import { IVideoCard, IVideoCarouselBlockFields, IVideoCategoryTab } from '../models/contentful';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild } from '@angular/core';
+import { IVideoCarouselBlockFields, IVideoCategoryTab } from '../models/contentful';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { HelperService } from '../../../services/helper.service';
-import { LinkBehavior } from '@careboxhealth/core';
-import { CarouselComponent, CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import {
   OneRowNavigationComponent
 } from '../../../shared-features/ui/components/one-row-navigation/one-row-navigation.component';
 import { AppIconRegistry } from '../../../services/app-icon-registry.service';
 import { VideoCardComponent } from './video-card/video-card.component';
-import { fromEvent } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime } from 'rxjs/operators';
+import { CustomCarouselComponent } from '../custom-carousel/custom-carousel.component';
+import { CarouselCustomNavComponent } from '../carousel-custom-nav/carousel-custom-nav.component';
+import { RouterLinkActive } from '@angular/router';
 
-export const BREAKPOINTS = {
+export const VIDEO_CAROUSEL_BREAKPOINTS = {
   MOBILE: 600,
   TABLET: 992
 } as const;
@@ -42,22 +31,18 @@ export const BREAKPOINTS = {
     MatFormField,
     MatSelect,
     MatOption,
-    CarouselModule,
     OneRowNavigationComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    CustomCarouselComponent,
+    CarouselCustomNavComponent,
+    RouterLinkActive
   ]
 })
 export class VideoCarouselBlockComponent {
-  readonly owlCarousel = viewChild<CarouselComponent>('owlCarousel');
-
+  readonly customCarousel = viewChild<CustomCarouselComponent>('customCarouselEl');
   readonly videoCarouselBlockFields = input.required<IVideoCarouselBlockFields>();
   readonly fields = computed(() => this.videoCarouselBlockFields());
   readonly selectedCategory = signal<string>('all');
-
-  readonly currentSlideIndex = signal<number>(0);
-  readonly currentSlideBy = signal<number>(1);
-  readonly visibleSlides = signal<number>(1);
-
   readonly filteredVideos = computed(() => {
     const fields = this.fields();
     const category = this.selectedCategory();
@@ -72,99 +57,24 @@ export class VideoCarouselBlockComponent {
       card?.fields?.filterTag === category
     );
   });
-  readonly totalSlides = computed(() => this.filteredVideos().length);
-  readonly carouselOptions = computed<OwlOptions>(() => {
-    const maxVisibleCards = this.fields()?.maxVisibleCards || 3;
 
-    return {
-      loop: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      dots: false,
-      nav: true,
-      navSpeed: 600,
-      responsive: {
-        0: {
-          items: 1,
-          slideBy: 1,
-          stagePadding: 0,
-          margin: 24,
-          nav: false
-        },
-        [BREAKPOINTS.MOBILE]: {
-          items: 2,
-          slideBy: 2,
-          stagePadding: 0,
-          margin: 24,
-          nav: false
-        },
-        [BREAKPOINTS.TABLET]: {
-          items: maxVisibleCards,
-          slideBy: maxVisibleCards,
-          stagePadding: 0,
-          margin: 24,
-          nav: true
-        }
-      },
-      autoWidth: false,
-      autoHeight: false
-    };
-  });
-  readonly totalPages = computed(() => {
-    const total = this.totalSlides();
-    const slideBy = this.currentSlideBy();
-    return Math.ceil(total / slideBy);
-  });
-  readonly currentPage = computed(() => {
-    const current = this.currentSlideIndex();
-    const slideBy = this.currentSlideBy();
-    return Math.floor(current / slideBy);
-  });
-  readonly paginationPages = computed(() => {
-    return Array(this.totalPages()).fill(0);
-  });
-  readonly progressPercentage = computed(() => {
-    const total = this.totalSlides();
-    const visible = this.visibleSlides();
-    const current = this.currentSlideIndex();
-
-    if (total <= visible) return 100;
-
-    const maxIndex = total - visible;
-    return Math.min(100, (current / maxIndex) * 100);
-  });
+  readonly carouselBreakpoints = VIDEO_CAROUSEL_BREAKPOINTS;
 
   readonly helperService: HelperService = inject(HelperService);
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  constructor(iconRegistry: AppIconRegistry,) {
+  constructor(iconRegistry: AppIconRegistry) {
     iconRegistry.addSvgIcon('play', '/assets/svg/lilly/play.svg');
-    fromEvent(window, 'resize')
-      .pipe(
-        debounceTime(150),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(() => {
-        const slideByValue = this.getSlideByFromWidth();
-        this.currentSlideBy.set(slideByValue);
-      });
+    iconRegistry.addSvgIcon('pause', '/assets/svg/lilly/pause.svg');
   }
 
   onCategoryClick(category: IVideoCategoryTab): void {
     this.selectedCategory.set(category?.fields?.filterValue);
-    this.owlCarousel()?.to('0');
+    this.customCarousel()?.toSlide('0');
   }
 
   onCategoryChange(value: string): void {
     this.selectedCategory.set(value);
-    this.owlCarousel()?.to('0');
-  }
-
-  onVideoClick(video: IVideoCard): void {
-    if (video?.fields?.videoUrl) {
-      this.helperService.goToLink(video?.fields?.videoUrl, LinkBehavior.NewTab);
-    }
+    this.customCarousel()?.toSlide('0');
   }
 
   onCtaClick(): void {
@@ -172,39 +82,8 @@ export class VideoCarouselBlockComponent {
     if (ctaButton?.fields) {
       this.helperService.goToLink(
         ctaButton?.fields?.link,
-        ctaButton?.fields?.linkBehavior as LinkBehavior
+        ctaButton?.fields?.linkBehavior
       );
-    }
-  }
-
-  onCarouselChanged(event: SlidesOutputData): void {
-    if (event.startPosition !== undefined) {
-      this.currentSlideIndex.set(event.startPosition);
-    }
-
-    const visibleCount = event.slides?.length || 1;
-    this.visibleSlides.set(visibleCount);
-
-    const slideByValue = this.getSlideByFromWidth();
-    this.currentSlideBy.set(slideByValue);
-  }
-
-  goToPage(pageIndex: number): void {
-    const current = this.currentPage();
-    const diff = pageIndex - current;
-
-    if (diff === 0) return;
-
-    const iterations = Math.abs(diff);
-
-    if (diff > 0) {
-      for (let i = 0; i < iterations; i++) {
-        this.owlCarousel()?.next();
-      }
-    } else {
-      for (let i = 0; i < iterations; i++) {
-        this.owlCarousel()?.prev();
-      }
     }
   }
 
@@ -217,14 +96,5 @@ export class VideoCarouselBlockComponent {
         viewAllButton?.fields?.linkBehavior
       );
     }
-  }
-
-  private getSlideByFromWidth(): number {
-    const width = window.innerWidth;
-    const maxVisibleCards = this.fields()?.maxVisibleCards || 3;
-
-    if (width < BREAKPOINTS.MOBILE) return 1;
-    if (width < BREAKPOINTS.TABLET) return 2;
-    return maxVisibleCards;
   }
 }

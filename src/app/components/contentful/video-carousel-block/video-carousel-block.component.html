@@ -59,46 +59,46 @@
   </div>
 
   <div class="video-carousel-block__wrapper">
-    <owl-carousel-o
-      #owlCarousel
-      [options]="carouselOptions()"
-      (changed)="onCarouselChanged($event)">
-      @for (video of filteredVideos(); track video?.sys?.id) {
-        <ng-template carouselSlide>
-          <lilly-video-card
-            [video]="video"
-            (cardClick)="onVideoClick($event)"
-            (playClick)="$event.stopPropagation(); onVideoClick(video)"/>
-        </ng-template>
-      }
-    </owl-carousel-o>
+    <app-custom-carousel
+      #customCarouselEl
+      [items]="filteredVideos()"
+      [maxVisibleCards]="fields()?.maxVisibleCards || 3"
+      [shouldShowNavigation]="false"
+      [shouldShowProgressBar]="true"
+      [breakpoints]="carouselBreakpoints">
+      <ng-template #slideTemplate let-video>
+        <lilly-video-card [video]="video"/>
+      </ng-template>
+    </app-custom-carousel>
 
-    <div class="carousel-progress">
-      <div class="carousel-progress__bar" [style.width.%]="progressPercentage()"></div>
-    </div>
+    @if (customCarousel() && filteredVideos().length > 1) {
+      <div class="carousel-controls-wrapper">
+        <!-- Navigation Component -->
+        <app-carousel-custom-nav
+          [isPrevDisabled]="customCarousel()!.isPrevDisabled()"
+          [isNextDisabled]="customCarousel()!.isNextDisabled()"
+          [paginationPages]="customCarousel()!.paginationPages()"
+          [currentPage]="customCarousel()!.currentPage()"
+          (goPrevEmit)="customCarousel()!.goPrev()"
+          (goNextEmit)="customCarousel()!.goNext()"
+          (goToPageEmit)="customCarousel()!.goToPage($event)"
+        />
 
-    <div class="carousel-controls">
-      <div class="carousel-pagination">
-        @for (page of paginationPages(); track $index) {
-          <button
-            class="carousel-pagination__dot"
-            [class.is-active]="currentPage() === $index"
-            (click)="goToPage($index)">
-          </button>
+        <!-- View All Link -->
+        @if (fields()?.viewAllButton?.fields) {
+          <div class="carousel-view-all">
+            <a class="carousel-view-all"
+               [href]="helperService.prepareContentfulLink(fields()?.viewAllButton?.fields?.link)"
+               (click)="onViewAllClick($event)"
+               itemprop="url"
+               routerLinkActive="is-active"
+               [attr.aria-label]="fields()?.viewAllButton?.fields?.text"
+               tabindex="0">
+              {{ fields()?.viewAllButton?.fields?.text }}
+            </a>
+          </div>
         }
       </div>
-
-      @if (fields()?.viewAllButton?.fields) {
-        <div class="carousel-view-all">
-          <a
-            [href]="helperService.prepareContentfulLink(fields()?.viewAllButton?.fields?.link)"
-            (click)="onViewAllClick($event)"
-            itemprop="url"
-            class="carousel-view-all__link">
-            {{ fields()?.viewAllButton?.fields?.text }}
-          </a>
-        </div>
-      }
-    </div>
+    }
   </div>
 </div>

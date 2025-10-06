@@ -1,0 +1,37 @@
+<div>
+    @if (mediaId) {
+        @switch (mediaType) {
+            @case (MediaContentType.VIDEO) {
+                <lilly-video [videoUrl]="mediaId"
+                             [isAutoplay]="isAutoplay"
+                             [isLoop]="isLoop"
+                             [isMuted]="isMuted"
+                             [subsiteName]="subsiteName"
+                             [title]="title"></lilly-video>
+            }
+            @case (MediaContentType.KALTURA) {
+                <lilly-kaltura [entryId]="mediaId"
+                               [uiConfigId]="uiConfigId"
+                               [isAutoplay]="isAutoplay"
+                               [isLoop]="isLoop"
+                               [isMuted]="isMuted"
+                               [subsiteName]="subsiteName"
+                               [title]="title"></lilly-kaltura>
+            }
+            @case (MediaContentType.YOUTUBE) {
+                <lilly-youtube [youtubeId]="mediaId"
+                               [isAutoplay]="isAutoplay"
+                               [isLoop]="isLoop"
+                               [isMuted]="isMuted"
+                               [subsiteName]="subsiteName"
+                               [title]="title"></lilly-youtube>
+            }
+            @case (MediaContentType.SPOTIFY) {
+                <lilly-spotify [backgroundColor]="backgroundColor"
+                               [entryId]="mediaId"
+                               [subsiteName]="subsiteName"
+                               [title]="title"></lilly-spotify>
+            }
+        }
+    }
+</div>

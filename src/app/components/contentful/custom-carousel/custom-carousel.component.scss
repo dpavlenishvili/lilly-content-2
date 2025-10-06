@@ -1,53 +1,49 @@
 @use "_v3/calc" as calc;
 
-$h: #{calc.$carousel} !default;
-$init: (
-        margin-y:(media-query-up: (
-                xs: var(--#{calc.$cb}container-margin),
-                xl: 170px,
-        )),
-) !default;
 :host {
-  @include calc.css-initVars($init, $h);
+  display: block;
+  width: 100%;
 }
 
 :host ::ng-deep {
-  @import '../../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel';
-  @import '../../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel-no-arrows.scss';
+  @import '../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel';
 
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+  }
 
   .owl-carousel {
-    position: relative;
-
     .owl-item {
       display: grid;
     }
-  }
-
-  .carousel-viewport {
-    position: relative;
-    overflow: hidden;
-    margin-right: calc(var(--#{$h}margin-y) * -1);
-    margin-left: calc(var(--#{$h}margin-y) * -1);
-    & + * {
-      margin-top: var(--#{calc.$cb}space-400);
-      display :block;
-    }
-
 
     .owl-stage-outer {
       overflow: visible;
     }
+  }
 
-    .owl-stage {
-     padding-left:var(--#{$h}margin-y) !important;
-     padding-right:var(--#{$h}margin-y) !important;
+  .carousel-progress {
+    width: 100%;
+    height: 2px;
+    background-color: var(--cb-color-neutral-base-020);
+    border-radius: 1px;
+    margin-top: var(--cb-space-600);
+    overflow: hidden;
+
+    @include calc.media-breakpoint-down(md) {
+      display: none;
     }
 
-    &.at-end {
-      .owl-stage {
-        padding-right: 0 !important;
-      }
+    &__bar {
+      height: 100%;
+      background-color: var(--cb-color-neutral-base-100);
+      border-radius: 1px;
+      transition: width 0.3s ease;
     }
+  }
+
+  .carousel-controls {
+    margin-top: var(--cb-space-400);
   }
 }

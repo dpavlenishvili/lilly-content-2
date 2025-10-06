@@ -1,0 +1,17 @@
+@if (video?.isIframe) {
+  <iframe [src]="video?.videoSrc"
+          allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          height="100%"
+          width="100%"
+          [title]="title"
+  ></iframe>
+}
+@else {
+  <video #videoElement controls [loop]="isLoop" [muted]="isMuted"
+         (loadeddata)="isAutoplay && videoElement.play()"
+         (play)="play()"
+         (pause)="pause()"
+         [title]="title">
+    <source [src]="video?.videoSrc" (error)="error()"/>
+  </video>
+}

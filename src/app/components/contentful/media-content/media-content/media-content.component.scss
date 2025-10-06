@@ -1,0 +1,6 @@
+@use "_v3/calc" as calc;
+
+:host {
+  border-radius: var(--#{calc.$cb}radius-2);
+  overflow: hidden;
+}

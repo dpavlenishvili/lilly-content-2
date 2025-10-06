@@ -35,6 +35,81 @@ export interface IAccordionWidget extends Entry<IAccordionWidgetFields> {
   };
 }
 
+export interface IArticleFields {
+  /** Label */
+  label: string;
+
+  /** Title */
+  title: string;
+
+  /** Image */
+  image: Asset;
+
+  /** Alt Text */
+  altText: string;
+
+  /** Categories */
+  categories?: ('category1' | 'category2')[] | undefined;
+
+  /** URL */
+  url: string;
+}
+
+/** Each entry includes a title, label, image, and descriptive body text, along with optional tags for categorization or filtering. */
+
+export interface IArticle extends Entry<IArticleFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'article';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IArticlesBlockFields {
+  /** Label */
+  label: string;
+
+  /** Heading */
+  heading: string;
+
+  /** Top Button */
+  topButton?: IButton | undefined;
+
+  /** Articles List */
+  articlesList: IArticle[];
+
+  /** Bottom Button */
+  bottomButton: IButton;
+}
+
+/** Use this model to display a list of articles on Modules Page. It defines the overall block structure — including a top section with heading and button, a middle section listing articles (referencing shared Article entries), and bottom call-to-action button. */
+
+export interface IArticlesBlock extends Entry<IArticlesBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'articlesBlock';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IBenefitsBlockFields {
   /** Label */
   label: string;
@@ -47,6 +122,9 @@ export interface IBenefitsBlockFields {
 
   /** Button */
   button?: IButton | undefined;
+
+  /** File */
+  file?: Asset | undefined;
 }
 
 /** Includes label, title, body text and button */
@@ -432,6 +510,31 @@ export interface IImageTileWidget extends Entry<IImageTileWidgetFields> {
   };
 }
 
+export interface IKalturaUiConfigFields {
+  /** Entry Name */
+  entryName: string;
+
+  /** Id */
+  id: string;
+}
+
+export interface IKalturaUiConfig extends Entry<IKalturaUiConfigFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'kalturaUiConfig';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface ILinkFields {
   /** Entry Name */
   entryName: string;
@@ -587,6 +690,9 @@ export interface IModuleFields {
 
   /** Video Carousel Block */
   videoCarouselBlock?: IVideoCarouselBlock | undefined;
+
+  /** Articles Block */
+  articlesBlock: Entry<{ [fieldId: string]: unknown }>;
 }
 
 /** Content displayed for each module */
@@ -652,6 +758,9 @@ export interface IModulesPageFields {
 
   /** Modules Navigation */
   modulesNavigation: IModulesNavigationBar;
+
+  /** Save Later Block */
+  saveLaterBlock: ISaveLaterBlock;
 }
 
 /** Container Page for multiple wellness modules with tabbed navigation. */
@@ -666,6 +775,72 @@ export interface IModulesPage extends Entry<IModulesPageFields> {
     contentType: {
       sys: {
         id: 'modulesPage';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IOptionFields {
+  /** Title */
+  title: string;
+
+  /** Description */
+  description: string;
+
+  /** Icon */
+  icon: Asset;
+
+  /** Alt Text */
+  altText: string;
+}
+
+/** Includes icon, title and description */
+
+export interface IOption extends Entry<IOptionFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'option';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface ISaveLaterBlockFields {
+  /** Heading */
+  heading: string;
+
+  /** Button */
+  button: IButton;
+
+  /** Options */
+  options: IOption[];
+
+  /** File */
+  file: Asset;
+}
+
+/** Includes a call-to-action and a list of options, each with an icon, title, and description. */
+
+export interface ISaveLaterBlock extends Entry<ISaveLaterBlockFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'saveLaterBlock';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -760,11 +935,11 @@ export interface IVideoCardFields {
   /** Thumbnail */
   thumbnail: Asset;
 
+  /** Video */
+  video?: IVideoMediaConfig | undefined;
+
   /** Icon */
   icon?: Asset | undefined;
-
-  /** Video URL */
-  videoUrl: string;
 
   /** Filter Tag */
   filterTag: 'all' | 'short-form' | 'recipe' | 'food-reset';
@@ -876,6 +1051,43 @@ export interface IVideoCategoryTab extends Entry<IVideoCategoryTabFields> {
   };
 }
 
+export interface IVideoMediaConfigFields {
+  /** Display Media */
+  displayMedia: 'Image' | 'Video' | 'KalturaId' | 'YoutubeId';
+
+  /** Video URL */
+  videoUrl?: string | undefined;
+
+  /** Kaltura Id */
+  kalturaId?: string | undefined;
+
+  /** Kaltura UI Config */
+  kalturaUiConfig?: IKalturaUiConfig | undefined;
+
+  /** Youtube Id */
+  youtubeId?: string | undefined;
+
+  /** Video Config */
+  videoConfig?: Record<string, any> | undefined;
+}
+
+export interface IVideoMediaConfig extends Entry<IVideoMediaConfigFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'videoMediaConfig';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IWeekPlannerNavigationFields {
   /** Key */
   key: string;
@@ -912,6 +1124,8 @@ export interface IWeekPlannerNavigation
 
 export type CONTENT_TYPE =
   | 'accordionWidget'
+  | 'article'
+  | 'articlesBlock'
   | 'benefitsBlock'
   | 'button'
   | 'card'
@@ -922,6 +1136,7 @@ export type CONTENT_TYPE =
   | 'icon'
   | 'imageCoverBlock'
   | 'imageTileWidget'
+  | 'kalturaUiConfig'
   | 'link'
   | 'metaAndShare'
   | 'microstepCard'
@@ -929,15 +1144,20 @@ export type CONTENT_TYPE =
   | 'module'
   | 'modulesNavigationBar'
   | 'modulesPage'
+  | 'option'
+  | 'saveLaterBlock'
   | 'section'
   | 'textWidget'
   | 'videoCard'
   | 'videoCarouselBlock'
   | 'videoCategoryTab'
+  | 'videoMediaConfig'
   | 'weekPlannerNavigation';
 
 export type IEntry =
   | IAccordionWidget
+  | IArticle
+  | IArticlesBlock
   | IBenefitsBlock
   | IButton
   | ICard
@@ -948,6 +1168,7 @@ export type IEntry =
   | IIcon
   | IImageCoverBlock
   | IImageTileWidget
+  | IKalturaUiConfig
   | ILink
   | IMetaAndShare
   | IMicrostepCard
@@ -955,11 +1176,14 @@ export type IEntry =
   | IModule
   | IModulesNavigationBar
   | IModulesPage
+  | IOption
+  | ISaveLaterBlock
   | ISection
   | ITextWidget
   | IVideoCard
   | IVideoCarouselBlock
   | IVideoCategoryTab
+  | IVideoMediaConfig
   | IWeekPlannerNavigation;
 
 export type LOCALE_CODE = 'en-US' | 'es-US';

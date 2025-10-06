@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+// video-card.component.ts
+import { ChangeDetectionStrategy, Component, computed, input, signal, } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { IVideoCard } from '../../models/contentful';
+import { MediaContentComponent } from '../../media-content/media-content/media-content.component';
+import { MediaContentType } from '../../media-content/media-content-type.enum';
 
 @Component({
   selector: 'lilly-video-card',
@@ -8,10 +11,44 @@ import { IVideoCard } from '../../models/contentful';
   styleUrl: './video-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatIcon],
+  imports: [MatIcon, MediaContentComponent],
 })
 export class VideoCardComponent {
+  // --- INPUTS ---
   readonly video = input.required<IVideoCard>();
-  readonly cardClick = output<IVideoCard>();
-  readonly playClick = output<Event>();
+
+  // --- STATE ---
+  readonly isPlaying = signal(false);
+
+  // --- COMPUTED ---
+  // Dynamically compute the correct mediaId based on displayMedia type
+  readonly mediaId = computed(() => {
+    const videoConfig = this.video()?.fields?.video;
+    if (!videoConfig) return '';
+
+    const displayMedia = videoConfig.fields?.displayMedia;
+
+    switch (displayMedia) {
+    case MediaContentType.KALTURA:
+      return videoConfig.fields?.kalturaId || '';
+    case MediaContentType.YOUTUBE:
+      return videoConfig.fields?.youtubeId || '';
+    case MediaContentType.VIDEO:
+      return videoConfig.fields?.videoUrl || '';
+    default:
+      return '';
+    }
+  });
+
+  // Get the first Kaltura UI Config ID (if exists)
+  readonly uiConfigId = computed(() => {
+    const kalturaConfigs = this.video()?.fields?.video?.fields?.kalturaUiConfig;
+    return kalturaConfigs?.[0]?.fields?.id || '';
+  });
+
+  // --- PUBLIC METHODS ---
+  togglePlay(event: Event): void {
+    event.stopPropagation();
+    this.isPlaying.update(playing => !playing);
+  }
 }

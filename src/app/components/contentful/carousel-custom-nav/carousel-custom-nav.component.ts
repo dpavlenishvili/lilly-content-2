@@ -7,18 +7,32 @@ import { Component, input, output } from '@angular/core';
   standalone: true,
 })
 export class CarouselCustomNavComponent {
-  isPrevDisabled = input<boolean>(false);
-  isNextDisabled = input<boolean>(false);
-  pages = input<number[]>([]);
-  activeIndex = input<number>(0);
-  goPrevEmit = output<void>();
-  goNextEmit = output<void>();
+  // Navigation state
+  readonly isPrevDisabled = input<boolean>(false);
+  readonly isNextDisabled = input<boolean>(false);
+
+  // Pagination
+  readonly paginationPages = input<number[]>([]);
+  readonly currentPage = input<number>(0);
+
+  // Outputs
+  readonly goPrevEmit = output<void>();
+  readonly goNextEmit = output<void>();
+  readonly goToPageEmit = output<number>();
 
   goPrev(): void {
-    this.goPrevEmit.emit();
+    if (!this.isPrevDisabled()) {
+      this.goPrevEmit.emit();
+    }
   }
 
   goNext(): void {
-    this.goNextEmit.emit();
+    if (!this.isNextDisabled()) {
+      this.goNextEmit.emit();
+    }
+  }
+
+  goToPage(pageIndex: number): void {
+    this.goToPageEmit.emit(pageIndex);
   }
 }

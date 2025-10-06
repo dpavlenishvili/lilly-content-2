@@ -1,15 +1,32 @@
-<div class="custom-nav">
-    <button type="button" class="nav-arrow prev" (click)="goPrev()" [disabled]="isPrevDisabled()" aria-label="previous"></button>
-    <div class="nav-dots">
-        @for (p of pages(); let i = $index; track i) {
-            <span
-                    class="nav-dot"
-                    [class.active]="activeIndex() === i"
-                    disabled
-                    [attr.aria-disabled]="true"
-                    [attr.aria-current]="activeIndex() === i ? 'true' : 'false'">
-                        </span>
-        }
+<div class="carousel-navigation">
+<!--  <button-->
+<!--    type="button"-->
+<!--    class="nav-arrow nav-arrow&#45;&#45;prev"-->
+<!--    [disabled]="isPrevDisabled()"-->
+<!--    [attr.aria-label]="'Previous slide'"-->
+<!--    (click)="goPrev()">-->
+<!--  </button>-->
+
+  <div class="carousel-navigation__mobile">
+    <div class="carousel-pagination">
+      @for (page of paginationPages(); track $index) {
+        <button
+          type="button"
+          class="carousel-pagination__dot"
+          [class.is-active]="currentPage() === $index"
+          [attr.aria-label]="'Go to page ' + ($index + 1)"
+          [attr.aria-current]="currentPage() === $index ? 'true' : 'false'"
+          (click)="goToPage($index)">
+        </button>
+      }
     </div>
-    <button type="button" class="nav-arrow next" (click)="goNext()" [disabled]="isNextDisabled()" aria-label="next"></button>
+
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="nav-arrow nav-arrow&#45;&#45;next"-->
+<!--      [disabled]="isNextDisabled()"-->
+<!--      [attr.aria-label]="'Next slide'"-->
+<!--      (click)="goNext()">-->
+<!--    </button>-->
+  </div>
 </div>
