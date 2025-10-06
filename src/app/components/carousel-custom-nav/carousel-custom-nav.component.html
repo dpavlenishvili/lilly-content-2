@@ -1,0 +1,15 @@
+<div class="custom-nav">
+    <button type="button" class="nav-arrow prev" (click)="goPrev()" [disabled]="isPrevDisabled()" aria-label="previous"></button>
+    <div class="nav-dots">
+        @for (p of pages(); let i = $index; track i) {
+            <span
+                    class="nav-dot"
+                    [class.active]="activeIndex() === i"
+                    disabled
+                    [attr.aria-disabled]="true"
+                    [attr.aria-current]="activeIndex() === i ? 'true' : 'false'">
+                        </span>
+        }
+    </div>
+    <button type="button" class="nav-arrow next" (click)="goNext()" [disabled]="isNextDisabled()" aria-label="next"></button>
+</div>
