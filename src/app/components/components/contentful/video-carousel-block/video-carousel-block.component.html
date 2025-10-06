@@ -60,23 +60,19 @@
 
   <div class="video-carousel-block__wrapper">
     <app-custom-carousel
-      #customCarousell
+      #customCarouselEl
       [items]="filteredVideos()"
       [maxVisibleCards]="fields()?.maxVisibleCards || 3"
       [shouldShowNavigation]="false"
       [shouldShowProgressBar]="true"
       [breakpoints]="carouselBreakpoints">
       <ng-template #slideTemplate let-video>
-        <lilly-video-card
-          [video]="video"
-          (cardClick)="onVideoClick($event)"
-          (playClick)="$event.stopPropagation(); onVideoClick(video)"/>
+        <lilly-video-card [video]="video"/>
       </ng-template>
     </app-custom-carousel>
 
     @if (customCarousel() && filteredVideos().length > 1) {
       <div class="carousel-controls-wrapper">
-        <!-- Navigation Component -->
         <app-carousel-custom-nav
           [isPrevDisabled]="customCarousel()!.isPrevDisabled()"
           [isNextDisabled]="customCarousel()!.isNextDisabled()"
@@ -87,10 +83,15 @@
           (goToPageEmit)="customCarousel()!.goToPage($event)"
         />
 
-        <!-- View All Link -->
         @if (fields()?.viewAllButton?.fields) {
           <div class="carousel-view-all">
-            <a (click)="onViewAllClick($event)">
+            <a class="carousel-view-all"
+               [href]="helperService.prepareContentfulLink(fields()?.viewAllButton?.fields?.link)"
+               (click)="onViewAllClick($event)"
+               itemprop="url"
+               routerLinkActive="is-active"
+               [attr.aria-label]="fields()?.viewAllButton?.fields?.text"
+               tabindex="0">
               {{ fields()?.viewAllButton?.fields?.text }}
             </a>
           </div>

@@ -44,7 +44,6 @@ export const DEFAULT_BREAKPOINTS: CarouselBreakpoints = {
   ],
 })
 export class CustomCarouselComponent implements AfterViewInit {
-  // Inputs
   readonly items = input([]);
   readonly maxVisibleCards = input<number>(3);
   readonly customCarouselStyleClass = input<string>('');
@@ -53,20 +52,16 @@ export class CustomCarouselComponent implements AfterViewInit {
   readonly shouldShowProgressBar = input<boolean>(false);
   readonly breakpoints = input<CarouselBreakpoints>(DEFAULT_BREAKPOINTS);
 
-  // Outputs
   readonly carouselChanged = output<SlidesOutputData>();
 
-  // ViewChild & ContentChild
   @ContentChild('slideTemplate', { read: TemplateRef }) slideTemplate: TemplateRef<Type<unknown>>;
   @ViewChild('owlCar') owlCar: CarouselComponent;
 
-  // State signals
   readonly carouselWasLoaded = signal<boolean>(false);
   readonly currentSlideIndex = signal<number>(0);
   readonly currentSlideBy = signal<number>(1);
   readonly visibleSlides = signal<number>(1);
 
-  // Computed values
   readonly totalSlides = computed(() => this.items().length);
 
   readonly totalPages = computed(() => {
@@ -112,6 +107,7 @@ export class CustomCarouselComponent implements AfterViewInit {
       dots: false,
       nav: true,
       navSpeed: 600,
+      navText: ['', ''],
       responsive: {
         0: {
           items: 1,
@@ -148,7 +144,6 @@ export class CustomCarouselComponent implements AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    // Watch for items changes
     effect(() => {
       const currentItems = this.items();
       if (currentItems && currentItems.length) {
@@ -160,7 +155,6 @@ export class CustomCarouselComponent implements AfterViewInit {
       this.cdr.markForCheck();
     }, {allowSignalWrites: true});
 
-    // Handle window resize
     fromEvent(window, 'resize')
       .pipe(
         debounceTime(150),
@@ -192,7 +186,6 @@ export class CustomCarouselComponent implements AfterViewInit {
     const slideByValue = this.getSlideByFromWidth();
     this.currentSlideBy.set(slideByValue);
 
-    // Emit event for parent components
     this.carouselChanged.emit(event);
   }
 

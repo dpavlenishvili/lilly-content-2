@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 declare const window;
 
 @Injectable({
@@ -8,8 +8,8 @@ declare const window;
 })
 export class SpotifyService {
   private readonly spotifyScriptId = 'spotifyLib';
-  private spotifyIframeApi: BehaviorSubject<any> = new BehaviorSubject(null);
-  public spotifyIframeApi$: Observable<any> = this.spotifyIframeApi.asObservable();
+  private spotifyIframeApi= new BehaviorSubject(null);
+  public spotifyIframeApi$ = this.spotifyIframeApi.asObservable();
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

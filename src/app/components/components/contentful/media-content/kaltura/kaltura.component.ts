@@ -27,6 +27,10 @@ const KALTURA_CONFIG = {
   UI_CONFIG_ID: '29415272'
 };
 
+interface IKalturaPlayer {
+  addJsListener(event: string, callback: (...args: unknown[]) => void): void;
+}
+
 @Component({
   selector: 'lilly-kaltura',
   templateUrl: './kaltura.component.html',
@@ -110,7 +114,7 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private addEventHandler(): void {
-    const player = this.document.getElementById(this.playerId) as any;
+    const player = this.document.getElementById(this.playerId) as unknown as IKalturaPlayer;
 
     player.addJsListener('playerStateChange', (playerState: string) => {
       this.sendAnalytic(playerState);
@@ -147,7 +151,7 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       const d = iframe?.contentWindow?.document;
       if (!d) return;
-  
+
       d.querySelectorAll<HTMLElement>('[role="slider"][aria-valuenow]').forEach(el => {
         const normalized = this.normalizeAriaFromPercent(el, el.getAttribute('aria-valuenow'));
         if (normalized !== null) el.setAttribute('aria-valuenow', normalized);
@@ -179,13 +183,13 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!raw || !raw.endsWith('%')) return null;
     const pct = parseFloat(raw);
     if (Number.isNaN(pct)) return null;
-  
+
     const max = parseFloat(el.getAttribute('aria-valuemax') || '100');
     const min = parseFloat(el.getAttribute('aria-valuemin') || '0');
     const span = max - min;
     const actual = span ? min + (pct / 100) * span : min;
-  
-    return Math.round(actual).toString(); 
+
+    return Math.round(actual).toString();
   }
 
   private sendAnalytic(videoState: string): void {

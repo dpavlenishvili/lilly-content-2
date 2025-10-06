@@ -1,0 +1,22 @@
+<div class="article" role="button" tabindex="0" (click)="goToLink(article())">
+  <div class="article__media">
+    <img
+      [src]="article()?.fields?.image?.fields?.file?.url"
+      [alt]="article()?.fields?.altText || ''"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="article__content">
+    <p class="font-size-sm font-weight-bold">{{ article()?.fields?.label }}</p>
+    <h3 class="h3-garamond-heading">{{ article()?.fields?.title }}</h3>
+    <div class="article__categories">
+      @for (category of article()?.fields?.categories; track $index) {
+        <span class="chip">{{ category }}</span>
+      }
+    </div>
+  </div>
+</div>
+<mat-divider class="article__divider" aria-hidden="true"></mat-divider>
+
+

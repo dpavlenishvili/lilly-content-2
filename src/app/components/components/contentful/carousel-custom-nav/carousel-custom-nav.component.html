@@ -1,21 +1,15 @@
 <div class="carousel-navigation">
-  <!-- Desktop: Progress bar style (hidden on mobile) -->
-  @if (showProgressBar()) {
-    <div class="carousel-navigation__desktop">
-      <!-- Navigation shown on large screens -->
-    </div>
+  @if (showNavArrows()) {
+    <button
+      type="button"
+      class="nav-arrow nav-arrow--prev"
+      [disabled]="isPrevDisabled()"
+      [attr.aria-label]="'Previous slide'"
+      (click)="goPrev()">
+    </button>
   }
 
-<!--  <button-->
-<!--    type="button"-->
-<!--    class="nav-arrow nav-arrow&#45;&#45;prev"-->
-<!--    [disabled]="isPrevDisabled()"-->
-<!--    [attr.aria-label]="'Previous slide'"-->
-<!--    (click)="goPrev()">-->
-<!--  </button>-->
-
-  <!-- Mobile/Tablet: Pagination dots style -->
-  <div class="carousel-navigation__mobile" [class.carousel-navigation__mobile--only]="!showProgressBar()">
+  <div class="carousel-navigation__mobile">
     <div class="carousel-pagination">
       @for (page of paginationPages(); track $index) {
         <button
@@ -29,12 +23,14 @@
       }
     </div>
 
-<!--    <button-->
-<!--      type="button"-->
-<!--      class="nav-arrow nav-arrow&#45;&#45;next"-->
-<!--      [disabled]="isNextDisabled()"-->
-<!--      [attr.aria-label]="'Next slide'"-->
-<!--      (click)="goNext()">-->
-<!--    </button>-->
+    @if (showNavArrows()) {
+      <button
+        type="button"
+        class="nav-arrow nav-arrow--next"
+        [disabled]="isNextDisabled()"
+        [attr.aria-label]="'Next slide'"
+        (click)="goNext()">
+      </button>
+    }
   </div>
 </div>

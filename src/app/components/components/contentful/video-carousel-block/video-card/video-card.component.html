@@ -5,18 +5,21 @@
     role="button"
     [attr.aria-label]="video()?.fields?.title">
 
-<!--    <img-->
-<!--      class="video-card__image"-->
-<!--      [src]="video()?.fields?.thumbnail?.fields?.file?.url"-->
-<!--      [alt]="video()?.fields?.title"-->
-<!--      loading="lazy"-->
-<!--      decoding="async"/>-->
-
-    @if (isPlaying()) {
+    @if (!isPlaying()) {
+      <img
+        class="video-card__image"
+        [src]="video()?.fields?.thumbnail?.fields?.file?.url"
+        [alt]="video()?.fields?.title"
+        loading="lazy"
+        decoding="async"/>
+    } @else {
       <lilly-media-content
-        [mediaType]="video().fields?.video.fields?.displayMedia"
-        [mediaId]="video().fields.video.fields.kalturaId"
-        [videoConfig]="video().fields.video?.fields.videoConfig"
+        [mediaType]="video().fields?.video?.fields?.displayMedia"
+        [mediaId]="mediaId()"
+        [uiConfigId]="uiConfigId()"
+        [subsiteName]="video().fields?.categoryLabel"
+        [title]="video().fields?.title"
+        [videoConfig]="video().fields?.video?.fields?.videoConfig"
       ></lilly-media-content>
     }
 
@@ -34,9 +37,11 @@
         <span>{{ video()?.fields?.title }}</span>
       </div>
 
-      <button class="video-card__play-btn" (click)="togglePlay($event)">
-        P
-<!--        <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>-->
+      <button
+        class="video-card__play-btn"
+        (click)="togglePlay($event)"
+        [attr.aria-label]="isPlaying() ? 'Pause video' : 'Play video'">
+        <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>
       </button>
     </div>
   </div>

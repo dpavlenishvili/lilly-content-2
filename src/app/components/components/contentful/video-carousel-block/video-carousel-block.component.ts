@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild } from '@angular/core';
-import { IVideoCard, IVideoCarouselBlockFields, IVideoCategoryTab } from '../models/contentful';
+import { IVideoCarouselBlockFields, IVideoCategoryTab } from '../models/contentful';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { HelperService } from '../../../services/helper.service';
-import { LinkBehavior } from '@careboxhealth/core';
 import {
   OneRowNavigationComponent
 } from '../../../shared-features/ui/components/one-row-navigation/one-row-navigation.component';
@@ -13,6 +12,7 @@ import { AppIconRegistry } from '../../../services/app-icon-registry.service';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { CustomCarouselComponent } from '../custom-carousel/custom-carousel.component';
 import { CarouselCustomNavComponent } from '../carousel-custom-nav/carousel-custom-nav.component';
+import { RouterLinkActive } from '@angular/router';
 
 export const VIDEO_CAROUSEL_BREAKPOINTS = {
   MOBILE: 600,
@@ -34,11 +34,12 @@ export const VIDEO_CAROUSEL_BREAKPOINTS = {
     OneRowNavigationComponent,
     VideoCardComponent,
     CustomCarouselComponent,
-    CarouselCustomNavComponent
+    CarouselCustomNavComponent,
+    RouterLinkActive
   ]
 })
 export class VideoCarouselBlockComponent {
-  readonly customCarousel = viewChild<CustomCarouselComponent>('customCarousell');
+  readonly customCarousel = viewChild<CustomCarouselComponent>('customCarouselEl');
   readonly videoCarouselBlockFields = input.required<IVideoCarouselBlockFields>();
   readonly fields = computed(() => this.videoCarouselBlockFields());
   readonly selectedCategory = signal<string>('all');
@@ -63,7 +64,7 @@ export class VideoCarouselBlockComponent {
 
   constructor(iconRegistry: AppIconRegistry) {
     iconRegistry.addSvgIcon('play', '/assets/svg/lilly/play.svg');
-    iconRegistry.addSvgIcon('play', '/assets/svg/lilly/pause.svg');
+    iconRegistry.addSvgIcon('pause', '/assets/svg/lilly/pause.svg');
   }
 
   onCategoryClick(category: IVideoCategoryTab): void {
@@ -74,12 +75,6 @@ export class VideoCarouselBlockComponent {
   onCategoryChange(value: string): void {
     this.selectedCategory.set(value);
     this.customCarousel()?.toSlide('0');
-  }
-
-  onVideoClick(video: IVideoCard): void {
-    if (video?.fields?.videoUrl) {
-      // this.helperService.goToLink(video?.fields?.videoUrl, LinkBehavior.NewTab);
-    }
   }
 
   onCtaClick(): void {

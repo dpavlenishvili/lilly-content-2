@@ -1,0 +1,50 @@
+@use '_v3/calc' as calc;
+
+:host {
+  display: block;
+}
+
+:host {
+  .article {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--#{calc.$cb}space-400);
+    padding: var(--#{calc.$cb}space-400);
+    border-radius: 12px;
+    transition: background-color 200ms ease-in-out;
+  }
+
+  &:hover .article,
+  &:focus-within .article {
+    background-color: var(--#{calc.$color}palette-red-005);
+    cursor: pointer;
+  }
+
+  .article__media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .article__categories {
+    margin-top: var(--#{calc.$cb}space-300);
+    display: flex;
+    gap: var(--#{calc.$cb}space-200);
+  }
+
+  .chip {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--#{calc.$color}palette-neutral-200);
+    font-size: 12px;
+  }
+
+  .article__divider {
+    height: 1px;
+    background-color: var(--#{calc.$color}palette-neutral-200);
+    margin: var(--#{calc.$cb}space-400) 0;
+  }
+}
+
+

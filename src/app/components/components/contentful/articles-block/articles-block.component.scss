@@ -1,0 +1,32 @@
+@use '_v3/calc' as calc;
+
+:host {
+  display: block;
+}
+
+:host ::ng-deep {
+  .block__title {
+    p {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--#{calc.$cb}space-200);
+    }
+  }
+
+  .btn__grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: var(--#{calc.$cb}space-200);
+  }
+
+  .articles__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--#{calc.$cb}space-200);
+  }
+
+}
+
+
+

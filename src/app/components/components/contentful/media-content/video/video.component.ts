@@ -35,7 +35,6 @@ export class VideoComponent implements OnChanges {
   }
 
   public ngOnChanges(): void {
-    console.count(this.videoUrl);
     if (this.videoUrl) {
       // TODO This logic has to be removed after updating Contentful Prod.
       // TODO In this component we has to use only video html tag(not iframe), we cannot add analytics for random iframe

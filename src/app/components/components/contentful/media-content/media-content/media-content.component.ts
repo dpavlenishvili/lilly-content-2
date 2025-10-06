@@ -26,7 +26,7 @@ export class MediaContentComponent {
   @Input() public title: string;
   @Input() public backgroundColor = '#de3626'; // This one just for Spotify
   @Input()
-  set videoConfig(value: Record<string, any>) {
+  set videoConfig(value: Record<string, never>) {
     if (!value) return;
 
     if ('autoplay' in value) {

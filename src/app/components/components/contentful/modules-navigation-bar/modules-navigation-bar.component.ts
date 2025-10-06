@@ -9,6 +9,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
 import { WeekPlannerNavigationBarComponent } from '../week-planner-navigation-bar/week-planner-navigation-bar.component';
 import { VideoCarouselBlockComponent } from '../video-carousel-block/video-carousel-block.component';
+import { ArticlesBlockComponent } from '../articles-block/articles-block.component';
 
 @Component({
   selector: 'lilly-content-modules-navigation-bar',
@@ -23,7 +24,8 @@ import { VideoCarouselBlockComponent } from '../video-carousel-block/video-carou
     MatOption,
     MatButton,
     WeekPlannerNavigationBarComponent,
-    VideoCarouselBlockComponent
+    VideoCarouselBlockComponent,
+    ArticlesBlockComponent
   ],
   standalone: true
 })

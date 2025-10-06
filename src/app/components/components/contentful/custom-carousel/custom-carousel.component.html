@@ -26,10 +26,9 @@
         <app-carousel-custom-nav
           [isPrevDisabled]="isPrevDisabled()"
           [isNextDisabled]="isNextDisabled()"
+          [showNavArrows]="false"
           [paginationPages]="paginationPages()"
           [currentPage]="currentPage()"
-          [showProgressBar]="shouldShowProgressBar()"
-          [progressPercentage]="progressPercentage()"
           (goPrevEmit)="goPrev()"
           (goNextEmit)="goNext()"
           (goToPageEmit)="goToPage($event)"

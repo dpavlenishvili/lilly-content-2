@@ -122,6 +122,9 @@ export interface IBenefitsBlockFields {
 
   /** Button */
   button?: IButton | undefined;
+
+  /** File */
+  file?: Asset | undefined;
 }
 
 /** Includes label, title, body text and button */
@@ -821,6 +824,9 @@ export interface ISaveLaterBlockFields {
 
   /** Options */
   options: IOption[];
+
+  /** File */
+  file: Asset;
 }
 
 /** Includes a call-to-action and a list of options, each with an icon, title, and description. */
@@ -931,9 +937,6 @@ export interface IVideoCardFields {
 
   /** Video */
   video?: IVideoMediaConfig | undefined;
-
-  /** Video URL */
-  videoUrl?: string | undefined;
 
   /** Icon */
   icon?: Asset | undefined;
@@ -1059,7 +1062,7 @@ export interface IVideoMediaConfigFields {
   kalturaId?: string | undefined;
 
   /** Kaltura UI Config */
-  kalturaUiConfig?: IKalturaUiConfig[] | undefined;
+  kalturaUiConfig?: IKalturaUiConfig | undefined;
 
   /** Youtube Id */
   youtubeId?: string | undefined;

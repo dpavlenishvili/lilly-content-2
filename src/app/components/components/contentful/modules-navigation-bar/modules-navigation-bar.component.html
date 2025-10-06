@@ -47,4 +47,11 @@
           [videoCarouselBlockFields]="selectedMenuItem()?.fields?.videoCarouselBlock?.fields"></lilly-content-video-carousel-block>
       </div>
     }
+
+    @if (selectedMenuItem()?.fields?.articlesBlock?.fields) {
+        <div class="selected-content">
+            <lilly-content-articles-block
+                [articlesBlockFields]="selectedMenuItem()?.fields?.articlesBlock?.fields"></lilly-content-articles-block>
+        </div>
+        }
 </div>
