@@ -1,0 +1,92 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+        block--area-t-a: (media-query-up: (
+                xs: ' "#{calc.templateRow((4, "m"))}" "#{calc.templateRow((4, "c"))}" ',
+                md: ' "#{calc.templateRow((8, "m"))}" "#{calc.templateRow((8, "c"))}" ',
+                lg: ' "#{calc.templateRow((5, "m",  7, "c"))}" ',
+                xl: ' "#{calc.templateRow((5, "m", 1, "0", 6, "c"))}" ',
+        )),
+        block--area-offset-x: (media-query-up: (
+                xs: 0,
+                lg: 1.5rem,
+                xl: 2rem,
+        )),
+        block--area-media-w: (media-query-up: (
+                xs: 100%,
+                lg: 25rem,
+
+        )),
+        block--area-media-h: (media-query-up: (
+                xs: 13.22rem,
+                lg: 20rem,
+                xl: 26.375rem,
+        )),
+        block--area-media-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-2),
+                lg: var(--#{calc.$cb}radius-4),
+        )),
+        block--area-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-120),
+        )),
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  .block {
+
+    @extend %cb-grid-layout-12;
+    align-items: center;
+    grid-template-areas: var(--#{$h}block--area-t-a);
+    //padding: 0 var(--#{$h}block--area-offset-x);
+    font-size: var(--#{$h}block--area-font-size);
+
+    --#{calc.$cb}media-w: var(--#{$h}block--area-media-w);
+    --#{calc.$cb}media-h: var(--#{$h}block--area-media-h);
+    --#{calc.$cb}media-radius: var(--#{$h}block--area-media-radius);
+
+    &__content {
+      grid-area: c;
+      a {
+        display: inline-block;
+      }
+    }
+
+    &__media {
+      grid-area: m;
+    }
+
+    //display: grid;
+    //grid-template-columns: var(--#{$h}grid-template-columns);
+    //column-gap: var(--#{$h}grid-gutter-width, 2rem);
+    //
+    //&__media {
+    //  margin-bottom : var(--#{calc.$cb}media-offset-y);
+    //}
+    //
+    &__title .title {
+      font-family: var(--#{calc.$cb}font-sans-narrow);
+      font-weight: var(--#{calc.$cb}font-weight-bold);
+    }
+
+    &__text {
+      font-size: var(--#{$h}font-size);
+    }
+
+    .md-to-html-pipe-link {
+      position: relative !important;
+      display: inline;
+    }
+  }
+
+}

@@ -1,0 +1,114 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+$init: (
+        container-width: (media-query-up: (
+                xs: 90%,
+                md: 720px,
+        )),
+        page-offset-x: var(--#{$cb}space-200),
+        page-offset-y: (media-query-up: (
+                xs: 2rem,
+                md: 6.25rem,
+        )),
+        page-color: #f9f9f9,
+        header-offset-y: (media-query-up: (
+                xs: 3rem,
+                md: 4.5rem,
+        )),
+        title-under-width: 4rem,
+        title-font-size: (media-query-up: (
+                xs: 1.75rem,
+                md: 2rem,
+        )),
+        title-offset-x: (media-query-up: (
+                xs: 2.25rem,
+                md: 3rem,
+        )),
+        h2-font-size: 1.5rem,
+        h2-line-height: 2.5rem
+) !default;
+
+::ng-deep .static-page {
+  @include css-initVars($init, $h);
+
+  padding: 0 var(--#{$h}page-offset-x) var(--#{$h}page-offset-y);
+  border-top: 1rem solid var(--#{$cb}primary);
+  background: var(--#{$h}page-color);
+
+  .container {
+    max-width: var(--#{$h}container-width);
+    margin: 0 auto;
+    padding: 0;
+
+    .header {
+      padding: var(--#{$h}header-offset-y) 0;
+    }
+
+    h1 {
+      font-size: var(--#{$h}title-font-size);
+      line-height: 1.5;
+      margin-bottom: var(--#{$h}title-offset-x);
+      transform: scale(1.05, 1);
+      transform-origin: left;
+
+      &:after {
+        display: block;
+        content: "";
+        width: var(--#{$h}title-under-width);
+        height: 0.25rem;
+        background-color: var(--#{$cb}primary);
+        margin: var(--#{$cb}space-200) 0;
+      }
+    }
+
+    h2 {
+      font-size: var(--#{$h}h2-font-size);
+      line-height: var(--#{$h}h2-line-height);
+      margin-bottom: var(--#{$cb}space-200);
+
+      b {
+        font-weight: var(--#{$cb}font-weight-normal);
+      }
+    }
+
+    h3 {
+      font-size: var(--#{$cb}font-size-base);
+    }
+
+    h3, p, table {
+      margin-bottom: var(--#{$cb}space-300);
+    }
+
+    th, td {
+      border: 1px solid var(--#{$cb}black);
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    table {
+      border-collapse: collapse;
+
+      @include media-breakpoint-down(md) {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    table tr:first-child p {
+      text-align: center;
+    }
+
+    a {
+      font-weight: var(--#{$cb}font-weight-normal);
+
+      @include media-breakpoint-down(md) {
+        u {
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}

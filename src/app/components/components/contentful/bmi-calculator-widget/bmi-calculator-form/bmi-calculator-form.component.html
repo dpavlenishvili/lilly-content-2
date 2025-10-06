@@ -1,0 +1,225 @@
+<form [formGroup]="form" #ngForm="ngForm" autocomplete="off" class="calc cb-form">
+    <fieldset class="calc__units">
+        <legend class="visually-hidden" i18n="@@bmi_calculator.unit_selection">Select your measurement unit</legend>
+        <mat-radio-group aria-label="Select unit" i18n-aria-label="@@bmi-calculator.select_unit_arialabel"
+                         formControlName="unit" (change)="unitChange($event)">
+            <mat-radio-button
+                    [value]="Unit.IMPERIAL"
+                    class="radio-button"
+                    aria-label="Standard"
+                    i18n-aria-label="@@bmi-calculator.standard_arialabel">
+                {{ fields?.imperialUnitCaption }}
+            </mat-radio-button>
+            <mat-radio-button [value]="Unit.METRIC" class="radio-button" aria-label="Metric"
+                              i18n-aria-label="@@bmi-calculator.metric_arialabel">
+                {{ fields?.metricUnitCaption }}
+            </mat-radio-button>
+        </mat-radio-group>
+    </fieldset>
+    @if (errors?.length) {
+        <div class="calc__errors-info">
+            <div>
+                <mat-icon svgIcon="baseline-error"></mat-icon>
+            </div>
+            <div>
+                @if (errors?.length === 1) {
+                    <span i18n="@@bmi_calculator.error_single">An error has occurred in your form. Please enter</span>
+                } @else {
+                    <span i18n="@@bmi_calculator.error_multiple">Multiple errors have occurred in your form. Please enter</span>
+                }
+                <span>
+                    {{ errors.join(', ') }}.
+                </span>
+                <span i18n="@@bmi_calculator.error_calculate">Then, click the Calculate BMI button again.</span>
+            </div>
+        </div>
+    }
+    <div class="calc__form">
+        <div class="calc__form__fields" [ngClass]="formValues.unit === Unit.METRIC ? 'is-metric' : ''">
+            <div class="calc__form__fields__1">
+                <div id="height-group-label" class="label--external" i18n="@@bmi_calculator.height">Height</div>
+                <div class="calc__form__fields__row">
+                    <div class="form-group">
+                        <mat-form-field class="has-out-hint" appearance="fill"
+                                        [class.mat-error]="ngForm?.submitted && formControls?.heightPrefix?.errors">
+                            <!--                    TODO with getHeightPlaceholder
+                            <mat-label>
+                                @switch (formValues.unit) {
+                                    @case (Unit.IMPERIAL) {
+                                        <span id="feet-label" i18n="@@bmi_calculator.feet">Feet</span>
+                                    }
+                                    @case (Unit.METRIC) {
+                                        <span id="cm-label" i18n="@@bmi_calculator.centimeters">Centimeters</span>
+                                    }
+                                }
+                            </mat-label>
+                            -->
+                            <input
+                                    [placeholder]="getHeightPlaceholder(formValues.unit) + '*'"
+                                    matInput formControlName="heightPrefix"
+                                    (click)="setFocus($event, 'heightPrefix')"
+                                    [attr.aria-labelledby]="formValues.unit === Unit.IMPERIAL
+                                                    ? 'height-group-label feet-label' 
+                                                    : 'height-group-label cm-label'"/>
+                        </mat-form-field>
+                        <div class="cb-hint-wrapper">
+                            @if (ngForm?.submitted && formControls?.heightPrefix?.errors && !hideErrors?.heightPrefix) {
+                                <mat-hint class="mat-error">
+
+                                        <mat-icon svgIcon="baseline-error"></mat-icon>
+
+                                        <div>
+                                            @if (formControls?.heightPrefix?.errors?.required) {
+                                                <div>
+                                                    <span i18n="@@bmi_calculator.weight_required">This field is required</span>
+                                                </div>
+                                            } @else {
+                                                @switch (formValues.unit) {
+                                                    @case (Unit.IMPERIAL) {
+                                                        <div class="error-msg"
+                                                             i18n="@@bmi_calculator.height_error_not_in_range_imperial">
+                                                            Enter
+                                                            height
+                                                            in
+                                                            feet from 1 to 15
+                                                        </div>
+                                                    }
+                                                    @case (Unit.METRIC) {
+                                                        <div class="error-msg"
+                                                             i18n="@@bmi_calculator.height_error_not_in_range_metric">
+                                                            Enter
+                                                            height
+                                                            in
+                                                            centimeters that is less than 457
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+
+                                </mat-hint>
+                            }
+                        </div>
+                    </div>
+                    @if (formValues.unit === Unit.IMPERIAL) {
+                        <div class="form-group">
+                            <mat-form-field class="has-out-hint" appearance="fill"
+                                            [class.mat-error]="ngForm?.submitted && formControls?.heightSuffix?.errors">
+                                <!--                                <mat-label><span id="inches-label" i18n="@@bmi_calculator.inches">Inches</span>-->
+                                <!--                                </mat-label>-->
+                                <input aria-labelledby="height-group-label inches-label"
+                                       placeholder="Inches"
+                                       i18n-placeholder="@@bmi_calculator.inches"
+                                       matInput
+                                       formControlName="heightSuffix" (click)="setFocus($event, 'heightSuffix')"/>
+                            </mat-form-field>
+                            <div class="cb-hint-wrapper">
+                                @if (ngForm?.submitted && formControls?.heightSuffix?.errors && !hideErrors?.heightSuffix) {
+                                    <mat-hint class="mat-error">
+
+                                            <mat-icon svgIcon="baseline-error"></mat-icon>
+
+                                            <div class="error-msg"
+                                                 i18n="@@bmi_calculator.height_error_not_in_range_inches">
+                                                Enter
+                                                height
+                                                in inches that is less than 12
+                                            </div>
+
+                                    </mat-hint>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="calc__form__fields__1">
+                <div id="weight-group-label" class="label--external" i18n="@@bmi_calculator.weight">Weight</div>
+                <div class="calc__form__fields__row">
+                    <div class="form-group" [ngClass]="formValues.unit === Unit.METRIC ? ' ' : ' '">
+
+
+                        <mat-form-field class="has-out-hint" appearance="fill"
+                                        [class.mat-error]="ngForm?.submitted && formControls?.weight?.errors">
+                            <!--                    TODO with getWeightPlaceholder
+                            <mat-label>
+                                @switch (formValues.unit) {
+                                    @case (Unit.IMPERIAL) {
+                                        <span id="pounds-label" i18n="@@bmi_calculator.pounds">Pounds</span>
+                                    }
+                                    @case (Unit.METRIC) {
+                                        <span id="kg-label" i18n="@@bmi_calculator.kilograms">Kilograms</span>
+                                    }
+                                }
+                            </mat-label>
+                              -->
+                            <input
+                                    [placeholder]="getWeightPlaceholder(formValues.unit) + '*'"
+                                    matInput formControlName="weight" (click)="setFocus($event, 'weight')"
+                                    [attr.aria-labelledby]="formValues.unit === Unit.IMPERIAL
+                                                    ? 'weight-group-label pounds-label' 
+                                                    : 'weight-group-label kg-label'"/>
+                        </mat-form-field>
+                        <div class="cb-hint-wrapper">
+                            @if (ngForm?.submitted && formControls?.weight?.errors && !hideErrors?.weight) {
+                                <mat-hint class="mat-error">
+                                    <div>
+                                        <mat-icon svgIcon="baseline-error"></mat-icon>
+                                    </div>
+                                    <div>
+                                        @if (formControls?.weight?.errors?.required) {
+                                            <div>
+                                                <span i18n="@@bmi_calculator.weight_required">This field is required</span>
+                                            </div>
+                                        } @else {
+                                            @switch (formValues.unit) {
+                                                @case (Unit.IMPERIAL) {
+                                                    <div class="error-msg"
+                                                         i18n="@@bmi_calculator.weight_error_not_in_range_imperial">
+                                                        Enter
+                                                        weight
+                                                        in
+                                                        pounds from 1 to 330
+                                                    </div>
+                                                }
+                                                @case (Unit.METRIC) {
+                                                    <div class="error-msg"
+                                                         i18n="@@bmi_calculator.weight_error_not_in_range_metric">Enter
+                                                        weight
+                                                        in
+                                                        kilograms from 1 to 150
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </mat-hint>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="calc__form__submit">
+
+            <button type="submit"
+                    color="primary"
+                    mat-flat-button
+                    (click)="onSubmit()">
+                <div class="btn__grid">
+                    <span i18n="@@bmi_calculator.calculate">Calculate BMI</span>
+                    <mat-icon svgIcon="arrow_forward"></mat-icon>
+                </div>
+
+            </button>
+
+        </div>
+    </div>
+</form>
+
+<span hidden="true" #numberOnly i18n="@@bmi_calculator.number_only">numbers only</span>
+<span hidden="true" #heightPrefix_imperial i18n="@@bmi_calculator.height_feet_range">a value for height in feet from 1 to 15</span>
+<span hidden="true" #heightSuffix_imperial i18n="@@bmi_calculator.height_inches_range">a value for height in inches that is less than 12</span>
+<span hidden="true" #heightPrefix_metric i18n="@@bmi_calculator.height_centimeters_range">a value for height in centimeters that is less than 457</span>
+<span hidden="true" #weight_metric i18n="@@bmi_calculator.weight_kilograms_range">a value for weight in kilograms from 1 to 150</span>
+<span hidden="true" #weight_imperial i18n="@@bmi_calculator.weight_pounds_range">a value for weight in pounds from 1 to 330</span>

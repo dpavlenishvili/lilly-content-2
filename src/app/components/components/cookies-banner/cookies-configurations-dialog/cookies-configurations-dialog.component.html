@@ -1,0 +1,134 @@
+
+
+<mat-dialog-content class="mb-3 es-cookies-body" [formGroup]="form">
+    <div class="md-dialog-header text-center mb-lg-2">
+        <img src="assets/images/lilly-logo.svg" width="88px"  alt="Lilly Logo" i18n-alt="@@logo-subject.lilly_logo_alt">
+    </div>
+    <h2 class="title title-under" i18n="@@cookie-dialog.cookie_config_title">Cookie Settings</h2>
+    <div class="es-cookies-body__block" >
+        <p i18n="@@cookie-dialog.visit_website" *hideForRegions="[Language.pt_BR]">When you visit any web site, it may store or retrieve information on your
+            browser, mostly in the form of cookies. This information might be about you, your preferences or your device
+            and is mostly used to make the site work as you expect it to. Cookies can be used to distinguish you from
+            other users of this website.</p>
+        <p i18n="@@cookie-dialog.respect_privacy" *showForRegions="['es-es']">
+            Because we respect your right to privacy, you can choose not to allow
+            some types of cookies. Click on the different category headings to find out more and change our default
+            settings. However, blocking some types of cookies may impact your experience of the site and the services
+            we are able to offer. Para obtener más información, consulte nuestra
+            <a (click)="openLink(clientRoutes.PrivacyFirstEs)">política de cookies</a> y
+            nuestra <a (click)="openLink(clientRoutes.PrivacySecondEs)"> política de privacidad</a> o <a
+                    (click)="openLink(clientRoutes.PrivacyThirdEs)">política de privacidad para profesionales
+                sanitarios</a>.
+        </p>
+        <p i18n="@@cookie-dialog.respect_privacy_new" *showForRegions="[Language.de_DE, Language.en_GB, Language.pt_BR, Language.pl_PL]">
+          Because we respect your right to privacy, you can choose not to allow some types of cookies.
+          Click on the different category headings to find out more and change our default settings.
+          However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
+          <br><br>
+          <a (click)="openLink(externalRoutes.PrivacyCookies)">For further information, you can consult our Privacy Statement.</a>
+        </p>
+        <mat-slide-toggle formControlName="acceptAllCookies" color="primary" class="accept-all-checkbox"
+                          labelPosition="before" i18n="@@cookie-dialog.accept_all_cookies">Accept All Cookies
+        </mat-slide-toggle>
+    </div>
+    <hr>
+    <div class="es-cookies-body__block">
+        <p class="font-weight-bold" i18n="@@cookie-dialog.cookie_necessary_title">Strictly Necessary Cookies (Always Active)</p>
+        <p i18n="@@cookie-dialog.cookie_technology_essential">These cookies and other technologies are essential to make
+            the website usable by enabling basic functions such as page navigation and access to secure areas of the website.
+            You are not able to opt-out of any cookies or other technologies that are “strictly necessary” for the service.</p>
+        <span class="es-cookies-body__block__note ps-3" *ngIf="!showMoreFirst" (click)="showMoreFirst = true"
+              i18n="@@cookie-dialog.view_cookies">View cookies</span>
+        <span class="es-cookies-body__block__note ps-3" *ngIf="showMoreFirst" (click)="showMoreFirst = false"
+              i18n="@@cookie-dialog.hide_cookies">Hide all cookies</span>
+        <div *ngIf="showMoreFirst" class="ps-4">
+            <p class="font-weight-bold mt-4" i18n="@@cookie-dialog.cookie_necessary_title_2">Strictly Necessary Cookie</p>
+            <p i18n="@@cookie-dialog.cookie_neccessary">These cookies are necessary for website functions such as setting
+                your privacy preferences, logging in or completing forms. By using this site, you agree we may place
+                these cookies on your device.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="es-cookies-body__block">
+        <div class="checkbox-wrapper mb-2">
+            <p class="font-weight-bold mb-0" i18n="@@cookie-dialog.cookie_performance">Performance Cookies</p>
+            <mat-slide-toggle formControlName="performanceCookies" color="primary"></mat-slide-toggle>
+        </div>
+        <p i18n="@@cookie-dialog.cookie_collection">These cookies and other technologies collect information about how users interact with the Services and allow us to improve how they work.</p>
+        <span class="es-cookies-body__block__note ps-3" *ngIf="!showMoreSecond" (click)="showMoreSecond = true"
+              i18n="@@cookie-dialog.view_cookies">View cookies</span>
+        <span class="es-cookies-body__block__note ps-3" *ngIf="showMoreSecond" (click)="showMoreSecond = false"
+              i18n="@@cookie-dialog.hide_cookies">Hide all cookies</span>
+        <div *ngIf="showMoreSecond" class="ps-4">
+            <div class="checkbox-wrapper mb-3 mt-2">
+                <p class="font-weight-bold mb-0 mt-4" i18n="@@cookie-dialog.cookie_performance_2">Performance Cookies</p>
+                <mat-slide-toggle formControlName="performanceCookiesCopy" color="primary"></mat-slide-toggle>
+            </div>
+            <p i18n="@@cookie-dialog.cookie_collection_more">These cookies and other technologies collect information about how users interact with the Services and allow us to improve how they work.</p>
+        </div>
+    </div>
+    <hr *hideForRegions="[Language.en_GB, Language.de_DE]">
+    <div class="es-cookies-body__block" *hideForRegions="[Language.en_GB, Language.de_DE]">
+      <div class="checkbox-wrapper mb-2">
+        <p class="font-weight-bold mb-0" i18n="@@cookie-dialog.analysis">Analytics</p>
+        <mat-slide-toggle formControlName="analyticsCookies" color="primary"></mat-slide-toggle>
+      </div>
+      <p i18n="@@cookie-dialog.cookie_monitor">These cookies are used to monitor traffic and analyze trends for
+        how visitors browse our website.</p>
+      <span class="es-cookies-body__block__note ps-3" *ngIf="!showMoreThird" (click)="showMoreThird = true"
+            i18n="@@cookie-dialog.view_cookies">View cookies</span>
+      <span class="es-cookies-body__block__note ps-3" *ngIf="showMoreThird" (click)="showMoreThird = false"
+            i18n="@@cookie-dialog.hide_cookies">Hide all cookies</span>
+      <div *ngIf="showMoreThird" class="ps-4">
+        <div class="checkbox-wrapper mb-3 mt-2">
+          <p class="font-weight-bold mb-0 mt-4" i18n="@@cookie-dialog.analysis_2">Analytics</p>
+          <mat-slide-toggle formControlName="analyticsCookiesCopy" color="primary"></mat-slide-toggle>
+        </div>
+        <p i18n="@@cookie-dialog.cookie_monitor_more">These cookies are used to monitor traffic and analyze trends for
+          how visitors browse our website.</p>
+          <p i18n="@@cookie-dialog.cookie_monitor_more_1" *showForRegions="[Language.pl_PL]">These cookies are used to monitor traffic and analyze trends for
+            how visitors browse our website.</p>
+      </div>
+    </div>
+    <hr>
+    <div class="es-cookies-body__block">
+        <p i18n="@@cookie-dialog.respect_privacy_new" *showForRegions="[Language.it_IT]">
+            For more information, you can consult our
+          <a (click)="openLink(externalRoutes.Privacy)">Privacy Policy</a>
+        </p>
+        <span i18n="@@cookie-dialog.ID">PP-NB-ES-0030</span>
+    </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="md-dialog-action-confirm" align="center">
+        <button mat-flat-button
+                color="primary"
+                class="md-btn-submit"
+                data-cb-id="CE4jySqP_oTg"
+                (click)="reject();dialogRef.close(true)"
+        >
+            <div i18n="@@cookie-dialog.decline_cookies_btn_1">Reject All</div>
+            <div i18n="@@cookie-dialog.decline_cookies_btn_2">Cookies</div>
+        </button>
+        <button mat-flat-button
+                color="primary"
+                class="md-btn-submit"
+                data-cb-id="LHdMka5zVXuV"
+                (click)="accept();dialogRef.close(true)"
+        >
+            <div i18n="@@cookie-dialog.accept_cookies_btn_1">Confirm</div>
+            <div i18n="@@cookie-dialog.accept_cookies_btn_2">My Choices</div>
+        </button>
+        <button mat-flat-button
+                color="primary"
+                class="md-btn-submit"
+                data-cb-id="RQKMM4VF6KQk"
+                (click)="acceptAll();dialogRef.close(true)"
+                >
+            <div i18n="@@cookie-dialog.accept_all_cookies_btn_1">Accept All</div>
+            <div i18n="@@cookie-dialog.accept_all_cookies_btn_2">Cookies</div>
+        </button>
+
+</mat-dialog-actions>
+

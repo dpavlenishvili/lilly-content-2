@@ -1,0 +1,26 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        max-height: (media-query-up: (
+                xs: 2rem
+        )),
+) !default;
+
+:host ::ng-deep {
+  @include calc.css-initVars($init, $h);
+  
+  .accordion.mat-expansion-panel .mat-expansion-panel-header {
+    .mat-expansion-panel-header-title {
+      > div > p {
+        display: block;
+      }
+
+      img {
+        margin-right: 0;
+        vertical-align: middle;
+        max-height: var(--#{$h}max-height);
+      }
+    }
+  }
+}

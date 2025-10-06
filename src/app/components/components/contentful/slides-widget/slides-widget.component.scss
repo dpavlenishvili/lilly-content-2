@@ -1,0 +1,56 @@
+@use "_v3/calc" as *;
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  ::ng-deep {
+    @import '../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel';
+  
+    owl-carousel-o {
+      .owl-item {
+        ul {
+          padding-inline-start: 3rem;
+  
+          @include media-breakpoint-down(lg) {
+            padding-inline-start: 2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.slides {
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  .title {
+    padding: 1rem 3rem;
+    font-weight: var(--#{$cb}font-weight-normal);
+  }
+
+  .content-wrapper {
+    background: var(--#{$cb}white);
+    padding: 1.6rem 1.8rem;
+    height: 100%;
+
+    .content-title {
+      font-weight: var(--#{$cb}font-weight-bold);
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .slides {
+    .content-wrapper {
+      font-size: var(--#{$cb}font-size-sm);
+    }
+  }
+}

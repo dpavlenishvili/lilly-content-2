@@ -1,0 +1,143 @@
+@use '_v3/calc' as *;
+
+$h: '';
+$indicator-tabs-btn-w: 2.25rem !default;
+$indicator-tabs-btn-h: 2.25rem !default;
+$init: (
+        btn-ind-w: $indicator-tabs-btn-w,
+        btn-ind-h: $indicator-tabs-btn-h,
+        btn-ind-size: 1rem,
+        content-text-align: (
+                media-query-up: (
+                        xs: center,
+                        lg: start,
+                )
+        ),
+) !default;
+
+:host {
+  @include css-initVars($init, $h);
+}
+
+
+:host ::ng-deep {
+
+  .cb-intro-tabs {
+    position: relative;
+    overflow-x: clip;
+    user-select: none;
+    touch-action: pan-y !important;
+
+    .mat-mdc-tab-group {
+      background-color: var(--#{$cb}lighter-clr);
+      min-height: var(--#{$cb}cst-intro-h);
+      z-index: 0;
+      touch-action: none;
+      user-select: none;
+      overflow-x: hidden;
+
+      @include media-breakpoint-down(lg) {
+        touch-action: auto;
+      }
+
+      .mat-mdc-tab-header {
+        display: none;
+      }
+    }
+
+    .mat-mdc-tab-body {
+      &, & img {
+        user-select: none;
+        overflow-x: hidden;
+        touch-action: pan-y;
+      }
+    }
+
+    .mat-mdc-tab-body {
+      animation: fade-out 0.15s;
+      opacity: 0;
+
+     &.mat-mdc-tab-body-active {
+        animation: fade-in 0.7s;
+        opacity: 1;
+      }
+    }
+
+    button.mdc-icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      @include size_r(var(--#{$h}btn-ind-w), var(--#{$h}btn-ind-h));
+      border-radius: 50%;
+
+      .indicator {
+        display: inline-flex;
+        @include square(var(--#{$h}btn-ind-size));
+        border-radius: 50%;
+        @include transition(0.2s ease-in-out);
+      }
+
+
+      &:not(.is-active) {
+        .indicator {
+          background-color: rgba(var(--#{$cb}black-rgb), 0.3);
+        }
+
+        &:hover {
+          .indicator {
+            @include transform(scale(1.15));
+            background-color: rgba(var(--#{$cb}black-rgb), 0.6);
+          }
+        }
+      }
+
+      &.is-active {
+        cursor: default;
+
+        .indicator {
+          background-color: var(--#{$cb}primary);
+        }
+      }
+
+      @include md-btn-disable-hover-focus();
+    }
+  }
+
+  &.disabled-animations .cb-intro-tabs .mat-mdc-tab-group {
+    .mat-mdc-tab-body {
+      animation: none;
+
+      &.mat-mdc-tab-body-active {
+        animation: none;
+      }
+    }
+  }
+
+  .row {
+    margin-top: var(--#{$cb}space-100);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

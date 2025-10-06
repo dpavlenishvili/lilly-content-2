@@ -1,0 +1,5 @@
+@use "_v3/calc" as calc;
+
+mat-select {
+    color: var(--#{calc.$color}neutral-base-060);
+}

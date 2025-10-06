@@ -1,0 +1,107 @@
+<cst-wrapper hostSizeClass="cst--md" [showTitle]="false" [showLogoSubject]="false">
+
+    <ng-container cst-header-content>
+        <app-logo-subject [hideText]="true" class="is-lg"></app-logo-subject>
+    </ng-container>
+    
+    <div class="block">
+        <div class="block__title">
+            <h1 class="title garamond-heading-1-font" i18n="@@sitemap.sitemap">Sitemap</h1>
+        </div>
+        <div class="block__links">
+            <ul>
+                <li>
+                    <a [routerLink]="[clientRoutes.Home]">
+                        <div i18n="@@sitemap.home">Home</div>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="[clientRoutes.Listing]">
+                        <div i18n="@@sitemap.find_trial">Find a Clinical Trial</div>
+                    </a>
+                </li>
+                
+                <li>
+                    <a [routerLink]="[clientRoutes.Matching]">
+                        <div i18n="@@sitemap.trial_match">Lilly Trial Match</div>
+                    </a>
+                </li>
+                
+                <li>
+                    <a [routerLink]="[clientRoutes.CompletedListing]">
+                        <div i18n="@@sitemap.completed_trials">Completed Trials</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+</cst-wrapper>
+
+<cst-wrapper class="cst--sitemap" [hostSizeClass]="'cst--md'" [showTitle]="false" [showHeaderContent]="false">
+    
+    <div class="block block--sm">
+        <div class="block__title">
+            <h2 class="title h3" i18n="@@sitemap.science">Science</h2>
+        </div>
+    </div>
+
+    <div class="block is-grid block--sitemap">
+        @for (menuItem of headerMenu; track menuItem) {
+            @if (menuItem.item && menuItem.page; as page) {
+                <div class="block__item">
+                    <div class="block__title">
+                        <h3 class="title">
+                            <a [routerLink]="[page.pageLink?.fields?.url]" [state]="{ referrer: sitemapReferrer}">
+                                {{page.pageLink?.fields?.text}}
+                            </a>
+                        </h3>
+                    </div>
+                    @if (page?.navElements?.length) {
+                        <ul class="menu menu--sitemap">
+                            @for (section of page?.navElements; track section) {
+                                <li>
+                                    <a [routerLink]="[page.pageLink?.fields?.url]" 
+                                       [state]="{ referrer: sitemapReferrer}" 
+                                       [fragment]="section?.fields?.sectionId">
+                                        {{section?.fields?.navTitle}}
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            }
+            @if (menuItem?.items?.length) {
+                <div class="block__item">
+                    <div class="block__title">
+                        <h3 class="title">{{menuItem.title}}</h3>
+                    </div>
+                    <ul class="menu menu--sitemap menu--level-2">
+                        @for (item of menuItem?.items; track item) {
+                            <li>
+                                <a [href]="helperService.prepareContentfulLink(item.link)"
+                                   (click)="browseCategory.navigateToCriteria(item, false, sitemapReferrer); $event.preventDefault()">
+                                    {{item.label}}
+                                </a>
+                                
+                                @if (item.subMenu?.length > 0) {
+                                    <ul class="menu menu--sitemap menu--level-3">
+                                        @for (subItem of item.subMenu; track subItem) {
+                                            <li>
+                                                <a [href]="helperService.prepareContentfulLink(subItem.link)"
+                                                   (click)="browseCategory.navigateToCriteria(subItem, false, sitemapReferrer); $event.preventDefault()">
+                                                    {{subItem.label}}
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
+    </div>
+</cst-wrapper>

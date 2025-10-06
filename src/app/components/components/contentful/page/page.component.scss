@@ -1,0 +1,59 @@
+@use "_v3/calc" as calc;
+/* TODO not sure if it's old css
+:host {
+  display: block;
+  &.has-page-background {
+    background: linear-gradient(
+  to bottom,
+      #FDE8E5 0%,
+      #FFFFFF 50%,
+      #FDE8E5 60%,
+      #FFFFFF 80%,
+      #FDE8E5 100%,
+    );
+  }
+  ::ng-deep {
+    lilly-nav-elements-tabs {
+      .sections-container {
+        overflow: auto;
+        
+        > lilly-section {
+          > section {
+            &.has-hidden-title {
+              padding-top: var(--#{calc.$cb}cst-contnet-offset-y) !important;
+            }
+          }
+          
+          &:last-of-type {
+            > section {
+              padding-bottom: var(--#{calc.$cb}cst-contnet-offset-y);
+            }
+          }
+
+          &.has-background {
+            > section {
+              padding-bottom: 3rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-menu-container--right {
+    order: 1;
+  }
+
+  @include calc.media-breakpoint-down(md) {
+    .page .d-flex {
+      display: block!important;
+    }
+
+    .page.container {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
+  }
+}
+*/

@@ -1,0 +1,24 @@
+<cst-wrapper class="page-media" [showLogoSubject]="false">
+    <div class="block">
+        <div class="block__eyebrow">
+            <div class="eyebrow" [innerHtml]="pageMediaFields?.label | mdToHtml"></div>
+        </div>
+        <div class="block__title">
+            <h2 class="title garamond-heading-1-font" [innerHtml]="pageMediaFields?.title | mdToHtml"></h2>
+        </div>
+    </div>
+</cst-wrapper>
+
+<div class="container media-container">
+    <div class="media-content">
+        <lilly-media-content
+            [mediaType]="pageMediaFields?.displayMedia"
+            [mediaId]="mediaId"
+            [uiConfigId]="pageMediaFields?.kalturaUiConfig?.fields.id"
+            [subsiteName]="pageMediaFields?.title"
+            [title]="mediaTitle"
+            [videoConfig]="pageMediaFields?.videoConfig">
+        </lilly-media-content>
+        <div class="media-overlay"></div>
+    </div>
+</div>

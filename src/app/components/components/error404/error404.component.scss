@@ -1,0 +1,74 @@
+@use "_v3/calc" as calc;
+
+$h: '';
+$init: (
+  title-font-size: (media-query-up: (
+    xs: calc(var(--#{calc.$cb}font-size-base) * 3),
+    lg: calc(var(--#{calc.$cb}font-size-base) * 6.25),
+  )),
+  description-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-125),
+    lg: var(--#{calc.$cb}font-size-150),
+  )),
+  block-text-align: (media-query-up: (
+    xs: center,
+  )),
+  btn-grid-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-base),
+    lg: var(--#{calc.$cb}font-size-150),
+  )),
+  hero-min-height: (media-query-up: (
+    xs: 12rem,
+    lg: 10rem,
+  )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  lilly-hero-section {
+    .cst--hero {
+      --#{calc.$cst--hero-prefix}min-height: var(--#{$h}hero-min-height);
+      --#{calc.$cst--hero-prefix}media__overlay-bg_clr: rgba(33, 33, 33, 0.2);
+    }
+  }
+  
+  .cst {
+    &__wrapper {
+      height: 100vh;
+    }
+    &__header {
+      margin: 0;
+    }
+    .block {
+      --#{calc.$cb}block-text-align: var(--#{$h}block-text-align);
+
+      .error-icon-wrapper {
+        margin-bottom: var(--#{calc.$cb}block-offset-md-y);
+        .mat-icon {
+          @include calc.square(3rem);
+        }
+      }
+      
+      &__title {
+        .title {
+          font-size: var(--#{$h}title-font-size);
+          font-style: italic;
+        }
+      }
+
+      &__text {
+        margin-bottom: var(--#{calc.$cb}space-600);
+        .description {
+          font-size: var(--#{$h}description-font-size);
+        }
+      }
+
+      .btn__grid {
+        font-size: var(--#{$h}btn-grid-font-size);
+      }
+    }
+  }
+}

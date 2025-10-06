@@ -1,0 +1,177 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        template-columns: (media-query-up: (
+                xs: 1fr,
+                sm: 50% 50%,
+        )),
+        width: (media-query-up: (
+                xs: 40rem,
+                sm: 40rem,
+                md: 40rem,
+        )),
+        bg-clr:var(--#{calc.$cb}lilac-clr),
+        arrow-in-s: (media-query-up: (
+                xs: 8px,
+                lg: 16px,
+        )),
+        arrow-h: (media-query-up: (
+                xs: 10px,
+                lg: 28px,
+        )),
+        arrow-offset: var(--site-card-thumb-size, 2.5rem),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+
+    .#{calc.$btn-selector} {
+      &.mat-mdc-button-base {
+        &.mdc-icon-button.btn--inform {
+          @include calc.btn-mixins-button-override($overrides: (
+                  fg: var(--#{calc.$cb}primary),
+                  bg: trnasparent
+          ));
+        }
+      }
+    }
+
+  }
+}
+
+::ng-deep {
+  .cdk-overlay-pane {
+
+    $p: 'pop-' !default;
+    $init-pop: (
+            margin-x: (media-query-up: (
+                    xs: .5rem,
+                    sm: .25rem,
+            )),
+            padding: (media-query-up: (
+                    xs: .75rem,
+            )),
+            clr: var(--#{calc.$color}neutral-base-100),
+            bg-clr: var(--#{calc.$color}neutral-base-000),
+            border-clr: var(--#{calc.$color}neutral-base-030),
+            border-w: 1px,
+            arrow-in-s: (media-query-up: (
+                    xs: 6px,
+            )),
+            arrow-out-s: (media-query-up: (
+                    xs: 8px,
+            )),
+            arrow-margin-t: calc(var(--#{$p}border-w) * -1),
+    ) !default;
+    @include calc.css-initVars($init-pop, $p);
+
+    outline-width: 0 !important;
+
+    .popup-info {
+
+      max-width: 400px;
+      position: relative;
+
+      &__block {
+        color: var(--#{$p}clr);
+        background-color: var(--#{$p}bg-clr);
+        border: var(--#{$p}border-w) solid var(--#{$p}border-clr);
+        border-radius: .25rem;
+
+        margin: 0 var(--#{$p}margin-x);
+        padding: var(--#{$p}padding);
+        font-size: var(--#{calc.$cb}font-size-sm);
+        line-height: var(--#{calc.$cb}line-height-sm);
+
+        display: grid;
+        width: calc(100% - var(--#{$p}margin-x) * 2);
+        grid-template-areas: "t c";
+        grid-template-columns: 1fr auto;
+        gap: 0;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+
+        > * {
+          min-width: 0;
+        }
+
+      }
+
+      &__text {
+        grid-area: t;
+      }
+
+      &__ctrl {
+        grid-area: c;
+
+        button.mat-mdc-icon-button {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          @include calc.square(1.25rem);
+          background-color: var(--#{calc.$cb}primary);
+          color: var(--#{calc.$cb}white);
+          transform: translate(0.25rem, -0.25rem);
+          min-height: auto;
+
+          .mat-icon {
+            @include calc.square(0.75rem);
+            align-items: center;
+            display: flex;
+          }
+        }
+      }
+
+
+      &__arrow {
+        &, &:after {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+
+        border-width: var(--#{$p}arrow-in-s);
+
+        &:after {
+          content: '';
+          border-width: var(--#{$p}arrow-out-s);
+
+          z-index: -1;
+
+        }
+      }
+    }
+
+    &.up {
+      .popup-info__arrow {
+        top: 100%;
+        margin-top: var(--#{$p}arrow-margin-t);
+        border-color: var(--#{$p}bg-clr) transparent transparent transparent;
+
+        &:after {
+          top: calc(var(--#{$p}arrow-in-s) * -1);
+          left: calc(var(--#{$p}arrow-out-s) * -1);
+          border-color: var(--#{$p}border-clr) transparent transparent transparent;
+        }
+      }
+    }
+
+    &:not(.up) {
+      .popup-info__arrow {
+
+        top: calc((var(--#{$p}arrow-in-s) - var(--#{$p}border-w)) * -2);
+        border-color: transparent transparent var(--#{$p}bg-clr) transparent;
+
+        &:after {
+          top: calc((var(--#{$p}arrow-out-s) + var(--#{$p}border-w)) * -1);
+          left: calc(var(--#{$p}arrow-out-s) * -1);
+          border-color: transparent transparent var(--#{$p}border-clr) transparent;
+        }
+      }
+    }
+  }
+}

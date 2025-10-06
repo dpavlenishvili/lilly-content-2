@@ -1,0 +1,21 @@
+@use "_v3/calc" as calc;
+$h: '' !default;
+$init: (
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+  ::ng-deep {
+    .block {
+      a {
+        display: inline-flex;
+      }
+    }
+    .block__text {
+      font-size: var(--#{$h}font-size);
+    }
+  }
+}

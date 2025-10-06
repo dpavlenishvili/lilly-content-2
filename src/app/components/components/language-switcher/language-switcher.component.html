@@ -1,0 +1,42 @@
+<button mat-icon-button
+        #langDeskMenuTrigger="appOverlayTrigger"
+        #triggerButton
+        class="nav__btn"
+        aria-label="Select your country or region"
+        i18n-aria-label="@@header.select_your_country_or_region_arialabel"
+        appOverlayTrigger
+        [appOverlayTrigger]="langDeskMenu"
+        [mode]="'click'"
+        [outsideClose]="'hover-or-click'"
+        [overlayContainer]="overlayContainer()"
+        [overlayClass]="['h-overlay','h-overlay--float', 'theme--dark', 'language-panel']"
+        [initialPosition]="{originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom'}"
+        (isOpenChange)="menuOpen.emit($event)"
+        [matTooltip]="'Select country/region'"
+        i18n-matTooltip="@@language-switcher.select_country_region.tooltip"
+>
+  <mat-icon svgIcon="network"></mat-icon>
+</button>
+
+<ng-template #langDeskMenu>
+  <div class="block block--sm" tabindex="0" (keydown.escape)="onEscape()">
+    <div class="block__title">
+      <h4 class="title" i18n="@@language-switcher.select_your_country" id="region-picker-heading">
+        Select your country or region
+      </h4>
+    </div>
+    <div class="block__menu">
+      <ul class="menu menu--lang" aria-labelledby="region-picker-heading">
+        @for (item of languageService.languages; track item) {
+          <a role="button" class="btn--link" mat-button
+             (click)="setLanguage(item); $event.preventDefault()"
+             [href]="item?.link"
+             [attr.aria-label]="'Language ' + item?.label" itemprop="url"
+             [ngClass]="{'is-active': item === languageService.selected }">
+            {{ item?.label }}
+          </a>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>

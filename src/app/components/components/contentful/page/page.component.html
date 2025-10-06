@@ -1,0 +1,50 @@
+@if (!loading) {
+  <lilly-hero-section [pageFields]="pageFields"></lilly-hero-section>
+
+  @if (pageFields?.pageMedia) {
+    <lilly-page-media [pageMediaFields]="pageFields.pageMedia.fields"></lilly-page-media>
+  }
+
+  @if (positionNavElements === Positions.Center && pageFields) {
+    <lilly-nav-elements-tabs [pageFields]="pageFields">
+      <ng-container [ngTemplateOutlet]="sections"></ng-container>
+    </lilly-nav-elements-tabs>
+  }
+
+  @if (positionNavElements !== Positions.Center) {
+    <section class="container page" (sectionChange)="onSectionChange($event)" scrollSpyEl [spiedTags]="navbarTabSectionIds">
+      <div class="d-flex">
+          @if (navbarTabs?.length && jumpMenu) {
+            <div class="{{'col-lg-3 sidebar-menu-container sidebar-menu-container--' + positionNavElements}}">
+              <lilly-nav-elements-sidemenu
+                [activeTab]="activeTab"
+                [navbarTabs]="navbarTabs"
+              ></lilly-nav-elements-sidemenu>
+            </div>
+          }
+          <div [ngClass]="{'col-12': !jumpMenu, 'col-lg-9': jumpMenu}">
+            <ng-container [ngTemplateOutlet]="sections"></ng-container>
+          </div>
+      </div>
+    </section>
+  }
+}
+@else {
+  <lilly-article-page-skeleton-loader></lilly-article-page-skeleton-loader>
+}
+
+<ng-template #sections>
+  @for (section of pageFields?.sections; track section) {
+    <lilly-section
+      [section]="section"
+      [background]="section?.fields?.backgroundColor"
+      [hasSideMenu]="positionNavElements !== Positions.Center && navbarTabs?.length && jumpMenu"
+      [navElements]="pageFields?.navElements"
+      [trials]="trials"
+      [filters]="filters"
+      [subsiteName]="subsiteName"
+      [ngClass]="{'has-background': section?.fields?.backgroundColor}"
+      [pageType]="PageType.SUBSITE">
+    </lilly-section>
+  }
+</ng-template>

@@ -1,0 +1,45 @@
+@use '_v3/calc' as *;
+
+.blog-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  h2, h3 {
+    font-weight: 500;
+  }
+
+  &__author {
+    margin-bottom: 2.5rem;
+    display: flex;
+
+    &--inf {
+      margin: 0.3rem 0 auto 1.8rem;
+    }
+
+    img {
+      height: 9.375rem;
+      border-radius: 100%;
+    }
+  }
+
+}
+
+@include media-breakpoint-down(md) {
+  .blog-container {
+    padding: 0;
+
+    &__author {
+      display: flex;
+      flex-direction: column;
+
+      span:first-child {
+        text-align: center;
+      }
+
+      &--inf {
+        margin-left: 0;
+      }
+    }
+  }
+}

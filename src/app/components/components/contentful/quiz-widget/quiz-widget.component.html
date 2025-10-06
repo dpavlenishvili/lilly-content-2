@@ -1,0 +1,12 @@
+<div class="quiz">
+    <div class="quiz-card-start">
+        <lilly-quiz-widget-start
+                [fields]="widgetFields?.startWidget?.fields"
+                (buttonClicked)="onStartQuiz()">
+        </lilly-quiz-widget-start>
+        <lilly-overlay #overlayComponent>
+            <lilly-quiz-widget-stepper [cmsAnalytics]="analytics" [widgetFields]="widgetFields">
+            </lilly-quiz-widget-stepper>
+        </lilly-overlay>
+    </div>
+</div>

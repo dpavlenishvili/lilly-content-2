@@ -1,0 +1,253 @@
+@if (showSection$ | async) {
+    <cst-wrapper [id]="section?.fields?.sectionId"
+                 [attr.aria-label]="section.fields.navTitle"
+                 tabindex="0"
+                 class="cst--About?" hostSizeClass=""
+                 [titleClass]="isInNavigation ? 'garamond-heading-1-font' : 'garamond-heading-3-font'"
+                 [showTitle]="showTitle"
+                 [showLogoSubject]="isInNavigation"
+                 [ngClass]="{'cst--empty-content': getTextExcludedWidgets(filterWidgets(section?.fields?.widgets)) <= 0, 'cst--without-title': !showTitle}"
+    >
+        <ng-container cst-title>
+            {{ section.fields?.title }}
+        </ng-container>
+
+        <div class="widget-container">
+            @for (widget of filterWidgets(section?.fields?.widgets); track widget; let i = $index) {
+                @switch (widget?.sys?.contentType?.sys?.id) {
+                    @case ('textWidget') {
+                        <lilly-text-widget
+                                class="widget-item"
+                                [textWidgetFields]="widget?.fields"
+                                [cmsAnalytics]="analyticsFilters"
+                        ></lilly-text-widget>
+                    }
+                    @case ('imageTileWidget') {
+                        <lilly-image-tile-widget
+                                class="widget-item widget-item--image-tile"
+                                [imageTileWidgetFields]="widget?.fields"
+                                [cmsAnalytics]="analyticsFilters"
+                                [isReverse]="i % 2 !== 0"
+                        ></lilly-image-tile-widget>
+                    }
+                    @case ('accordionWidget') {
+                        <lilly-accordion-widget
+                                class="widget-item accordion-widget"
+                                [accordionWidgetFields]="widget?.fields"
+                                [isFirst]="i === 0 || section?.fields?.widgets[i - 1]?.sys.contentType.sys.id !== 'accordionWidget'"
+                        ></lilly-accordion-widget>
+                    }
+
+                    @case ('cardArrangementWidget') {
+                        <lilly-card-arrangement-widget
+                                class="widget-item"
+                                [cardArrangementWidgetFields]="widget?.fields"
+                                [cmsAnalytics]="analyticsFilters"
+                                [sectionshowTitle]="showTitle"
+                        ></lilly-card-arrangement-widget>
+                    }
+
+                    @case ('slidesWidget') {
+                        <lilly-slides-widget
+                                class="widget-item"
+                                [slidesWidgetFields]="widget?.fields"
+                        ></lilly-slides-widget>
+                    }
+                    @case ('trials-widget') {
+                        <lilly-trials-widget
+                                class="widget-item"
+                                [trials]="trials"
+                        ></lilly-trials-widget>
+                    }
+                    @case ('alertMeWidget') {
+                        <lilly-alert-me-widget
+                                class="widget-item"
+                                [alertMeWidgetFields]="widget?.fields"
+                                [filters]="analyticsFilters"
+                                [subsiteName]="subsiteName"
+                        ></lilly-alert-me-widget>
+                    }
+                    @case ('imageLinkWidget') {
+                        <lilly-image-link-widget
+                                class="widget-item"
+                                [widget]="widget?.fields"
+                        ></lilly-image-link-widget>
+                    }
+                    @case ('questionnaireWidget') {
+                        <lilly-questionnaire-widget
+                                class="widget-item"
+                                [questionnaireWidgetFields]="widget?.fields"
+                                [cmsAnalytics]="analyticsFilters"
+                        ></lilly-questionnaire-widget>
+                    }
+                    @case ('quizWidget') {
+                        <lilly-quiz-widget
+                                class="widget-item"
+                                [cmsAnalytics]="analyticsFilters"
+                                [widgetFields]="widget?.fields">
+                        </lilly-quiz-widget>
+                    }
+                    @case ('bmiCalculatorWidget') {
+                        <lilly-bmi-calculator-widget
+                                class="widget-item"
+                                [bmiWidgetFields]="widget?.fields"
+                                [cmsAnalytics]="analyticsFilters"
+                        ></lilly-bmi-calculator-widget>
+                    }
+                    @case ('homePageFindWidget') {
+                        <lilly-find-clinical-trial-widget
+                                class="widget-item"
+                                [widgetFields]="widget?.fields"
+                        ></lilly-find-clinical-trial-widget>
+                    }
+                    @case ('blockquoteWidget') {
+                        <lilly-blockquote-widget
+                                class="widget-item"
+                                [widgetFields]="widget?.fields"
+                        ></lilly-blockquote-widget>
+                    }
+                    @case ('clinicalTrialEssentialsWidget') {
+                        <lilly-clinical-trial-essentials-widget
+                                class="widget-item"
+                                [widgetFields]="widget?.fields"
+                        ></lilly-clinical-trial-essentials-widget>
+                    }
+                    @case ('findTrialWidget') {
+                        <lilly-find-trial-widget
+                                class="widget-item"
+                                [findTrialWidgetFields]="widget?.fields"
+                        ></lilly-find-trial-widget>
+                    }
+                    @case ('trialConnectWidget') {
+                        <lilly-trial-connect-widget
+                                class="widget-item--full-bleed"
+                                [trialConnectWidgetFields]="widget?.fields"
+                        ></lilly-trial-connect-widget>
+                    }
+                }
+            }
+        </div>
+    </cst-wrapper>
+
+    <!-- TODO  Old section for compare with new-->
+    @if (false) {
+        <section
+                class="cst section-cont"
+                [ngClass]="{
+            'has-hidden-title': !section?.fields?.title || section?.fields?.hideTitle,
+            'blog-section': pageType === PageType.BLOG,
+            'has-sidemenu': hasSideMenu
+        }"
+                [ngStyle]="{ background: background ? background : '#ffffff' }"
+                [id]="section?.fields?.sectionId"
+                tabindex="0"
+                [attr.aria-label]="section.fields.navTitle"
+        >
+            <div class="container">
+                <div class="d-flex flex-column align-items-center">
+                    @if (showTitle) {
+                        <div class="title-container">
+                            <h2>{{ section.fields?.title }}</h2>
+                        </div>
+                    }
+                    <div class="widget-container">
+                        @for (widget of filterWidgets(section?.fields?.widgets); track widget; let i = $index) {
+                            @switch (widget?.sys?.contentType?.sys?.id) {
+                                @case ('imageTileWidget') {
+                                    <lilly-image-tile-widget
+                                            class="widget-item"
+                                            [imageTileWidgetFields]="widget?.fields"
+                                            [cmsAnalytics]="analyticsFilters"
+                                            [isReverse]="i % 2 === 0"
+                                    ></lilly-image-tile-widget>
+                                }
+                                @case ('accordionWidget') {
+                                    <lilly-accordion-widget
+                                            class="widget-item accordion-widget"
+                                            [accordionWidgetFields]="widget?.fields"
+                                            [isFirst]="i === 0 || section?.fields?.widgets[i - 1]?.sys.contentType.sys.id !== 'accordionWidget'"
+                                    ></lilly-accordion-widget>
+                                }
+
+                                @case ('textWidget') {
+                                    <lilly-text-widget
+                                            class="widget-item"
+                                            [textWidgetFields]="widget?.fields"
+                                            [cmsAnalytics]="analyticsFilters"
+                                    ></lilly-text-widget>
+                                }
+                                @case ('cardArrangementWidget') {
+                                    <lilly-card-arrangement-widget
+                                            class="widget-item"
+                                            [cardArrangementWidgetFields]="widget?.fields"
+                                            [cmsAnalytics]="analyticsFilters"
+                                            [sectionshowTitle]="showTitle"
+                                    ></lilly-card-arrangement-widget>
+                                }
+                                @case ('slidesWidget') {
+                                    <lilly-slides-widget
+                                            class="widget-item"
+                                            [slidesWidgetFields]="widget?.fields"
+                                    ></lilly-slides-widget>
+                                }
+                                @case ('trials-widget') {
+                                    <lilly-trials-widget
+                                            class="widget-item"
+                                            [trials]="trials"
+                                    ></lilly-trials-widget>
+                                }
+                                @case ('alertMeWidget') {
+                                    <lilly-alert-me-widget
+                                            class="widget-item"
+                                            [alertMeWidgetFields]="widget?.fields"
+                                            [filters]="analyticsFilters"
+                                            [subsiteName]="subsiteName"
+                                    ></lilly-alert-me-widget>
+                                }
+                                @case ('imageLinkWidget') {
+                                    <lilly-image-link-widget
+                                            class="widget-item"
+                                            [widget]="widget?.fields"
+                                    ></lilly-image-link-widget>
+                                }
+                                @case ('questionnaireWidget') {
+                                    <lilly-questionnaire-widget
+                                            class="widget-item"
+                                            [questionnaireWidgetFields]="widget?.fields"
+                                            [cmsAnalytics]="analyticsFilters"
+                                    ></lilly-questionnaire-widget>
+                                }
+                                @case ('quizWidget') {
+                                    <lilly-quiz-widget
+                                            class="widget-item"
+                                            [cmsAnalytics]="analyticsFilters"
+                                            [widgetFields]="widget?.fields">
+                                    </lilly-quiz-widget>
+                                }
+                                @case ('bmiCalculatorWidget') {
+                                    <lilly-bmi-calculator-widget
+                                            class="widget-item"
+                                            [bmiWidgetFields]="widget?.fields"
+                                            [cmsAnalytics]="analyticsFilters"
+                                    ></lilly-bmi-calculator-widget>
+                                }
+                                @case ('homePageFindWidget') {
+                                    <lilly-find-clinical-trial-widget
+                                            class="widget-item"
+                                            [widgetFields]="widget?.fields"
+                                    ></lilly-find-clinical-trial-widget>
+                                }
+                                @case ('blockquoteWidget') {
+                                    <lilly-blockquote-widget
+                                            class="widget-item"
+                                            [widgetFields]="widget?.fields"
+                                    ></lilly-blockquote-widget>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

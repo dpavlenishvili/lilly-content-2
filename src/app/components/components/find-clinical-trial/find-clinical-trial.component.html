@@ -1,0 +1,48 @@
+<section class="cst is-find-clinical" [ngClass]="wrapClass">
+    <div [ngClass]="containerClass">
+        <div class="cst__grid">
+            <div class="cst__content">
+                <ng-container *ngTemplateOutlet="browseT"></ng-container>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #browseT>
+    <div class="block" aria-labelledby="find-clinical-trial-id">
+        <ng-container *showForRegions="[Language.es_AR, Language.es_MX]">
+            <div class="block__intro" i18n="@@extended-home_v1.talk_to_hcp">
+                Search for Lilly clinical trials looking for participants or find results for a completed trial below.
+                Please talk to your healthcare provider if you are considering a clinical trial as a care option for you
+                or
+                someone you care for.
+            </div>
+        </ng-container>
+
+        <!-- TODO removed (swipe)="onSwipe($event)", needs to refactor code-->
+        <h2 class="title" i18n="@@extended-home_v1.browse_trials_header" id="find-clinical-trial-id">
+            Find a Lilly Clinical Trial
+        </h2>
+
+        <lilly-primary-filters/>
+
+        <div class="block__active">
+            <a mat-raised-button role="button" color="primary" [deepGtmTrigger]="GtmTriggerName.FindATrial"
+               (click)="navigateToTrials(false); $event.preventDefault()"
+               [href]="listingLink"
+            >
+                <div i18n="@@extended-home_v1.find_a_trial">
+                    Find a Trial
+                </div>
+            </a>
+
+        </div>
+
+        <div class="block__links" *showForRegions="[Language.en_US,Language.es_US]">
+            <a class="md-btn-link" [routerLink]="[ClientRoutes.CompletedListing]">
+                <span i18n="@@extended-home_v1.find_results_for_trial">Find Results for a Completed Trials</span>
+                <mat-icon class="ms-1 xs" svgIcon="keyboard_arrow_right"></mat-icon>
+            </a>
+        </div>
+    </div>
+</ng-template>

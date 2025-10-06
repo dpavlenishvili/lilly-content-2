@@ -1,0 +1,44 @@
+<section class="main-wrapper main-404-wrapper h-100 row g-0  justify-content-center align-items-center">
+    <div class="col col-lg-10  py-5 py-lg-6">
+        <div class="container">
+            <div class="text-center">
+                @if (queryParams?.entityType !== EntityType.Trial) {
+                    <div class="text-center">
+                        <h1 class="h2" i18n="@@not_support.not_found_in_regional_title">Page not found in your regional version of Lilly Trials</h1>
+                        <p class="my-4">
+                            <span i18n="@@not_support.not_found_in_regional_description_first">
+                                The web page you requested is not available in this regional version of Lilly Trials, but is available in the
+                              <a (click)="goToTrialPage()">US English version of Lilly Trials</a> or go to the</span>&nbsp;<span i18n="@@not_support.not_found_in_regional_description_second">
+                              <a  (click)="goToHomePage()">Lilly Trials Home Page</a> in your regional language.
+                            </span>
+                        </p>
+                    </div>
+                }
+
+                @else {
+                    @if (queryParams?.payload) {
+                        <div class="text-center">
+                            <h1 class="h2" i18n="@@not_support.trial_not_found_in_language_title">Trial not found in requested language</h1>
+                            <p class="my-4">
+                                <span i18n="@@not_support.trial_not_found_in_language_description_first">
+                                    The trial you are looking for does not exist in English. You can access this trial in the
+                                <a (click)="goToTrialPage()">Lilly Trials English</a> website, or go to the</span>&nbsp;<span i18n="@@not_support.trial_not_found_in_language_description_second">
+                                <a (click)="goToHomePage()">Lilly Trials Home</a> page in English.
+                                </span>
+                            </p>
+                        </div>
+                    }
+                    @else {
+                        <div class="text-center">
+                            <h1 class="h2" i18n="@@not_support.trial_not_found_title">Trial not found</h1>
+                            <p class="my-4">
+                                <span i18n="@@not_support.trial_not_found_description">The trial you are looking for does not exist in Lilly Trials. You can go to the
+                                    <a (click)="goToHomePage()">Lilly Trials Home</a> page.</span>
+                            </p>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

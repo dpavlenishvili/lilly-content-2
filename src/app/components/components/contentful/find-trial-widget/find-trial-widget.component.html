@@ -1,0 +1,23 @@
+<cb-card class="md-card-promo">
+    <cb-card-body class="block">
+        <div class="block__title">
+            <h2 class="title h2-garamond-heading" [innerHTML]="findTrialWidgetFields?.summary | mdToHtml"></h2>
+        </div>
+        <div class="block__text description">
+                <span class="desktop" [innerHTML]="findTrialWidgetFields?.content | mdToHtml"></span>
+                <span
+                    class="mobile"
+                    [innerHTML]="findTrialWidgetFields?.contentMobile || findTrialWidgetFields?.content | mdToHtml"
+                ></span>
+        </div>
+        <div class="block__ctrl">
+            <button mat-flat-button color="primary" class="mb-button-main"
+                    [deepGtmTrigger]="GtmTriggerName.FindATrial" (click)="goToTrialsPage(findTrialWidgetFields?.buttonLink, findTrialWidgetFields?.linkBehavior)">
+                <div class="btn__grid">
+                    <div>{{ findTrialWidgetFields?.buttonText }}</div>
+                    <mat-icon [svgIcon]="'arrow_forward'" class="sm"></mat-icon>
+                </div>
+            </button>
+        </div>
+    </cb-card-body>
+</cb-card>

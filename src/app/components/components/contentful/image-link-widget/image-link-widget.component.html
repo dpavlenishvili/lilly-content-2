@@ -1,0 +1,11 @@
+<a class="link-wrapper" 
+   (click)="helperService.goToLink(widget?.url, widget?.linkBehavior)">
+    @if (widget?.image?.fields?.file?.url; as url) {
+        <picture>
+            <source type="image/avif" [srcset]="url + '?fm=avif'"/>
+            <source type="image/webp" [srcset]="url + '?fm=webp'"/>
+            <img [src]="url"
+                 [alt]="widget?.altText || ''">
+        </picture>
+    }
+</a>

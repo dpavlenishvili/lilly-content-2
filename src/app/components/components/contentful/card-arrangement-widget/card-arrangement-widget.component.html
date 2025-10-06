@@ -1,0 +1,31 @@
+@if (cardArrangementWidgetFields?.cards?.length === 1) {
+    <lilly-card-widget-2 [cmsAnalytics]="cmsAnalytics" [cardWidgetFields]="cardArrangementWidgetFields?.cards[0]?.fields"></lilly-card-widget-2>
+}
+@else {
+    @if (showCarousel) {
+        <app-custom-carousel
+                [items]="cardArrangementWidgetFields?.cards"
+                [maxVisibleCards]="cardArrangementWidgetFields?.maxVisibleCards">
+            <ng-template #slideTemplate let-card>
+                <lilly-card-widget-2
+                        [cardWidgetFields]="card?.fields"
+                        [cmsAnalytics]="cmsAnalytics"
+                        [sectionshowTitle]="sectionshowTitle"
+                        [ngClass]="{'card-with-padding': cardArrangementWidgetFields?.cards?.length > 1}">
+                </lilly-card-widget-2>
+            </ng-template>
+        </app-custom-carousel>
+    }
+    @else {
+        <div class="carousel-viewport disabled" [style.--cards-per-row]="cardArrangementWidgetFields?.maxVisibleCards || 3">
+            @for (card of cardArrangementWidgetFields?.cards; track card) {
+                <lilly-card-widget-2
+                    [cardWidgetFields]="card?.fields"
+                    [cmsAnalytics]="cmsAnalytics"
+                    [sectionshowTitle]="sectionshowTitle"
+                    [ngClass]="{'card-with-padding': cardArrangementWidgetFields?.cards?.length > 1}">
+                </lilly-card-widget-2>
+            }
+        </div>
+    }
+}

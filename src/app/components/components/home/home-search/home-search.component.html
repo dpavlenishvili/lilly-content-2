@@ -1,0 +1,86 @@
+<section class="cst cst--intro is-find-clinical theme--dark sb-max-width" aria-labelledby="find-trial-title">
+    <div class="cst__grid">
+        <div class="cst__grid__in">
+            <div class="cst__content cst__content--container">
+                <div class="block block--lg is_grid">
+                    <div class="block__content">
+                        <div class="block__title">
+                            <h1 id="find-trial-title" class="title ringside-heading-0-font"
+                                i18n="@@home.browse_trials.title">
+                                Find a trial that is right for you or a loved one:
+                            </h1>
+                        </div>
+                        <div class="block__forms">
+                        <lilly-primary-filters/>
+                        </div>
+                        <div class="block__ctrl">
+                            <a mat-raised-button role="button" color="primary" class="is-lg"
+                               [deepGtmTrigger]="GtmTriggerName.FindATrial"
+                               (click)="navigateToTrials(); $event.preventDefault()"
+                               [href]="listingLink"
+                            >
+
+                                <mat-icon svgIcon="search"></mat-icon>
+                                <div i18n="@@extended-home_v1.find_a_trial">
+                                    Find A Trial
+                                </div>
+
+                            </a>
+
+                            <ng-container *checkToggleFeatures="[ToggleFeature.QUESTIONNAIRE]">
+                                <a mat-stroked-button role="button" color="primary" class="is-lg"
+                                   [deepGtmTrigger]="GtmTriggerName.QuestionnaireEnter"
+                                   (click)="navigateToQuestionnaire(); $event.preventDefault()"
+                                   [href]="questionnaireLink"
+                                >
+                                    <mat-icon svgIcon="ost_edit"></mat-icon>
+                                    <div i18n="@@home.see_if_qualify">
+                                        Match To A Trial
+                                    </div>
+                                </a>
+                            </ng-container>
+                        </div>
+
+                        <ng-container *checkToggleFeatures="[ToggleFeature.QUESTIONNAIRE]">
+                            <div class="block__info">
+                            <div class="d-inline-flex">
+                                <div class="btn__grid">
+                                <span i18n="@@home.search_options">What Are My Search Options?</span>
+                                <lilly-info-box class="d-print-none"
+                                                tooltip="Use Find A Trial to view all trials by condition, trial name, or investigational medicine. Click Match To A Trial to answer a few questions and find trials that might be a good fit."
+                                                i18n-tooltip="@@home.search_options.tooltip">
+                                </lilly-info-box>
+                                </div>
+                            </div>
+                            </div>
+                        </ng-container>
+
+                        <div class="block__links" *showForRegions="[Language.en_US,Language.es_US]">
+                            <a class="md-btn-link" [routerLink]="[ClientRoutes.CompletedListing]">
+                                <span i18n="@@extended-home_v1.find_results_for_trial">Find Results For Completed Trials</span>
+                                <mat-icon class="ms-1 xs" svgIcon="keyboard_arrow_right"></mat-icon>
+                            </a>
+                        </div>
+
+                    </div>
+                    @if(isMobile) {
+                        <div class="scroll-down">
+                            <mat-icon svgIcon="straight" class="arrow-down"></mat-icon>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="cst__media">
+            @if (heroImageHomeSrc()?.image) {
+                <picture class="media">
+                    <img width="220"
+                         [src]="heroImageHomeSrc()?.image?.fields?.file?.url"
+                         [alt]="heroImageHomeSrc()?.altText">
+                    <div class="media__bg"></div>
+                </picture>
+            }
+        </div>
+    </div>
+</section>
+

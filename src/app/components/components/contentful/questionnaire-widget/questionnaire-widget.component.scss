@@ -1,0 +1,7 @@
+@use "_v3/calc" as calc;
+
+:host ::ng-deep {
+  .#{calc.$card-class}.md-card-promo {
+    @include calc.md-card-promo--custom();
+  }
+}

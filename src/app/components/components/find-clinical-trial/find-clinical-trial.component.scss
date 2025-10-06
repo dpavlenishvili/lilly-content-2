@@ -1,0 +1,55 @@
+@use '_v3/calc' as *;
+
+$h: '';
+$init: (
+        cst-offset-y: (media-query-up: (
+                xs: var(--#{$cb}cst-offset-y),
+                xl: 0,
+        )),
+        cst-grid-template-columns: (media-query-up: (
+                xs: 1fr,
+                lg: minmax(80%, 91.6%),
+                xl: minmax(70%, 75%),
+        )),
+        cst-grid-justify-content: (media-query-up: (
+                xs: start,
+                md: center,
+        )),
+        block-text-align: (media-query-up: (
+                xs: start,
+                lg: center,
+        )),
+       form-template-columns: (media-query-up: (
+                xs: 1fr,
+                md: repeat(auto-fill, minmax(25rem, 1fr)),
+        )),
+) !default;
+
+:host {
+  @include css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  .cst {
+    --#{$cb}cst-grid-justify-content: var(--#{$h}cst-grid-justify-content);
+
+    &__grid {
+      grid-template-columns: var(--#{$h}cst-grid-template-columns);
+    }
+  }
+
+  .block {
+    --#{$cb}block-text-align: var(--#{$h}block-text-align);
+    &__active, &__links {
+      text-align: center;
+    }
+    .cb-filter-gridR {
+      display: grid;
+      grid-template-columns: var(--#{$h}form-template-columns);
+      column-gap: 1rem;
+      margin-bottom: var(--#{$cb}block-offset-y);
+    }
+  }
+
+
+}

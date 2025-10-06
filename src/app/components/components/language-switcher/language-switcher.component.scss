@@ -1,0 +1,58 @@
+@use "_v3/calc" as calc;
+
+$h: cb-hd-;
+$class: header !default;
+$overlay: h-overlay !default;
+$m-up: lg !default;
+
+::ng-deep .language-panel {
+  .menu {
+    list-style: none;
+    display: grid;
+    column-gap: var(--#{$h}menu-gap-x);
+    row-gap: var(--#{$h}menu-gap-y);
+    margin: 0;
+    padding: 0;
+    font-size: var(--#{$h}menu-font-size);
+
+    a {
+      display: flex;
+      font-size: var(--#{calc.$cb}font-size-base);
+      color: var(--#{calc.$color}neutral-base-030);
+      transition: all 0.35s ease, color 0.35s ease;
+
+      &:hover {
+        transform: translateX(0.5rem);
+        color: var(--#{calc.$cb}white);
+      }
+
+      &:focus {
+        outline: 3px solid #8a8a8a;
+        border-radius: .25rem;
+        width: fit-content;
+      }
+    }
+
+    &--lang {
+      grid-template-columns: var(--#{$h}menu-lang-desk-cols);
+    }
+
+    &--row {
+      display: flex;
+      align-items: center;
+    }
+
+    &--nav {
+      column-gap: var(--#{calc.$cb}space-150);
+    }
+
+    .btn--title {
+      opacity:.7;
+    }
+  }
+
+  .block .title {
+    font-family: var(--#{calc.$cb}font-sans-extra-wide);
+    font-size: var(--#{calc.$cb}font-size-base);
+  }
+}

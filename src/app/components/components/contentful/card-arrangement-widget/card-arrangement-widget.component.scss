@@ -1,0 +1,243 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+        card-media-h: (media-query-up: (
+                xs: 23.8125rem,
+                lg: 32.187rem,
+        )),
+        non-carousel-media-h: (media-query-up: (
+                xs: 12.81rem,
+                lg: 13.56rem,
+        )),
+        non-carousel-2cards-media-h: (media-query-up: (
+                xs: 12.25rem,
+                lg: 22.18rem,
+        )),
+        non-carousel-1card-media-h: (media-query-up: (
+                xs: 13.22rem,
+                lg: 32rem,
+                xl: 35rem,
+        )),
+        non-carousel-1card-media-w: (media-query-up: (
+                xs: 100%,
+                lg: 26rem,
+        )),
+        non-carousel-1card-gap-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                sm: var(--#{calc.$cb}space-500),
+        )),
+        non-carousel-1card-gap-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-600),
+        )),
+        non-carousel-1card-title-font-size: (media-query-up: (
+                xs: calc(var(--#{calc.$cb}font-size-base) * 2.25),
+                md: calc(var(--#{calc.$cb}font-size-base) * 3),
+        )),
+        non-carousel-1card-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+        non-carousel-title-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-125),
+                lg: var(--#{calc.$cb}font-size-150),
+        )),
+        non-carousel-2cards-title-font-size: (media-query-up: (
+                xs: calc(var(--#{calc.$cb}font-size-base) * 1.75),
+                lg: calc(var(--#{calc.$cb}font-size-base) * 2),
+        )),
+        card-title-font-size: (media-query-up: (
+                xs: 0.75rem,
+                lg: var(--#{calc.$cb}font-size-150),
+        )),
+        card-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-125),
+                lg: var(--#{calc.$cb}font-size-150),
+        )),
+        card-gap: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                lg: var(--#{calc.$cb}space-400),
+        )),
+) !default;
+
+:host ::ng-deep {
+  @import '../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel';
+  @import '../../../../assets/styles/_v3/modules/owl-carousel/owl-carousel-no-arrows.scss';
+  @include calc.css-initVars($init, $h);
+
+  .carousel-viewport {
+    position: relative;
+    overflow: hidden;
+    &.disabled {
+      margin-right: 0;
+      display: grid;
+      grid-template-columns: repeat(var(--cards-per-row, 3), minmax(0, 1fr));
+      gap: var(--#{calc.$cb}space-300);
+
+      @include calc.media-breakpoint-down(md) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    lilly-card-widget-2 {
+      .cb-card {
+        --#{calc.$cb}media-h: var(--#{$h}card-media-h);
+        gap: var(--#{$h}card-gap);
+
+        .block {
+          &__title {
+            @include calc.media-breakpoint-down(sm) {
+            margin-bottom: var(--#{calc.$cb}space-200);
+            }
+
+            .title {
+              font-family: var(--#{calc.$cb}font-sans-extra-wide);
+              font-size: var(--#{$h}card-title-font-size);
+              font-weight: var(--#{calc.$cb}font-weight-bolder);
+            }
+          }
+
+          &__text  {
+            font-size: var(--#{$h}card-text-font-size);
+          }
+        }
+      }
+    }
+
+
+  }
+
+  .carousel-viewport.disabled {
+    lilly-card-widget-2 {
+      .cb-card {
+        --#{calc.$cb}media-h: var(--#{$h}non-carousel-media-h);
+
+        &__header {
+          padding-bottom: 0;
+        }
+
+        &__body {
+          padding-top: 0;
+        }
+
+        .block {
+          &__title .title {
+            font-family: var(--#{calc.$cb}font-family-head);
+            font-size: var(--#{$h}non-carousel-title-font-size);
+            font-weight: var(--#{calc.$cb}font-weight-bolder);
+          }
+
+          &__text {
+            font-size: var(--#{calc.$cb}font-size-base);
+          }
+        }
+      }
+    }
+
+    &:has(> *:first-child:nth-last-child(2)) {
+      .cb-card {
+        --#{calc.$cb}media-h: var(--#{$h}non-carousel-2cards-media-h);
+        .block {
+          &__title .title {
+            font-size: var(--#{$h}non-carousel-2cards-title-font-size);
+            font-weight: var(--#{calc.$cb}font-weight-base);
+          }
+        }
+      }
+    }
+  }
+
+  lilly-card-widget-2:not(.carousel-viewport *) {
+    .cb-card {
+      --#{calc.$cb}media-h: var(--#{$h}non-carousel-1card-media-h) !important;
+      --#{calc.$cb}media-w: var(--#{$h}non-carousel-1card-media-w) !important;
+      --horizontal-column-gap: var(--#{$h}non-carousel-1card-gap-y);
+      --horizontal-row-gap: var(--#{$h}non-carousel-1card-gap-x);
+
+      &__header {
+        padding-bottom: 0;
+      }
+
+      &__body {
+        padding-top: 0;
+      }
+
+      .block {
+        &__title .title {
+          font: var(--#{calc.$typography}h2-garamond-heading-font) !important;
+          font-size: var(--#{$h}non-carousel-1card-title-font-size) !important;
+          font-weight: var(--#{calc.$cb}font-weight-bolder);
+        }
+
+        &__text {
+          font-size: var(--#{$h}non-carousel-1card-text-font-size);
+        }
+      }
+    }
+  }
+
+  .custom-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    gap: var(--#{calc.$cb}space-100);
+    padding: 0;
+    background: var(--#{calc.$color}neutral-base-005);
+    border-radius: var(--#{calc.$cb}radius-full);
+
+    .nav-arrow {
+      width: 2rem;
+      height: 2rem;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+
+      &[disabled] {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        width: 0.5rem;
+        height: 0.5rem;
+        border: solid var(--#{calc.$color}neutral-base-080);
+        border-width: 1px 0 0 1px;
+      }
+
+      &.next::after {
+        transform: translate(-50%, -50%) rotate(135deg);
+      }
+    }
+
+    .nav-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: var(--#{calc.$cb}radius-full);
+      background: var(--#{calc.$color}neutral-base-040);
+      border: 0;
+      padding: 0;
+      transition: width 250ms ease, background-color 250ms ease;
+      pointer-events: none;
+
+      &.active {
+        width: 1.5rem;
+        background: var(--#{calc.$color}neutral-base-080);
+      }
+    }
+  }
+}

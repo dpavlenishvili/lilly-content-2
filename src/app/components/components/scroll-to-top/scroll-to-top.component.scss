@@ -1,0 +1,70 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+
+$init: (
+        thumb-size: (media-query-up: (
+                xs: 3.55rem,
+                xl: 3.55rem,
+        )),
+        icon-size: (media-query-up: (
+                xs: 1rem,
+                xl: 1.25rem,
+        )),
+        font-size: (media-query-up: (
+                xs:0.61rem,
+                xl: 0.688rem,
+        )),
+) !default;
+
+:host {
+  @include css-initVars($init, $h);
+
+  .scroll-to-top {
+    position: fixed;
+    bottom: .875rem;
+    right: .875rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 300ms, opacity 300ms;
+    z-index: 1;
+
+    ::ng-deep {
+      .btn-scroll-to-top {
+        @include md-def-button(var(--page-color, var(--#{$cb}primary)));
+        white-space: normal;
+        @include square(var(--#{$h}thumb-size));
+        font-size: var(--#{$h}font-size);
+
+        .mat-icon {
+          @include square(var(--#{$h}icon-size));
+          margin-top: -.25rem;
+        }
+
+        &__label {
+          @include thumb-on-center();
+          padding: 0;
+          line-height: 1;
+        }
+      }
+
+    }
+  }
+
+  .show-scrollTop {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 300ms;
+    animation: fadeIn 0.2s ease-out;
+
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

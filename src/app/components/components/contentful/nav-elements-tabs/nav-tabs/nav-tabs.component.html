@@ -1,0 +1,48 @@
+<nav class="nav--tabs "
+     [ngClass]="{ 'nav-blog': isBlogState,  'nav-hide-mob': hideNavOnMob }"
+     id="nav-page-wrap"
+     [attr.aria-label]="pageTitle"
+>
+    <div class="nav--tabs__container show-desktop-only" id="nav-cont-elements">
+
+            <lilly-one-row-navigation>
+                <div class="nav--tabs__content">
+                    @for (tab of navbarTabs; track tab) {
+                        <button mat-flat-button (click)="onTabClick(tab.sectionId)" (keydown.enter)="onTabEnter(tab.sectionId)" class="nav--tabs__item"
+                             tabindex="0" role="link"
+                             [ngClass]="{ 'selected': activeTab === tab?.sectionId}" [attr.aria-label]="tab?.title">
+                            <span>{{ tab?.title }}</span>
+                        </button>
+                    }
+                </div>
+            </lilly-one-row-navigation>
+
+        @if (hasSearch) {
+            <div>
+                <mat-icon (click)="isSearchVisible = !isSearchVisible" svgIcon="search" class="mat-icon"></mat-icon>
+            </div>
+        }
+    </div>
+    @if (isSearchVisible) {
+        <div>
+            <mat-form-field class="mat-form-field" appearance="fill">
+                <input matInput type="text" (keyup.enter)="onSearch()" placeholder="Search TrialGuide Blog Articles"
+                       [(ngModel)]="value" i18n-placeholder="@@nav_tabs.search_placeholder">
+                <button matSuffix aria-label="Clear" i18n-aria-label="@@nav-tabs.clear_arialabel" (click)="value='';isSearchVisible = !isSearchVisible">
+                    <mat-icon svgIcon="close">+</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    }
+
+  <div class="form-group show-mobile-only">
+    <label for="category-selector" class="label--external" i18n="@@trial-summary-nav.select_category">Select a category:</label>
+    <mat-form-field class="has-out-hint">
+      <mat-select [value]="activeTab" id="category-selector">
+        @for (tab of navbarTabs; track tab) {
+          <mat-option [value]="tab.sectionId" (click)="onTabClick(tab.sectionId)">{{ tab.title }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</nav>

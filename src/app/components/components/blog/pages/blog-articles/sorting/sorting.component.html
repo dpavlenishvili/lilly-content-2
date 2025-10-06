@@ -1,0 +1,34 @@
+<div class="form-group">
+    <div class="label--external" i18n="@@blog_articles.sorting.sort_by">Sort by</div>
+<mat-form-field class="md-filter-an has-out-hint" appearance="fill" #field cdkMonitorSubtreeFocus>
+    <mat-select #select
+                [formControl]="control"
+                [disabled]="options?.length === 0"
+                (selectionChange)="onChange(control.value) "
+                panelClass=""
+    >
+
+        @for (option of options; track option; ) {
+            <mat-option [value]="option" title="{{option.name}}"
+                        [attr.aria-label]="option.name">
+                <div class="text-truncate sort">
+                    <span i18n="@@blog_articles.sorting.sort_by">
+                        Sort by
+                    </span>
+                    {{ option.name }}
+                </div>
+            </mat-option>
+        }
+
+    </mat-select>
+</mat-form-field>
+</div>
+
+<!--<div class="bnt__grid">-->
+<!--    <div i18n="@@blog_articles.sorting.sort_by">-->
+<!--        Sort by-->
+<!--    </div>-->
+<!--    <div i18n="@@blog_articles.sorting.sort_by">-->
+<!--    Sort by-->
+<!--</div>-->
+<!--</div>-->

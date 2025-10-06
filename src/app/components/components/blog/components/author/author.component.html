@@ -1,0 +1,22 @@
+<div class="author {{ theme }} {{ size }}">
+<!--    TODO need to remove this , right?
+  @if (authorFields?.image?.fields?.file?.url; as url) {
+    <a [routerLink]="['/blog/author/', authorFields?.slug ]" [ngClass]="!clickable && 'unclickable'">
+      <img [src]="url"
+           [alt]="authorFields?.altText || 'Author\'s Image'"/>
+    </a>
+  }
+-->
+  <div class="content">
+<!--      <a [routerLink]="['/blog/author/', authorFields?.slug ]" [ngClass]="!clickable && 'unclickable'"></a>-->
+     {{authorFields?.name}}
+
+    @if (publishDate && readTime && false) {
+      <div>
+        <span>{{ publishDate | date: 'MMMM dd, yyyy' }}</span>
+        <span class="divider"></span>
+        <span class="read-time">{{ readTime }}</span>
+      </div>
+    }
+  </div>
+</div>

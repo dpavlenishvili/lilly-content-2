@@ -1,0 +1,220 @@
+@use '_v3/calc' as calc;
+@use '_v3/modules/card.scss' as card;
+
+$h: '';
+$init: (
+        cst-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}cst-offset-y),
+                xl: 0,
+        )),
+        res-show-desktop-only: (media-query-up: (
+                xs: none,
+                lg: block,
+        )),
+        res-show-mobile-only: (media-query-up: (
+                xs: block,
+                lg: none,
+        )),
+        block--desk-template-areas: (
+                media-query-up: (
+                        xs: ' "#{calc.templateRow((4, "l"))}" "#{calc.templateRow((4, "c"))}" ',
+                        sm: ' "#{calc.templateRow((12, "l"))}" "#{calc.templateRow((12, "c"))}"  ',
+                        lg: ' "#{calc.templateRow((4, "l", 10, "c"))}" ',
+                )
+        ),
+        block--area-t-a: (media-query-up: (
+                xs: ' "#{calc.templateRow((4, "m"))}" "#{calc.templateRow((4, "c"))}" ',
+                md: ' "#{calc.templateRow((8, "m"))}" "#{calc.templateRow((8, "c"))}" ',
+                lg: ' "#{calc.templateRow((5, "m",  7, "c"))}" ',
+                xl: ' "#{calc.templateRow((5, "m", 1, "0", 6, "c"))}" ',
+        )),
+        block--area-offset-x: (media-query-up: (
+                xs: 0,
+                lg: 1.5rem,
+                xl: 2rem,
+        )),
+        block--area-media-w: (media-query-up: (
+                xs: 100%,
+                lg: 26rem,
+        )),
+        block--area-media-h: (media-query-up: (
+                xs: 13.22rem,
+                lg: 34rem,
+        )),
+        block--area-media-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-2),
+                lg: var(--#{calc.$cb}radius-4),
+        )),
+        block--area-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+        cards-columns: (media-query-up: (
+                xs: 1fr,
+                lg: repeat(3, 1fr),
+        )),
+        block--area-subtitle-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-125),
+                md: var(--#{calc.$cb}font-size-150),
+        )),
+        block--area-title-font-size: (media-query-up: (
+                xs: calc(var(--#{calc.$cb}font-size-base) * 2.5),
+                md: calc(var(--#{calc.$cb}font-size-base) * 3),
+        )),
+        block--area-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                md: var(--#{calc.$cb}font-size-base),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+
+  .cst.is-resources-area {
+    background: linear-gradient(180deg, #FEEEEB 0%, #FFF 100%);
+    font-size: var(--#{$h}block--area-font-size);
+    //padding-bottom: calc(var(--#{calc.$cb}cst-offset-y) * 2);
+
+    .cst__header{
+      margin-bottom: var(--#{calc.$cb}block-offset-lg-y);
+    }
+
+    .is-nav-desktop {
+      display: var(--#{$h}res-show-desktop-only);
+    }
+
+    .is-nav-mobile {
+      display: var(--#{$h}res-show-mobile-only);
+    }
+
+    .block {
+
+      &__subtitle {
+        font-size: var(--#{$h}block--area-subtitle-font-size);
+      }
+
+      &__title .title {
+        font-size: var(--#{$h}block--area-title-font-size);
+      }
+
+      &__text {
+        font-size: var(--#{$h}block--area-text-font-size);
+      }
+
+      &--area {
+        @extend %cb-grid-layout-12;
+        align-items: center;
+        grid-template-areas: var(--#{$h}block--area-t-a);
+        padding: 0 var(--#{$h}block--area-offset-x);
+
+        --#{calc.$cb}media-w: var(--#{$h}block--area-media-w);
+        --#{calc.$cb}media-h: var(--#{$h}block--area-media-h);
+        --#{calc.$cb}media-radius: var(--#{$h}block--area-media-radius);
+
+        &__content {
+          grid-area: c;
+        }
+
+        &__media {
+          grid-area: m;
+        }
+      }
+
+      &--mobile {
+        display: var(--#{$h}res-show-mobile-only);
+      }
+    }
+  }
+
+  .mdc-list {
+    padding: 0;
+  }
+
+  .cst.cards-section {
+    background: linear-gradient(180deg, #FFF 0%, #FEEEEB 97.35%);
+
+    .cst__content {
+      display: grid;
+      grid-template-columns: var(--#{$h}cards-columns);
+      column-gap: var(--#{calc.$cb}space-300);
+      row-gap: var(--#{calc.$cb}space-500);
+      justify-content: center;
+
+      &:has(.card-with-padding:first-child:nth-last-child(2)) {
+        @include calc.media-breakpoint-up(lg) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    }
+
+    lilly-card-widget-2 {
+      .block__title .title{
+        font-weight: var(--#{calc.$cb}font-weight-bolder);
+      }
+    }
+  }
+
+  // for ar ans mx  regions
+  .hm-ar-mx + .hm-wrapper {
+    display: grid;
+    grid-template-areas: "tabs" "resources" "divide1" "find";
+
+    > * {
+      display: grid;
+      max-width: 100%;
+    }
+
+    .tabs-area {
+      grid-area: tabs;
+    }
+
+    .find-area {
+      grid-area: find;
+    }
+
+    .divide1-area {
+      grid-area: divide1;
+    }
+
+    .resources-area {
+      grid-area: resources;
+    }
+  }
+}
+
+.mat-action-list {
+  display: block;
+  padding: 0;
+
+  mat-list-item {
+    display: block;
+    padding: 1rem;
+    cursor: pointer;
+
+    &[aria-selected="true"] {
+      background: var(--#{calc.$cb}primary) !important;
+      color: var(--#{calc.$cb}white) !important;
+
+      .opt-text img {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    &:hover {
+      background: var(--#{calc.$cb}primary);
+      color: var(--#{calc.$cb}white);
+    }
+
+    &:focus {
+      background: var(--#{calc.$cb}primary);
+      color: var(--#{calc.$cb}white);
+    }
+  }
+
+  .mat-ripple-element {
+    display: none;
+  }
+}

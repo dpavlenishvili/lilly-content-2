@@ -1,0 +1,203 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+        block--area: (media-query-up: (
+                xs: '"m" "c"',
+                lg: '"m c"'
+        )),
+        block--column: (media-query-up: (
+                xs: 1fr,
+                lg: auto 1fr,
+        )),
+        block--area-reverse: (media-query-up: (
+                xs: '"m" "c"',
+                lg: '"c m"'
+        )),
+        block--column-reverse: (media-query-up: (
+                xs: 1fr,
+                lg: 1fr auto,
+        )),
+        block--gap-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                sm: var(--#{calc.$cb}space-500),
+        )),
+        block--gap-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-600),
+        )),
+        block--area-media-w: (media-query-up: (
+                xs: 100%,
+                lg: 26rem,
+        )),
+        block--area-media-h: (media-query-up: (
+                xs: 13.22rem,
+                lg: 32rem,
+                xl: 35rem,
+        )),
+        block--area-media-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-2),
+                lg: var(--#{calc.$cb}radius-4),
+        )),
+        block--area-title-font-size: (media-query-up: (
+                xs: calc(var(--#{calc.$cb}font-size-base) * 2.25),
+                md: calc(var(--#{calc.$cb}font-size-base) * 3),
+        )),
+        block--area-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+:host + .widget-item {
+  margin-top: var(--#{calc.$cb}header-gap);
+  outline: 2px solid currentColor;
+}
+
+:host ::ng-deep {
+
+
+  .block {
+    &.is-reverse {
+      --#{$h}block--area: var(--#{$h}block--area-reverse);
+      --#{$h}block--column: var(--#{$h}block--column-reverse);
+    }
+
+    display: grid;
+    align-items: center;
+    grid-template-areas: var(--#{$h}block--area);
+    grid-template-columns: var(--#{$h}block--column);
+    gap: var(--#{$h}block--gap-y) var(--#{$h}block--gap-x);
+
+    font-size: var(--#{$h}block--area-font-size);
+
+    --#{calc.$cb}media-w: var(--#{$h}block--area-media-w);
+    --#{calc.$cb}media-h: var(--#{$h}block--area-media-h);
+    --#{calc.$cb}media-radius: var(--#{$h}block--area-media-radius);
+
+    &__content {
+      grid-area: c;
+
+      a {
+        display: inline-flex;
+      }
+    }
+
+    &__media {
+      grid-area: m;
+    }
+
+    &__title .h2-garamond-heading {
+        font-size: var(--#{$h}block--area-title-font-size);
+    }
+
+
+  }
+
+
+
+}
+
+
+//@use "_v3/calc" as *;
+//
+//$h: '' !default;
+//
+//$init: (
+//        section-offset: (media-query-up: (
+//              xs: 1rem,
+//              lg: 3rem,
+//        )),
+//        description-offset: 1rem,
+//        description-font-size: (media-query-up: (
+//              xs: var(--#{$cb}font-size-sm),
+//              sm: var(--#{$cb}font-size-base),
+//        ))
+//) !default;
+//
+//:host {
+//  width: 100%;
+//  @include css-initVars($init, $h);
+//}
+//
+//.image-tile {
+//  width: 100%;
+//  display: flex;
+//  flex-wrap: wrap;
+//
+//  .content {
+//    max-width: 50%;
+//    width: 100%;
+//    display: flex;
+//    justify-content: center;
+//    flex-direction: column;
+//
+//    &.media-content {
+//      picture {
+//        min-width: 100%;
+//      }
+//
+//      img {
+//        width: 100%;
+//      }
+//
+//      + .text-content {
+//        padding-top: var(--#{$h}section-offset);
+//      }
+//
+//      lilly-media-content {
+//        align-items: center;
+//      }
+//    }
+//
+//    &.text-content {
+//      padding: 0 var(--#{$h}section-offset) 0 0;
+//
+//      &.reverse {
+//        padding: 0 0 0 var(--#{$h}section-offset);
+//      }
+//
+//      .title {
+//        font-weight: var(--#{$cb}font-weight-normal);
+//      }
+//
+//      .description {
+//        padding: var(--#{$h}description-offset) 0;
+//        font-size: var(--#{$h}description-font-size);
+//        word-break: break-word;
+//
+//        ::ng-deep {
+//          a {
+//            white-space: nowrap;
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//@include media-breakpoint-down(md) {
+//  .image-tile {
+//    justify-content: center;
+//
+//    .content {
+//      flex-grow: 0;
+//      max-width: 100%;
+//      flex-basis: 100%;
+//      padding: 0 0 1rem;
+//      text-align: left;
+//      flex-direction: column;
+//
+//      &.text-content {
+//        padding: 0;
+//
+//        &.reverse {
+//          padding: 0;
+//        }
+//      }
+//    }
+//  }
+//}

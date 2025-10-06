@@ -1,0 +1,122 @@
+@use '_v3/calc' as calc;
+
+$h: '';
+$init: (
+  cst-title-align: (media-query-up: (
+    xs: start,
+  )),
+  cst-sitemap-padding-top: (media-query-up: (
+    xs: var(--#{calc.$cb}space-100),
+    lg: var(--#{calc.$cb}space-400),
+    xl: var(--#{calc.$cb}space-300),
+  )),
+  sitemap-grid-columns: (media-query-up: (
+    xs: 1fr,
+    md: repeat(2, 1fr),
+    lg: repeat(3, 1fr),
+  )),
+  sitemap-gap-x: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    lg: var(--#{calc.$cb}space-600),
+  )),
+  sitemap-gap-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-500),
+    lg: var(--#{calc.$cb}space-600),
+  )),
+  sitemap-title-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-lg),
+    md: var(--#{calc.$cb}font-size-125),
+  )),
+  sitemap-links-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-lg),
+    md: var(--#{calc.$cb}font-size-125),
+  )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  .cst {
+    &__header {
+      .title {
+        --#{calc.$cb}cst-title-align: var(--#{$h}cst-title-align);
+      }
+
+      .lilly-logo-subject {
+        margin-left: 0;
+        margin-right: auto;
+      }
+    }
+    .block {
+      &__links ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+    }
+  }
+
+  .cst--sitemap {
+    padding-top: var(--#{$h}cst-sitemap-padding-top);
+
+    .block--sm {
+      margin-bottom: var(--#{calc.$cb}space-300);
+
+      .title {
+        font-weight: var(--#{calc.$cb}font-weight-bolder);
+      }
+    }
+  }
+
+  .block--sitemap {
+    display: grid;
+    grid-template-columns: var(--#{$h}sitemap-grid-columns);
+    gap: var(--#{$h}sitemap-gap-y) var(--#{$h}sitemap-gap-x);
+
+    > * {
+      min-width: 0;
+    }
+
+    .block__title {
+      .title {
+        font-size: var(--#{$h}sitemap-title-font-size);
+        font-weight: var(--#{calc.$cb}font-weight-bolder);
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .menu--sitemap {
+    margin: 0;
+
+    li {
+      margin-bottom: var(--#{calc.$cb}space-100);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &.menu--level-2 {
+      padding-left: var(--#{calc.$cb}space-300);
+    }
+
+    &.menu--level-3 {
+      margin-top: var(--#{calc.$cb}space-100);
+      padding-left: var(--#{calc.$cb}space-300);
+      list-style-type: disc;
+
+      a {
+        font-size: var(--#{$h}sitemap-links-font-size);
+      }
+    }
+  }
+
+  a {
+    color: var(--#{calc.$cb}palette-stone-080);
+    font-weight: var(--#{calc.$cb}font-weight-base);
+    font-size: var(--#{$h}sitemap-links-font-size);
+  }
+}

@@ -1,0 +1,123 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        text-widget-custom-margin-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-600),
+                lg: var(--#{calc.$cb}space-700),
+                xl: var(--#{calc.$cb}space-900),
+        )),
+        text-widget-margin-top: (media-query-up: (
+                xs: calc((var(--#{$h}text-widget-custom-margin-y) - var(--#{calc.$cb}cst-header-gap) ) * -1 ),
+        )),
+        widget-item-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+  ::ng-deep {
+    p,
+    h1,
+    h2,
+    h3,
+    h4 {
+      &:not(.title) {
+        & + br {
+          display: none;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+
+      .accordion-widget {
+        .mat-expansion-panel {
+          .mat-expansion-panel-header {
+            .mat-content {
+              .mat-expansion-panel-header-title {
+                > div {
+                  > div {
+                    margin: 0 !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  ::ng-deep {
+    .cst.cst--custom {
+      &:not(.cst--without-title ){
+        .widget-container {
+          & > *:first-child {
+            &.widget-item {
+              margin-top: var(--#{$h}text-widget-margin-top);
+            }
+          }
+        }
+      }
+      &.cst--empty-content {
+        .widget-item {
+          --#{$h}text-widget-margin-top: var(--#{calc.$cb}space-300);
+        }
+      }
+    }
+
+    .widget-item {
+      .text-wrapper {
+        p {
+          font-size: var(--#{$h}widget-item-font-size);
+        }
+      }
+    }
+  }
+
+  &.blog-section {
+    padding: 0 0 var(--#{calc.$cb}space-200);
+
+    .title-container {
+      align-self: start;
+
+      h2 {
+        padding: var(--#{calc.$cb}space-100) 0;
+      }
+    }
+  }
+
+  .widget-container {
+
+    > * + * {
+      display: block;
+      margin-top: var(--#{calc.$cb}cst-in-margin-y);
+    }
+
+
+    .widget-item--image-tile + .widget-item--image-tile {
+      display: block;
+      border-top: 1px solid var(--#{calc.$color}palette-red-030);
+      margin-top: var(--#{calc.$cb}cst-in-margin-y);
+      padding-top: var(--#{calc.$cb}cst-in-margin-y);
+    }
+
+
+    lilly-accordion-widget + lilly-accordion-widget {
+      margin-top: 0 !important;
+    }
+
+    &:has(lilly-image-link-widget) {
+      text-align: center;
+    }
+
+    lilly-image-link-widget {
+      display: inline-block !important;
+    }
+  }
+}

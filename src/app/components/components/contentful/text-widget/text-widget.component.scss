@@ -1,0 +1,82 @@
+@use "_v3/calc" as calc;
+$h: '' !default;
+$init: (
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+  display: block;
+
+  ::ng-deep {
+    ul {
+      @include calc.cb-list(0, 1rem, var(--#{calc.$cb}primary));
+      margin: 0 0 1rem;
+
+      li p {
+        &:last-child,  &:last-of-type {
+          margin: 0;
+        }
+      }
+
+    }
+    li {
+      ul {
+        @include calc.cb-list(0, 0, var(--#{calc.$cb}black), $bullet-content: "◦");
+      }
+    }
+  
+    .text-wrapper {
+      z-index: 1;
+      font-size: var(--#{$h}font-size);
+
+      h1, h2, h3, h4 {
+        width: 100%;
+        display: inline-block;
+      }
+
+      blockquote {
+        padding-left: 1.125rem;
+        margin: 0;
+        border-left: 5px solid var(--page-color);
+        white-space: normal;
+
+        //p {
+        //  font-size: 1.5rem;
+        //}
+      }
+    
+      > p {
+        display: inline-block;
+
+        + p,
+        + blockquote {
+          margin-top: 1.5rem;
+        }
+      }
+    
+      .embedly-card {
+        margin-top: 1.5rem;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .text-left {
+      text-align: left !important;
+    }
+    
+    .text-center {
+      text-align: center !important;
+
+      @include calc.media-breakpoint-down(sm) {
+        text-align: start !important;
+      }
+    }
+  }
+}

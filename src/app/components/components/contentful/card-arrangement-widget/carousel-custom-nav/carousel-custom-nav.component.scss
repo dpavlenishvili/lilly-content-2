@@ -1,0 +1,68 @@
+@use "_v3/calc" as calc;
+$h: '' !default;
+
+:host ::ng-deep {
+  .custom-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    gap: var(--#{calc.$cb}space-100);
+    padding: 0;
+    background: var(--#{calc.$color}neutral-base-005);
+    border-radius: var(--#{calc.$cb}radius-full);
+
+    .nav-arrow {
+      width: 2rem;
+      height: 2rem;
+      background: transparent;
+      border: none;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+
+      &[disabled] {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        width: 0.5rem;
+        height: 0.5rem;
+        border: solid var(--#{calc.$color}neutral-base-080);
+        border-width: 1px 0 0 1px;
+      }
+
+      &.next::after {
+        transform: translate(-50%, -50%) rotate(135deg);
+      }
+    }
+
+    .nav-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: var(--#{calc.$cb}radius-full);
+      background: var(--#{calc.$color}neutral-base-040);
+      border: 0;
+      padding: 0;
+      transition: width 250ms ease, background-color 250ms ease;
+      pointer-events: none;
+
+      &.active {
+        width: 1.5rem;
+        background: var(--#{calc.$color}neutral-base-080);
+      }
+    }
+  }
+}

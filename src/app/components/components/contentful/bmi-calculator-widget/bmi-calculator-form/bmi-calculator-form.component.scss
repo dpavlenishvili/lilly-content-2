@@ -1,0 +1,113 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        units-align: (media-query-up: (
+                xs: center,
+                md: flex-start,
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                md: var(--#{calc.$cb}space-600),
+        )),
+        fileds-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                md: var(--#{calc.$cb}space-300),
+        )),
+        fileds-offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                md: var(--#{calc.$cb}space-600),
+        )),
+        form-rows: (media-query-up: (
+                xs: 1fr,
+                md: repeat(2, 1fr),
+        )),
+) !default;
+:host {
+  @include calc.css-initVars($init, $h);
+  display: grid;
+
+
+  ::ng-deep {
+    .calc {
+      display: grid;
+      gap: var(--#{$h}fileds-offset-y);
+
+      &__units {
+        .mat-mdc-radio-group {
+          display: flex;
+          column-gap: var(--#{$h}fileds-offset-x);
+          row-gap: var(--#{$h}fileds-offset-y);
+          justify-content: var(--#{$h}units-align);
+        }
+
+      }
+
+      &__errors-info {
+        display: flex;
+        align-items: center;
+        padding: var(--#{calc.$cb}space-300) var(--#{calc.$cb}space-400);
+
+        border-radius:  var(--#{calc.$cb}radius-3);
+        background-color: var(--#{calc.$color}palette-red-010);
+        font-size: var(--#{calc.$cb}font-size-sm);
+        line-height: var(--#{calc.$cb}line-height-sm);
+
+        gap: var(--#{calc.$cb}space-300);
+        color: var(--#{calc.$cb}danger);
+      }
+
+      &__form {
+        display: grid;
+        gap: var(--#{$h}offset-y);
+
+        &__submit {
+          display: flex;
+          justify-content: center;
+        }
+
+        &__fields {
+          &__1 {
+            & + * {
+              margin-top: var(--#{$h}fileds-offset-y);
+            }
+          }
+          &.is-metric {
+            --#{$h}form-rows: 1fr;
+          }
+
+          &__row {
+            display: grid;
+            grid-template-columns: var(--#{$h}form-rows);
+            column-gap: var(--#{$h}fileds-offset-x);
+            row-gap: var(--#{$h}fileds-offset-y);
+            > * {
+              min-width: 0;
+            }
+          }
+
+          .label--external {
+            margin-bottom: var(--#{calc.$cb}space-100);
+          }
+        }
+      }
+
+      .form-group {
+        .mat-mdc-form-field-hint {
+          display: flex;
+          gap: var(--#{calc.$cb}space-100);
+          margin-top: var(--#{calc.$cb}space-50);
+          align-items: center;
+          &:before {
+            display: none;
+          }
+          .mat-icon {
+            @include calc.square(1.25rem);
+          }
+        }
+
+      }
+    }
+
+  }
+}

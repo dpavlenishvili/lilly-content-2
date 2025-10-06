@@ -1,0 +1,182 @@
+@if (!loading) {
+    <div class="breadcrumbs-wrapper">
+        <div class="container">
+            <lilly-breadcrumbs [links]="breadcrumbLinks"></lilly-breadcrumbs>
+        </div>
+    </div>
+    <cst-wrapper [hostClass]="'cst--article-top'"
+                 [hostSizeClass]="'cst--md'"
+                 [showLogoSubject]="false"
+                 [showTitle]="false"
+    >
+        <ng-container cst-header-content>
+            <div class="block block--article-header is-grid">
+                <div class="block__title">
+                    <h1 class="title article-title h2">{{ article?.fields?.title }}</h1>
+                    <div class="block__date">
+                        <cb-tag class="is-base">
+                            @if (article?.fields?.publishDate) {
+                                <span i18n="@@blog_article_card.published">Published </span>&nbsp;
+                                <span>{{ article?.fields?.publishDate | date: 'MMMM dd, yyyy' }}</span>
+                            } @else {
+                                <span i18n="@@blog_article_card.revised">Revised </span>&nbsp;
+                                <span>{{ article?.fields?.revisedDate | date: 'MMMM dd, yyyy' }}</span>
+                            }
+                        </cb-tag>
+
+                        @if (article?.fields?.author?.fields?.slug) {
+                            <cb-tag class="is-base">
+                                <lilly-author
+                                        class="blog-article-author"
+                                        [authorFields]="article?.fields?.author?.fields"
+                                ></lilly-author>
+                            </cb-tag>
+                        }
+
+                    </div>
+                </div>
+                <div class="block block--article-header__info is-grid">
+
+
+                    @if (article?.fields?.category) {
+                        <div class="block__categories">
+                            @if (article.fields.archived) {
+                                <cb-tag [filled]="true" class="archived-tag" i18n="@@blog_article_card.archived">Archived</cb-tag>
+                                <mat-icon svgIcon="info-base" class="sm" color="primary"
+                                          [matTooltip]="blogArticlesArchivedPostsTooltipLabel"
+                                ></mat-icon>
+                            }
+                            @for (cat of helperService.orderTagsArr(article?.fields?.category); track cat; let last = $last) {
+                                <cb-tag [filled]="true">{{ cat }}</cb-tag>
+                            }
+                        </div>
+                    }
+
+                    @if (article?.fields?.author?.fields?.slug) {
+                        <div class="block__share d-print-none" (click)="$event.stopPropagation();">
+                            <lilly-share-button-container [article]="article" [shareUrl]="shareUrl"
+                                                          [position]="'horizontal'"></lilly-share-button-container>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </ng-container>
+        <div class="block">
+            @if (article?.fields?.heroImage?.fields?.file?.url; as url) {
+                <picture class="media media--main">
+                    <img [src]="url"
+                         [alt]="article?.fields?.altText || ''" width="200"/>
+                </picture>
+            }
+
+            @if (!sectionsList?.length) {
+
+                <div class="article-content"
+                     [innerHTML]="article?.fields?.body | mdToHtml: {analytics: articleAnalytics, elementRef: elementRef}">
+                </div>
+            }
+
+        </div>
+    </cst-wrapper>
+
+
+    <section class="blog-article" [attr.aria-label]="article.fields.title">
+
+        @if (!article) {
+            <app-error404></app-error404>
+
+        }
+
+        <div class="article"
+
+             (sectionChange)="onSectionChange($event)"
+             scrollSpyEl
+             [spiedTags]="navbarTabSectionIds">
+
+
+            @if (!sectionsList?.length) {
+
+            } @else {
+                @if (sectionsList?.length > 1) {
+                    <lilly-nav-elements-tabs [pageFields]="article?.fields" [hideNavOnMob]="true">
+                        <ng-container [ngTemplateOutlet]="sections"></ng-container>
+                    </lilly-nav-elements-tabs>
+                } @else {
+                    <ng-container [ngTemplateOutlet]="sections"></ng-container>
+                }
+
+                <ng-template #sections>
+                    <div class="blog-article__content">
+                        @for (section of sectionsList; track section) {
+
+                            <lilly-section
+                                    [section]="section"
+                                    [background]="section?.fields?.backgroundColor"
+                                    [filters]="{analytics: articleAnalytics}"
+                                    [navElements]="article?.fields?.navElements"
+                                    [pageType]="PageType.BLOG">
+                            </lilly-section>
+
+                        }
+                    </div>
+
+
+                </ng-template>
+            }
+
+        </div>
+
+
+    </section>
+
+    <ng-container [ngTemplateOutlet]="recentT"></ng-container>
+
+} @else {
+    <!--    <lilly-blog-article-skeleton-loader></lilly-blog-article-skeleton-loader>-->
+}
+
+<ng-template #recentT>
+    <cst-wrapper [showHeaderContent]="false" class="d-print-none cst--recent" aria-labelledby="recent-articles-title">
+        <div class="block">
+            <div class="block__title">
+                <h2 class="garamond-heading-3-font" i18n="@@blog_article.recent_articles" id="recent-articles-title">
+                    Recent Articles</h2>
+            </div>
+            <app-custom-carousel
+                    [customCarouselStyleClass]="recentArticles?.length === 3 ? 'owl-full-size' : ''"
+                    [items]="recentArticles">
+                <ng-template #slideTemplate let-card>
+                    <lilly-blog-article-card
+                            class="article-card-slider"
+                            [article]="card"
+                            [sliderArticleCard]="true"/>
+                </ng-template>
+            </app-custom-carousel>
+        </div>
+
+    </cst-wrapper>
+
+</ng-template>
+
+<ng-template #articleContent>
+
+</ng-template>
+
+<ng-template #notUsedElements>
+    @if (article?.fields?.archived) {
+        <h5>
+            <span class="archived-tag" i18n="@@blog_article.archived">Archived</span>
+            <span class="d-inline-flex ms-2">
+                                            <mat-icon svgIcon="info-base" class="sm" color="primary"
+                                                      [matTooltip]="blogArticlesArchivedPostsTooltipLabel"
+                                            ></mat-icon>
+                                        </span>
+            @if (article?.fields?.category?.length) {
+                <span class="tags-divider">|</span>
+            }
+        </h5>
+    }
+</ng-template>
+
+<span hidden="true" #blogArticlesArchivedPostsTooltip i18n="@@blog_articles.archived_posts.tooltip_text">Information within these articles was accurate at the time of publication but is no longer being updated</span>

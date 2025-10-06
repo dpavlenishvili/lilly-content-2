@@ -1,0 +1,20 @@
+<mat-expansion-panel
+  #matExpansionPanel
+  (closed)="isOpen = false"
+  (opened)="isOpen = true"
+  [expanded]="isOpen"
+  class="accordion"
+  [ngClass]="{ first: isFirst }"
+>
+  <mat-expansion-panel-header (click)="checkTarget($event)">
+    <mat-panel-title>
+      @if (accordionWidgetFields?.summary | mdToHtml; as summaryHtml) {
+          <div
+              [innerHTML]="summaryHtml"
+              [class.is-first-image]="isFirstImage(summaryHtml)">
+          </div>
+      }
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div [innerHTML]="accordionWidgetFields?.body | mdToHtml"></div>
+</mat-expansion-panel>

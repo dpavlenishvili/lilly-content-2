@@ -1,0 +1,140 @@
+//@use '_v3/calc' as *;
+//
+//$h: '' !default;
+//
+//$init: (
+//  dark-clr: var(--#{$cb}body-color),
+//  light-clr: var(--#{$cb}white),
+//  large-img: 3.125rem,
+//  medium-img: 2.375rem,
+//  small-img: 1.5rem,
+//) !default;
+//
+//
+//.author {
+//  @include css-initVars($init, $h);
+//
+//  display: flex;
+//  align-items: center;
+//
+//  &.dark {
+//    .content {
+//      color: var(--#{$h}dark-clr);
+//
+//      a {
+//        text-decoration: none;
+//      }
+//
+//      label {
+//        color: var(--#{$h}light-clr);
+//        background: var(--#{$h}dark-clr);
+//      }
+//
+//      .divider {
+//        border-color: var(--#{$cb}gray-300);
+//      }
+//
+//      .read-time {
+//        color: var(--#{$cb}gray-600);
+//      }
+//    }
+//  }
+//
+//  &.light {
+//    .content {
+//      color: var(--#{$h}light-clr);
+//
+//      label {
+//        color: var(--#{$h}dark-clr);
+//        background: var(--#{$h}light-clr);
+//      }
+//
+//      .divider {
+//        opacity: 0.6;
+//      }
+//
+//      .read-time {
+//        opacity: 0.6;
+//      }
+//    }
+//  }
+//
+//  &.large {
+//    img {
+//      @include square(var(--#{$h}large-img));
+//      margin-right: 1rem;
+//    }
+//
+//    .content {
+//      font-size: var(--#{$cb}font-size-base);
+//
+//      label {
+//        line-height: 1rem;
+//        font-size: var(--#{$cb}font-size-sm);
+//        padding: 0.125rem 0.875rem;
+//      }
+//    }
+//  }
+//
+//  &.medium {
+//    img {
+//      @include square(var(--#{$h}medium-img));
+//      margin-right: 1rem;
+//    }
+//
+//    .content {
+//      line-height: 1.2rem;
+//      font-size: var(--#{$cb}font-size-sm);
+//
+//      label {
+//        line-height: 1.25;
+//        padding: 0.125rem 0.75rem;
+//      }
+//    }
+//  }
+//
+//  &.small {
+//    img {
+//      @include square(var(--#{$h}small-img));
+//      margin-right: .5rem;
+//    }
+//
+//    .content {
+//      line-height: 1.25;
+//      font-size: var(--#{$cb}font-size-sm);
+//
+//      label {
+//        line-height: 1.1;
+//        font-size: 0.5rem;
+//        padding: 0.125rem 0.625rem;
+//      }
+//    }
+//  }
+//
+//  img {
+//    border-radius: 100%;
+//  }
+//
+//  .content {
+//    text-align: left;
+//
+//    label {
+//      font-weight: var(--#{$cb}font-weight-middle);
+//      text-transform: uppercase;
+//      border-radius: 0.25rem;
+//      margin: 0 0 0 0.5rem;
+//      vertical-align: top;
+//    }
+//
+//    .divider {
+//      margin: 0 0.5rem;
+//      border-left: 1px solid;
+//    }
+//  }
+//}
+//
+//.unclickable {
+//  pointer-events: none;
+//  cursor: default;
+//  color: var(--#{$h}dark-clr);
+//}

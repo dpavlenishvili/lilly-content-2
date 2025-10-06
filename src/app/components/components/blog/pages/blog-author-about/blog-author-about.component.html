@@ -1,0 +1,23 @@
+<div class="articles">
+    <div class="preview">
+        <div class="preview__author">
+            <div>
+                <img class="img"
+                     [src]="authorInfo?.image?.fields?.file?.url"
+                     [alt]="authorInfo?.altText || ''"/>
+            </div>
+            <div class="author-info">
+                <h1>{{ authorInfo?.name }}</h1>
+                <div>{{ authorInfo?.bio }}</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="articles-list">
+        @for (article of articles; track article) { 
+            <div class="articles-el">
+                <lilly-blog-article-card [article]="article"></lilly-blog-article-card>
+            </div>
+        }
+    </div>
+</div>

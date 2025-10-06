@@ -1,0 +1,145 @@
+@use "_v3/calc" as calc;
+
+$h: '';
+
+$init: (
+        offset-x: (media-query-up: (
+                xs: 0,
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-600),
+                lg: var(--#{calc.$cb}space-1200),
+        )),
+        logo-icon-size: (media-query-up: (
+                xs: 4.639rem,
+                md: 5.639rem,
+                lg: 7.65rem,
+                xl: 8.65rem,
+        )),
+
+        col-structure: (media-query-up: (
+                xs: 1fr,
+                md: auto 1fr,
+        )),
+        area-structure: (media-query-up: (
+                xs: '"c" "b"',
+                md: '"b c"',
+        )),
+        gap-x-structure: (media-query-up: (
+                xs: var(--#{calc.$cb}space-600),
+                md: var(--#{calc.$cb}space-900),
+                xl: var(--#{calc.$cb}space-1800),
+        )),
+        col-3: (media-query-up: (
+                xs: 1fr,
+                lg: 1fr 1fr auto,
+        )),
+        x-gap-links: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                md: var(--#{calc.$cb}space-400),
+        )),
+        y-gap-links: (media-query-up: (
+                xs: var(--#{calc.$cb}space-100),
+                md: var(--#{calc.$cb}space-200),
+        )),
+        links-margin-bottom: (media-query-up: (
+                xs: var(--#{calc.$cb}space-100),
+                md: var(--#{calc.$cb}space-150),
+        )),
+        blocks-margin-bottom: (media-query-up: (
+                xs: var(--#{calc.$cb}space-400),
+                md: var(--#{calc.$cb}space-600),
+        )),
+        col3-y-gap: (media-query-up: (
+                xs: var(--#{calc.$cb}space-400),
+                md: var(--#{calc.$cb}space-600),
+        )),
+
+) !default;
+
+
+:host {
+  z-index: 1;
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+
+    .footer-main {
+      &, & a {
+        color: var(--#{calc.$cb}white);
+      }
+
+      background-color: var(--#{calc.$cb}primary);
+      padding: var(--#{$h}offset-y) var(--#{$h}offset-x);
+    }
+
+    a {
+      display: inline-flex;
+      text-underline-offset: 24%;
+      text-decoration-thickness: 4%;
+    }
+
+    .md-btn-link {
+      min-height: 1.5rem;
+      align-self: center;
+    }
+
+    .brand {
+      .mat-icon {
+        align-self: stretch;
+        aspect-ratio: 112/51;
+        height: var(--#{$h}logo-icon-size);
+        width: auto;
+      }
+    }
+
+    .block--structure {
+      display: grid;
+      grid-template-columns: var(--#{$h}col-structure);
+      grid-template-areas: var(--#{$h}area-structure);
+      column-gap: var(--#{$h}gap-x-structure);
+      .block__brand {
+        display: grid;
+        justify-content: center;
+        grid-area: b;
+      }
+      .block__content {
+        grid-area: c;
+
+        .is-grid {
+          margin-bottom: var(--#{$h}blocks-margin-bottom);
+        }
+      }
+    }
+
+    .block--3col {
+      grid-template-columns: var(--#{$h}col-3);
+      column-gap: var(--#{calc.$cb}space-400);
+      margin-bottom: var(--#{$h}blocks-margin-bottom) !important;
+      row-gap: var(--#{$h}col3-y-gap);
+      
+      .link-box {
+        margin-bottom: var(--#{$h}links-margin-bottom);
+      }
+    }
+
+    .wrapper-links {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: var(--#{$h}x-gap-links);
+      row-gap: var(--#{$h}y-gap-links);
+      max-width: 70%;
+
+      > * {
+        @include calc.make-col-auto();
+      }
+    }
+
+    .footer-title {
+      font-size: var(--#{calc.$cb}font-size-125);
+      font-weight: var(--#{calc.$cb}font-weight-bolder);
+      margin-bottom: var(--#{calc.$cb}space-200) !important;
+    }
+
+  }
+}

@@ -1,0 +1,43 @@
+<div class="cst  is-intro">
+  <div class="container">
+      <div class="cst__grid">
+          <div class="cst__content">
+              <ng-container *ngTemplateOutlet="introT"></ng-container>
+          </div>
+          <div class="cst__media">
+              <ng-container *ngTemplateOutlet="introBgT"></ng-container>
+          </div>
+      </div>
+  </div>
+</div>
+
+<ng-template #introT>
+  <div class="block">
+      <h1 class="title title-under block__title mat-h2">{{ tabContentFields?.heading }}</h1>
+      <div class="block__text" [innerHTML]="tabContentFields?.description | mdToHtml"></div>
+
+      <ng-container *ngIf="!tabContentFields?.hideButton">
+          <div class="block__action">
+              <button [attr.cbgtmevent]="gtmEventName"
+                      mat-flat-button
+                      color="primary"
+                      class="mb-button-main is-lg btn-multiline-def"
+                      (click)="forAnalytics()"
+              >
+                  <div class="btn-multiline-def__content"
+                       [attr.cbgtmevent]="gtmEventName">{{ tabContentFields?.buttonText }}
+                  </div>
+              </button>
+          </div>
+      </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #introBgT>
+  <picture class="media">
+      <source type="image/avif" [srcset]="tabContentFields?.image?.fields?.file?.url + '?fm=avif'"/>
+      <source type="image/webp" [srcset]="tabContentFields?.image?.fields?.file?.url + '?fm=webp'"/>
+      <img [src]="tabContentFields?.image?.fields?.file?.url"
+           [alt]="tabContentFields?.altText || ''"/>
+  </picture>
+</ng-template>

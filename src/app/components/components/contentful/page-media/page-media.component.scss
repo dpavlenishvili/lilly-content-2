@@ -1,0 +1,122 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+  eyebrow-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-xs),
+    lg: var(--#{calc.$cb}font-size-sm),
+    xxl: var(--#{calc.$cb}font-size-125),
+  )),
+  media-height: (media-query-up: (
+    xs: 40rem,
+    lg: 50rem,
+  )),
+  media-content-padding: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: var(--#{calc.$cb}space-900),
+  )),
+  media-content-alignment: (media-query-up: (
+    xs: center,
+    lg: space-between,
+  )),
+  media-content-margin-top: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: 0,
+  )),
+  media-content-margin-bottom: (media-query-up: (
+    xs: var(--#{calc.$cb}space-600),
+  )),
+  media-text-content-max-width: (media-query-up: (
+    xs: 100%,
+    lg: 44rem,
+  )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .cst {
+      --#{calc.$cb}cst-font-size: var(--#{$h}font-size);
+      min-height: auto;
+    }
+
+    .block {
+
+      &__title .title {
+        font-style: italic;
+      }
+
+      &__eyebrow {
+        --cb-block-offset-y: var(--#{calc.$cb}space-600);
+
+        .eyebrow {
+          font-family: var(--#{calc.$cb}font-sans-extra-wide);
+          font-size: var(--#{$h}eyebrow-font-size);
+          font-weight: var(--#{calc.$cb}font-weight-bolder);
+          text-transform: uppercase;
+          color: var(--#{calc.$color}neutral-base-100);
+          text-decoration: none;
+        }
+      }
+    }
+
+    .media-container {
+      position: relative;
+    }
+
+    .media-content {
+      position: relative;
+      height: var(--#{$h}media-height);
+      max-height: var(--#{$h}media-height);
+      border-radius: var(--#{calc.$cb}radius-2);
+      overflow: hidden;
+
+      lilly-media-content {
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        > * {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .media-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+
+    .content-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: var(--#{$h}media-content-alignment);
+      padding: var(--#{$h}media-content-padding);
+    }
+
+    .quote-icon {
+      @include calc.size_r(4.125rem, 2.5rem);
+    }
+
+    .text-container {
+      max-width: var(--#{$h}media-text-content-max-width);
+      color: var(--#{calc.$color}neutral-base-000);
+      margin-top: var(--#{$h}media-content-margin-top);
+      margin-bottom: var(--#{$h}media-content-margin-bottom);
+
+      .text {
+        font-style: italic;
+      }
+    }
+  }
+}

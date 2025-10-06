@@ -1,0 +1,9 @@
+@use '_v3/calc' as calc;
+:host ::ng-deep {
+  .soc-network {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+

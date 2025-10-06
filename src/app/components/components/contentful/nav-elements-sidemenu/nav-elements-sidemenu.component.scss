@@ -1,0 +1,65 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+
+$init: (
+  sidebar-border-width: 0.313rem,
+  sidebar-border-color: rgb(232, 232, 232),
+  sidebar-max-width: (
+          media-query-up: (
+                lg: 13rem,
+                xl: 16rem,
+                xxl: 18rem,
+  )),
+)!default;
+
+:host {
+  @include css-initVars($init, $h);
+
+  .sidebar-menu {
+    margin: calc(var(--#{$cb}cst-offset-y) + var(--#{$cb}cst-contnet-offset-y)) 0;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    max-width: var(--#{$h}sidebar-max-width);
+
+    &-item {
+      padding: var(--#{$cb}space-100) 0;
+      text-decoration: underline;
+      font-weight: var(--#{$cb}font-weight-bold);
+      font-size: var(--#{$cb}h4);
+      border-left: var(--#{$h}sidebar-border-width) solid var(--#{$h}sidebar-border-color);
+      padding-left: var(--#{$cb}space-200);
+      cursor: pointer;
+
+      &--active {
+        color: var(--page-color);
+        border-left: var(--#{$h}sidebar-border-width) solid var(--page-color);
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+}
+
+:host-context(.sidebar-menu-container--right) {
+  text-align: right;
+
+  .sidebar-menu {
+    margin-left: auto;
+  }
+
+  .sidebar-menu-item {
+    padding-left: 0 !important;
+    padding-right: var(--#{$cb}space-200);
+    border-right: var(--#{$h}sidebar-border-width) solid var(--#{$h}sidebar-border-color);
+    border-left: 0 !important;
+
+    &--active {
+      border-left: 0 !important;
+      border-right: var(--#{$h}sidebar-border-width) solid var(--page-color);
+    }
+  }
+}

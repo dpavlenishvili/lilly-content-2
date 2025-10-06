@@ -1,0 +1,11 @@
+<div class="sidebar-menu" sticky-header-wrapper>
+    @for (tab of navbarTabs; track tab) {
+      @if (!isHidden(tab)) {
+        <div class="sidebar-menu-item"
+             [ngClass]="{ 'sidebar-menu-item--active':  activeTab === tab.sectionId}"
+             (click)="helperService.scrollToSection(tab.sectionId)">
+          {{ tab?.title }}
+        </div>
+      }
+    }
+</div>

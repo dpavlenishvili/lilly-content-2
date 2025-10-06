@@ -1,0 +1,31 @@
+<div class="block is-grid block--widget-title" [ngClass]="{ 'is-reverse': isReverse }">
+    <div class="block__media">
+        <div class="media">
+            @if (imageTileWidgetFields?.displayMedia === MediaContentType.IMAGE) {
+                <picture>
+                    <source type="image/avif" [srcset]="imageTileWidgetFields?.image?.fields?.file?.url + '?fm=avif'"/>
+                    <source type="image/webp" [srcset]="imageTileWidgetFields?.image?.fields?.file?.url + '?fm=webp'"/>
+                    <img [src]="imageTileWidgetFields?.image?.fields?.file?.url"
+                         [alt]="imageTileWidgetFields?.altText || ''"
+                         loading="lazy"
+                         decoding="async" />
+                </picture>
+            }
+            @else {
+                <lilly-media-content [mediaType]="imageTileWidgetFields?.displayMedia"
+                                     [mediaId]="mediaId"
+                                     [uiConfigId]="imageTileWidgetFields?.kalturaUiConfig?.fields.id"
+                                     [subsiteName]="cmsAnalytics?.subsiteName"
+                                     [title]="imageTileWidgetFields?.heading"
+                                     [videoConfig]="imageTileWidgetFields?.videoConfig">
+                </lilly-media-content>
+            }
+        </div>
+    </div>
+    <div class="block__content">
+        <div class="block__title">
+            <h3 class="h2-garamond-heading">{{ imageTileWidgetFields?.heading }}</h3>
+        </div>
+        <div class="block__text description" [innerHTML]="description"></div>
+    </div>
+</div>

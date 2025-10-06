@@ -1,0 +1,42 @@
+<hero-wrapper>
+    <div>
+        <lilly-breadcrumb-navigation [pageLink]="pageFields?.pageLink"/>
+    </div>
+    @if (pageFields?.mainTitle) {
+        <div class="block__title">
+            <h1 class="title ringside-heading-2-font"
+                [innerHTML]="pageFields?.mainTitle | mdToHtml"></h1>
+        </div>
+    }
+    @if ((pageFields?.intro || pageFields?.description) && !noIntro) {
+        <div class="block__text"
+             [innerHTML]="pageFields?.intro + ' ' + pageFields?.description | mdToHtml">
+        </div>
+    }
+
+    <ng-container media>
+        @if (pageFields?.displayMedia === MediaContentType.IMAGE) {
+            <picture class="media">
+                <source type="image/avif" [srcset]="pageFields?.image?.fields?.file?.url + '?fm=avif'"/>
+                <source type="image/webp" [srcset]="pageFields?.image?.fields?.file?.url + '?fm=webp'"/>
+                <img [src]="pageFields?.image?.fields?.file?.url"
+                     [alt]="pageFields?.altText || ''"/>
+                <div class="media__bg"></div>
+            </picture>
+        } @else {
+            <div class="media">
+                <lilly-media-content
+                        [mediaType]="pageFields?.displayMedia"
+                        class="video-wrapper media__thumb"
+                        [mediaId]="mediaId"
+                        [uiConfigId]="pageFields?.kalturaUiConfig?.fields.id"
+                        [subsiteName]="pageFields?.metadata?.fields?.metaTitle"
+                        [title]="mediaTitle"
+                        [videoConfig]="pageFields?.videoConfig">
+                </lilly-media-content>
+                <div class="media__bg"></div>
+            </div>
+        }
+    </ng-container>
+
+</hero-wrapper>

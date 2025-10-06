@@ -1,0 +1,45 @@
+@use "_v3/calc" as *;
+
+$h: '' !default;
+$init: (
+        container-width: (media-query-up: (
+                xs: 90%,
+                md: 720px,
+        )),
+        footer-margin-top: (media-query-up: (
+                xs: 3rem,
+                md: 4.625rem,
+        )),
+        footer-offset-y: 3.125rem,
+) !default;
+
+
+::ng-deep .static-footer {
+  @include css-initVars($init, $h);
+
+  border-top: 2px solid var(--#{$cb}gray-400);
+  padding: var(--#{$h}footer-offset-y) 0;
+  margin-top: var(--#{$h}footer-margin-top);
+
+  .container {
+    max-width: var(--#{$h}container-width);
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  a {
+    font-weight: var(--#{$cb}font-weight-normal);
+  }
+
+  .static-footer-main-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--#{$cb}space-300);
+    row-gap: calc(var(--#{$cb}space-200) * 1.25);
+    margin-bottom: calc(var(--#{$cb}space-200) * 2.5);
+  }
+
+  .static-footer-logo {
+    margin-top: var(--#{$cb}space-300);
+  }
+}

@@ -1,0 +1,308 @@
+<footer class="footer-main theme--dark d-print-none">
+    <div class="container">
+        <div class="block is-grid block--structure is-grid">
+            <div class="block__brand">
+                <ng-container [ngTemplateOutlet]="logo"></ng-container>
+            </div>
+            <div class="block__content"
+                [ngClass]="{'': defaultCultureCode.toLowerCase() !== Language.pl_PL}">
+
+                <div class="block is-grid">
+                    <div>
+                        <ng-container *ngTemplateOutlet="menu1; context: {rowClass: 'wrapper-links', colClass: ''}"></ng-container>
+                    </div>
+                </div>
+
+                <div *hideForRegions="[Language.ja_JP]">
+                    <ng-container [ngTemplateOutlet]="lang"></ng-container>
+                </div>
+
+                <div class="font-size-sm">
+                    <ng-container
+                            *ngTemplateOutlet="menu0; context: {rowClass: '', colClass: ''}"></ng-container>
+                    <ng-container
+                            *ngTemplateOutlet="residentT; context: {rowClass: '', colClass: ''}"></ng-container>
+                    <ng-container *ngTemplateOutlet="copy; context: {rowClass: '', colClass: ''}"></ng-container>
+                    <ng-container
+                            *ngTemplateOutlet="additionalInfo; context: {rowClass: defaultCultureCode.toLowerCase() !== Language.pl_PL ? '' : '', colClass: ''}"></ng-container>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<ng-template #logo>
+    <a class="brand disable-user-select"
+       (click)="goToLink(newRoutes.Home)"
+       routerLinkActive="home"
+       aria-label="Lilly logo (opens in new tab)"
+       i18n-aria-label="@@footer.lilly_logo_arialabel"
+       tabindex="0">
+        <mat-icon svgIcon="logo-footer"></mat-icon>
+    </a>
+</ng-template>
+<ng-template #residentT let-rowClass="rowClass" let-colClass="colClass">
+    <ng-container
+            *showForRegions="[Language.en_US, Language.es_US, Language.pt_BR, Language.en_CA, Language.fr_CA, Language.ja_JP]">
+        <div [ngClass]="rowClass">
+            <div [ngClass]="colClass">
+                <div class="footer-note" i18n="@@footer.lilly_site_intention_text">
+                    This site is intended for U.S. residents ages 18 and older.
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #copy let-rowClass="rowClass" let-colClass="colClass">
+    <div [ngClass]="rowClass">
+        <div [ngClass]="colClass" *hideForRegions="[Language.de_DE, Language.ja_JP]">
+            <a
+                (click)="goToLink(newRoutes.Copyright)"
+                class="md-btn-link"
+                [ngClass]="{'md-btn-without-link': [Language.es_AR, Language.es_MX, Language.en_AU].includes(defaultCultureCode?.toLowerCase())}"
+                i18n="@@footer.copyright.lilly_company"
+                attr.aria-label="Copyright {{currentYear}} Eli Lilly and Company (opens in new tab)"
+                tabindex="0">
+                Copyright © {{ currentYear }} Eli Lilly and Company
+            </a>
+            {{ ' ' }}
+            <span *showForRegions="[Language.es_ES, Language.pt_BR]" i18n="@@footer.copyright.lilly_company_part_2">Copyright part 2 if needed</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #additionalInfo let-rowClass="rowClass" let-colClass="colClass">
+    <div [ngClass]="rowClass" *showForRegions="[Language.es_AR, Language.es_MX, Language.pt_BR]">
+        <div [ngClass]="colClass">
+            <span>
+              <span i18n="@@footer.additional_info.body_id">PP-MG-MX-1493</span>	&nbsp;	&nbsp;
+              <span i18n="@@footer.additional_info.body_date" class="block-text">13/03/2024</span>	&nbsp;	&nbsp;
+              <span *hideForRegions="[Language.pt_BR]" i18n="@@footer.additional_info.body_consult" class="block-text">Consulte a su medico</span>
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #menu0 let-rowClass="rowClass" let-colClass="colClass">
+    <div [ngClass]="rowClass">
+        <ng-container *showForRegions="[Language.pt_BR]">
+            @for (link of topLinks; track link.link) {
+                <div [ngClass]="colClass" class="footer-top-link">
+                    <div>
+                        <a class="md-btn-link"
+                           (click)="goToLink(link.link)"
+                           itemprop="url"
+                           routerLinkActive="is-active"
+                           [attr.aria-label]="link.text"
+                           tabindex="0"
+                        >
+                            <div>{{ link.text }}</div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </ng-container>
+        <ng-container *hideForRegions="[Language.pt_BR]">
+            <div [ngClass]="colClass">
+                <div>
+                    <a class="md-btn-link"
+                       (click)="goToLink(newRoutes.Contact)"
+                       itemprop="url"
+                       routerLinkActive="is-active"
+                       aria-label="Contact Lilly (opens in new tab)"
+                       i18n-aria-label="@@footer.contact_lilly_arialabel"
+                       tabindex="0"
+                    >
+                        <div i18n="@@footer.contact_lilly">Contact Lilly</div>
+                    </a>
+                </div>
+                <ng-container *showForRegions="[Language.es_AR, Language.es_MX]">
+                    <div class="font-size-sm" i18n="@@footer.site_intended_informational">
+                        This site is intended for residents of Mexico. Content is provided for informational purposes
+                        only
+                        and
+                        is not intended to act as a substitute for professional medical advice, diagnosis, or treatment.
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #menu1 let-rowClass="rowClass" let-colClass="colClass">
+    <div class="block block---links">
+        <div class="block is-grid block--3col">
+            <div>
+                <h4 class="footer-title show-mobile-only" i18n="@@footer.privacy">Privacy</h4>
+                <div [ngClass]="rowClass" class="link-box" *showForRegions="[Language.en_US, Language.es_US]">
+                    <a class="md-btn-link"
+                       itemprop="url"
+                       routerLinkActive="is-active"
+                       (click)="goToLink(newRoutes.YourPrivacyChoice)"
+                       aria-label="Your Privacy Choices (opens in new tab)"
+                       i18n-aria-label="@@footer.your_privacy_choices_arialabel"
+                       tabindex="0"
+                    >
+                        <div class="btn__grid">
+
+                            <img alt="Privacy options image" width="33"
+                                 class="link-list__logo link-list__logo--decorative"
+                                 src="https://delivery-p137454-e1438138.adobeaemcloud.com/adobe/assets/urn:aaid:aem:ce2fd3c5-be0b-42de-ac6e-5c88e0112a57">
+
+
+                            <div i18n="@@extended-footer.your_privacy_choices">Your Privacy Choices</div>
+                        </div>
+                    </a>
+
+                </div>
+                @if (isCookieAccepted) {
+                    <div [ngClass]="rowClass">
+                        <div>
+                            <a class="md-btn-link"
+                               itemprop="url"
+                               routerLinkActive="is-active"
+                               (click)="showCookiesSettings()"
+                               tabindex="0"
+                            >
+                                <div i18n="@@extended-footer.cookie_settings">Cookie Settings</div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div>
+              <h4 class="footer-title show-mobile-only" i18n="@@footer.social">Social</h4>
+                <ng-container
+                    *ngTemplateOutlet="share; context: {alignClass: ''}"></ng-container>
+            </div>
+        </div>
+
+        <h4 class="footer-title show-mobile-only" i18n="@@footer.terms_and_conditions">Terms & Conditions</h4>
+        <div [ngClass]="rowClass">
+            <div [ngClass]="colClass">
+                <a class="md-btn-link"
+                   (click)="goToLink(newRoutes.TermsOfUse)"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   aria-label="Terms of use (opens in new tab)"
+                   i18n-aria-label="@@footer.terms_of_use_arialabel"
+                   tabindex="0"
+                >
+                    <div i18n="@@extended-footer.terms_and_conditions">Terms of Use</div>
+                </a>
+            </div>
+            <div [ngClass]="colClass">
+                <a class="md-btn-link"
+                   (click)="goToLink(newRoutes.Privacy)"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   aria-label="Privacy statement (opens in new tab)"
+                   i18n-aria-label="@@footer.privacy_policy_arialabel"
+                   tabindex="0"
+                >
+                    <div i18n="@@extended-footer.privacy_policy">Privacy Statement</div>
+                </a>
+            </div>
+            @if (toggleFeatureHelperService.isEnabledTrialAlertsWithShowPage) {
+                <div [ngClass]="colClass">
+                    <a class="md-btn-link"
+                       [routerLink]="[clientLocalRoutes.FAQ]"
+                       (click)="onFAQClick()"
+                       itemprop="url"
+                       routerLinkActive="is-active"
+                       tabindex="0"
+                    >
+                        <div i18n="@@extended-footer.FAQ">FAQ</div>
+                    </a>
+                </div>
+            }
+            <div [ngClass]="colClass" *showForRegions="[Language.en_CA, Language.fr_CA]">
+                <a class="md-btn-link"
+                   (click)="goToLink(newRoutes.Disclaimer)"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   aria-label="Disclaimer (opens in new tab)"
+                   i18n-aria-label="@@footer.disclaimer_arialabel"
+                   tabindex="0"
+                >
+                    <div i18n="@@extended-footer.disclaimer">Disclaimer</div>
+                </a>
+            </div>
+            <div [ngClass]="colClass" *showForRegions="[Language.en_US, Language.es_US]">
+                <a class="md-btn-link"
+                   (click)="goToLink(newRoutes.ConsumerHealthPrivacyNotice)"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   aria-label="Consumer Health Privacy Notice (opens in new tab)"
+                   i18n-aria-label="@@footer.consumer_health_privacy_arialabel"
+                   tabindex="0"
+                >
+                    <div i18n="@@extended-footer.consumer_health_privacy_notice">Consumer Health Privacy Notice</div>
+                </a>
+            </div>
+
+            <div [ngClass]="colClass">
+                <a class="md-btn-link"
+                   (click)="goToLink(newRoutes.Accessibility)"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   aria-label="Accessibility statement (opens in new tab)"
+                   i18n-aria-label="@@footer.accessibility_arialabel"
+                   tabindex="0"
+                >
+                    <div i18n="@@footer.accessibility">Accessibility Statement</div>
+                </a>
+            </div>
+            <div [ngClass]="colClass">
+                <a class="md-btn-link"
+                   [routerLink]="[clientLocalRoutes.Sitemap]"
+                   itemprop="url"
+                   routerLinkActive="is-active"
+                   (click)="onSitemapClick()"
+                   tabindex="0"
+                >
+                    <div i18n="@@extended-footer.sitemap">Sitemap</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #share let-alignClass="alignClass">
+    <div class="row g-2 align-items-center" [ngClass]="alignClass">
+        <div class="col-auto"
+             *showForRegions="[Language.en_US, Language.en_GB, Language.ja_JP, Language.pl_PL, Language.de_DE, Language.es_US]">
+            <a [href]="newRoutes.Facebook" target="_blank" mat-icon-button
+               class="md-social mat-elevation-z0" (click)="onSocialLogoClick('FB')"
+               aria-label="Facebook (opens in new tab)" i18n-aria-label="@@footer.facebook_arialabel">
+                <img alt="Facebook Logo" class="link-list__logo"
+                     src="https://delivery-p137454-e1438138.adobeaemcloud.com/adobe/assets/urn:aaid:aem:a7cfbc95-1bbb-4c0e-b89d-50e427bad4cb">
+            </a>
+        </div>
+        <div class="col-auto" *showForRegions="[Language.es_AR, Language.es_MX, Language.es_US]">
+            <a href="https://www.linkedin.com/company/lilly-latam" target="_blank" mat-icon-button
+               class="md-social mat-elevation-z0" (click)="onSocialLogoClick('IN')"
+               aria-label="Linkedin (opens in new tab)" i18n-aria-label="@@footer.linkedin_arialabel">
+                <img alt="LinkedIn Logo" loading="lazy" class="link-list__logo"
+                     src="https://delivery-p137454-e1438138.adobeaemcloud.com/adobe/assets/urn:aaid:aem:8100b909-41c9-4606-9ac6-2e2149747129">
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #lang>
+    <div *showForRegions="[Language.pt_BR]" class="text-under-language-switcher">
+        <div class="text-bold" i18n="@@footer.text-under-language-switcher_1">
+            Para falar com o suporte ao cliente:
+        </div>
+        <div i18n="@@footer.text-under-language-switcher_2">
+            SAC - 0800 701 0444
+        </div>
+    </div>
+
+</ng-template>
+
+<div style="display: none" id="version_number">$$VERSION_NUMBER$$</div>

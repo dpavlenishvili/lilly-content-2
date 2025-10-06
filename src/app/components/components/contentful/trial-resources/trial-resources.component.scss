@@ -1,0 +1,28 @@
+@use "_v3/calc" as *;
+
+:host ::ng-deep {
+  .trial-resources {
+    &__title {
+      margin-bottom: var(--#{$cb}cst-offset-y);
+    }
+    &__item {
+      display: block;
+      &:not(&:last-of-type) {
+        margin-bottom:  var(--#{$cb}cst-offset-y, 2.5rem);
+      }
+    }
+
+    &.show-all {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--#{$cb}block-offset-y);
+
+      button {
+        color: var(--page-color);
+        border-color: var(--page-color);
+      }
+    }
+  }
+
+
+}

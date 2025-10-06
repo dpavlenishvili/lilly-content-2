@@ -1,0 +1,71 @@
+@use '_v3/calc' as *;
+
+$h: '';
+$init: (
+        cst-offset-y: (media-query-up: (
+                xs: var(--#{$cb}cst-offset-y),
+                xl: 0,
+        )),
+        cst-grid-template-areas: (media-query-up: (
+                xs: '"c" "m"',
+                xl: '"c m"',
+        )),
+        cst-grid-template-columns: (media-query-up: (
+                xs: 1fr,
+                lg: minmax(70%, 83.3%),
+                xl: minmax(30%, 50%) auto,
+        )),
+        cst-grid-justify-content: (media-query-up: (
+                xs: center,
+                xl: space-between,
+        )),
+        media-w: (media-query-up: (
+                xs: var(--#{$cb}media-w),
+                xl: 35.688rem,
+        )),
+) !default;
+
+:host {
+  @include css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  .cst {
+    --#{$cb}cst-margin-bottom: 0;
+    --#{$cb}media-object-fit: cover;
+    --#{$cb}cst-bg-clr: var(--#{$cb}lighter-clr);
+    --#{$cb}media-h: var(--#{$cb}cst-intro-h);
+    --#{$cb}cst-min-h: var(--#{$cb}cst-intro-h);
+    --#{$cb}cst-grid-justify-content: var(--#{$h}cst-grid-justify-content);
+    padding: var(--#{$h}cst-offset-y) 0;
+
+    &__grid {
+      grid-template-areas: var(--#{$h}cst-grid-template-areas);
+      grid-template-columns: var(--#{$h}cst-grid-template-columns);
+    }
+
+    &__content {
+      grid-area: c;
+    }
+
+    &__media {
+      grid-area: m;
+    }
+
+    .media {
+      width: var(--#{$h}media-w);
+      margin: 0 auto;
+    }
+  }
+
+
+  p {
+    margin: 0;
+  }
+
+  .media-container {
+    max-width: 100%;
+  }
+
+}
+

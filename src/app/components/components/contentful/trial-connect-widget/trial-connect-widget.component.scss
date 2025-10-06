@@ -1,0 +1,75 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+
+$init: (
+        cst-min-h: (media-query-up: (
+                xs: 0,
+                lg: 44rem,
+                xl: 56rem,
+        )),
+        cst-bg-clr: var(--#{calc.$color}neutral-base-090),
+        block-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-120),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .cst {
+      --#{calc.$cb}cst-min-h: var(--#{$h}cst-min-h);
+      --#{calc.$cb}cst-bg-clr: var(--#{calc.$color}neutral-base-090);
+      --#{calc.$cb}media-h: 100%;
+      &__wrapper {
+        display: grid;
+        align-items: center;
+        z-index: 1;
+        a {
+          color: #d31710;
+        }
+      }
+
+      .block {
+        &__text {
+          font-size: var(--#{$h}block-text-font-size);
+        }
+      }
+
+      &__media {
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .media {
+          &> * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+      }
+
+    }
+
+    .btn__grid {
+      font-size: var(--#{calc.$cb}font-size-125);
+    }
+  }
+
+}
+
+:host(.widget-item--full-bleed) {
+  > cst-wrapper {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 100vw;
+  }
+}

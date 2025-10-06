@@ -1,0 +1,17 @@
+@use "_v3/calc" as calc;
+
+:host {
+  display: block;
+  margin-bottom: calc(var(--#{calc.$cb}cst-offset-y) * 2);
+
+  ::ng-deep {
+    @include calc.trials-cards();
+
+
+    .show-all {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--#{calc.$cb}cst-offset-y);
+    }
+  }
+}

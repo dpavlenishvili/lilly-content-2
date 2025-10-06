@@ -1,0 +1,137 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                md: var(--#{calc.$cb}font-size-125),
+                lg: var(--#{calc.$cb}font-size-150),
+        )),
+        border-width: (media-query-up: (
+                xs: .125rem,
+                md: .25rem,
+        )),
+        dot-size: (media-query-up: (
+                xs: .5rem,
+                md: .75rem,
+        )),
+        float-height: (media-query-up: (
+                xs: 3.75rem,
+                md: 5.5rem,
+        )),
+        pin-size: (media-query-up: (
+                xs: 1rem,
+                md: 1.625rem,
+        )),
+        slider-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-800),
+                md: var(--#{calc.$cb}space-1200),
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                md: var(--#{calc.$cb}space-600),
+        )),
+) !default;
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .bmi-result {
+      font-size: var(--#{$h}font-size);
+      &-title {
+        text-align: center;
+        margin-bottom: var(--#{$h}offset-y);
+
+      }
+
+      &-slider {
+        width: 100%;
+        display: flex;
+        margin-top: var(--#{$h}slider-offset-y);
+
+        &-item {
+          display: flex;
+          flex-direction: column;
+          border-top: var(--#{$h}border-width) solid #E0E0E0;
+          padding-top: var(--#{calc.$cb}space-300);
+          flex: 1;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+
+          &-status, &-caption {
+            line-height: var(--#{calc.$cb}line-height-sm);
+            text-align: center;
+          }
+
+          &-value {
+            position: absolute;
+            display: grid;
+            grid-template-rows: 1fr auto;
+
+            top: calc(-1 * (var(--#{$h}float-height) - var(--#{$h}pin-size) * 0.5 + var(--#{$h}border-width) * 0.5));
+            z-index: 1;
+            height: var(--#{$h}float-height);
+            align-items: stretch;
+            justify-content: center;
+            gap: var(--#{calc.$cb}space-100);
+
+            div {
+              &:first-child {
+                & > * {
+                  border-radius: 4px;
+                  padding: .2em .5em;
+                  line-height: var(--#{calc.$cb}line-height-sm);
+
+                  font-size: 1em;
+                  color: var(--#{calc.$cb}white);
+                  background: var(--#{calc.$cb}primary);
+                  text-align: center;
+                }
+                //margin-bottom: .5rem;
+              }
+
+              &:last-child {
+                display: flex;
+                justify-content: center;
+                & > * {
+                  background: var(--#{calc.$cb}primary);
+                  @include calc.square(var(--#{$h}pin-size));
+                  border-radius: 50%;
+                }
+
+
+              }
+            }
+          }
+
+          &:not(:last-child):after {
+            content: '';
+            @include calc.square(var(--#{$h}dot-size));
+            position: absolute;
+            background: var(--#{calc.$cb}primary);
+            border-radius: 50%;
+            top: calc(-1 * ((var(--#{$h}dot-size) * 0.5) + (var(--#{$h}border-width) * 0.5)));
+            right: 0;
+          }
+
+          &--selected {
+            border-color: var(--#{calc.$cb}primary);
+          }
+        }
+      }
+
+      &-btn {
+        margin-top: var(--#{$h}offset-y);
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    //@include calc.media-breakpoint-down(sm) {
+    //  .bmi-result-slider-item {
+    //    font-size: var(--#{calc.$cb}font-size-sm);
+    //  }
+    //}
+  }
+}

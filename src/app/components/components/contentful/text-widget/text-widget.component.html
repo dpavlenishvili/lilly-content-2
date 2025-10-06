@@ -1,0 +1,6 @@
+<div class="block block--xs">
+    <div class="block__text text-wrapper" [ngClass]="{
+    'text-left': !textWidgetFields?.textAlign,
+    'text-center': textWidgetFields?.textAlign
+  }" [innerHTML]="textWidgetFields?.text | mdToHtml: {analytics: cmsAnalytics, elementRef: elementRef}"></div>
+</div>
