@@ -1,11 +1,14 @@
 <div class="carousel-navigation">
-<!--  <button-->
-<!--    type="button"-->
-<!--    class="nav-arrow nav-arrow&#45;&#45;prev"-->
-<!--    [disabled]="isPrevDisabled()"-->
-<!--    [attr.aria-label]="'Previous slide'"-->
-<!--    (click)="goPrev()">-->
-<!--  </button>-->
+  @if (showNavArrows()) {
+    <button
+      type="button"
+      class="nav-arrow nav-arrow--prev"
+      [disabled]="isPrevDisabled()"
+      aria-label="Previous slide"
+      i18n-aria-label="@@carousel.previous_slide_arialabel"
+      (click)="goPrev()">
+    </button>
+  }
 
   <div class="carousel-navigation__mobile">
     <div class="carousel-pagination">
@@ -15,18 +18,22 @@
           class="carousel-pagination__dot"
           [class.is-active]="currentPage() === $index"
           [attr.aria-label]="'Go to page ' + ($index + 1)"
+          i18n-aria-label="@@carousel.go_to_page_arialabel"
           [attr.aria-current]="currentPage() === $index ? 'true' : 'false'"
           (click)="goToPage($index)">
         </button>
       }
     </div>
 
-<!--    <button-->
-<!--      type="button"-->
-<!--      class="nav-arrow nav-arrow&#45;&#45;next"-->
-<!--      [disabled]="isNextDisabled()"-->
-<!--      [attr.aria-label]="'Next slide'"-->
-<!--      (click)="goNext()">-->
-<!--    </button>-->
+    @if (showNavArrows()) {
+      <button
+        type="button"
+        class="nav-arrow nav-arrow--next"
+        [disabled]="isNextDisabled()"
+        aria-label="Next slide"
+        i18n-aria-label="@@carousel.next_slide_arialabel"
+        (click)="goNext()">
+      </button>
+    }
   </div>
 </div>

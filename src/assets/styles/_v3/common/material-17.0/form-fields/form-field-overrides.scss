@@ -46,7 +46,7 @@ $init-text-field: (
   // lg
         lg-font-size: (media-query-up: (
                 xs: var(--#{calc.$cb}font-size-base, 1rem),
-                lg: 1.75rem,
+                lg: var(--#{calc.$cb}font-size-125 ),
         )),
         lg-min-height: (media-query-up: (
                 xs: 3.625rem,

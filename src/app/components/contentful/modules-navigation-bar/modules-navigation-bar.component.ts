@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, HostBinding, Input, input, signal} from '@angular/core';
 import { IModule, IModulesNavigationBarFields } from '../models/contentful';
 import {
   OneRowNavigationComponent
@@ -7,13 +7,19 @@ import { ImageTileWidgetComponent } from '../image-tile-widget/image-tile-widget
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
-import { WeekPlannerNavigationBarComponent } from '../week-planner-navigation-bar/week-planner-navigation-bar.component';
+import {
+  WeekPlannerNavigationBarComponent
+} from '../week-planner-navigation-bar/week-planner-navigation-bar.component';
 import { VideoCarouselBlockComponent } from '../video-carousel-block/video-carousel-block.component';
+import { ArticlesBlockComponent } from '../articles-block/articles-block.component';
+import {
+  ContainerWrapperComponent
+} from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
 
 @Component({
   selector: 'lilly-content-modules-navigation-bar',
   templateUrl: './modules-navigation-bar.component.html',
-  styleUrls: ['./modules-navigation-bar.component.scss'],
+  styleUrls: ['./modules-navigation-bar.component.scss', '../../../../assets/styles/_v3/modules/nav-tabs.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OneRowNavigationComponent,
@@ -23,7 +29,9 @@ import { VideoCarouselBlockComponent } from '../video-carousel-block/video-carou
     MatOption,
     MatButton,
     WeekPlannerNavigationBarComponent,
-    VideoCarouselBlockComponent
+    VideoCarouselBlockComponent,
+    ArticlesBlockComponent,
+    ContainerWrapperComponent
   ],
   standalone: true
 })
@@ -31,7 +39,7 @@ export class ModulesNavigationBarComponent {
   readonly modulesNavigationBarFields = input<IModulesNavigationBarFields | undefined>();
   readonly fields = computed(() => this.modulesNavigationBarFields());
   readonly selectedMenuItem = signal<IModule | null>(null);
-
+  @Input() hostClass: string = 'widget--navbar';
   constructor() {
     effect(() => {
       const fields = this.modulesNavigationBarFields();
@@ -41,5 +49,9 @@ export class ModulesNavigationBarComponent {
 
   onMenuItemClick(item: IModule): void {
     this.selectedMenuItem.set(item);
+  }
+  @HostBinding('class')
+  get hostClasses(): string {
+    return `${this.hostClass ? ' ' + this.hostClass : ''}`;
   }
 }

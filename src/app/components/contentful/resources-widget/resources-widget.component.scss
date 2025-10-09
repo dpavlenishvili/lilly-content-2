@@ -1,0 +1,24 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+  font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-125),
+    lg: var(--#{calc.$cb}font-size-base),
+  )),
+  title-font: (media-query-up: (
+    xs: '300 2.5rem / 1.2 var(--#{calc.$cb}font-family-serif)',
+    lg: '400 1.5rem / 1.2 var(--#{calc.$cb}body-font-family)',
+  )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+  .title {
+    font: var(--#{$h}title-font);
+  }
+
+  ::ng-deep {
+    font-size: var(--#{$h}font-size);
+  }
+}

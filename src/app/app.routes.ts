@@ -12,6 +12,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/modules/modules.component').then(m => m.ModulesComponent)
   },
   {
+    path: 'article',
+    loadComponent: () => import('./components/article/article.component').then(m => m.ArticleComponent)
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/error404/error404.component').then(m => m.ExtendedError404Component),
     data: {seoPageKey: SeoPageKey.NOT_FOUND}

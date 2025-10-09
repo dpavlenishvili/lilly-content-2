@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { IBenefitsBlockFields } from '../models/contentful';
 import { AppMaterialModule } from '../../../shared-features/material/material.module';
 import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'lilly-content-benefits-block',
@@ -15,10 +16,14 @@ import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
   standalone: true
 })
 export class BenefitsBlockComponent {
-  readonly benefitsBlockFields = input<IBenefitsBlockFields | undefined>();
-
-  onButtonClick(): void {
-    // TODO: Implement file download requirement is not clear yet
+  readonly benefitsBlockFields = input.required<IBenefitsBlockFields>();
+  private readonly helperService = inject(HelperService); 
+  
+  onDownload (): void {
+    const fileUrl = this.benefitsBlockFields()?.file?.fields?.file?.url;
+    const fileName = this.benefitsBlockFields()?.file?.fields?.file?.fileName;
+    
+    this.helperService.downloadFile(fileUrl, fileName);
   }
 }
 

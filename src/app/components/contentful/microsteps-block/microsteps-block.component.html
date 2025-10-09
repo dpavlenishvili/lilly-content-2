@@ -9,7 +9,7 @@
         @if (card.fields.label) {
           <p class="card-label">{{ card.fields.label }}</p>
         }
-        <h3 class="card-title">{{ card.fields.title }}</h3>
+        <h2 class="card-title">{{ card.fields.title }}</h2>
         <div class="card-text" [innerHTML]="card.fields.bodyText | mdToHtml"></div>
       </div>
     }

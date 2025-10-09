@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Inject, input, OnInit } from '@angular/core';
 import { YoutubeParams } from './youtube-params.interface';
 import { MediaContentService } from '../media-content.service';
 import { VideoAnalyticsEvent } from '../video-analytics-event.enum';
@@ -24,22 +24,21 @@ export const YOUTUBE_SCRIPT_URL = 'assets/scripts/youtube_iframe_api.js';
   standalone: true
 })
 export class YoutubeComponent implements OnInit {
-  @Input() public isAutoplay = false;
-  @Input() public isMuted = true;
-  @Input() public isLoop = true;
-  @Input() public title: string;
-  @Input() private subsiteName: string;
-  @Input() public set youtubeId(id: string) {
-    this.videoId = id;
-    this.setVideoParams();
-  }
+  readonly isAutoplay = input<boolean>(false);
+  readonly isMuted = input<boolean>(true);
+  readonly isLoop = input<boolean>(true);
+  readonly title = input<string>();
+  readonly subsiteName = input<string>();
+  readonly youtubeId = input<string>();
 
-  public get youtubeId(): string {
-    return this.videoId;
-  }
-
-  public videoParams: YoutubeParams;
-  private videoId: string;
+  readonly videoParams = computed<YoutubeParams>(() => {
+    return {
+      playlist: this.youtubeId(),
+      loop: this.isLoop(),
+      mute: this.isMuted(),
+      autoplay: this.isAutoplay(),
+    };
+  });
 
   constructor(
     private mediaContentAnalytics: MediaContentService,
@@ -49,7 +48,6 @@ export class YoutubeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.optionalLoadScript();
-    this.setVideoParams();
   }
 
   public optionalLoadScript(): void {
@@ -66,20 +64,11 @@ export class YoutubeComponent implements OnInit {
     const analysedState = VideoState[videoState.data];
 
     if (analysedState) {
-      this.mediaContentAnalytics.sendMediaAnalytics(analysedState, this.subsiteName, this.title);
+      this.mediaContentAnalytics.sendMediaAnalytics(analysedState, this.subsiteName(), this.title());
     }
   }
 
   public handleError(): void {
-    this.mediaContentAnalytics.sendMediaAnalytics(VideoAnalyticsEvent.ERROR, this.subsiteName, this.title);
-  }
-
-  private setVideoParams(): void {
-    this.videoParams = {
-      playlist: this.youtubeId,
-      loop: this.isLoop,
-      mute: this.isMuted,
-      autoplay: this.isAutoplay,
-    };
+    this.mediaContentAnalytics.sendMediaAnalytics(VideoAnalyticsEvent.ERROR, this.subsiteName(), this.title());
   }
 }

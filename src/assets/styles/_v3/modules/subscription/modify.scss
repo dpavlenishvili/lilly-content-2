@@ -1,0 +1,87 @@
+@use "_v3/calc" as calc;
+$h: #{calc.$browse-trials} !default;
+$f-selector: calc.$filters-class !default;
+$db: lg !default;
+$init: (
+
+        offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+        )),
+        offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                #{$db}: var(--#{calc.$cb}space-300),
+        )),
+        lg-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                #{$db}: var(--#{calc.$cb}space-600),
+        )),
+        main-grid-cols: (media-query-up: (
+                xs: 1fr,
+                #{$db}: repeat(2, minmax(290px, 1fr)),
+        )),
+        head-font-size: (media-query-up: (
+                xs:  var(--#{calc.$cb}font-size-base),
+                #{$db}: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+  ::ng-deep {
+
+
+    .mat-mdc-checkbox {
+        --mdc-checkbox-unselected-icon-color: var(--#{calc.$color}neutral-base-060);
+    }
+
+    .cst__header{
+      font-size: var(--#{$h}head-font-size);
+      .block{
+        --#{calc.$cb}block-text-align: center;
+        ul {
+          display: inline-block;
+          text-align: start;
+          li {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .#{$f-selector} {
+      &__main {
+        display: grid;
+        grid-template-columns: var(--#{$h}main-grid-cols);
+        row-gap: var(--#{$h}offset-y);
+        column-gap: var(--#{$h}offset-x);
+        margin-bottom: var(--#{$h}offset-y);
+      }
+      &__second {
+        margin-bottom: var(--#{$h}lg-offset-y);
+      }
+      &__chips {
+        @include calc.make-row(var(--#{calc.$cb}space-150));
+        & > * {
+          @include calc.make-col-auto();
+        }
+        & > *:last-child {
+          margin-bottom: var(--#{$h}offset-y);
+        }
+      }
+      &__checkboxes {
+        margin-bottom: var(--#{$h}offset-y);
+        display: grid;
+        row-gap: var(--#{calc.$cb}space-100);
+      }
+      &__refs {
+        margin-bottom: var(--#{$h}lg-offset-y);
+      }
+      &__submit {
+        display: flex;
+        gap:var(--#{calc.$cb}space-200);
+      }
+
+
+    }
+  }
+}

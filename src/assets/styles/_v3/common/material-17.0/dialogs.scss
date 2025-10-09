@@ -1,6 +1,6 @@
  @use "_v3/calc" as calc;
 
- $md-dialog-cnt-btn-close-abs-offset: .5rem !default;
+ $md-dialog-cnt-btn-close-abs-offset: 2rem !default;
 
 .mat-mdc-dialog-panel {
   --mat-dialog-container-max-width: 95dvw;
@@ -13,23 +13,23 @@
   --mdc-dialog-subhead-weight: var(--#{calc.$cb}font-weight-bold);
   //--mdc-dialog-subhead-tracking: .001em;
   --mdc-dialog-supporting-text-color: #000000de;
-  --mdc-dialog-supporting-text-size: var(--#{calc.$cb}font-size-sm);
+  --mdc-dialog-supporting-text-size: var(--#{calc.$cb}font-size-base);
   --mdc-dialog-supporting-text-line-height: var(--#{calc.$cb}line-height-lg);
   //--mdc-dialog-container-elevation-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   --mdc-dialog-container-shadow-color: #000;
   --mdc-dialog-container-shape:  var(--#{calc.$md}dialog-radius);
   --mat-dialog-container-min-width: 0;
   --mat-dialog-actions-alignment: start;
-  --mat-dialog-actions-padding: var(--#{calc.$md}dialog-offset-y) var(--#{calc.$md}dialog-offset-x);
+  --mat-dialog-actions-padding: var(--#{calc.$md}dialog-offset-y) var(--#{calc.$md}dialog-offset-x) calc(var(--#{calc.$md}dialog-offset-y) * 2);
   --mat-dialog-content-padding: var(--#{calc.$md}dialog-offset-y) var(--#{calc.$md}dialog-offset-x) ;
-  --mat-dialog-with-actions-content-padding: var(--#{calc.$md}dialog-offset-y) var(--#{calc.$md}dialog-offset-x);
-  --mat-dialog-headline-padding: calc(var(--#{calc.$md}dialog-offset-y) *  0.8) var(--#{calc.$md}dialog-offset-x) calc(var(--#{calc.$md}dialog-offset-y) *  0.4);
+  --mat-dialog-with-actions-content-padding: 0 var(--#{calc.$md}dialog-offset-x) var(--#{calc.$md}dialog-offset-y);
+  --mat-dialog-headline-padding: var(--#{calc.$md}dialog-offset-y) var(--#{calc.$md}dialog-offset-x);
 
   .mat-mdc-dialog-actions {
     --#{calc.$cb}btn-base-font-weight: var(--#{calc.$cb}font-weight-normal);
 
     .row {
-      --#{calc.$cb}gutter-y: var(--#{calc.$cb}space-100);
+      --#{calc.$cb}gutter-y: var(--#{calc.$cb}space-200);
     }
   }
 }
@@ -37,9 +37,17 @@
 .md-dialog-header {
   padding: var(--mat-dialog-headline-padding);
 
+  .logo {
+    width: 6rem;
+    margin: auto auto var(--#{calc.$cb}space-400);
+  }
+
   .title {
+    font: var(--#{calc.$typography}h2-garamond-heading-font);
     font-size: var(--#{calc.$md}dialog-title-font-size);
-    margin: 0;
+    font-style: italic;
+    margin: 0 auto;
+    text-align: center;
   }
 
   button {
@@ -49,7 +57,7 @@
 
         .mat-icon {
           opacity: .51;
-          @include calc.square(calc(var(--#{calc.$md}mat-icon-button-size-sm) * .49));
+          @include calc.square((var(--#{calc.$md}mat-icon-button-size-sm)));
         }
 
         &:hover, &:focus, &:active {
@@ -68,13 +76,40 @@
   }
 }
 
+ .mat-mdc-dialog-container-with-actions .mat-mdc-dialog-content {
+  padding: 0;
+}
+
 .md-dialog-action-confirm {
   --min-width: 12rem;
-  @include calc.media-breakpoint-up(md) {
-    --min-width: 12rem;
+  @include calc.media-breakpoint-down(md) {
+    width: 100%
+  }
+
+  .mat-mdc-button-base {
+    @include calc.media-breakpoint-up(md) {
+      font-size: var(--#{calc.$cb}font-size-125);
+      padding: var(--#{calc.$cb}space-150) var(--#{calc.$cb}space-300);
+    }
   }
 
   button {
     min-width: var(--min-width);
+    @include calc.media-breakpoint-down(md) {
+      width: 100%;
+    }
   }
 }
+
+ .mat-mdc-dialog-actions {
+   @include calc.media-breakpoint-down(md) {
+     width: 100%
+   }
+
+   button {
+     min-width: 6rem;
+     @include calc.media-breakpoint-down(md) {
+       width: 100%;
+     }
+   }
+ }

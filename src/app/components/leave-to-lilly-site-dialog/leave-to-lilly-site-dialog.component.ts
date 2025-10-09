@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { LeavePopup } from '../../directives/leave-popup.directive';
 import { DIALOG_KEY } from '../../constants/translation-key';
 import { MatIcon } from '@angular/material/icon';
-import { MatDialogClose, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
-import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatDialogActions, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
+import { MatButton, MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'lilly-content-leave-to-lilly-site-dialog',

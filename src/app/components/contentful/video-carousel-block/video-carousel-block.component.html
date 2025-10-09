@@ -73,7 +73,6 @@
 
     @if (customCarousel() && filteredVideos().length > 1) {
       <div class="carousel-controls-wrapper">
-        <!-- Navigation Component -->
         <app-carousel-custom-nav
           [isPrevDisabled]="customCarousel()!.isPrevDisabled()"
           [isNextDisabled]="customCarousel()!.isNextDisabled()"
@@ -84,7 +83,6 @@
           (goToPageEmit)="customCarousel()!.goToPage($event)"
         />
 
-        <!-- View All Link -->
         @if (fields()?.viewAllButton?.fields) {
           <div class="carousel-view-all">
             <a class="carousel-view-all"

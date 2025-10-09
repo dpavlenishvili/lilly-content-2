@@ -1,10 +1,23 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostBinding, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostBinding,
+  inject,
+  Inject,
+  input,
+  OnInit,
+  signal,
+  viewChild
+} from '@angular/core';
 import { SpotifyService } from './spotify.service';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { MediaContentService } from '../media-content.service';
 import { AudioAnalyticsEvent } from '../audio-analytics-event.enum';
-import { Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lilly-spotify',
@@ -13,18 +26,22 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
-export class SpotifyComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input()
-  @HostBinding('style.background-color') backgroundColor = '#de3626';
+export class SpotifyComponent implements OnInit, AfterViewInit {
+  readonly backgroundColor = input<string>('#de3626');
 
-  @Input() private entryId: string;
-  @Input() private height = '152';
-  @Input() public title: string;
-  @Input() private subsiteName: string;
+  @HostBinding('style.background-color')
+  get backgroundColorStyle(): string {
+    return this.backgroundColor();
+  }
 
-  @ViewChild('spotifyPlayer') spotifyPlayer: ElementRef;
-  private currentAudioState: AudioAnalyticsEvent;
-  private _onDestroy = new Subject<void>();
+  readonly entryId = input<string>();
+  readonly height = input<string>('152');
+  readonly title = input<string>();
+  readonly subsiteName = input<string>();
+
+  readonly spotifyPlayer = viewChild<ElementRef>('spotifyPlayer');
+  private readonly currentAudioState = signal<AudioAnalyticsEvent | undefined>(undefined);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(@Inject(DOCUMENT) private document: Document,
               private spotifyService: SpotifyService,
@@ -41,33 +58,28 @@ export class SpotifyComponent implements OnInit, AfterViewInit, OnDestroy {
   private initSpotifyPlayer(): void {
     this.spotifyService.spotifyIframeApi$.pipe(
       filter(api => !!api),
-      takeUntil(this._onDestroy)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(api => {
       const options = {
-        uri: `spotify:episode:${this.entryId}`,
-        height: this.height,
+        uri: `spotify:episode:${this.entryId()}`,
+        height: this.height(),
       };
       const callback = EmbedController => {
         EmbedController.addListener('playback_update', eventData => {
           const currentState = eventData.data.isPaused ? AudioAnalyticsEvent.Pause : AudioAnalyticsEvent.Play;
 
-          if (currentState !== this.currentAudioState) {
-            this.currentAudioState = currentState;
-            this.mediaContentAnalytics.sendMediaAnalytics(currentState, this.subsiteName, this.title);
+          if (currentState !== this.currentAudioState()) {
+            this.currentAudioState.set(currentState);
+            this.mediaContentAnalytics.sendMediaAnalytics(currentState, this.subsiteName(), this.title());
           }
         });
       };
 
       try {
-        api.createController(this.spotifyPlayer.nativeElement, options, callback);
+        api.createController(this.spotifyPlayer()?.nativeElement, options, callback);
       } catch (e) {
-        this.mediaContentAnalytics.sendMediaAnalytics(AudioAnalyticsEvent.Error, this.subsiteName, this.title);
+        this.mediaContentAnalytics.sendMediaAnalytics(AudioAnalyticsEvent.Error, this.subsiteName(), this.title());
       }
     });
-  }
-
-  public ngOnDestroy(): void {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 }

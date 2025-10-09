@@ -1,0 +1,95 @@
+@use "_v3/calc" as calc;
+
+$h: '' !default;
+$init: (
+        form-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                sm: var(--#{calc.$cb}space-250),
+                md: var(--#{calc.$cb}space-400),
+                lg: var(--#{calc.$cb}space-500),
+                xl: var(--#{calc.$cb}space-600),
+        )),
+        form-offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                sm: var(--#{calc.$cb}space-250),
+                md: var(--#{calc.$cb}space-400),
+                lg: var(--#{calc.$cb}space-900),
+                xl: var(--#{calc.$cb}space-1200),
+        )),
+        form-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-4),
+                md: var(--#{calc.$cb}radius-5),
+                lg: var(--#{calc.$cb}radius-8),
+        )),
+        form-grid-template-columns: (media-query-up: (
+                xs: 1fr,
+                lg: 1fr auto,
+        )),
+        font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                sm: var(--#{calc.$cb}font-size-125),
+                md: var(--#{calc.$cb}font-size-150),
+                xl: var(--#{calc.$cb}font-size-175),
+        )),
+        sub-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-sm),
+                md: var(--#{calc.$cb}font-size-125),
+        )),
+) !default;
+
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .cst.cst--quest-intro {
+      .cst__header {
+        .title {
+          --#{calc.$cb}cst-title-align: start;
+        }
+
+      }
+    }
+
+
+    .block {
+      &__form {
+        background-color: var(--#{calc.$color}palette-red-005);
+        padding: var(--#{$h}form-offset-y) var(--#{$h}form-offset-x);
+        border-radius: var(--#{$h}form-radius);
+        .cb-main-filters {
+          display: grid;
+          grid-template-columns: var(--#{$h}form-grid-template-columns);
+          column-gap: var(--#{calc.$cb}space-300);
+          row-gap: var(--#{calc.$cb}space-300);
+        }
+
+        .block__title h6 {
+          font-size: var(--#{$h}font-size);
+        }
+      }
+
+      &__text:not(.is-sub-text) {
+        font-size: var(--#{$h}font-size);
+      }
+
+      &__text.is-sub-text {
+        font-size: var(--#{$h}sub-text-font-size);
+        color: var(--#{calc.$color}neutral-base-080);
+        text-align: center;
+      }
+
+    }
+
+    button.mat-mdc-unelevated-button.mb-button-main {
+      @include calc.md-form-row-group-adjust-button();
+    }
+
+    li {
+      margin-bottom: var(--#{calc.$cb}space-100);
+
+      &:first-of-type {
+        margin-top: var(--#{calc.$cb}space-100);
+      }
+    }
+  }
+}

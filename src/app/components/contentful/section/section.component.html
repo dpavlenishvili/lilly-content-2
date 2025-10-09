@@ -1,4 +1,8 @@
-<cst-wrapper [id]="section()?.fields?.sectionId" [showHeaderContent]="showTitle()">
+<cst-wrapper [id]="section()?.fields?.sectionId"
+             [showHeaderContent]="showTitle()"
+             [containerClass]="'container'"
+             [ngClass]="{'cst--without-title': !showTitle}"
+>
   <ng-container cst-title>
     {{ section()?.fields?.title }}
   </ng-container>
@@ -7,22 +11,40 @@
   </ng-container>
 
   <div class="widget-container">
-    @for (widget of section()?.fields?.widgets; track widget.sys.id) {
-      @switch (widget?.sys?.contentType?.sys?.id) {
-        @case ('imageTileWidget') {
-          <lilly-content-image-tile-widget [imageTileWidgetFields]="widget?.fields"></lilly-content-image-tile-widget>
-        }
-        @case ('accordionWidget') {
-          <lilly-content-accordion-widget [accordionWidgetFields]="widget?.fields">
-          </lilly-content-accordion-widget>
-        }
-        @case ('textWidget') {
-          <lilly-text-widget [textWidgetFields]="widget?.fields"></lilly-text-widget>
-        }
-        @case ('modulesNavigationBar') {
-          <lilly-content-modules-navigation-bar [modulesNavigationBarFields]="widget?.fields"></lilly-content-modules-navigation-bar>
-        }
-      }
+    @if (section()?.fields?.sectionType === 'resources') {
+      <container-wrapper>
+        <div class="widgets--resources">
+          <ng-container *ngTemplateOutlet="widgetsT"></ng-container>
+        </div>
+      </container-wrapper>
+    } @else {
+      <ng-container *ngTemplateOutlet="widgetsT"></ng-container>
     }
+
   </div>
 </cst-wrapper>
+
+<ng-template #widgetsT>
+  @for (widget of section()?.fields?.widgets; track widget.sys.id) {
+    @switch (widget?.sys?.contentType?.sys?.id) {
+      @case ('imageTileWidget') {
+        <lilly-content-image-tile-widget class="widget--image-tile"
+                                         [imageTileWidgetFields]="widget?.fields"></lilly-content-image-tile-widget>
+      }
+      @case ('accordionWidget') {
+        <lilly-content-accordion-widget class="widget--accordion" [accordionWidgetFields]="widget?.fields">
+        </lilly-content-accordion-widget>
+      }
+      @case ('textWidget') {
+        <lilly-text-widget class="widget--text" [textWidgetFields]="widget?.fields"></lilly-text-widget>
+      }
+      @case ('modulesNavigationBar') {
+        <lilly-content-modules-navigation-bar class="widget--navbar"
+                                              [modulesNavigationBarFields]="widget?.fields"></lilly-content-modules-navigation-bar>
+      }
+      @case ('resourcesWidget') {
+        <lilly-content-resources-widget [resourcesWidgetFields]="widget?.fields"></lilly-content-resources-widget>
+      }
+    }
+  }
+</ng-template>

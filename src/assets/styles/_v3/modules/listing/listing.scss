@@ -1,5 +1,5 @@
 @use "_v3/calc" as calc;
-@use "./prop-status" as status;
+//@use "./prop-status" as status;
 
 $h: #{calc.$browse-trials} !default;
 $fc: cb-filter-gridR !default;
@@ -96,7 +96,7 @@ $init: (
         ),
         clear-btn-offset-y: (
                 media-query-up: (
-                        xs: var(--#{calc.$cb}space-300),
+                        xs: var(--#{calc.$cb}space-200),
                         sm: 0,
                 )
         ),
@@ -105,7 +105,8 @@ $init: (
                         xs: column,
                         sm: row,
                 )
-        ), results-only-width: (
+        ),
+        results-only-width: (
                 media-query-up: (
                         xs: 100%,
                         xl: 58rem,
@@ -117,12 +118,26 @@ $init: (
                         md: calc(var(--#{calc.$cb}font-size-base) * 3.75),
                 )
         ),
+        count-info-font-size: (
+                media-query-up: (
+                        xs: var(--#{calc.$cb}font-size-base),
+                        md: var(--#{calc.$cb}font-size-lg),
+                )
+        ),
+        filters-label-space: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                md: var(--#{calc.$cb}space-300),
+        )),
   // hero
         hero-content-template-areas: (media-query-up: (
                 xs: ' "#{calc.templateRow((4, "b"))}" ',
                 md: ' "#{calc.templateRow((8, "b"))}" ',
                 lg: ' "#{calc.templateRow((10, "b"))}" ',
                 xl: ' "#{calc.templateRow((7, "b" ))}" ',
+        )),
+        subtitle-space: (media-query-up: (
+                xs: 0,
+                md: var(--#{calc.$cb}space-50),
         )),
 ) !default;
 
@@ -152,8 +167,16 @@ $init: (
         }
       }
 
+      .subtitle-space {
+        margin-left: var(--#{$h}subtitle-space);
+      }
+
       &__text {
         font-size: var(--#{calc.$cb}font-size-lg);
+
+        &.content p {
+          margin-bottom: 0;
+        }
       }
     }
   }
@@ -161,6 +184,16 @@ $init: (
   .cst.cst--listing {
     .cst__header {
       margin-bottom: 0;
+
+
+    }
+    .cst-header__links {
+      @include calc.make-row(var(--#{calc.$cb}space-300));
+      row-gap: 0;
+      justify-content: center;
+      > * {
+        @include calc.make-col-auto();
+      }
     }
 
 
@@ -168,6 +201,10 @@ $init: (
       .browse-filters__main {
         margin-bottom: 0;
       }
+    }
+
+    .browse-filters__main .filters-label {
+      margin-bottom: var(--#{$h}filters-label-space);
     }
   }
 
@@ -247,36 +284,14 @@ $init: (
     }
 
     &__info {
-      font-size: var(--#{calc.$cb}font-size-lg);
+      font-size: var(--#{$h}count-info-font-size);
       font-weight: var(--#{calc.$cb}font-weight-middle);
     }
   }
 
 
   .trials-results-wrap {
-    .md-card-result {
-      padding-bottom: var(--#{$h}card-offset-y);
-      border-bottom: 1px solid var(--#{calc.$cb}divider);
-
-    }
-
-    & > * {
-      display: block;
-
-      &:not(:nth-child(1)):not(:nth-child(2)):not(.cb-filter-counts):not(&#alertme-banner), &:not(&#alertme-banner) {
-        margin-top: var(--#{$h}card-offset-y);
-
-
-      }
-
-      &#alertme-banner {
-      }
-
-      .md-card-promo, .md-card-promo-strip, .add__more_trials {
-        margin: var(--#{$h}lg-offset-y) 0;
-      }
-
-    }
+    @include calc.trials-cards();
   }
 
   .md-card-no-results {
@@ -340,7 +355,7 @@ $init: (
         flex-direction: var(--#{$h}filters-panel-direction);
 
         .md-btn-clear {
-          margin: 0 var(--#{$h}clear-btn-offset-x) var(--#{$h}clear-btn-offset-y);
+          margin: var(--#{$h}clear-btn-offset-y) var(--#{$h}clear-btn-offset-x) var(--#{$h}clear-btn-offset-y);
         }
 
         .mat-expansion-panel-header-title {
@@ -356,8 +371,6 @@ $init: (
         --mat-expansion-header-expanded-state-height: auto;
 
         &.mat-expanded {
-
-
           .mat-expansion-indicator {
             align-self: flex-start;
             position: relative;
@@ -371,23 +384,4 @@ $init: (
       }
     }
   }
-
-  //card
-  //.mat-mdc-card {
-  //  &.md-card-promo-strip {
-  //    @include calc.md-card-promo-strip();
-  //  }
-  //}
-
-  //.md-card-content {
-  //  .desktop {
-  //    display: var(--#{$h}card-desktop);
-  //  }
-  //
-  //  .mobile {
-  //    display: var(--#{$h}card-mobile);
-  //  }
-  //}
-
-
 }

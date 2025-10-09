@@ -67,7 +67,7 @@ $grid-columns: (media-query-up: (
         lg: $grid-desk-columns,
 )) !default;
 
-$wrap-max-width: 100% !default;
+$wrap-max-width: 100%!default;
 
 // z-index
 $cookie-banner-z-index: 999 !default;
@@ -89,7 +89,8 @@ $main-promo-offset-y: (
 
 //type
 $font-family-body: "Ringside Sans", Ringside, "Lato", -apple-system, Arial, sans-serif !default;
-$font-sans-extra-wide: "Ringside Sans Extra Wide", "Ringside Extra Wide", sans-serif !default;
+$font-sans-narrow: "Ringside Sans Narrow", "Ringside Sans", Ringside, "Lato" , sans-serif !default;
+$font-sans-extra-wide: "Ringside Sans Extra Wide",  sans-serif !default;
 $font-serif: "ITC Garamond Std", "ITC Garamond Std", Garamond, garamond, serif !default;
 $font-family-head-embedded: $font-family-body !default;
 
@@ -118,6 +119,7 @@ $font-size: (
         150: $font-size-base * 1.50,
         175: $font-size-base * 1.75,
         225: $font-size-base * 2.25,
+        350: $font-size-base * 3.5,
         xs: $small-font-size,
 ) !default;
 
@@ -134,16 +136,15 @@ $text-display-1: (media-query-up: (
 
 $h2: (
         media-query-up: (
-                xs: 2rem,
-                lg: 3.5rem,
-                xl: 3.75rem,
+                xs: 2.5rem,
+                xl: 3rem,
         )
 ) !default;
 
 $h3: (
         media-query-up: (
-                xs: 1.5rem,
-                lg: 2rem
+                xs: 2rem,
+                lg: 2.25rem
         )
 ) !default;
 
@@ -151,6 +152,13 @@ $h4: (
         media-query-up: (
                 xs: $font-size-base * 1.25,
                 lg: $font-size-base * 1.75
+        )
+) !default;
+
+$h6: (
+        media-query-up: (
+                xs: $font-size-base * 1.25,
+                lg: $font-size-base * 1.5
         )
 ) !default;
 
@@ -239,12 +247,18 @@ $card-border-radius: (media-query-up: (
 // dialog
 $dialog-radius: (
         media-query-up: (
-                xs: .5rem,
-                sm: 1rem
+                xs: 1.5rem,
+                lg: 3rem
         )
 ) !default;
 
-$dialog-confirm-max-width: 35rem !default;
+$dialog-confirm-max-width: (
+        media-query-up: (
+                xs: 92vw,
+                lg: 75vw,
+        )
+) !default;
+
 $dialog-confirm-max-width-lg: 55rem !default;
 
 $form-label: (
@@ -298,6 +312,7 @@ $main-to-css: (
         index: $index,
         font-family-head: $font-family-head,
         font-family-serif: $font-serif,
+        font-sans-narrow: $font-sans-narrow,
         font-sans-extra-wide: $font-sans-extra-wide,
         font-size: $font-size,
         h1: $h1,
@@ -305,6 +320,7 @@ $main-to-css: (
         h3: $h3,
         h4: $h4,
         h5: $h5,
+        h6: $h6,
         display-1: $display-1,
         display-2: $display-2,
         display-3: $display-3,
@@ -406,11 +422,11 @@ $main-to-css: (
   // query media
         show-desktop-only: (media-query-up: (
                 xs: none,
-                xl: block,
+                lg: block,
         )),
         show-mobile-only: (media-query-up: (
                 xs: block,
-                xl: none,
+                lg: none,
         )),
   //nav arrow
         nav-arrow-bg-color: $nav-arrow-bg-color,

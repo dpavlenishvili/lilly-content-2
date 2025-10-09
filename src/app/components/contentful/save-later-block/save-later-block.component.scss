@@ -1,0 +1,47 @@
+@use '_v3/calc' as calc;
+
+:host {
+  display: block;
+}
+
+:host ::ng-deep {
+  .cst {
+    text-align: center;
+  }
+
+  .block__title {
+    text-align: center;
+    p {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--#{calc.$cb}space-200);
+    }
+    .h2-garamond-heading {
+      margin: 0 auto var(--#{calc.$cb}space-400);
+      max-width: 48rem;
+    }
+  }
+
+  .block__action {
+    display: flex;
+    justify-content: center;
+    gap: var(--#{calc.$cb}space-200);
+    margin-top: var(--#{calc.$cb}space-400);
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--#{calc.$cb}space-500);
+    margin-top: var(--#{calc.$cb}space-600);
+  }
+
+  .option {
+    display: grid;
+    justify-items: start;
+    text-align: left;
+    gap: var(--#{calc.$cb}space-200);
+  }
+}
+
+

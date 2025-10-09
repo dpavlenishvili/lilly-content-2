@@ -4,6 +4,9 @@ import { MD_TO_HTML_PIPE_STRONG_CLASS, MdToHtmlPipe } from '../../../pipes/md-to
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 import { NgClass } from '@angular/common';
 import { ImageTileWidgetComponent } from '../image-tile-widget/image-tile-widget.component';
+import {
+  ContainerWrapperComponent
+} from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
 
 @Component({
   selector: 'lilly-content-accordion-widget',
@@ -16,7 +19,8 @@ import { ImageTileWidgetComponent } from '../image-tile-widget/image-tile-widget
     MatExpansionPanelTitle,
     MatExpansionPanelHeader,
     ImageTileWidgetComponent,
-    MdToHtmlPipe
+    MdToHtmlPipe,
+    ContainerWrapperComponent
   ],
   standalone: true
 })

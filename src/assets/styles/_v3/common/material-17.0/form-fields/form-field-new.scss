@@ -77,8 +77,8 @@ $selector: calc.$mdf-selector !default;
 
 
     input, .mat-mdc-select-value-text {
-      font-weight: var(--#{$h}value-weight);
-      color: var(--#{calc.$color}neutral-base-060);
+      font-weight: var(--#{calc.$cb}font-weight-light);
+      color: var(--#{$h}active-fg);
     }
 
 
@@ -252,21 +252,25 @@ $selector: calc.$mdf-selector !default;
 
   .cb-main-filters #{$selector}, #{$selector}.is-lg {
     @include calc.form-field-mixins-ff-size($h: calc.$mdf);
-    //@include calc.form-field-mixins-ff-serif-typography($h: calc.$mdf);
+    .label--external {
+      --margin-bottom: var(--#{calc.$cb}space-200);
+    }
   }
 
 
   .label--external {
+    --margin-bottom: var(--#{calc.$cb}space-100);
     display: block;
     color: var(--#{calc.$color}neutral-base-060);
     font-weight: var(--#{calc.$cb}font-weight-normal);
     font-size: var(--#{calc.$cb}font-size-sm);
-    margin: 0 0 var(--#{calc.$cb}space-200);
+    margin: 0 0 var(--margin-bottom);
     font-feature-settings: 'ss02' on;
     text-align: start;
   }
-  .mat-mdc-form-field-hint {
-    font-size: var(--#{calc.$cb}font-size-xs);
+  .mat-mdc-form-field-hint, .mat-mdc-form-field-error {
+    font-size: var(--#{calc.$cb}font-size-sm);
+    text-align: start !important;
   }
 
 
@@ -280,6 +284,10 @@ $selector: calc.$mdf-selector !default;
           ));
         }
       }
+    }
+
+    .label--external {
+      color: var(--#{calc.$color}neutral-base-000);
     }
   }
 

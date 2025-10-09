@@ -130,13 +130,13 @@ $init: (
     gap: var(--cb-space-400);
 
     @include calc.media-breakpoint-up(lg) {
-      display: none; // Hidden on desktop
+      display: none;
     }
   }
 
   .carousel-view-all {
     &__link {
-      white-space: nowrap; // Prevents wrapping
+      white-space: nowrap;
     }
   }
 

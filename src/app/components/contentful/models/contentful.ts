@@ -10,7 +10,7 @@ export interface IAccordionWidgetFields {
   title?: string | undefined;
 
   /** Content */
-  content?: IImageTileWidget[] | undefined;
+  content?: (IImageTileWidget | ITextWidget)[] | undefined;
 
   /** Body */
   body?: string | undefined;
@@ -67,6 +67,58 @@ export interface IArticle extends Entry<IArticleFields> {
     contentType: {
       sys: {
         id: 'article';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IArticlePageFields {
+  /** Title */
+  title: string;
+
+  /** Publish Date */
+  publishDate: string;
+
+  /** Author */
+  author: string;
+
+  /** Category Tag */
+  categoryTag: Entry<{ [fieldId: string]: unknown }>[];
+
+  /** Hero Image */
+  heroImage: Asset;
+
+  /** Alt Text */
+  altText?: string | undefined;
+
+  /** Body */
+  body: string;
+
+  /** FAQ */
+  faq: IAccordionWidget[];
+
+  /** Feedback */
+  feedback?: IFeedback | undefined;
+
+  /** References */
+  references: ITextWidget;
+
+  /** Key */
+  key: string;
+}
+
+export interface IArticlePage extends Entry<IArticlePageFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'articlePage';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -151,7 +203,7 @@ export interface IButtonFields {
   text: string;
 
   /** Link */
-  link: string;
+  link?: string | undefined;
 
   /** Link Behavior */
   linkBehavior?:
@@ -160,6 +212,12 @@ export interface IButtonFields {
     | 'interstitial'
     | 'interstitialCollaboration'
     | undefined;
+
+  /** Icon */
+  icon?: Asset | undefined;
+
+  /** Icon Alt */
+  iconAlt?: string | undefined;
 }
 
 /** Button with text, link and link behavior */
@@ -211,6 +269,28 @@ export interface ICard extends Entry<ICardFields> {
   };
 }
 
+export interface ICategoryTagFields {
+  /** Name */
+  name: 'short-form' | 'recipe' | 'pricing';
+}
+
+export interface ICategoryTag extends Entry<ICategoryTagFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'categoryTag';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IDayProgramFields {
   /** Tab Name */
   tabName: string;
@@ -235,6 +315,9 @@ export interface IDayProgramFields {
 
   /** Benefits Block */
   benefitsBlock: IBenefitsBlock;
+
+  /** File */
+  file?: Asset | undefined;
 }
 
 /** includes content per day */
@@ -249,6 +332,31 @@ export interface IDayProgram extends Entry<IDayProgramFields> {
     contentType: {
       sys: {
         id: 'dayProgram';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IFeedbackFields {
+  /** Title */
+  title: string;
+
+  /** Action */
+  action: IButton[];
+}
+
+export interface IFeedback extends Entry<IFeedbackFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'feedback';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -356,6 +464,9 @@ export interface IHeroSection extends Entry<IHeroSectionFields> {
 }
 
 export interface IHomePageFields {
+  /** Page Name */
+  pageName: string;
+
   /** Entry Name */
   entryName: string;
 
@@ -692,7 +803,7 @@ export interface IModuleFields {
   videoCarouselBlock?: IVideoCarouselBlock | undefined;
 
   /** Articles Block */
-  articlesBlock: Entry<{ [fieldId: string]: unknown }>;
+  articlesBlock?: Entry<{ [fieldId: string]: unknown }> | undefined;
 }
 
 /** Content displayed for each module */
@@ -744,6 +855,9 @@ export interface IModulesNavigationBar
 }
 
 export interface IModulesPageFields {
+  /** Page Name */
+  pageName: string;
+
   /** Entry Name */
   entryName: string;
 
@@ -815,6 +929,31 @@ export interface IOption extends Entry<IOptionFields> {
   };
 }
 
+export interface IResourcesWidgetFields {
+  /** Title */
+  title: string;
+
+  /** Body */
+  body: string;
+}
+
+export interface IResourcesWidget extends Entry<IResourcesWidgetFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'resourcesWidget';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface ISaveLaterBlockFields {
   /** Heading */
   heading: string;
@@ -852,6 +991,14 @@ export interface ISectionFields {
   /** Title */
   title?: string | undefined;
 
+  /** Section Type */
+  sectionType:
+    | 'introduction'
+    | 'behavior-list'
+    | 'program'
+    | 'resources'
+    | 'support';
+
   /** Label */
   label?: string | undefined;
 
@@ -864,6 +1011,7 @@ export interface ISectionFields {
     | ITextWidget
     | IAccordionWidget
     | IModulesNavigationBar
+    | IResourcesWidget
   )[];
 
   /** Hide Title */
@@ -929,6 +1077,12 @@ export interface IVideoCardFields {
   /** Title */
   title: string;
 
+  /** Title Icon */
+  icon?: Asset | undefined;
+
+  /** Title Icon Alt */
+  iconAlt?: string | undefined;
+
   /** Category Label */
   categoryLabel: string;
 
@@ -937,9 +1091,6 @@ export interface IVideoCardFields {
 
   /** Video */
   video?: IVideoMediaConfig | undefined;
-
-  /** Icon */
-  icon?: Asset | undefined;
 
   /** Filter Tag */
   filterTag: 'all' | 'short-form' | 'recipe' | 'food-reset';
@@ -1125,11 +1276,14 @@ export interface IWeekPlannerNavigation
 export type CONTENT_TYPE =
   | 'accordionWidget'
   | 'article'
+  | 'articlePage'
   | 'articlesBlock'
   | 'benefitsBlock'
   | 'button'
   | 'card'
+  | 'categoryTag'
   | 'dayProgram'
+  | 'feedback'
   | 'footer'
   | 'heroSection'
   | 'homePage'
@@ -1145,6 +1299,7 @@ export type CONTENT_TYPE =
   | 'modulesNavigationBar'
   | 'modulesPage'
   | 'option'
+  | 'resourcesWidget'
   | 'saveLaterBlock'
   | 'section'
   | 'textWidget'
@@ -1157,11 +1312,14 @@ export type CONTENT_TYPE =
 export type IEntry =
   | IAccordionWidget
   | IArticle
+  | IArticlePage
   | IArticlesBlock
   | IBenefitsBlock
   | IButton
   | ICard
+  | ICategoryTag
   | IDayProgram
+  | IFeedback
   | IFooter
   | IHeroSection
   | IHomePage
@@ -1177,6 +1335,7 @@ export type IEntry =
   | IModulesNavigationBar
   | IModulesPage
   | IOption
+  | IResourcesWidget
   | ISaveLaterBlock
   | ISection
   | ITextWidget

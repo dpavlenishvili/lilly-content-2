@@ -2,18 +2,21 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
+  DestroyRef,
   ElementRef,
+  inject,
   Inject,
-  Input,
+  input,
   OnDestroy,
   OnInit
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { KalturaService } from './kaltura.service';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { VideoAnalyticsEvent } from '../video-analytics-event.enum';
 import { MediaContentService } from '../media-content.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 declare const window;
 
@@ -41,28 +44,22 @@ interface IKalturaPlayer {
 export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly playerId = `kalturaPlayer${this.randomId}`;
 
-  @Input() private entryId: string;
-  @Input() private partnerId: string = KALTURA_CONFIG.PARTNER_ID;
-  @Input() private isAutoplay = false;
-  @Input() private isMuted = true;
-  @Input() private isLoop = true;
-  @Input() public title: string;
-  @Input() private subsiteName: string;
+  readonly entryId = input.required<string>();
+  readonly partnerId = input<string>(KALTURA_CONFIG.PARTNER_ID);
+  readonly isAutoplay = input<boolean>(false);
+  readonly isMuted = input<boolean>(true);
+  readonly isLoop = input<boolean>(true);
+  readonly title = input.required<string>();
+  readonly subsiteName = input.required<string>();
+  readonly uiConfigIdInput = input<string>('', { alias: 'uiConfigId' });
 
-  @Input()
-  set uiConfigId(value: string) {
-    if (!value) return;
+  readonly uiConfigId = computed(() => {
+    const value = this.uiConfigIdInput();
+    return value || KALTURA_CONFIG.UI_CONFIG_ID;
+  });
 
-    this._uiConfigId = value;
-  }
-
-  get uiConfigId() {
-    return this._uiConfigId;
-  }
-
-  private _uiConfigId = KALTURA_CONFIG.UI_CONFIG_ID;
-  private _onDestroy = new Subject<void>();
   private protectedElements = new WeakSet<HTMLElement>();
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(@Inject(DOCUMENT) private document: Document,
               private kalturaService: KalturaService,
@@ -71,30 +68,30 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.kalturaService.loadKalturaScript(this.partnerId, this.uiConfigId);
+    this.kalturaService.loadKalturaScript(this.partnerId(), this.uiConfigId());
   }
 
   public ngAfterViewInit(): void {
-    if (!this.entryId) {
+    if (!this.entryId()) {
       return;
     }
 
     this.kalturaService.kalturaScriptLoaded$.pipe(
       filter((isLoaded: boolean) => isLoaded),
-      takeUntil(this._onDestroy)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       window?.kWidget?.embed({
         targetId: this.playerId,
-        wid: `_${this.partnerId}`,
-        uiconf_id: this.uiConfigId,
+        wid: `_${this.partnerId()}`,
+        uiconf_id: this.uiConfigId(),
         flashvars: {
-          autoPlay: this.isAutoplay,
-          mobileAutoPlay: this.isAutoplay,
-          loop: this.isLoop,
+          autoPlay: this.isAutoplay(),
+          mobileAutoPlay: this.isAutoplay(),
+          loop: this.isLoop(),
           'EmbedPlayer.WebKitPlaysInline': true,
           ...this.muteConfiguration
         },
-        entry_id: this.entryId,
+        entry_id: this.entryId(),
         readyCallback: this.addEventHandler.bind(this)
       });
     });
@@ -102,12 +99,10 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     window?.kWidget?.destroy(this.playerId);
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   private get muteConfiguration() {
-    return this.isMuted ? {} : {
+    return this.isMuted() ? {} : {
       autoMute: false,
       'unMuteOverlayButton.plugin': false,
     };
@@ -121,7 +116,7 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     player.addJsListener('mediaError', () => {
-      this.mediaContentAnalytics.sendMediaAnalytics(VideoAnalyticsEvent.ERROR, this.subsiteName, this.title);
+      this.mediaContentAnalytics.sendMediaAnalytics(VideoAnalyticsEvent.ERROR, this.subsiteName(), this.title());
     });
 
     player.addJsListener('playerReady', () => {
@@ -165,6 +160,7 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
   private protectElement(element: HTMLElement): void {
     if (this.protectedElements.has(element)) return;
 
+    // Override the native setAttribute method to normalize 'aria-valuenow'
     const original = element.setAttribute.bind(element);
     const normalize = this.normalizeAriaFromPercent.bind(this);
 
@@ -196,7 +192,7 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
     const analysedState = VIDEO_STATE[videoState];
 
     if (analysedState) {
-      this.mediaContentAnalytics.sendMediaAnalytics(analysedState, this.subsiteName, this.title);
+      this.mediaContentAnalytics.sendMediaAnalytics(analysedState, this.subsiteName(), this.title());
     }
   }
 

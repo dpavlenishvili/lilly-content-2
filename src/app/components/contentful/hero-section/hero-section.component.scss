@@ -1,41 +1,40 @@
 @use '_v3/calc' as calc;
-@use '_v3/modules/layouts/cst-calc' as intro;
 
-@include intro.cst-configure(
-        $class-name: #{calc.$cst--intro-class},
-        $h: #{calc.$cst--intro-prefix},
-        $block-text-font-size: (media-query-up: (
-                xs: var(--#{calc.$cb}font-size-base),
-                md: var(--#{calc.$cb}font-size-lg),
-        )),
+$init: (
+  btn-scrolll-display: (media-query-up: (
+    xs: none,
+    lg: inline-flex,
+  )),
 );
-:host ::ng-deep {
-  .#{calc.$cst--intro-class} {
-    @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (min-height: map-get(calc.$height-breakpoints, xl)) {
-      --#{calc.$cst--intro-prefix}min-height: 44.25rem;
-    }
-    @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (min-height: map-get(calc.$height-breakpoints, xxl)) {
-      --#{calc.$cst--intro-prefix}min-height: 56.25rem;
-    }
 
+$h: '' !default;
+:host {
+  @include calc.css-initVars($init, $h);
 
-    .cb-filter-gridR {
-      display: grid;
-      gap: var(--#{calc.$cb}block-offset-sm-y);
+  ::ng-deep {
+    #{calc.$btn-selector} {
+      &.btn--scroll {
+        display: var(--#{$h}btn-scrolll-display);
+
+        .mdc-button__label {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          gap: 0.75rem;
+          font: 900 0.75rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide);
+          text-transform: uppercase;
+
+          > * {
+            margin: 0;
+          }
+
+          .mat-icon {
+            @include calc.square(1.75rem);
+          }
+        }
+      }
     }
-
   }
-
-
 }
 
-.scroll-down {
-  display: flex;
-  justify-content: start;
-  z-index: 1;
-  color: white;
-
-  .arrow-down {
-    rotate: 180deg;
-  }
-}

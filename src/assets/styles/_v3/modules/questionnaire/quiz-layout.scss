@@ -1,0 +1,244 @@
+@use "_v3/calc" as calc;
+@use "./quiz-controls" as conterl;
+
+$h: #{calc.$quiz} !default;
+$init: (
+        title-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-125),
+                md: var(--#{calc.$cb}h3),
+        )),
+        title-line-height: (media-query-up: (
+                xs: var(--#{calc.$cb}line-height-sm),
+        )),
+        title-align: (media-query-up: (
+                xs: start,
+          //sm: center,
+        )),
+        subtitle-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+        card-max-width: (media-query-up: (
+                xs: 100%,
+                lg: 54rem,
+                xl: 54rem,
+        )),
+        card-min-height: (media-query-up: (
+                xs: 50dvh,
+                sm: 40dvh,
+                lg: 45dvh,
+        )),
+        card-offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-500),
+                lg: var(--#{calc.$cb}space-700),
+        )),
+        card-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                lg: var(--#{calc.$cb}space-700),
+        )),
+        card-footer-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                lg: var(--#{calc.$cb}space-300),
+        )),
+        card-footer-btn-text-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-125),
+        )),
+        bg-rgb-clr: var(--#{calc.$cb}body-bg-clr-rgb),
+        block-active-bg-value-1: (media-query-up: (
+                xs: 1,
+        )),
+        block-active-bg-value-2: (media-query-up: (
+                xs: 0.3,
+                md: 0.4,
+        )),
+        quiz--counter-font: (media-query-up: (
+                xs: '900 0.75rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+                lg: '900 0.875rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+        )),
+        answer-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-lg),
+                xl: var(--#{calc.$cb}font-size-125),
+        )),
+        quiz-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-lg),
+                lg: var(--#{calc.$cb}font-size-125),
+                xl: var(--#{calc.$cb}font-size-150),
+        )),
+  //questionnaire grid
+        quest-grid-template-areas: (media-query-up: (
+                xs: '"h" "b" "v"',
+                md: '"h b" "v b"',
+        )),
+        quest-grid-template-columns: (media-query-up: (
+                xs: 1fr,
+                md: minmax(200px, 30.5rem) minmax(200px, 27.5rem),
+        )),
+        quest-grid-template-rows: (media-query-up: (
+                 xs: auto  auto 1fr,
+                 md: auto 1fr,
+        )),
+        //quiz grid
+        grid-template-areas: (media-query-up: (
+                xs: '"h" "b" "a"',
+                md: '"h b" "a b"',
+        )),
+        grid-template-columns: (media-query-up: (
+                xs: 1fr,
+                md: minmax(200px, 30.5rem) minmax(200px, 27.5rem),
+        )),
+        grid-template-rows: (media-query-up: (
+                xs: auto 1fr min-content,
+                md: auto 1fr,
+        )),
+        title-text-align: (media-query-up: (
+                xs: start,
+                md: center,
+        )),
+) !default;
+
+
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .cst.cst--quiz {
+
+      .card-questionnaire-in > * {
+        display: grid;
+
+        justify-content: space-between;
+        min-height: var(--#{$h}card-min-height);
+        column-gap: var(--#{$h}card-offset-x);
+        row-gap: var(--#{$h}card-offset-y);
+        grid-template-areas: var(--#{$h}grid-template-areas);
+        grid-template-columns: var(--#{$h}grid-template-columns);
+        grid-template-rows: var(--#{$h}grid-template-rows);
+      }
+    }
+    .cst.cst--questionnaire {
+        .card-questionnaire-in .question-wrapper {
+          display: grid;
+          justify-content: space-between;
+          min-height: var(--#{$h}card-min-height);
+          column-gap: var(--#{$h}card-offset-x);
+          row-gap: var(--#{$h}card-offset-y);
+          grid-template-areas: var(--#{$h}quest-grid-template-areas);
+          grid-template-columns: var(--#{$h}quest-grid-template-columns);
+          grid-template-rows: var(--#{$h}quest-grid-template-rows);
+
+          .card-validation {
+            grid-area: v;
+          }
+        }
+    }
+
+    .title--quest {
+      font-size: calc(var(--#{calc.$cb}font-size-base) * 3);
+      text-align: var(--#{$h}title-text-align);
+    }
+
+    .quiz--counter {
+      display: flex;
+      align-items: center;
+
+      font: var(--#{$h}quiz--counter-font);
+
+
+    }
+
+    .card-questionnaire {
+      //max-width: var(--#{$h}card-max-width);
+      //margin: 0 auto;
+      padding: 0;
+      border: 0;
+
+      .card-questionnaire-in > * {
+
+
+        .card-header {
+          grid-area: h;
+          &__title {
+          font-size: var(--#{$h}title-font-size);
+          text-align: var(--#{$h}title-align);
+          line-height: var(--#{$h}title-line-height);
+            word-break: break-word;
+          }
+
+          &__title + glossary-html-renderer {
+            display: block;
+            font-size: var(--#{$h}subtitle-font-size);
+            margin-top: var(--#{calc.$cb}space-300);
+          }
+
+          p:last-of-type {
+            margin: 0;
+          }
+        }
+
+        .card-body {
+          grid-area: b;
+          //padding-top: var(--#{$h}card-offset-y);
+
+          flex: 0 1 auto;
+          height: 100%;
+          font-size: var(--#{$h}quiz-font-size);
+
+        }
+
+        .card-answer {
+          grid-area: a;
+          font-size: var(--#{$h}answer-font-size);
+
+          p:last-of-type {
+            margin: 0;
+          }
+        }
+
+        @include calc.questionnaire-required-field-error() ;
+      }
+
+
+      .card-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+
+        background: var(--#{calc.$cb}body-bg-clr);
+        background: linear-gradient(0deg, rgba(var(--#{$h}bg-rgb-clr), var(--#{$h}block-active-bg-value-1)) 60%, rgba(var(--#{$h}bg-rgb-clr), var(--#{$h}block-active-bg-value-2)) 100%);
+
+        padding-top: var(--#{$h}card-offset-y);
+        padding-bottom: var(--#{$h}card-footer-offset-y);
+        display: flex;
+        justify-content: space-between;
+        gap: var(--#{calc.$cb}space-200);
+
+        .btn--text {
+          font-size: var(--#{$h}card-footer-btn-text-font-size);
+          font-weight: var(--#{calc.$cb}font-weight-bolder);
+        }
+      }
+
+
+      app-questionnaire-date, lib-features-questionnaire-year, .questionnaire-it-date {
+
+
+      }
+
+      // material
+      ::ng-deep .md-data-file {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .#{calc.$quiz-overlay-class}__content  {
+    .quiz--counter {
+      min-height: var(--#{calc.$quiz-overlay}top-min-h);
+      transform:  translateY( calc(var(--#{calc.$cb}cst-offset-y) * -1) );
+    }
+  }
+}

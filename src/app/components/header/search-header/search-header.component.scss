@@ -1,0 +1,54 @@
+@use "_v3/calc" as calc;
+
+$overlay: h-overlay !default;
+$h: #{calc.$cb-hd} !default;
+
+$init: (
+) !default;
+
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+}
+
+::ng-deep {
+  .#{$overlay} {
+    &.#{$overlay}--mobile {
+    }
+
+     &.#{$overlay}--desk-search.#{$overlay}--float {
+
+
+
+      > .#{$overlay}__search {
+        //padding:
+        --#{$h}ov-offset-y: 0;
+        --#{$h}ov-offset-x: var(--#{$h}tool-offset-x);
+        min-height: var(--#{calc.$cb}head-toolbar-height);
+        @include calc.make-row(var(--#{calc.$cb}space-200));
+        align-items: center;
+
+        & > *:not(form-group) {
+          @include calc.make-col-auto();
+
+        }
+        & > .form-group {
+          display: grid;
+          align-items: center;
+          @include calc.make-col();
+        }
+        #{calc.$mdf-selector} {
+          --#{calc.$mdf}min-height: var(--#{$h}tool-item-h);
+          --#{calc.$mdf}border-width: 0;
+          --#{calc.$mdf}radius:  var(--#{$h}tool-radius);
+          --#{calc.$mdf}bg:  hsla(0, 0%, 100%, 0.15);
+          --#{calc.$mdf}active-bg: hsla(0, 0%, 100%, 0.20);
+        }
+
+      }
+    }
+  }
+}
+

@@ -1,7 +1,12 @@
 @if (homePage(); as home) {
-  <lilly-content-hero-section [heroFields]="home?.fields?.heroSection?.fields"></lilly-content-hero-section>
+  <lilly-content-hero-section [heroFields]="home?.fields?.heroSection?.fields"
+                              [scrollID]="'content'"></lilly-content-hero-section>
 
-  @for (section of home?.fields?.sections; track section) {
-    <lilly-content-section [section]="section"></lilly-content-section>
-  }
+  <div class="csts--wrapper">
+    @for (section of home?.fields?.sections; track section) {
+      <lilly-content-section [section]="section"
+                             id="content"
+      ></lilly-content-section>
+    }
+  </div>
 }

@@ -7,15 +7,12 @@ import { Component, input, output } from '@angular/core';
   standalone: true,
 })
 export class CarouselCustomNavComponent {
-  // Navigation state
   readonly isPrevDisabled = input<boolean>(false);
   readonly isNextDisabled = input<boolean>(false);
-
-  // Pagination
+  readonly showNavArrows = input<boolean>(false);
   readonly paginationPages = input<number[]>([]);
   readonly currentPage = input<number>(0);
 
-  // Outputs
   readonly goPrevEmit = output<void>();
   readonly goNextEmit = output<void>();
   readonly goToPageEmit = output<number>();

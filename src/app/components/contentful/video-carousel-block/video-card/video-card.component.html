@@ -1,4 +1,3 @@
-<!-- video-card.component.html -->
 @if (video()) {
   <div
     class="video-card"
@@ -7,7 +6,6 @@
     [attr.aria-label]="video()?.fields?.title">
 
     @if (!isPlaying()) {
-      <!-- Show thumbnail when NOT playing -->
       <img
         class="video-card__image"
         [src]="video()?.fields?.thumbnail?.fields?.file?.url"
@@ -15,7 +13,6 @@
         loading="lazy"
         decoding="async"/>
     } @else {
-      <!-- Show video player when playing -->
       <lilly-media-content
         [mediaType]="video().fields?.video?.fields?.displayMedia"
         [mediaId]="mediaId()"
@@ -43,7 +40,7 @@
       <button
         class="video-card__play-btn"
         (click)="togglePlay($event)"
-        [attr.aria-label]="isPlaying() ? 'Pause video' : 'Play video'">
+        [attr.aria-label]="isPlaying() ? pauseVideoLabel : playVideoLabel">
         <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>
       </button>
     </div>

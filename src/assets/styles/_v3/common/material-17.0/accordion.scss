@@ -7,11 +7,12 @@ $init: (
                 lg: 1.5rem,
         )),
         expansion-body-font-size: (media-query-up: (
-                xs: 1em
+                xs: var(--#{calc.$cb}font-size-base),
+                xxl: var(--#{calc.$cb}font-size-lg),
         )),
-        expansion-panel-padding: (media-query-up: (
-                xs: 1.5rem 0,
-                lg: 2rem 0,
+        expansion-panel-offset-y: (media-query-up: (
+                xs: 1.5rem,
+                lg: 2rem,
         )),
 
 ) !default;
@@ -25,13 +26,9 @@ $init: (
 .accordion {
   &.mat-expansion-panel {
     background: inherit;
-    border-bottom: 1px solid var(--#{calc.$cb}divider);
+    border-top: 2px solid var(--#{calc.$cb}divider);
     border-radius: 0;
     box-shadow: none !important;
-
-    &:first-of-type {
-      border-top: 1px solid var(--#{calc.$cb}divider);
-    }
 
     .mat-expansion-panel-header,
     .mat-expansion-panel-body {
@@ -49,17 +46,20 @@ $init: (
 
       .mat-expansion-panel-header-title {
         font-size: var(--#{$h}expansion-title-font-size);
-        font-weight: var(--#{calc.$cb}font-weight-light);
         line-height: 2.2rem;
-        padding: var(--#{$h}expansion-panel-padding);
+        padding: var(--#{$h}expansion-panel-offset-y) 0;
 
-        @include calc.media-breakpoint-down(sm) {
-          line-height: 1.5;
-        }
+        //@include calc.media-breakpoint-down(sm) {
+        //  line-height: 1.5;
+        //}
 
         > div > p {
           display: flex;
           align-items: center;
+        }
+        ul, ol {
+          margin-top: 0;
+          margin-bottom: 0;
         }
       }
 
@@ -68,15 +68,21 @@ $init: (
         align-items: center;
         justify-content: center;
         @include calc.square(1.75rem);
-        background-color: var(--#{calc.$cb}body-bg-clr);
         border: 1px solid var(--#{calc.$cb}body-clr);
         color: var(--#{calc.$cb}body-clr);
         border-radius: 50%;
         text-align: center;
+        transition: all .3s ease;
 
         &:after {
           border-color: currentColor;
 
+        }
+
+        &:hover {
+          background-color: (var(--#{calc.$color}neutral-base-100));
+          border-color: (var(--#{calc.$color}neutral-base-100));
+          color: (var(--#{calc.$color}neutral-base-000));
         }
       }
     }
@@ -88,9 +94,6 @@ $init: (
     }
 
     .mat-expansion-panel-body {
-      padding-top: 1rem;
-
-
       font-size: var(--#{$h}expansion-body-font-size);
       line-height: var(--#{calc.$cb}line-height-base);
       ul {
@@ -100,21 +103,31 @@ $init: (
       ol {
         @include calc.cb-list-num($bullet-color: currentColor);
       }
+
+      ul li,
+      ol li {
+        margin-bottom: var(--#{calc.$cb}space-100);
+      }
     }
   }
 
   &.mat-expanded {
-    .mat-expansion-panel-header {
-      border-bottom: 1px solid var(--#{calc.$cb}divider);
+    &.mat-expansion-panel {
+      border-top: 2px solid var(--#{calc.$color}neutral-base-100);
+    }
 
-      .mat-expansion-panel-header-title {
-        //color: var(--page-color);
-        //font-weight: var(--cb-font-weight-bold);
+    .mat-expansion-panel-header {
+      .mat-expansion-indicator {
+        transition: all .2s ease-in-out;
+
+        background-color: (var(--#{calc.$color}neutral-base-100));
+        border-color: (var(--#{calc.$color}neutral-base-100));
+        color: (var(--#{calc.$color}neutral-base-000));
       }
     }
 
     .mat-expansion-panel-body {
-
+      padding-bottom: var(--#{$h}expansion-panel-offset-y);
     }
   }
 }

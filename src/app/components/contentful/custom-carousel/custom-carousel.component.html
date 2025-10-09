@@ -8,7 +8,7 @@
       @for (item of items(); track $index) {
         <ng-template carouselSlide>
           <ng-container
-            [ngTemplateOutlet]="slideTemplate"
+            [ngTemplateOutlet]="slideTemplate()"
             [ngTemplateOutletContext]="{$implicit: item}">
           </ng-container>
         </ng-template>
@@ -26,6 +26,7 @@
         <app-carousel-custom-nav
           [isPrevDisabled]="isPrevDisabled()"
           [isNextDisabled]="isNextDisabled()"
+          [showNavArrows]="false"
           [paginationPages]="paginationPages()"
           [currentPage]="currentPage()"
           (goPrevEmit)="goPrev()"

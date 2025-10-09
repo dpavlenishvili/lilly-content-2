@@ -1,12 +1,12 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  ElementRef,
   input,
   InputSignal,
-  ElementRef,
   output,
   OutputEmitterRef,
-  ChangeDetectionStrategy,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
@@ -35,7 +35,7 @@ export class LanguageSwitcherComponent {
   overlayContainer: InputSignal<HTMLElement | ElementRef<HTMLElement> | null> = input();
   menuOpen: OutputEmitterRef<boolean>  = output();
 
-  @ViewChild('triggerButton') triggerButton: MatIconButton;
+  triggerButton = viewChild<MatIconButton>('triggerButton');
 
   constructor(
     public languageService: LanguageService,
@@ -48,7 +48,7 @@ export class LanguageSwitcherComponent {
 
   onEscape(): void {
     window.requestAnimationFrame(() => {
-      this.triggerButton.focus();
+      this.triggerButton()?.focus();
     });
   }
 }

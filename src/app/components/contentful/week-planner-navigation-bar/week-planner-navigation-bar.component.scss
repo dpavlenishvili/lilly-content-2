@@ -1,33 +1,14 @@
 @use '../../../../assets/styles/_v3/calc' as calc;
-@import "../../../../assets/styles/_v3/modules/nav-tabs";
+//@import "../../../../assets/styles/_v3/modules/nav-tabs";
 
-:host ::ng-deep{
+:host ::ng-deep {
   .menu-area {
-    .is-nav-desktop {
-      @include calc.media-breakpoint-down(md) {
-        display: none;
-      }
-      @include calc.media-breakpoint-up(lg) {
-        display: block;
-      }
-    }
+    display: grid;
+    gap: var(--#{calc.$cb}cst-contnet-offset-y);
 
-    .is-nav-mobile {
-      @include calc.media-breakpoint-up(xs) {
-        display: block;
-      }
-      @include calc.media-breakpoint-up(lg) {
-        display: none;
-      }
-    }
 
-    .modules-title {
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .selected-content {
-      margin-top: var(--#{calc.$cb}space-400);
+    &__content {
+      margin-top: var(--#{calc.$cb}cst-contnet-offset-y);
     }
   }
 }

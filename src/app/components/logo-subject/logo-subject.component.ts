@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject, Input } from '@angular/core';
+import { Component, HostBinding, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AppIconRegistry } from '../../services/app-icon-registry.service';
 
@@ -12,8 +12,8 @@ import { AppIconRegistry } from '../../services/app-icon-registry.service';
   styleUrl: './logo-subject.component.scss'
 })
 export class LogoSubjectComponent {
-  @Input() text = 'Trials';
-  @Input() hideText = false;
+  readonly text = input<string>('Trials');
+  readonly hideText = input<boolean>(false);
 
   @HostBinding('class')
   get hostClasses(): string {

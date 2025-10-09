@@ -1,4 +1,4 @@
-@use "_v3/calc" as calc;
+ @use "_v3/calc" as calc;
 
 $h: calc.$btn !default;
 $selector: calc.$btn-selector !default;
@@ -20,6 +20,8 @@ $init: (
         font-size: (media-query-up: (
                 xs: var(--#{calc.$cb}font-size-base),
         )),
+  //
+  //
         btn-link-font-size: (media-query-up: (
                 xs: 1em,
         )),
@@ -44,6 +46,19 @@ $init: (
                 xs: 1.5rem,
                 sm: 1.75rem,
         )),
+  //sm
+        sm-min-h: (media-query-up: (
+                xs: 2rem,
+                sm: 2rem,
+        )),
+        sm-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-sm),
+        )),
+        sm-icon-size: (media-query-up: (
+                xs: 1.25rem,
+                sm: 1.25rem,
+        )),
+  //
         icon-button-size: (media-query-up: (
                 xs: 3rem,
         )),
@@ -74,6 +89,9 @@ $init: (
         #{calc.$btn-outline}hover-fg: var(--#{calc.$color}brand-base-070),
         #{calc.$btn-outline}border: var(--#{calc.$color}brand-base-060),
         #{calc.$btn-outline}border-hover: var(--#{calc.$color}brand-base-070),
+        fg-disabled: var(--#{calc.$color}palette-transparent-black-030),
+        bg-disabled: var(--#{calc.$color}palette-transparent-black-005),
+        border-disabled: var(--#{calc.$color}palette-transparent-black-005),
         btn-max-width: (media-query-up: (
                 xs: 100%,
                 sm: 12.89∂rem,
@@ -101,6 +119,7 @@ button {
   white-space: normal;
   position: relative;
   max-width: 100%;
+  height: min-content;
   font-family: inherit;
   transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease, transform .02s ease;
   -webkit-tap-highlight-color: transparent;
@@ -108,9 +127,8 @@ button {
   text-decoration: none;
 
 
-
   .mdc-button__label {
-    display: flex;
+    display: inline-flex;
     row-gap: .25rem;
     grid-auto-flow: column;
     justify-content: space-between;
@@ -142,6 +160,12 @@ button {
       --#{$h}icon-size: var(--#{$h}lg-icon-size);
     }
 
+    &.is-sm {
+      --#{$h}font-size: var(--#{$h}sm-font-size);
+      --#{$h}min-h: var(--#{$h}sm-min-h);
+      --#{$h}icon-size: var(--#{$h}sm-icon-size);
+    }
+
     //
 
     //--mdc-outlined-button-container-shape: var(--#{$h}radius);
@@ -153,6 +177,10 @@ button {
                 bg: var(--#{$h}#{calc.$btn-fill-primary}bg),
                 hover: (
                         bg: var(--#{$h}#{calc.$btn-fill-primary}hover-bg),
+                ),
+                disabled: (
+                        fg: var(--#{$h}fg-disabled),
+                        bg: var(--#{$h}bg-disabled)
                 )
         ));
       }
@@ -162,7 +190,12 @@ button {
     &.mat-mdc-outlined-button {
       border-width: var(--#{$h}border-width);
       @include calc.btn-mixins-button-override($overrides: (
-              border: var(--#{$h}border)
+              border: var(--#{$h}border),
+              disabled: (
+                      fg: var(--#{$h}fg-disabled),
+                      bg: var(--#{$h}bg-disabled),
+                      border: var(--#{$h}border-disabled),
+              )
       ));
 
       &.mat-primary {
@@ -172,6 +205,11 @@ button {
                 hover: (
                         fg: var(--#{$h}#{calc.$btn-outline}hover-fg),
                         border: var(--#{$h}#{calc.$btn-outline}border-hover),
+                ),
+                disabled: (
+                        fg: var(--#{$h}fg-disabled),
+                        bg: var(--#{$h}bg-disabled),
+                        border: var(--#{$h}border-disabled),
                 )
         ));
       }
@@ -211,6 +249,11 @@ button {
                 bg: var(--#{$h}#{calc.$btn-fill-primary}bg),
                 hover: (
                         bg: var(--#{$h}#{calc.$btn-fill-primary}hover-bg),
+                ),
+                disabled: (
+                        fg: var(--#{$h}fg-disabled),
+                        bg: var(--#{$h}bg-disabled),
+                        border: var(--#{$h}border-disabled),
                 )
         ));
       }
@@ -220,6 +263,7 @@ button {
       --#{$h}offset-x: 0;
       --#{$h}radius: 0;
       --#{$h}font-size: var(--#{$h}btn-link-font-size);
+      min-width:0;
       text-align: start;
       justify-content: initial;
 
@@ -232,13 +276,26 @@ button {
           text-decoration: var(--#{calc.$cb}link-hover-decoration);
         }
       }
+
       .mdc-button__label {
         width: 100%;
       }
-
     }
 
+    &.btn--text {
+      --#{$h}offset-x: 0;
+      --#{$h}radius: 0;
+      text-align: start;
+      justify-content: initial;
+      min-width:0;
 
+      &:not([disabled]):not(:disabled) {
+      }
+
+      .mdc-button__label {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -253,6 +310,11 @@ button {
                 border: inherit,
                 shadow: inherit,
         ),
+        disabled: (
+                fg: var(--#{$h}fg-disabled),
+                bg: var(--#{$h}bg-disabled),
+                border: var(--#{$h}border-disabled),
+        )
 ));
 
 
@@ -270,6 +332,17 @@ button {
                         border: inherit,
                         shadow: inherit,
                 ),
+        ));
+      }
+      &.btn--text, &.btn--link {
+        @include calc.btn-mixins-button-override($overrides: (
+          fg: var(--#{calc.$cb}white),
+          hover: (
+            fg: inherit,
+            bg: inherit,
+            border: inherit,
+            shadow: inherit,
+          ),
         ));
       }
 

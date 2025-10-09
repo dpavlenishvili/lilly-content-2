@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input, inject } from '@angular/core';
-import { IIcon, IDayProgramFields } from '../models/contentful';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { IDayProgramFields, IIcon } from '../models/contentful';
 import { PrintService } from '@careboxhealth/core';
 import { HelperService } from '../../../services/helper.service';
-import { LinkTarget } from '@careboxhealth/layout1-shared';
 import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
 import { MicrostepsBlockComponent } from '../microsteps-block/microsteps-block.component';
 import { ImageCoverBlockComponent } from '../image-cover-block/image-cover-block.component';
@@ -23,17 +22,22 @@ export class DayProgramBlockComponent {
   private readonly helperService = inject(HelperService);
 
   onActionClick(icon: IIcon): void {
+    const fileUrl = this.fields()?.file?.fields?.file?.url;
+    
     switch (icon?.fields?.type) {
     case 'print':
-      (this.printService?.printPage?.bind(this.printService) ?? window.print.bind(window))();
+      if (fileUrl) {
+        this.helperService.printFile(fileUrl);
+      } else {
+        (this.printService?.printPage?.bind(this.printService) ?? window.print.bind(window))();
+      }
       break;
 
-    case 'mail': {
-      // Opens a blank mail compose. Content (subject/body/attachments) is undefined for now.
-      const mailto = 'mailto:';
-      this.helperService.openDialog(mailto, LinkTarget.Self);
+    case 'mail':
+      if (fileUrl) {
+        this.helperService.sendEmailWithFile(fileUrl, this.fields()?.heading ?? '');
+      }
       break;
-    }
     }
   }
 }

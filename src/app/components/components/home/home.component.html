@@ -1,7 +1,0 @@
-@if (homePage(); as home) {
-  <lilly-content-hero-section [heroFields]="home?.fields?.heroSection?.fields"></lilly-content-hero-section>
-
-  @for (section of home?.fields?.sections; track section) {
-    <lilly-content-section [section]="section"></lilly-content-section>
-  }
-}

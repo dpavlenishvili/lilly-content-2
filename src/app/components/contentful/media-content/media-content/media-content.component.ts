@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
 import { MediaContentType } from '../media-content-type.enum';
 import { VideoComponent } from '../video/video.component';
 import { KalturaComponent } from '../kaltura/kaltura.component';
@@ -19,32 +19,36 @@ import { SpotifyComponent } from '../spotify/spotify.component';
   standalone: true
 })
 export class MediaContentComponent {
-  @Input() public mediaType: MediaContentType;
-  @Input() public mediaId: string;
-  @Input() public uiConfigId: string;  // This one just for Kaltura
-  @Input() public subsiteName: string;
-  @Input() public title: string;
-  @Input() public backgroundColor = '#de3626'; // This one just for Spotify
-  @Input()
-  set videoConfig(value: Record<string, never>) {
-    if (!value) return;
+  readonly mediaType = input<MediaContentType>();
+  readonly mediaId = input<string>();
+  readonly uiConfigId = input<string>();  // This one just for Kaltura
+  readonly subsiteName = input<string>();
+  readonly title = input<string>();
+  readonly backgroundColor = input<string>('#de3626'); // This one just for Spotify
+  readonly videoConfig = input<Record<string, never>>();
 
-    if ('autoplay' in value) {
-      this.isAutoplay = value.autoplay;
-    }
-
-    if ('mute' in value) {
-      this.isMuted = value.mute;
-    }
-
-    if ('loop' in value) {
-      this.isLoop = value.loop;
-    }
-  }
-
-  public isAutoplay = false;
-  public isMuted = true;
-  public isLoop = true;
+  public readonly isAutoplay = signal(false);
+  public readonly isMuted = signal(true);
+  public readonly isLoop = signal(true);
 
   readonly MediaContentType: typeof MediaContentType = MediaContentType;
+
+  constructor() {
+    effect(() => {
+      const value = this.videoConfig();
+      if (!value) return;
+
+      if ('autoplay' in value) {
+        this.isAutoplay.set(value.autoplay);
+      }
+
+      if ('mute' in value) {
+        this.isMuted.set(value.mute);
+      }
+
+      if ('loop' in value) {
+        this.isLoop.set(value.loop);
+      }
+    });
+  }
 }

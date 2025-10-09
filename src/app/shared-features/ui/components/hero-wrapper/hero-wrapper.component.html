@@ -1,0 +1,34 @@
+<section class="cst cst--hero theme--dark cb-max-view" [ngClass]="wrapClass">
+  <div class="cst__grid">
+    <div class="cst__grid__in">
+      <div class="cst__content cst__content--container">
+        <div class="block block--hero">
+          <div class="block__content">
+            <ng-content></ng-content>
+
+
+          </div>
+        </div>
+        <div class="block block--footer">
+          <div class="block_ctrl">
+            <ng-content select="[scroll]"></ng-content>
+          </div>
+          <div class="block__content">
+            <ng-content select="[footer]"></ng-content>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cst__media">
+      <ng-content select="[media]"></ng-content>
+      <!--            TODO image example -->
+      <!--                <picture class="media">-->
+      <!--                    <img /> -->
+      <!--                </picture>-->
+      <!--                <div class="media__bg"></div>-->
+    </div>
+
+  </div>
+</section>
+

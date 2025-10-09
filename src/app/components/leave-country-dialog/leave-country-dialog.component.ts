@@ -4,8 +4,8 @@ import { LeavePopup } from '../../directives/leave-popup.directive';
 import { HelperService } from '@careboxhealth/layout1-shared';
 import { DIALOG_KEY } from 'src/app/constants/translation-key';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatDialogContent, MatDialogClose, MatDialogActions } from '@angular/material/dialog';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatDialogActions, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
 
 @Component({
   selector: 'lilly-content-leave-country-dialog',

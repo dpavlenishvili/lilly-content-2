@@ -13,7 +13,7 @@ $init: (
 
   ::ng-deep {
     ul {
-      @include calc.cb-list(0, 1rem, var(--#{calc.$cb}primary));
+      @include calc.cb-list(0, 1em, var(--#{calc.$cb}primary));
       margin: 0 0 1rem;
 
       li p {
@@ -25,7 +25,7 @@ $init: (
     }
     li {
       ul {
-        @include calc.cb-list(0, 0, var(--#{calc.$cb}black), $bullet-content: "◦");
+        @include calc.cb-list(0, 0, var(--#{calc.$cb}body-clr), $bullet-content: "◦");
       }
     }
 
@@ -39,18 +39,23 @@ $init: (
       }
 
       blockquote {
-        padding-left: 1.125rem;
+        padding-left: 1.125em;
         margin: 0;
         border-left: 5px solid var(--page-color);
         white-space: normal;
       }
 
-      > p {
+      > p:not(:empty) {
         display: inline-block;
 
         + p,
+        + ul,
+        + ol,
         + blockquote {
           margin-top: 1.5rem;
+        }
+        &:empty {
+          display: none;
         }
       }
 

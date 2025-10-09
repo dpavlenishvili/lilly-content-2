@@ -9,11 +9,12 @@ $arrow-border-radius: 3px;
 
 owl-carousel-o {
   display: block;
+  position: relative;
   // padding: 0 $arrow-padding;
 
   .owl-carousel {
     .owl-stage {
-      display: flex !important;
+      display: flex;
     }
 
     .owl-nav {
@@ -23,20 +24,22 @@ owl-carousel-o {
 
       .owl-prev,
       .owl-next {
-        width: 37px;
-        height: 50px;
-        background-color: var(--#{calc.$cb}black);
-        top: 35%;
+        @include calc.square(3rem); // 48px
+        background-color: var(--#{calc.$cb}white);
+        top: 45%;
         position: absolute;
-        opacity: 0.2;
+        opacity: 1;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
         &:after {
           content: "";
-          @include calc.square(13px);
+          @include calc.square(0.625rem); // 10px
           position: absolute;
-          top: 35%;
+          top: 50%;
+          left: 50%;
           background: none;
-          border: solid var(--#{calc.$cb}white);
+          border: solid var(--#{calc.$cb}black);
           border-width: $arrow-border-width 0px 0px $arrow-border-width;
           display: inline-block;
           margin: 0;
@@ -44,27 +47,25 @@ owl-carousel-o {
         }
 
         &.disabled {
+          opacity: 0;
+          visibility: hidden;
           pointer-events: none;
         }
       }
 
       .owl-prev {
-        left: -$arrow-padding;
-        border-radius: $arrow-border-radius 0px 0px $arrow-border-radius;
+        left: -0.1rem;
 
         &:after {
-          left: 1rem;
-          transform: rotate(-45deg);
+          transform: translate(-25%, -50%) rotate(-45deg);
         }
       }
 
       .owl-next {
-        right: -$arrow-padding;
-        border-radius: 0 $arrow-border-radius $arrow-border-radius 0px;
+        right: -0.1rem;
 
         &:after {
-          right: 1rem;
-          transform: rotate(135deg);
+          transform: translate(-75%, -50%) rotate(135deg);
         }
       }
     }

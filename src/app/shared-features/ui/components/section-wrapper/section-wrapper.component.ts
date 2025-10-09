@@ -6,6 +6,7 @@ import {
   CstLabelSlotDirective,
   CstTitleSlotDirective
 } from './cst-slots';
+import {ContainerWrapperComponent} from './container-wrapper/container-wrapper.component';
 
 @Component({
   selector: 'cst-wrapper',
@@ -15,7 +16,8 @@ import {
     CstContentSlotDirective,
     CstHeaderContentSlotDirective,
     CstLabelSlotDirective,
-    CstTitleSlotDirective
+    CstTitleSlotDirective,
+    ContainerWrapperComponent
   ],
   templateUrl: './section-wrapper.component.html',
   styleUrls: ['./section-wrapper.component.scss'],
@@ -29,6 +31,7 @@ export class SectionWrapperComponent {
   @Input() hostSizeClass: string = 'cst--lg';
   @Input() titleClass: string = 'garamond-heading-1-font';
   @Input() gridClass: string = 'is-narrow';
+  @Input() containerClass: string = 'container';
   @HostBinding('class')
   get hostClasses(): string {
     return `cst${this.hostClass ? ' ' + this.hostClass : ''}${this.hostSizeClass ? ' ' + this.hostSizeClass : ''}`;

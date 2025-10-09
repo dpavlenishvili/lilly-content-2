@@ -1,47 +1,89 @@
 @use "_v3/calc" as calc;
 
-.mat-mdc-chip {
-  --mdc-chip-elevated-container-color: var(--#{calc.$md}chip-bg-color, #f4f4f4);
-  --mdc-chip-container-shape-radius: .25rem;
-  --mdc-chip-label-text-size: var(--#{calc.$md}chip-font-size);
-  --mat-icon-button-state-layer-color: transparent;
-  --mdc-chip-hover-state-layer-opacity: 0;
-  --md-chip-button-w: 2.5rem;
-
-  min-height: var(--#{calc.$md}chip-min-height);
-  font-size: var(--#{calc.$md}chip-font-size);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-
-  &.mat-mdc-standard-chip {
-    --mdc-chip-label-text-color: var(--#{calc.$md}chip-color, initial);
-
-    color: var(--mdc-chip-label-text-color);
-    border: var(--#{calc.$md}chip-border, 0);
-  }
-
-  .mdc-evolution-chip__cell,
-  .mat-mdc-chip-action,
-  .mat-mdc-chip-action-label {
-    width: 100%;
-  }
-
-  .mat-mdc-chip-remove:hover {
-    opacity: 1;
-  }
-
-  .text-chip {
+:root {
+  .mat-mdc-chip {
+    --mdc-chip-elevated-container-color: var(--#{calc.$md}chip-bg-color);
+    --mdc-chip-container-shape-radius: var(--#{calc.$md}chip-radius);
+    --mdc-chip-label-text-size: var(--#{calc.$md}chip-font-size);
+    --mat-icon-button-state-layer-color: transparent;
+    --mdc-chip-hover-state-layer-opacity: 0;
+    --md-chip-button-w: 2em;
+    --mdc-chip-container-height: var(--#{calc.$md}chip-min-height);
+    min-height: var(--#{calc.$md}chip-min-height);
+    font-size: var(--#{calc.$md}chip-font-size);
+    border: var(--#{calc.$md}chip-border);
+    box-shadow: none;
     display: inline-flex;
-    @include calc.truncate();
-    max-width: var(--#{calc.$md}chip-text-width-max, 13.75rem);
-    width:100%;
-  }
 
-  button.md-btn-chip-clear {
-    @include calc.size_r(var(--#{calc.$md}chip-button-w), var(--#{calc.$md}chip-min-height));
-    border-radius: 0;
-    margin: 0;
-    padding: 0!important;
-    border-left: 1px solid rgba(var(--#{calc.$cb}body-clr-rgb), .15);
-    @include calc.thumb-on-center();
+    &.mat-mdc-standard-chip {
+      --mdc-chip-label-text-color: var(--#{calc.$md}chip-color, initial);
+
+      color: var(--mdc-chip-label-text-color);
+      border: var(--#{calc.$md}chip-border);
+
+      .mdc-evolution-chip__cell--primary {
+        flex: 1 1 100%;
+        min-width: 0;
+
+        & > * {
+          min-width: 0;
+        }
+        & + * {
+          padding-left: var(--#{calc.$cb}space-50);
+        }
+      }
+      .mdc-evolution-chip__text-label {
+        white-space: normal;
+      }
+      @include calc.truncate();
+    }
+
+    &.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--primary {
+      padding-left: var(--#{calc.$cb}space-150);
+      padding-right: 0;
+    }
+
+
+    .mdc-evolution-chip__text-label {
+      //display: flex;
+      //
+      //width: 100%;
+      max-width: 100%;
+
+      & > * {
+        min-width: 0;
+      }
+
+      .md-chip-value {
+        display: block;
+        @include calc.truncate();
+      }
+
+    }
+
+    .mat-mdc-chip-remove:hover {
+      opacity: 1;
+    }
+
+    //.text-chip {
+    //  display: inline-flex;
+    //  @include calc.truncate();
+    //  max-width: var(--#{calc.$md}chip-text-width-max, 13.75rem);
+    //  width: 100%;
+    //}
+
+    button.md-btn-chip-clear {
+      @include calc.square(var(--md-chip-button-w));
+      border-radius: 0;
+      margin: 0;
+      padding: 0 !important;
+
+      .mat-icon {
+        @include calc.square(1.25em);
+      }
+
+      //border-left: 1px solid rgba(var(--#{calc.$cb}body-clr-rgb), .15);
+      //@include calc.thumb-on-center();
+    }
   }
 }

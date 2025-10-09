@@ -1,6 +1,6 @@
  @use "_v3/calc" as calc;
 @forward './init-vars' as init-vars-*;
-@forward 'buttons' as buttons-*;
+@forward './buttons' as buttons-*;
 @forward './tootltip' as tootltip*;
 @forward './checkbox' as checkbox-*;
 @forward './toaster' as toaster-*;

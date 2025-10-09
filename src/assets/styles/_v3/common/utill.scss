@@ -26,10 +26,15 @@
     &:last-child {
       margin-bottom: 0;
     }
+    &:empty {
+       display: none;
+     }
+
   }
+
 }
 
-.mat-h2, h2, .h2 {
+.mat-h2, h2, .h2  {
   font-family: var(--#{calc.$cb}font-family-head);
   font-size: var(--#{calc.$cb}h2);
 }
@@ -68,7 +73,12 @@ h2, h3, h4, h5, h6 {
   }
 }
 
-body {
+:root {
+  .ringside-heading-0-font {
+    font: var(--#{calc.$typography}ringside-heading-0-font);
+    letter-spacing: var(--#{calc.$typography}ringside-heading-0-letter-spacing);
+    line-height: var(--#{calc.$typography}ringside-heading-0-line-height);
+  }
   .ringside-heading-1-font {
     font: var(--#{calc.$typography}ringside-heading-1-font);
     letter-spacing: var(--#{calc.$typography}ringside-heading-1-letter-spacing);
@@ -76,9 +86,13 @@ body {
   }
 
   .ringside-heading-2-font {
+    &, & > * {
     font: var(--#{calc.$typography}ringside-heading-2-font);
     letter-spacing: var(--#{calc.$typography}ringside-heading-2-letter-spacing);
     line-height: var(--#{calc.$typography}ringside-heading-2-line-height);
+
+
+    }
   }
 
   .garamond-heading-1-font {
@@ -93,10 +107,18 @@ body {
     line-height: var(--#{calc.$typography}garamond-heading-3-line-height);
   }
 
+
   .h2-garamond-heading{
     font: var(--#{calc.$typography}h2-garamond-heading-font);
     letter-spacing: var(--#{calc.$typography}h2-garamond-heading-letter-spacing);
     line-height: var(--#{calc.$typography}h2-garamond-heading-line-height);
+  }
+
+  .garamond-subtitle-font {
+    font: var(--#{calc.$typography}garamond-subtitle-font);
+    letter-spacing: var(--#{calc.$typography}garamond-subtitle-letter-spacing);
+    line-height: var(--#{calc.$typography}garamond-subtitle-line-height);
+    font-style: italic;
   }
 }
 
@@ -187,6 +209,7 @@ mark {
   position: sticky;
   top: 0;
   z-index: 2;
+  pointer-events: none;
 
   @media print {
     position: relative;
@@ -257,4 +280,16 @@ mark {
     stroke-dasharray: 90, 150;
     stroke-dashoffset: -124;
   }
+}
+
+a[href^="tel:"] {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: initial;
+  word-break: keep-all;
+  flex-shrink: 0;
+}
+
+.CtmScoped.react-datepicker-popper {
+  z-index: 1010 !important;
 }

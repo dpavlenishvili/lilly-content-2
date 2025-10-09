@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input
 import { NgClass } from '@angular/common';
 import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
 import { ITextWidgetFields } from '../models/contentful';
+import {
+  ContainerWrapperComponent
+} from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
 
 @Component({
   selector: 'lilly-text-widget',
@@ -10,7 +13,8 @@ import { ITextWidgetFields } from '../models/contentful';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MdToHtmlPipe,
-    NgClass
+    NgClass,
+    ContainerWrapperComponent
   ],
   standalone: true
 })

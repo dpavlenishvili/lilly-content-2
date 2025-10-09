@@ -1,118 +1,117 @@
 @use "_v3/calc" as calc;
 
-$h: cb-hd-;
+$h: #{calc.$cb-hd} !default;
 $class: header !default;
 $overlay: h-overlay !default;
 $m-up: lg !default;
 
 $show-desktop-block: (
-        media-query-up: (
-                xs: none,
-                #{$m-up}: block,
-        )
+  media-query-up: (
+    xs: none,
+    #{$m-up}: block,
+  )
 ) !default;
 $show-mobile-block: (
-        media-query-up: (
-                xs: block,
-                #{$m-up}: none,
-        ),
+  media-query-up: (
+    xs: block,
+    #{$m-up}: none,
+  ),
 ) !default;
 
 $init: (
-        tool-def-bg: var(--#{calc.$color}palette-transparent-black-050),
-        tool-bg: (media-query-up: (
-                xs: var(--#{$h}tool-def-bg),
-                #{$m-up}: transparent,
-        )),
-        tool-fg: var(--#{calc.$cb}fg-strong),
-        tool-h: var(--#{calc.$cb}head-toolbar-height),
-        tool-item-bg: (media-query-up: (
-                xs: transparent,
-                #{$m-up}: var(--#{$h}tool-def-bg),
-        )),
-        tool-blur: (media-query-up: (
-                xs: 50px,
-                #{$m-up}: none,
-        )),
-        tool-item-blur: (media-query-up: (
-                xs: none,
-                #{$m-up}: 50px,
-        )),
-        tool-item-h: (media-query-up: (
-                xs: 2.625rem,
-        )),
-        tool-item-w: (media-query-up: (
-                xs: 2.625rem,
-        )),
-        tool-offset-x: (media-query-up: (
-                xs: 1.5rem
-        )),
-        tool-item-bg-hover: rgba(0, 0, 0, 0.0),
-        tool-radius: (media-query-up: (
-                xs: 1.25rem,
-                lg: 1.75rem,
-        )),
+  tool-def-bg: var(--#{calc.$color}palette-transparent-black-050),
+  tool-bg: (media-query-up: (
+    xs: var(--#{$h}tool-def-bg),
+    #{$m-up}: transparent,
+  )),
+  tool-fg: var(--#{calc.$cb}fg-strong),
+  tool-h: var(--#{calc.$cb}head-toolbar-height),
+  tool-item-bg: (media-query-up: (
+    xs: transparent,
+    #{$m-up}: var(--#{$h}tool-def-bg),
+  )),
+  tool-blur: (media-query-up: (
+    xs: 50px,
+    #{$m-up}: none,
+  )),
+  tool-item-blur: (media-query-up: (
+    xs: none,
+    #{$m-up}: 50px,
+  )),
+  tool-item-h: (media-query-up: (
+    xs: 2.625rem,
+  )),
+  tool-item-w: (media-query-up: (
+    xs: 2.625rem,
+  )),
+  tool-offset-x: (media-query-up: (
+    xs: 1.5rem
+  )),
+  tool-item-bg-hover: rgba(0, 0, 0, 0.0),
+  tool-radius: (media-query-up: (
+    xs: 1.25rem,
+    lg: 1.75rem,
+  )),
   //overlay
-        ov-bg: var(--#{calc.$color}palette-transparent-black-080),
-        ov-fg: var(--#{calc.$color}neutral-base-000),
-        ov-fg-link: var(--#{calc.$color}neutral-base-030),
-        ov-fg-link-hover: var(--#{calc.$color}neutral-base-000),
-        ov-radius: (media-query-up: (
-                xs: 0,
-                #{$m-up}: var(--#{$h}tool-radius),
-        )),
-        ov-offset-y: (media-query-up: (
-                xs: 1.5rem,
-                lg: 1.5rem
-        )),
-        ov-offset-x: (media-query-up: (
-                xs: var(--#{calc.$cb}grid-gutter-width),
-                lg: 1.5rem
-        )),
+  ov-bg: var(--#{calc.$color}palette-transparent-black-080),
+  ov-fg: var(--#{calc.$color}neutral-base-000),
+  ov-fg-link: var(--#{calc.$color}neutral-base-030),
+  ov-fg-link-hover: var(--#{calc.$color}neutral-base-000),
+  ov-radius: (media-query-up: (
+    xs: 0,
+    #{$m-up}: var(--#{$h}tool-radius),
+  )),
+  ov-offset-y: (media-query-up: (
+    xs: 1.5rem,
+    lg: 1.5rem
+  )),
+  ov-offset-x: (media-query-up: (
+    xs: var(--#{calc.$cb}grid-gutter-width),
+    lg: 1.5rem
+  )),
   // menu
-        menu-gap-x: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-                #{$m-up}: var(--#{calc.$cb}space-400),
-        )),
-        menu-gap-y: (media-query-up: (
-                xs: .025rem,
-        )),
-        menu-lang-desk-cols: (media-query-up: (
-                xs: repeat(1, 1fr),
-                sm: repeat(2, 1fr),
-                lg: repeat(3, 1fr),
-                xl: repeat(4, 1fr),
-        )),
-        menu-desk-min-h: (media-query-up: (
-                xs: 27.81rem,
-        )),
-        menu-desk-desk-2-cols: (media-query-up: (
-                xs: 1,
-                sm: 2,
-                xl: 2,
-        )),
-        menu-level-1-font-size:(media-query-up: (
-                xs: var(--#{calc.$cb}font-size-225),
-                #{$m-up}: var(--#{calc.$cb}font-size-base),
-        )),
-        menu-level-3-margin: 0 0 .5rem 1rem,
-        menu-font-size:(media-query-up: (
-                xs: var(--#{calc.$cb}font-size-120),
+  menu-gap-x: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    #{$m-up}: var(--#{calc.$cb}space-400),
+  )),
+  menu-gap-y: (media-query-up: (
+    xs: .025rem,
+  )),
+  menu-lang-desk-cols: (media-query-up: (
+    xs: repeat(1, 1fr),
+    sm: repeat(2, 1fr),
+    lg: repeat(3, 1fr),
+    xl: repeat(4, 1fr),
+  )),
+  menu-desk-min-h: (media-query-up: (
+    xs: 27.81rem,
+  )),
+  menu-desk-desk-2-cols: (media-query-up: (
+    xs: 1,
+    sm: 2,
+    xl: 2,
+  )),
+  menu-level-1-font-size:(media-query-up: (
+    xs: var(--#{calc.$cb}font-size-225),
+    #{$m-up}: var(--#{calc.$cb}font-size-base),
+  )),
+  menu-font-size:(media-query-up: (
+    xs: var(--#{calc.$cb}font-size-120),
 
-        )),
-        menu-font-size-long-string:(media-query-up: (
-                xs: var(--#{calc.$cb}font-size-base),
-        )),
-        brand-h:(media-query-up: (
-                xs: 1.625rem,
-                lg: 2.375rem,
-        )),
-        brand-font-size:(media-query-up: (
-                xs: 1.5rem,
-        )),
-        brand-w-rel: var(--#{calc.$cb}brand-w-rel),
-        show-desktop-block: $show-desktop-block,
-        show-mobile-block: $show-mobile-block,
+  )),
+  menu-font-size-long-string:(media-query-up: (
+    xs: var(--#{calc.$cb}font-size-base),
+  )),
+  brand-h:(media-query-up: (
+    xs: 1.625rem,
+    lg: 2.375rem,
+  )),
+  brand-font-size:(media-query-up: (
+    xs: 1.5rem,
+  )),
+  brand-w-rel: var(--#{calc.$cb}brand-w-rel),
+  show-desktop-block: $show-desktop-block,
+  show-mobile-block: $show-mobile-block,
 ) !default;
 
 @mixin font-level-2-serif() {
@@ -125,16 +124,23 @@ $init: (
 ::ng-deep :root {
   @include calc.css-initVars($init, $h);
 }
+:host {
+  display: block;
+  pointer-events: none;
+}
 
 :host ::ng-deep {
-  pointer-events: none;
+
 
   .#{$class} {
+    //border-bottom: 1px solid var(--#{calc.$cb}divider);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: var(--#{calc.$cb}head-toolbar-height);
     padding-top: var(--#{calc.$cb}header-top-offset);
+    pointer-events: none;
+
 
     &__container {
       z-index: 5;
@@ -144,6 +150,7 @@ $init: (
       @media only screen and (max-width: 1340px) {
         --#{$h}menu-font-size: var(--#{$h}menu-font-size-long-string);
       }
+
     }
 
 
@@ -201,6 +208,7 @@ $init: (
         left: 0;
         bottom: 0;
         right: 0;
+
         cursor: pointer;
         background-color: transparent;
       }
@@ -246,6 +254,10 @@ $init: (
     display: flex;
   }
 
+  .#{$class}__grid__item {
+
+  }
+
   #{calc.$btn-selector} {
     &.nav__btn {
       min-height: var(--#{$h}tool-item-h);
@@ -256,11 +268,11 @@ $init: (
       }
 
       @include calc.btn-mixins-button-override($overrides: (
-              fg: var(--#{calc.$cb}fg-strong),
-              bg: transparent,
-              hover: (
-                      bg: var(--#{calc.$color}palette-transparent-white-020),
-              )
+        fg: var(--#{calc.$cb}fg-strong),
+        bg: transparent,
+        hover: (
+          bg: var(--#{calc.$color}palette-transparent-white-020),
+        )
       ));
     }
 
@@ -268,11 +280,11 @@ $init: (
       transition: all 0.35s ease, color 0.35s ease;
 
       @include calc.btn-mixins-button-override($overrides: (
-              fg: var(--#{$h}ov-fg-link),
-              bg: transparent,
-              hover: (
-                      fg: var(--#{$h}ov-fg-link-hover),
-              )
+        fg: var(--#{$h}ov-fg-link),
+        bg: transparent,
+        hover: (
+          fg: var(--#{$h}ov-fg-link-hover),
+        )
       ));
       .btn__grid {
         display: flex;
@@ -316,6 +328,7 @@ $init: (
       display: grid;
       column-gap: var(--#{$h}menu-gap-x);
       row-gap: var(--#{$h}menu-gap-y);
+      //width: 100%;
       margin: 0;
       padding: 0;
       font-size: var(--#{$h}menu-font-size);
@@ -351,8 +364,15 @@ $init: (
           margin: var(--#{calc.$cb}space-300) 0;
         }
       }
-      &--level-3 {
-        margin: var(--#{$h}menu-level-3-margin);
+
+      &--level-2 a {
+        align-items: flex-end;
+        --cb-btn-min-h: 3.5rem;
+      }
+
+      &--level-3 a {
+        font-size: var(--#{calc.$cb}font-size-sm);
+        --cb-btn-min-h: var(--#{calc.$cb}font-size-sm);
       }
 
       .btn--title {
@@ -417,7 +437,11 @@ $init: (
 
             &.block__content--menu {
               justify-content: center;
+
+              .menu--level-2 {
+              }
             }
+
           }
         }
       }
@@ -450,6 +474,16 @@ $init: (
       --#{calc.$cb}media-radius: var(--#{calc.$cb}radius-3);
       --#{calc.$cb}media-h: 100%;
       --#{calc.$cb}media-w: 100%;
+      transition: all .2s ease-in-out;
+
+      img {
+        transition: all .2s ease-in-out;
+        filter: brightness(.85);
+      }
+
+      &:hover img {
+        filter: brightness(.5);
+      }
 
       .#{calc.$card-class}__body {
         display: grid;
@@ -488,6 +522,9 @@ $init: (
     }
   }
 }
+
+
+
 
 .seo-language-buttons {
   visibility: hidden;

@@ -7,18 +7,18 @@
   --step-divide-line: 4.125rem;
   --step-icon-size: 1rem;
   --step-border-size: 0.125rem;
-  --step-border-color: var(--#{calc.$cb}gray-500);
-  --step-color-divider: var(--#{calc.$cb}gray-500);
+  --step-border-color: var(--#{calc.$color}neutral-base-030);
+  --step-color-divider: var(--#{calc.$color}neutral-base-030);
   --step-bg-color: var(--#{calc.$cb}white);
-  --step-color: var(--#{calc.$cb}gray-700);
+  --step-color: var(--#{calc.$color}neutral-base-060);
   --step-font-size: var(--#{calc.$cb}font-size-sm);
   --step-animation-time: .31s;
 
-  --step-active-color: var(--#{calc.$cb}success-dark);
+  --step-active-color: var(--#{calc.$color}palette-blue-060);
   --step-active-bg-color: var(--#{calc.$cb}white);
-  --step-active-border-color: var(--#{calc.$cb}success-dark);
+  --step-active-border-color: var(--#{calc.$color}palette-blue-060);
 
-  --step-complete-color: var(--#{calc.$cb}success-dark);
+  --step-complete-color: var(--#{calc.$color}palette-blue-060);
 
   @include calc.media-breakpoint-up(md) {
     --step-size: 2rem;

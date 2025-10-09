@@ -29,5 +29,7 @@ export class AppMaterialModule {
     iconRegistry.addSvgIcon('straight', '/assets/svg/lilly/straight.svg');
     iconRegistry.addSvgIcon('arrow_forward', '/assets/svg/lilly/arrow_forward.svg');
     iconRegistry.addSvgIcon('arrow-down', '/assets/svg/lilly/arrow-down.svg');
+    iconRegistry.addSvgIcon('arrow-scroll', '/assets/svg/lilly/arrow--scroll.svg');
+    iconRegistry.addSvgIcon('arrow-right', '/assets/svg/lilly/arw-right-w.svg');
   }
 }

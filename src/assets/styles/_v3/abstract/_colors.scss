@@ -81,6 +81,19 @@ $primary: (
   --#{calc.$color}palette-blue-010: #e8f2fa;
   --#{calc.$color}palette-blue-005: #f2f7fc;
   //
+  --#{calc.$color}palette-pink-100: #3a0118;
+  --#{calc.$color}palette-pink-105: #26050f;
+  --#{calc.$color}palette-pink-090: #540523;
+  --#{calc.$color}palette-pink-080: #730932;
+  --#{calc.$color}palette-pink-070: #9c1349;
+  --#{calc.$color}palette-pink-060: #ce1562;
+  --#{calc.$color}palette-pink-050: #f15082;
+  --#{calc.$color}palette-pink-040: #f694ab;
+  --#{calc.$color}palette-pink-030: #f1b8c2;
+  --#{calc.$color}palette-pink-020: #ffd8df;
+  --#{calc.$color}palette-pink-010: #fcedee;
+  --#{calc.$color}palette-pink-005: #fff4f4;
+  //
   --#{calc.$color}palette-transparent-black-0: transparent;
   --#{calc.$color}palette-transparent-black-100: #000;
   --#{calc.$color}palette-transparent-black-090: rgba(0, 0, 0, 0.9);
@@ -187,6 +200,31 @@ $danger: (
         )
 );
 
+$palette-red: (
+        50 : #f9eeed,
+        100 : #ffdad4,
+        200 : #f6b8ae,
+        300 : #fd9485,
+        400 : #fd9485,
+        500 : #f7513f,
+        600 : #d31710,
+        700 : #9f180f,
+        800 : #6e1911,
+        900 : #3d0101,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #ffffff,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+        )
+) !default;
+
 
 $gray: (
         30 : #FAFAFA,
@@ -241,9 +279,9 @@ $colors: (
         fg-enrolling: var(--#{calc.$color}palette-teal-050),
         bg-enrolling: var(--#{calc.$color}palette-teal-010),
   //loaders
-        loader-border: var(--#{calc.$cb}palette-transparent-black-030),
-        loader-bg-1: var(--#{calc.$cb}palette-transparent-black-010),
-        loader-bg-2: var(--#{calc.$cb}palette-transparent-black-020),
+        loader-border: var(--#{calc.$color}palette-transparent-black-005),
+        loader-bg-1: var(--#{calc.$color}palette-transparent-black-005),
+        loader-bg-2: var(--#{calc.$color}palette-transparent-black-005),
   //
           "form-primary-clr": var(--#{calc.$cb}primary),
           "form-primary-clr-rgb": var(--#{calc.$cb}primary-rgb),

@@ -181,6 +181,9 @@ a {
 [hidden] {
   display: none !important;
 }
+fieldset {
+  padding: 0; margin: 0; border: none;
+}
 
 @media print {
   .d-no-print {

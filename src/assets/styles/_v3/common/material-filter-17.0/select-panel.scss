@@ -24,73 +24,86 @@ $init: (
         ),
 ) !default;
 
-
-.md-filter-panel {
-  & > * {
-    @include calc.css-initVars($init, $l );
+:root {
+  --mat-autocomplete-container-elevation-shadow: var(--#{$h}mat-menu-box-shadow)!important;
+  .mat-mdc-select-panel{
+    padding: var(--#{$h}mat-menu-side-offset-y) 0;
+    border-radius: var(--#{$h}mat-menu-radius) !important;
+    border: var(--#{$h}mat-menu-border);
+    /* Shadow/bottom-4 */
+    box-shadow: var(--#{$h}mat-menu-box-shadow) !important;
   }
 
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  max-width: 100%;
-  overflow: auto !important;
-  align-items: stretch;
-  align-content: stretch;
 
-  .md-content {
+  .md-filter-panel {
+    & > * {
+      @include calc.css-initVars($init, $l);
+    }
+
     display: flex;
     flex-direction: column;
     height: 100%;
-
     width: 100%;
     max-width: 100%;
-    overflow: hidden !important;
+    overflow: auto !important;
     align-items: stretch;
     align-content: stretch;
-    grid-template-rows: max-content auto max-content;
+    padding: var(--#{$h}mat-menu-side-offset-y) 0;
+    border-radius: var(--#{$h}mat-menu-radius) !important;
+    box-shadow: var(--#{$h}mat-menu-box-shadow) !important;
 
-    > * {
-      &:empty {
-        display: none;
-      }
-    }
+    .md-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
 
-    .md-head {
-      flex: none;
-      padding: 0 var(--#{$h}mat-menu-side-offset-x);
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden !important;
+      align-items: stretch;
+      align-content: stretch;
+      grid-template-rows: max-content auto max-content;
 
-      & > .filter-body-text {
-        margin: var(--#{$h}mat-menu-side-offset-y) 0;
-        @include calc.font-size(var(--#{calc.$cb}font-size-sm));
-
-        > * {
-          min-width: 0;
+      > * {
+        &:empty {
+          display: none;
         }
       }
 
-      &__grid {
+      .md-head {
+        flex: none;
+        padding: 0 var(--#{$h}mat-menu-side-offset-x) var(--#{$h}mat-menu-side-header-offset-y) ;
 
-        @include calc.make-row();
-        column-gap: 0;
-        row-gap: 0;
-        align-items: flex-start;
-        justify-content: space-between;
-        
-        > * {
-          @include calc.make-col-auto();
+        & > .filter-body-text {
+          margin: var(--#{$h}mat-menu-side-offset-y) 0;
+          @include calc.font-size(var(--#{calc.$cb}font-size-sm));
+
+          > * {
+            min-width: 0;
+          }
         }
 
-        > *:not(:first-child) {
-          @include calc.make-col-auto();
-        }
+        &__grid {
 
-        .mat-mdc-form-field {
-          max-width: 100%;
+          @include calc.make-row();
+          column-gap: 0;
+          row-gap: 0;
+          align-items: flex-start;
+          justify-content: space-between;
+
+          > * {
+            @include calc.make-col-auto();
+          }
+
+          > *:not(:first-child) {
+            @include calc.make-col-auto();
+          }
+
+          .mat-mdc-form-field {
+            max-width: 100%;
+          }
         }
       }
-    }
 
       .md-body {
         position: relative;
@@ -177,7 +190,7 @@ $init: (
 
 
     .mat-mdc-option, .mat-mdc-optgroup .mat-mdc-optgroup-label {
-      padding: var(--#{$h}mat-menu-side-offset-y) var(--#{$h}mat-menu-side-offset-x);
+      padding: var(--#{$h}mat-menu-option-y) var(--#{$h}mat-menu-option-x);
       line-height: var(--#{calc.$cb}line-height-sm);
       white-space: normal;
       height: auto;
@@ -194,7 +207,7 @@ $init: (
 
     .mat-mdc-optgroup {
       .mat-mdc-optgroup-label {
-        background-color: var(--#{calc.$cb}lighter-clr);
+        background-color: transparent;
         color: rgba(var(--#{calc.$cb}body-clr-rgb), .65);
         font-weight: var(--#{calc.$cb}font-weight-bold);
       }
@@ -251,7 +264,7 @@ $init: (
     --#{calc.$cb}btn-base-height: var(--#{$h}filter-panel-btn-base-height, 2.5rem);
 
     .md-footer {
-      padding: var(--#{$h}mat-menu-side-footer-offset-y) var(--#{$h}mat-menu-side-footer-offset-x);
+      padding: var(--#{$h}mat-menu-side-footer-offset-y) var(--#{$h}mat-menu-side-footer-offset-x) 0;
       display: grid;
       justify-content: space-between;
       align-items: center;
@@ -264,9 +277,9 @@ $init: (
 
       apply-filter {
         button {
-            --btn-min-width: 4rem;
-            --cb-btn-base-height: 2rem;
-            font-size: var(--#{calc.$cb}btn-sm-font-size);
+          --btn-min-width: 4rem;
+          --cb-btn-base-height: 2rem;
+          font-size: var(--#{calc.$cb}btn-sm-font-size);
         }
       }
 
@@ -283,20 +296,20 @@ $init: (
 
   .mat-mdc-select-panel.md-filter-panel {
     &:not(.md-filter-panel--same-width) {
-    display: flex;
-    flex-direction: column !important;
-    height: 100%;
+      display: flex;
+      flex-direction: column !important;
+      height: 100%;
 
       max-width: fit-content !important;
       min-width: var(--#{$h}filter-panel-min-with, auto);
 
       @include calc.media-breakpoint-down(md) {
-        max-width: 100%!important;
+        max-width: 100% !important;
       }
 
-    overflow: visible !important;
-    align-items: stretch;
-    align-content: stretch;
+      overflow: visible !important;
+      align-items: stretch;
+      align-content: stretch;
 
       &[aria-label="modifiers"] {
         max-width: 100% !important;
@@ -318,7 +331,7 @@ $init: (
 
   .mat-select-search-no-entries-found {
     color: var(--#{calc.$cb}danger);
-    font-size:var(--#{calc.$cb}font-size-sm);
+    font-size: var(--#{calc.$cb}font-size-sm);
   }
 
   .mat-select-search-panel:not(.app-base-select-filter-panel) {
@@ -353,3 +366,4 @@ $init: (
       border-top: 1px solid var(--#{calc.$cb}divider);
     }
   }
+}

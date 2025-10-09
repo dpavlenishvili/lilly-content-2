@@ -1,9 +1,10 @@
-<youtube-player [videoId]="youtubeId"
-                [playerVars]="videoParams"
+<youtube-player [videoId]="youtubeId()"
+                [playerVars]="videoParams()"
                 (stateChange)="sendAnalytic($event)"
                 (error)="handleError()"
-                [title]="title"
-                placeholderButtonLabel="Play {{title}} video"
+                [title]="title()"
+                placeholderButtonLabel="Play {{title()}} video"
+                i18n-placeholderButtonLabel="@@youtube.play_title_video"
                 placeholderImageQuality="low">
 </youtube-player>
 

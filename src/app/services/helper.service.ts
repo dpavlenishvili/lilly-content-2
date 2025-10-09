@@ -11,6 +11,7 @@ import { LeaveCountryDialogComponent } from '../components/leave-country-dialog/
 import { LinkTarget, HelperService as SharedHelperService } from '@careboxhealth/layout1-shared';
 import { BehaviorSubject } from 'rxjs';
 import { Location, LocationStrategy, ViewportScroller } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 const ROUTES_SEPARATOR = '/';
 
@@ -39,6 +40,7 @@ export class HelperService {
   private readonly router: Router = inject(Router);
   protected readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly location: Location = inject(Location);
+  private readonly sanitizer: DomSanitizer = inject(DomSanitizer);
   protected locationStrategy = inject(LocationStrategy);
 
   goToLink(link: string, linkBehavior: LinkBehavior | string, analyticsObj?: {[key: string]: unknown}): void {
@@ -195,6 +197,54 @@ export class HelperService {
     return dialogRef;
   }
 
+  setVideoSrc(videoUrl: string, autoplay: '1' | '0' = '1'): { isIframe: boolean; videoSrc: string | SafeResourceUrl } {
+    if (!videoUrl) {
+      return;
+    }
+
+    if (this.isAllowedVideoFormat(videoUrl)) {
+      return { isIframe: false, videoSrc: videoUrl };
+    } else {
+      // Get the search params from the URL
+      const url: URL = new URL(videoUrl);
+      const searchParams: URLSearchParams = new URLSearchParams(url.search);
+      const defaultParams: {
+        rel: string;
+        autoplay: string;
+        loop: string;
+        mute: string;
+      } = {
+        rel: '0',
+        autoplay,
+        loop: '1',
+        mute: '1'
+      };
+
+      // update query params
+      Object.keys(defaultParams).forEach(key => {
+        if (searchParams.get(key)) {
+          return;
+        }
+        searchParams.set(key, defaultParams[key]);
+      });
+
+      // get youtube video Id from link
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match: RegExpMatchArray | null = videoUrl.match(regExp);
+
+      if (match?.length) {
+        videoUrl = 'https://www.youtube.com/embed/' + match[2];
+      } else {
+        videoUrl = url.origin + url.pathname;
+      }
+
+      return {
+        isIframe: true,
+        videoSrc: this.sanitizer.bypassSecurityTrustResourceUrl(`${videoUrl}?${searchParams.toString()}`)
+      };
+    }
+  }
+
   private handleDialogRef(dialogRef: MatDialogRef<LeaveDialogComponent>, analyticsObj?: {[key: string]: unknown}) {
     dialogRef.afterClosed().pipe(take(1)).subscribe(data => {
       if (!data) {
@@ -244,12 +294,76 @@ export class HelperService {
     this.viewportScroller.setOffset([0, offset]);
   }
 
+  public isAllowedVideoFormat(videoUrl: string): boolean {
+    const allowedVideoFormat: string[] = ['.mp4', '.ogv', '.ogm', '.ogg', '.webm'];
+    return allowedVideoFormat.some((format: string) => videoUrl.toLowerCase().includes(format));
+  }
+
   get isItaly(): boolean {
     return this.configuration.defaultCultureCode?.toLowerCase() === LanguageCode.it_IT;
   }
 
   get disabledConfirmLeaveCountry(): boolean {
     return !this.isItaly;
+  }
+
+  async downloadFile(fileUrl: string, fileName: string = 'download.pdf'): Promise<void> {
+    if (!fileUrl) return;
+
+    const response = await fetch(fileUrl.startsWith('http') ? fileUrl : `https:${fileUrl}`);
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    
+    window.URL.revokeObjectURL(url);
+  }
+
+  sendEmailWithFile(fileUrl: string, subject?: string): void {
+    if (!fileUrl) {
+      return;
+    }
+
+    const absoluteUrl = fileUrl.startsWith('http') ? fileUrl : `https:${fileUrl}`;
+
+    const emailSubject = subject ? encodeURIComponent(subject) : '';
+    const emailBody = encodeURIComponent(absoluteUrl);
+    const mailto = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    
+    this.sharedHelperService.windowOpen(mailto, LinkTarget.Self);
+  }
+
+  async printFile(fileUrl: string): Promise<void> {
+    if (!fileUrl) return;
+
+    const url = fileUrl.startsWith('http') ? fileUrl : `https:${fileUrl}`;
+
+    try {
+      const res = await fetch(url);
+      const blobUrl = URL.createObjectURL(await res.blob());
+      const iframe = Object.assign(document.createElement('iframe'), {
+        src: blobUrl,
+      });
+      document.body.appendChild(iframe);
+
+      iframe.onload = () => {
+        const iframeWindow = iframe.contentWindow;
+        if (!iframeWindow || !iframeWindow.focus || !iframeWindow.print) return;
+
+        iframeWindow.focus();
+        iframeWindow.print();
+
+        iframeWindow.addEventListener('afterprint', () => {
+          URL.revokeObjectURL(blobUrl);
+          iframe.remove();
+        });
+      };
+    } catch {
+      this.sharedHelperService.windowOpen(url, LinkTarget.Blank);
+    }
   }
 }
 

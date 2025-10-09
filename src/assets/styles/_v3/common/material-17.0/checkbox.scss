@@ -7,8 +7,10 @@ $md-checkbox-icon-size: var(--#{calc.$md}checkbox-icon-size);
 $md-checkbox-offset: var(--#{calc.$md}checkbox-list-offset);
 $md-checkmark-size: var(--#{calc.$md}checkbox-checkmark-size);
 
+
 :root {
   --mdc-checkbox-state-layer-size: var(--#{calc.$md}checkbox-size);
+  --mdc-form-field-label-text-size: 1em;
 }
 
 .mdc-checkbox {
@@ -18,10 +20,6 @@ $md-checkmark-size: var(--#{calc.$md}checkbox-checkmark-size);
   flex: 0 0 $md-checkbox-icon-size !important;
 }
 
-.mdc-checkbox__ripple, .mat-ripple.mat-mdc-checkbox-ripple {
-  opacity: 0 !important;
-}
-
 .mdc-checkbox .mdc-checkbox__background {
   @include calc.square($md-checkbox-icon-size, !important);
   border-width: var(--#{calc.$md}checkbox-border-size) !important;
@@ -29,6 +27,7 @@ $md-checkmark-size: var(--#{calc.$md}checkbox-checkmark-size);
   left: calc((var(--mdc-checkbox-state-layer-size) - $md-checkbox-icon-size) / 2) !important;
 
   border-radius: var(--#{calc.$md}checkbox-border-radius) !important;
+  border-color: var(--#{calc.$cb}form-primary-clr);
 }
 
 .mdc-checkbox__checkmark {
@@ -37,129 +36,90 @@ $md-checkmark-size: var(--#{calc.$md}checkbox-checkmark-size);
   @include calc.square($md-checkmark-size, !important);
 }
 
+.mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) ~ .mdc-checkbox__background {
+  background-color: white !important;
+  --mdc-checkbox-unselected-focus-icon-color: var(--#{calc.$cb}form-primary-clr);
+  --mdc-checkbox-unselected-hover-icon-color: var(--#{calc.$cb}form-primary-clr);
+}
 
-.mat-mdc-checkbox.md-checkbox-cond {
-  display: grid;
-  align-items: center;
+
+
+.mat-mdc-radio-button, .mat-mdc-checkbox {
+  --label-padding-x: 0rem;
+  --label-padding-y: .65rem;
+  --gap: .25rem;
+  font-feature-settings: 'ss02' on;
+  --mdc-form-field-label-text-size: 1em;
 
   .mdc-form-field {
     display: grid;
-    align-items: start;
-    padding: calc(1rem) 0;
-    white-space: normal;
-    line-height: var(--#{calc.$cb}line-height-sm, 1.15);
-    grid-template-columns: min-content auto;
-    grid-template-areas:"check label";
-    min-height: 2.5rem;
-
-    .mdc-checkbox {
-      grid-area: check;
-      margin: 0 !important;
-    }
-
-    .mdc-label {
-      grid-area: label;
-      padding-top: calc((var(--#{calc.$md}checkbox-size) - var(--#{calc.$md}checkbox-icon-size)) * 0.5);
-    }
-
-  }
-}
-
-
-// radio
-.mat-mdc-radio-button {
-  --mdc-radio-state-layer-size: var(--#{calc.$md}radio-size);
-
-  .mdc-radio {
-    padding: calc((var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
-  }
-}
-
-.mat-mdc-radio-button .mdc-radio .mdc-radio__background::before {
-  top: calc(-1 * (var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
-  left: calc(-1 * (var(--mdc-radio-state-layer-size) - var(--#{calc.$md}radio-icon-size)) / 2) !important;
-}
-
-.mdc-radio__background {
-  @include calc.square(var(--#{calc.$md}radio-icon-size), !important);
-}
-
-.mdc-radio {
-  --mat-radio-ripple-color: 0;
-  @include calc.square(var(--#{calc.$md}radio-icon-size), !important);
-}
-
-.mdc-radio__inner-circle {
-  border-width: 0 !important;
-  background: var(--mdc-radio-selected-icon-color) !important;
-}
-
-.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
-  opacity: 0 !important;
-}
-
-.mat-mdc-radio-button .mat-radio-ripple {
-  opacity: 0 !important;
-}
-
-
-
-
-//
-.md-checkbox-custom {
-  .mat-mdc-checkbox {
-    display: grid;
     align-items: center;
+    white-space: normal;
 
-    .mdc-form-field {
+    grid-template-columns:  min-content 1fr ;
+    grid-template-areas:"check label";
+    gap: var(--gap);
+    padding: 0;
+    cursor: pointer;
+    //
+
+
+    > .mdc-radio, > .mdc-checkbox {
+      grid-area: check;
+      margin-left: -0.5rem !important;
+      margin-right: auto  !important;
+
+      .mat-ripple-element {
+        //display: none;
+      }
+    }
+
+    > .mdc-label {
       display: grid;
-      align-items: start;
-      padding: calc(var(--#{calc.$md}list-offset-y) * .5) 0;
-      white-space: normal;
-      line-height: var(--#{calc.$cb}line-height-sm, 1.15);
+      width: 100%;
+      align-items: center;
+      grid-area: label;
+      cursor: pointer;
+      line-height: 1.25;
+      padding: var(--label-padding-y) var(--label-padding-x);
+      //padding-left: calc(var(--label-offset) - 0.25rem  );
+      user-select: none;
+
+    }
+  }
+
+  &.cdk-keyboard-focused {
+    outline: 2px solid var(--#{calc.$cb}btn-focus-clr);
+  }
+
+  &.left-aligned {
+    .mdc-form-field {
       grid-template-columns: min-content auto;
-      grid-template-areas:"check label";
-      min-height: var(--#{calc.$md}list-min-height);
+      grid-template-areas: "check label";
 
-      .mdc-checkbox {
-        grid-area: check;
-        margin: 0 !important;
+      > .mdc-checkbox, > .mdc-radio {
+        grid-column: auto;
+        grid-row: auto;
       }
 
-      .mdc-label {
-        grid-area: label;
-        padding-top: calc((var(--#{calc.$md}checkbox-size) - var(--#{calc.$md}checkbox-icon-size)) * 0.5);
+      > .mdc-label {
+        padding-right: var(--label-padding-x);
       }
-
     }
   }
 }
 
-.md-radio-custom {
-  .mat-mdc-radio-button {
-    display: grid;
-    //align-items: center;
+.mat-mdc-checkbox {
+  --label-offset: calc(var(--#{calc.$md}checkbox-size));
 
-    .mdc-form-field {
-      display: grid;
-      align-items: start;
-      padding: calc(var(--#{$h}list-offset-y) * .5) 0;
-      white-space: normal;
-      line-height: var(--#{calc.$cb}line-height-sm, 1.15);
-      grid-template-columns: min-content auto;
-      grid-template-areas:"check label";
-      min-height: var(--#{calc.$md}list-min-height);
-
-      .mdc-radio {
-        grid-area: check;
-        margin: 0 !important;
-      }
-
-      .mdc-label {
-        grid-area: label;
-        padding-top: calc((var(--#{calc.$md}radio-size) - var(--#{calc.$md}radio-icon-size)) * 0.4);
-      }
-    }
+  &.mat-primary.ng-touched.ng-invalid {
+    --mdc-checkbox-unselected-icon-color: var(--#{calc.$cb}danger);
+    --mdc-checkbox-unselected-focus-icon-color: var(--#{calc.$cb}danger);
   }
 }
+
+.mat-mdc-radio-button {
+  --label-offset: var(--#{calc.$md}radio-size);
+}
+
 

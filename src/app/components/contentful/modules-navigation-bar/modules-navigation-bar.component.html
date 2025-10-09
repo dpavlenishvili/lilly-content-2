@@ -1,6 +1,7 @@
-<div class="block menu-area">
-    <div class="nav--tabs is-nav-desktop">
-        <div class="nav--tabs__container" id="nav-cont-elements">
+<div class=" menu-area">
+  <container-wrapper>
+    <div class="nav--tabs">
+        <div class="nav--tabs__container show-desktop-only" id="nav-cont-elements">
             <lilly-one-row-navigation>
                 <div class="nav--tabs__content">
                     @for (item of modulesNavigationBarFields()?.menu; track item.sys.id) {
@@ -16,7 +17,7 @@
         </div>
     </div>
 
-    <div class="form-group is-nav-mobile">
+    <div class="form-group show-mobile-only">
         <div class="label--external">{{ fields()?.mobileDropdownLabel }}</div>
         <mat-form-field class="research-areas-dropdown has-out-hint">
             <mat-select [value]="selectedMenuItem()" (selectionChange)="onMenuItemClick($event.value)">
@@ -27,24 +28,33 @@
         </mat-form-field>
     </div>
 
+  </container-wrapper>
+
     @if (selectedMenuItem()?.fields?.introduction?.fields) {
-    <div class="selected-content">
+    <div class="menu-area__content">
         <lilly-content-image-tile-widget
             [imageTileWidgetFields]="selectedMenuItem()?.fields?.introduction?.fields"></lilly-content-image-tile-widget>
     </div>
     }
 
     @if (selectedMenuItem()?.fields?.weekPlannerNavigation?.fields) {
-    <div class="selected-content">
+    <div class="menu-area__content">
         <lilly-content-week-planner-navigation-bar
             [weekPlannerNavigationBarFields]="selectedMenuItem()?.fields?.weekPlannerNavigation?.fields"></lilly-content-week-planner-navigation-bar>
     </div>
     }
 
     @if (selectedMenuItem()?.fields?.videoCarouselBlock?.fields) {
-      <div class="selected-content">
+      <div class="menu-area__content">
         <lilly-content-video-carousel-block
           [videoCarouselBlockFields]="selectedMenuItem()?.fields?.videoCarouselBlock?.fields"></lilly-content-video-carousel-block>
       </div>
     }
+
+    @if (selectedMenuItem()?.fields?.articlesBlock?.fields) {
+        <div class="menu-area__content">
+            <lilly-content-articles-block
+                [articlesBlockFields]="selectedMenuItem()?.fields?.articlesBlock?.fields"></lilly-content-articles-block>
+        </div>
+        }
 </div>

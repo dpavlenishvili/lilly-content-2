@@ -1,4 +1,5 @@
 $cb: cb- !default;
+$cb-hd: cb-hd- !default;
 $cb-subject-logo: #{$cb}subject-logo- !default;
 $cb-res: #{$cb}res- !default;
 $cb-sum: #{$cb}sum- !default;
@@ -52,9 +53,17 @@ $tag-class: #{$cb}tag !default;
 $cst--intro-class:  cst--intro !default;
 $cst--intro-prefix:  intro-- !default;
 
+// overlay quiz
+$quiz: #{$cb}quiz- !default;
+$quiz-overlay: #{$cb}quiz-overlay- !default;
+$quiz-overlay-class: #{$cb}quiz-overlay !default;
+
 // hero
 $cst--hero-class:  cst--hero !default;
 $cst--hero-prefix:  hero-- !default;
+
+$carousel: #{$cb}carousel- !default;
+$widget--image-tile: #{$cb}wdget--image-tile- !default;
 
 // scss-docs-start grid-breakpoints
 //$wrap-max-width: 1460px  !default;

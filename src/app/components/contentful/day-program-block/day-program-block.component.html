@@ -2,7 +2,7 @@
 <div class="block__content">
 <div class="block__title">
     <p>{{ fields()?.label }}</p>
-    <h3 class="h2-garamond-heading">{{ fields()?.heading }}</h3>
+    <h2 class="h2-garamond-heading">{{ fields()?.heading }}</h2>
   </div>
   <div class="block__text description" [innerHTML]="fields()?.bodyText | mdToHtml"></div>
   @if (fields()?.actionIcons?.length) {

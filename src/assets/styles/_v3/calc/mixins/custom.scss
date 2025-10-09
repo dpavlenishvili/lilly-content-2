@@ -81,7 +81,7 @@
   --padding-x: var(--#{$cb}space-100);
   --padding-y: var(--#{$cb}space-100);
   --color: var(--#{$cb}body-clr);
-  --bg-color: var(--#{$cb}lighter-clr);
+  --bg-color: var(-#{$color}palette-transparent-black-020);
   --border-radius: .25rem;
   --font-size: .75rem;
   --font-weight: var(--#{$cb}font-weight-bold);
@@ -110,7 +110,7 @@
 }
 
 
-@mixin cb-list($margin-bottom: 1rem, $bullet-offset: 1rem,  $bullet-color: var(--#{$cb}body-clr), $bullet-content: "\2022") {
+@mixin cb-list($margin-bottom: 1em, $bullet-offset: 1em,  $bullet-color: var(--#{$cb}body-clr), $bullet-content: "\2022") {
   --bulet-color: #{$bullet-color};
   --bulet-content: #{$bullet-content};
   --bulet-offset-y: #{$bullet-offset};
@@ -132,7 +132,7 @@
     }
   }
 }
-@mixin cb-list-num($margin-bottom: 0, $bullet-offset: 1.75rem,  $bullet-color: var(--#{$cb}primary)) {
+@mixin cb-list-num($margin-bottom: 0, $bullet-offset: 1.75em,  $bullet-color: var(--#{$cb}body-clr)) {
   --bulet-color: #{$bullet-color};
   --bulet-offset-y: #{$bullet-offset};
   list-style: none;
@@ -153,7 +153,7 @@
       font-size: .9em;
       content: counter(steps)".  ";
       color: var(--bulet-color);
-      font-weight: 700;
+      font-weight: normal;
       display: inline-block;
       width: 1.5em;
     }
@@ -194,13 +194,12 @@
   mat-error {
     display: flex;
     align-items: center;
-    margin-top: 3rem;
-    margin-left: 1rem;
-  
+    color: var(--#{$cb}danger);
+
     mat-icon {
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: 1rem;
     }
   }
 }

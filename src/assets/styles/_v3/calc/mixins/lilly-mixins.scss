@@ -12,6 +12,92 @@
 
 }
 
+@mixin trials-cards(
+  $h: 'trials-card-',
+  $db: lg,
+  $card-offset-y: (media-query-up: (
+        xs: var(--#{vars.$cb}space-300),
+        sm: var(--#{vars.$cb}space-400),
+        lg: var(--#{vars.$cb}space-500),
+        )),
+  $lg-offset-y: (media-query-up: (
+        xs: var(--#{vars.$cb}space-500),
+        #{$db}: var(--#{vars.$cb}space-600),
+))
+) {
+  $init: (
+          card-offset-y: $card-offset-y,
+          lg-offset-y: $lg-offset-y,
+  ) !default;
+  @include css.initVars($init, $h);
+  .md-card-result {
+    padding-bottom: var(--#{$h}card-offset-y);
+    border-bottom: 1px solid var(--#{vars.$cb}divider);
+  }
+
+  & > * {
+    display: block;
+
+    &:not(:nth-child(1)):not(:nth-child(2)):not(.cb-filter-counts):not(&#alertme-banner), &:not(&#alertme-banner) {
+      margin-top: var(--#{$h}card-offset-y);
+    }
+
+    //&#alertme-banner {
+    //}
+
+    .md-card-promo, .md-card-promo-strip, .add__more_trials {
+      margin: var(--#{$h}lg-offset-y) 0;
+    }
+  }
+}
+
+@mixin md-card-promo--custom(
+  $h: 'card-pro--custom--',
+) {
+  $init: (
+          title-font-size: (media-query-up: (
+                  xs: var(--#{vars.$cb}font-size-225),
+                  lg: 3rem,
+          )),
+          description-max-width: (media-query-up: (
+                  xs: 100%,
+                  lg: 85%,
+          )),
+          description-desktop-display: (
+                  media-query-up: (
+                          xs: none,
+                          md: block,
+                  )
+          ),
+          description-mobile-display: (
+                  media-query-up: (
+                          xs: block,
+                          md: none,
+                  )
+          ),
+  ) !default;
+  @include css.initVars($init, $h);
+  @include md-card-promo();
+  .title {
+    font-size: var(--#{$h}title-font-size);
+  }
+
+  .block__text {
+    line-height: 1.5rem;
+    max-width: var(--#{$h}description-max-width);
+    margin: 0 auto;
+  }
+  .description {
+    .desktop {
+      display: var(--#{$h}description-desktop-display);
+    }
+
+    .mobile {
+      display: var(--#{$h}description-mobile-display);
+    }
+  }
+}
+
 @mixin md-card-promo(
   $h: 'card-pro-',
   $bg: var(--#{vars.$color}palette-red-010),

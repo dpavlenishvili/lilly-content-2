@@ -1,4 +1,3 @@
-// video-card.component.ts
 import { ChangeDetectionStrategy, Component, computed, input, signal, } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { IVideoCard } from '../../models/contentful';
@@ -14,14 +13,13 @@ import { MediaContentType } from '../../media-content/media-content-type.enum';
   imports: [MatIcon, MediaContentComponent],
 })
 export class VideoCardComponent {
-  // --- INPUTS ---
   readonly video = input.required<IVideoCard>();
 
-  // --- STATE ---
   readonly isPlaying = signal(false);
 
-  // --- COMPUTED ---
-  // Dynamically compute the correct mediaId based on displayMedia type
+  readonly playVideoLabel = $localize`:@@video_card.play_video_arialabel:Play video`;
+  readonly pauseVideoLabel = $localize`:@@video_card.pause_video_arialabel:Pause video`;
+
   readonly mediaId = computed(() => {
     const videoConfig = this.video()?.fields?.video;
     if (!videoConfig) return '';
@@ -40,13 +38,11 @@ export class VideoCardComponent {
     }
   });
 
-  // Get the first Kaltura UI Config ID (if exists)
   readonly uiConfigId = computed(() => {
     const kalturaConfigs = this.video()?.fields?.video?.fields?.kalturaUiConfig;
     return kalturaConfigs?.[0]?.fields?.id || '';
   });
 
-  // --- PUBLIC METHODS ---
   togglePlay(event: Event): void {
     event.stopPropagation();
     this.isPlaying.update(playing => !playing);

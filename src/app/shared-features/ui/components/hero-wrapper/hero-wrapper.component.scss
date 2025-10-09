@@ -1,0 +1,34 @@
+@use "_v3/calc" as calc;
+@use '_v3/modules/layouts/cst-calc' as hero;
+
+@include hero.cst-configure(
+  $class-name: #{calc.$cst--hero-class},
+  $h: #{calc.$cst--hero-prefix},
+  $content-template-areas: (media-query-up: (
+    xs: ' "#{calc.templateRow((4, "b"))}" "#{calc.templateRow((4, "f" ))}"',
+    md: ' "#{calc.templateRow((8, "b"))}" "#{calc.templateRow((8, "f" ))}"',
+    lg: ' "#{calc.templateRow((12, "b"))}" "#{calc.templateRow((12, "f" ))}"',
+    xl: ' "#{calc.templateRow((10, "b", 2, "0" ))}" "#{calc.templateRow((12, "f" ))}"',
+  )),
+  $min-height: (media-query-up: (
+    xs: 60dvh,
+    sm: 50dvh,
+    lg: 60dvh,
+  ))
+);
+
+:host {
+  ::ng-deep {
+    .#{calc.$cst--hero-class} {
+
+      @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (min-height: map-get(calc.$height-breakpoints, xl)) {
+        //--#{calc.$cst--hero-prefix}min-height: 44.25rem;
+      }
+      @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (min-height: map-get(calc.$height-breakpoints, xxl)) {
+        --#{calc.$cst--hero-prefix}min-height: 56.25rem;
+      }
+    }
+  }
+
+
+}

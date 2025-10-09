@@ -3,183 +3,39 @@
 //@use "_md.000/calc" as *;
 @forward "./text-field" as control*;
 
-//control.$test: green;
-$row-field: (
-        width: 10rem,
-        min-width: 5rem,
-  //max-width: 18rem,
-        text-width: 8rem,
-) !default;
-
-$row-field-max-width: (media-query-up: (
-        xs: 12rem,
-        xl: 8rem,
-        gl: 18rem
-)) !default;
-
-// Input
-$font-size: (media-query-up: (
-        xs: var(--#{calc.$cb}font-size-sm, .85rem),
-        sm: var(--#{calc.$cb}font-size-base, 1rem),
-)) !default;
-
-
-$line-height: (media-query-up: (
-        xs: 1.5,
-)) !default;
-
-$min-height: (media-query-up: (
-        xs: 3.5rem,
-)) !default;
-
-$offset-y-t: (media-query-up: (
-        xs: 1.5rem,
-)) !default;
-
-$offset-y-b: (media-query-up: (
-        xs: .5rem,
-        sm: 0.5rem
-)) !default;
-//
-$offset-x: (media-query-up: (
-        xs: 1rem,
-        sm: 1rem
-)) !default;
-
-$offset-y: (
-        media-query-up: (
-                xs: .25rem,
-                sm: .39rem
-        )
-) !default;
-
-$border-radius: (
-        media-query-up: (
-                xs: 0.25rem 0.25rem 0 0,
-        )
-) !default;
-
-$border-size-shift: (
-        media-query-up: (
-                xs: 0.25rem,
-                sm: 0.2rem
-        )
-) !default;
-
-$bg-clr: rgba(var(--#{calc.$cb}white-rgb), 1) !default;
-$btn-icon-location-bg-color: rgba(var(--#{calc.$cb}form-accent-clr-rgb), .15) !default;
-$btn-icon-location-color: var(--#{calc.$cb}form-primary-clr) !default;
-
-$init-text-field: (
-  // typography
-        font-size: $font-size,
-        line-height: $line-height,
-        label-weight: var(--#{calc.$cb}font-weight-normal),
-        value-weight: var(--#{calc.$cb}font-weight-middle),
-        value-weight-active: var(--#{calc.$cb}font-weight-bold),
-  //
-        min-height: $min-height,
-        offset-x: $offset-x,
-        offset-y-t: $offset-y-t,
-        offset-y-b: $offset-y-b,
-        border-radius: $border-radius,
-        border-width: 1.25px,
-  //arrow
-        arrow-size: 0.75rem,
-        arrow-border-radius: 0,
-        arrow-sym-size: 0.5rem,
-        arrow-line-width: 1.75px,
-  //btn
-        btn-icon-size: calc(var(--#{calc.$mdf}min-height) - var(--#{calc.$mdf}border-width) * 4 - 4px),
-        btn-icon-thumb-size: 65%,
-        btn-icon-clear-thumb-size: 42%,
-        btn-icon-radius: calc(var(--#{calc.$mdf}border-radius) * 1.05),
-        hint-height: 1.5rem,
-        hint-margin: 2rem,
-        hint-flexible-margin: 1rem,
-  //colors
-        clr: var(--#{calc.$cb}black),
-        clr-active: var(--#{calc.$cb}black),
-        bg-clr: $bg-clr,
-        bg-clr-active: var(--#{calc.$mdf}bg),
-        label-clr: rgba(var(--#{calc.$cb}black-rgb), 1),
-        label-clr-active: rgba(var(--#{calc.$cb}body-clr-rgb), 1),
-        border-clr: rgba(var(--#{calc.$cb}gray-900-rgb), .19),
-        border-clr-focus: rgba(var(--#{calc.$cb}gray-900-rgb), .31),
-        border-clr-active: rgba(var(--#{calc.$cb}success-rgb), 1),
-        prefix-icon-color: rgba(var(--#{calc.$cb}form-primary-clr-rgb), 0.98),
-        btn-icon-location-bg-color:$btn-icon-location-bg-color,
-        btn-icon-location-color:$btn-icon-location-color,
-  //arrow
-        arrow-bg-clr: transparent,
-        arrow-line-clr: currentColor,
-        arrow-bg-clr-active: transparent,
-        arrow-line-clr-active: currentColor,
-  //
-        disable-opacity: .51,
-        color-danger: var(--#{calc.$cb}danger),
-  //
-        row-field:$row-field,
-        row-field-max-width:$row-field-max-width,
-  // sub forms
-        sub-clr: var(--#{calc.$cb}black),
-        sub-bg-clr: rgba(var(--#{calc.$cb}gray-900-rgb), .038),
-        sub-bg-clr-active: rgba(var(--#{calc.$cb}gray-900-rgb), .038),
-        sub-clr-focus: var(--#{calc.$cb}white),
-        sub-label-clr-focus: var(--#{calc.$cb}white),
-        sub-bg-clr-focus: var(--#{calc.$cb}form-primary-clr),
-        sub-border-width: 0,
-        sub-border-width-focus: 0,
-        sub-font-size: 0.85rem,
-        sub-min-height:(media-query-up: (
-                xs: 2.8rem,
-                sm: 3rem,
-        )),
-        sub-offset-x: .75rem,
-        sub-offset-y-t: (media-query-up: (
-                xs: 1.5rem,
-                sm: 1.25rem
-        )),
-        sub-offset-y-b: (media-query-up: (
-                xs: .25rem,
-                sm: 0.25rem
-        )),
-        sub-btn-icon-size: calc(var(--#{calc.$mdf}sub-min-height) - var(--#{calc.$mdf}border-width) * 4 - 4px),
-        sub-line-height: 1.2,
-        sub-button-clear-size:2.4rem,
-        btn-filter-height: var(--#{calc.$mdf}sub-min-height),
-  // menu
-) !default;
-
 
 // dialog
 
-$dialog-offset-x: (
-        media-query-up: (
-                xs: var(--#{calc.$cb}space-300, 2rem),
-                lg: var(--#{calc.$cb}space-400, 2.5rem)
-        )
-) !default;
+$dialog-offset-x: (media-query-up: (
+        xs: var(--#{calc.$cb}space-200, 2rem),
+        lg: var(--#{calc.$cb}space-400, 2.5rem)
+)) !default;
 
-$dialog-offset-y: (
-        media-query-up: (
-                xs: var(--#{calc.$cb}space-300, 1.5rem),
-                sm: var(--#{calc.$cb}space-400, 2rem),
-        )
-) !default;
-$dialog-radius: 0 !default;
+$dialog-offset-y: (media-query-up: (
+        xs: var(--#{calc.$cb}space-200, 1rem),
+        sm: var(--#{calc.$cb}space-400, 2rem),
+)) !default;
+$dialog-radius: (media-query-up: (
+        xs: 1.5rem,
+        lg: 3rem,
+)) !default;
+$dialog-title-font-size: (media-query-up: (
+        xs: 2.5rem,
+        lg: 3.75rem
+)) !default;
 
 $mat-icon-button-size: 38px !default;
-$mat-icon-button-size-sm: 2.5rem !default;
+$mat-icon-button-size-sm: 1.5rem !default;
 $mat-icon-button-size-lg: 3.5rem !default;
 
 $chip: (
         bg-color: rgba(var(--#{calc.$cb}body-bg-clr), 1),
         color: initial,
-        border: 1px solid rgba(var(--#{calc.$cb}primary-200-rgb), 1),
+        border: 2px solid var(--#{calc.$color}neutral-base-030),
         text-width-max: 13.75rem,
-        min-height: 2rem,
-        font-size: .875rem
+        min-height: 2.5em,
+        font-size: 1em,
+        radius: var(--#{calc.$cb}radius-3),
 ) !default;
 
 $tooltip: (
@@ -200,26 +56,39 @@ $radio: (
         size: 2rem,
         icon-size: 1rem,
 ) !default;
-$checkbox-list-offset: (
-        media-query-up: (
-                xs: var(--#{calc.$cb}space-100, 1rem),
-                sm: 1em
-        )
-) !default;
+$checkbox-list-offset: (media-query-up: (
+        xs: var(--#{calc.$cb}space-100, 1rem),
+        sm: 1em
+)) !default;
 
 $init: (
-        mat-menu-side-offset-x: var(--#{calc.$cb}space-200),
-        mat-menu-side-offset-y: var(--#{calc.$cb}space-100),
+        mat-menu-side-offset-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-250),
+                lg: var(--#{calc.$cb}space-300)
+        )),
+        mat-menu-side-offset-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-250),
+        )),
+        mat-menu-radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-4),
+        )),
+        mat-menu-option-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-100),
+        )),
+        mat-menu-option-x: var(--#{calc.$md}mat-menu-side-offset-x),
+        mat-menu-box-shadow:'0 4px 12px 0 rgba(52, 63, 65, 0.08), 0 18px 28px 0 rgba(52, 63, 65, 0.12)',
+        mat-menu-border: 1px solid var(--#{calc.$color}neutral-base-010),
         mat-menu-side-offset-multiply: .75,
         mat-menu-side-footer-offset-x: var(--#{calc.$md}mat-menu-side-offset-x),
-        mat-menu-side-footer-offset-y: var(--#{calc.$cb}space-100),
+        mat-menu-side-header-offset-y: calc(var(--#{calc.$md}mat-menu-side-offset-y) * .75),
+        mat-menu-side-footer-offset-y: calc(var(--#{calc.$md}mat-menu-side-offset-y) * .75),
         mat-menu-title-font-size: var(--#{calc.$cb}font-size-base),
         mat-menu-title-font-weight: var(--#{calc.$cb}font-weight-bold),
         mat-menu-title-font-color: var(--#{calc.$cb}body-clr),
   // dialogs
         dialog-offset-x: $dialog-offset-x,
         dialog-offset-y: $dialog-offset-y,
-        dialog-title-font-size: var(--#{calc.$cb}h3),
+        dialog-title-font-size: $dialog-title-font-size,
         dialog-radius: $dialog-radius,
   //icons
         mat-icon-button-size: $mat-icon-button-size,
@@ -232,6 +101,61 @@ $init: (
         radio:$radio,
         checkbox-list-offset:$checkbox-list-offset,
         radio-list-offset:$checkbox-list-offset,
+        //
+        control-thumb-bg-clr: var(--#{calc.$cb}form-primary-clr),
+        control-thumb-clr: var(--#{calc.$cb}white),
+        control-thumb-border-radius: .25rem,
+        control-radius: var(--#{calc.$cb}radius-1),
+        control-min-height:  (media-query-up: (
+                xs: 5rem,
+                lg: 6rem,
+        )),
+
+        control-clr: var(--#{calc.$cb}body-clr),
+        control-bg-clr: var(--#{calc.$color}neutral-base-000),
+        control-border-clr: var(--#{calc.$color}palette-stone-030),
+        control-clr-active: var(--#{calc.$color}palette-blue-070),
+        control-bg-clr-active: var(--#{calc.$color}palette-stone-005),
+        control-border-clr-active: var(--#{calc.$color}palette-blue-070),
+        //
+        control-clr-wrong: var(--#{calc.$color}palette-pink-060),
+        control-bg-clr-wrong: var(--#{calc.$color}palette-pink-005),
+        control-border-clr-wrong: var(--#{calc.$color}palette-pink-060),
+        //
+        control-clr-error: var(--#{calc.$color}palette-red-070),
+        control-bg-clr-error: var(--#{calc.$color}palette-red-005),
+        control-border-clr-error: var(--#{calc.$color}palette-red-070),
+        //
+        control-clr-hover: unset,
+        control-bg-clr-hover: unset,
+        control-border-clr-hover: var(--#{calc.$color}palette-stone-040),
+
+        //
+        control-label-border-width: 1px,
+        control-label-border-width-active: 2px,
+        control-shadow: none,
+        contolr-shadow-clr: var(--#{calc.$cb}form-primary-clr),
+        control-shadow-active: none,
+        control-shadow-focus: none,
+        control-shadow-hover: '0px 0px 16px 0px rgba(0, 0, 0, 0.02)',
+        controls-gap: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                lg: var(--#{calc.$cb}space-300),
+        )),
+        control-label-padding-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-300),
+                lg: var(--#{calc.$cb}space-500),
+        )),
+        control-label-padding-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-200),
+                lg: var(--#{calc.$cb}space-400),
+        )),
+        //
+        //control-btn-bg-clr: var(--#{calc.$cb}black),
+        //control-btn-border-clr: var(--#{calc.$color}palette-blue-070),
+        //control-btn-border-clr-active: var(--#{calc.$color}palette-blue-070),
+        //control-btn-bg-clr-active: var(--#{calc.$cb}white),
+        //
         list-offset-y: (
                 media-query-up: (
                         xs: .25rem,
@@ -251,3 +175,152 @@ $init: (
                         md: 22.5rem
                 ))
 ) !default;
+
+
+////control.$test: green;
+//$row-field: (
+//        width: 10rem,
+//        min-width: 5rem,
+//  //max-width: 18rem,
+//        text-width: 8rem,
+//) !default;
+//
+//$row-field-max-width: (media-query-up: (
+//        xs: 12rem,
+//        xl: 8rem,
+//        gl: 18rem
+//)) !default;
+//
+//// Input
+//$font-size: (media-query-up: (
+//        xs: var(--#{calc.$cb}font-size-sm, .85rem),
+//        sm: var(--#{calc.$cb}font-size-base, 1rem),
+//)) !default;
+//
+//
+//$line-height: (media-query-up: (
+//        xs: 1.5,
+//)) !default;
+//
+//$min-height: (media-query-up: (
+//        xs: 3.5rem,
+//)) !default;
+//
+//$offset-y-t: (media-query-up: (
+//        xs: 1.5rem,
+//)) !default;
+//
+//$offset-y-b: (media-query-up: (
+//        xs: .5rem,
+//        sm: 0.5rem
+//)) !default;
+////
+//$offset-x: (media-query-up: (
+//        xs: 1rem,
+//        sm: 1rem
+//)) !default;
+//
+//$offset-y: (
+//        media-query-up: (
+//                xs: .25rem,
+//                sm: .39rem
+//        )
+//) !default;
+//
+//$border-radius: (
+//        media-query-up: (
+//                xs: 0.25rem 0.25rem 0 0,
+//        )
+//) !default;
+//
+//$border-size-shift: (
+//        media-query-up: (
+//                xs: 0.25rem,
+//                sm: 0.2rem
+//        )
+//) !default;
+//
+//$bg-clr: rgba(var(--#{calc.$cb}white-rgb), 1) !default;
+//$btn-icon-location-bg-color: rgba(var(--#{calc.$cb}form-accent-clr-rgb), .15) !default;
+//$btn-icon-location-color: var(--#{calc.$cb}form-primary-clr) !default;
+//
+//$init-text-field: (
+//  // typography
+//        font-size: $font-size,
+//        line-height: $line-height,
+//        label-weight: var(--#{calc.$cb}font-weight-normal),
+//        value-weight: var(--#{calc.$cb}font-weight-middle),
+//        value-weight-active: var(--#{calc.$cb}font-weight-bold),
+//  //
+//        min-height: $min-height,
+//        offset-x: $offset-x,
+//        offset-y-t: $offset-y-t,
+//        offset-y-b: $offset-y-b,
+//        border-radius: $border-radius,
+//        border-width: 1.25px,
+//  //arrow
+//        arrow-size: 0.75rem,
+//        arrow-border-radius: 0,
+//        arrow-sym-size: 0.5rem,
+//        arrow-line-width: 1.75px,
+//  //btn
+//        btn-icon-size: calc(var(--#{calc.$mdf}min-height) - var(--#{calc.$mdf}border-width) * 4 - 4px),
+//        btn-icon-thumb-size: 65%,
+//        btn-icon-clear-thumb-size: 42%,
+//        btn-icon-radius: calc(var(--#{calc.$mdf}border-radius) * 1.05),
+//        hint-height: 1.5rem,
+//        hint-margin: 2rem,
+//        hint-flexible-margin: 1rem,
+//  //colors
+//        clr: var(--#{calc.$cb}black),
+//        clr-active: var(--#{calc.$cb}black),
+//        bg-clr: $bg-clr,
+//        bg-clr-active: var(--#{calc.$mdf}bg),
+//        label-clr: rgba(var(--#{calc.$cb}black-rgb), 1),
+//        label-clr-active: rgba(var(--#{calc.$cb}body-clr-rgb), 1),
+//        border-clr: rgba(var(--#{calc.$cb}gray-900-rgb), .19),
+//        border-clr-focus: rgba(var(--#{calc.$cb}gray-900-rgb), .31),
+//        border-clr-active: rgba(var(--#{calc.$cb}success-rgb), 1),
+//        prefix-icon-color: rgba(var(--#{calc.$cb}form-primary-clr-rgb), 0.98),
+//        btn-icon-location-bg-color:$btn-icon-location-bg-color,
+//        btn-icon-location-color:$btn-icon-location-color,
+//  //arrow
+//        arrow-bg-clr: transparent,
+//        arrow-line-clr: currentColor,
+//        arrow-bg-clr-active: transparent,
+//        arrow-line-clr-active: currentColor,
+//  //
+//        disable-opacity: .51,
+//        color-danger: var(--#{calc.$cb}danger),
+//  //
+//        row-field:$row-field,
+//        row-field-max-width:$row-field-max-width,
+//  // sub forms
+//        sub-clr: var(--#{calc.$cb}black),
+//        sub-bg-clr: rgba(var(--#{calc.$cb}gray-900-rgb), .038),
+//        sub-bg-clr-active: rgba(var(--#{calc.$cb}gray-900-rgb), .038),
+//        sub-clr-focus: var(--#{calc.$cb}white),
+//        sub-label-clr-focus: var(--#{calc.$cb}white),
+//        sub-bg-clr-focus: var(--#{calc.$cb}form-primary-clr),
+//        sub-border-width: 0,
+//        sub-border-width-focus: 0,
+//        sub-font-size: 0.85rem,
+//        sub-min-height:(media-query-up: (
+//                xs: 2.8rem,
+//                sm: 3rem,
+//        )),
+//        sub-offset-x: .75rem,
+//        sub-offset-y-t: (media-query-up: (
+//                xs: 1.5rem,
+//                sm: 1.25rem
+//        )),
+//        sub-offset-y-b: (media-query-up: (
+//                xs: .25rem,
+//                sm: 0.25rem
+//        )),
+//        sub-btn-icon-size: calc(var(--#{calc.$mdf}sub-min-height) - var(--#{calc.$mdf}border-width) * 4 - 4px),
+//        sub-line-height: 1.2,
+//        sub-button-clear-size:2.4rem,
+//        btn-filter-height: var(--#{calc.$mdf}sub-min-height),
+//  // menu
+//) !default;

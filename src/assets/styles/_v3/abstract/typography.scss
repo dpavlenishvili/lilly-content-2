@@ -1,40 +1,49 @@
 @use '_v3/calc' as calc;
 
 $typography-to-css: (
-        //extra wide
-        ringside-heading-1-letter-spacing: -0.025em,
-        ringside-heading-1-line-height : 112%,
-
-        ringside-heading-1-font: (media-query-up: (
-                xs: '900 2.5rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
-                lg: '900 4rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
-        )),
-        ringside-heading-2-letter-spacing: -0.15rem,
-        ringside-heading-2-line-height : 110%,
-        ringside-heading-2-font: (media-query-up: (
-                xs: '900 2.5rem / 1.22 var(--#{calc.$cb}font-sans-extra-wide)',
-                lg: '900 3.75rem / 1.1 var(--#{calc.$cb}font-sans-extra-wide)',
-        )),
-
-        //serif
-        garamond-heading-1-letter-spacing: -0.09375rem,
-        garamond-heading-1-line-height : 128%,
-        garamond-heading-1-font: (media-query-up: (
-                xs: '300 3rem / 1.0 var(--#{calc.$cb}font-family-serif)',
-                lg: '300 6.25rem / 1.0 var(--#{calc.$cb}font-family-serif)',
-        )),
-
-        garamond-heading-3-letter-spacing: -0.045rem,
-        garamond-heading-3-line-height : 120%,
-        garamond-heading-3-font: (media-query-up: (
-                xs: '500 2.25rem / 1.0 var(--#{calc.$cb}font-family-serif)',
-                lg: '300 3rem / 1.0 var(--#{calc.$cb}font-family-serif)',
-        )),
-
-        h2-garamond-heading-letter-spacing: -0.045rem,
-        h2-garamond-heading-line-height : 120%,
-        h2-garamond-heading-font: (media-query-up: (
-                xs: '300 var(--#{calc.$cb}h2) / 1.0 var(--#{calc.$cb}font-family-serif)',
-        )),
-
+  //extra wide
+  //home page
+  ringside-heading-0-letter-spacing: -0.025em,
+  ringside-heading-0-line-height : 112%,
+  ringside-heading-0-font: (media-query-up: (
+    xs: '900 2.5rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+    lg: '900 4rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+  )),
+  ringside-heading-1-letter-spacing: -0.025em,
+  ringside-heading-1-line-height : 112%,
+  ringside-heading-1-font: (media-query-up: (
+    xs: '900 2.5rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+    md: '900 4rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+    lg: '900 5rem / 1.0 var(--#{calc.$cb}font-sans-extra-wide)',
+  )),
+  ringside-heading-2-letter-spacing: -0.15rem,
+  ringside-heading-2-line-height : 110%,
+  ringside-heading-2-font: (media-query-up: (
+    xs: '900 2.5rem / 1.22 var(--#{calc.$cb}font-sans-extra-wide)',
+    lg: '900 3.75rem / 1.1 var(--#{calc.$cb}font-sans-extra-wide)',
+  )),
+  //serif
+  garamond-heading-1-letter-spacing: -0.09375rem,
+  garamond-heading-1-line-height : 128%,
+  garamond-heading-1-font: (media-query-up: (
+    xs: '500 3rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+    lg: '400 6.25rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+  )),
+  garamond-heading-3-letter-spacing: -0.045rem,
+  garamond-heading-3-line-height : 120%,
+  garamond-heading-3-font: (media-query-up: (
+    xs: '300 2.25rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+    lg: '300 3rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+  )),
+  h2-garamond-heading-letter-spacing: -0.025rem,
+  h2-garamond-heading-line-height : 120%,
+  h2-garamond-heading-font: (media-query-up: (
+    xs: '300 var(--#{calc.$cb}h2) / 1.0 var(--#{calc.$cb}font-family-serif)',
+  )),
+  garamond-subtitle-letter-spacing: -0.03125rem,
+  garamond-subtitle-line-height : 1.5,
+  garamond-subtitle-font: (media-query-up: (
+    xs: '300 2rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+    lg: '300 4.5rem / 1.0 var(--#{calc.$cb}font-family-serif)',
+  )),
 ) !default;

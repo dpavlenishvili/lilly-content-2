@@ -301,31 +301,31 @@ $multi-3: .44;
   }
 }
 
-.mat-mdc-chip.md-filter-chip {
-  @include calc.font-size(.85rem);
-  margin: 0;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  color: var(--#{calc.$cb}body-clr);
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, .15);
-  font-weight: var(--#{calc.$cb}font-weight-normal);
-
-  .mdc-evolution-chip__text-label {
-    display: grid;
-    grid-auto-flow: column;
-    align-items: center;
-
-    > * {
-      min-width: 0;
-    }
-
-    .md-chip-value {
-      @include calc.truncate();
-    }
-  }
-
-}
+//.mat-mdc-chip.md-filter-chip {
+//  @include calc.font-size(.85rem);
+//  margin: 0;
+//  padding-top: 0 !important;
+//  padding-bottom: 0 !important;
+//  color: var(--#{calc.$cb}body-clr);
+//  background: transparent;
+//  border: 1px solid rgba(0, 0, 0, .15);
+//  font-weight: var(--#{calc.$cb}font-weight-normal);
+//
+//  .mdc-evolution-chip__text-label {
+//    display: grid;
+//    grid-auto-flow: column;
+//    align-items: center;
+//
+//    > * {
+//      min-width: 0;
+//    }
+//
+//    .md-chip-value {
+//      @include calc.truncate();
+//    }
+//  }
+//
+//}
 
 button {
   &.md-btn-chip-toggle, &.md-btn-chip-clear-no {

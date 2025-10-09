@@ -1,0 +1,38 @@
+<div class="show-desktop-only">
+  <button
+    #menuTrigger="appOverlayTrigger"
+    [appOverlayTrigger]="searchDesktopT"
+    [mode]="'click'"
+    [outsideClose]="'click-only'"
+    [overlayContainer]="overlayContainer()"
+    [overlayClass]="['h-overlay','h-overlay--float','h-overlay--desk-search', 'theme--dark']"
+    (isOpenChange)="menuOpen.emit($event)"
+    mat-icon-button
+    class="nav__btn"
+  >
+    <mat-icon svgIcon="search"></mat-icon>
+  </button>
+</div>
+<div class="show-mobile-only">
+  <button
+    mat-icon-button
+    class="nav__btn"
+  >
+    <mat-icon svgIcon="search"></mat-icon>
+  </button>
+</div>
+
+<ng-template #searchDesktopT>
+  <div class="h-overlay__search">
+    <div><mat-icon svgIcon="search"/></div>
+    <label for="inputDesk" i18n>Search Lilly</label>
+    <div class="form-group">
+    <mat-form-field class="has-out-hint" appearance="fill">
+      <input matInput
+             id="inputDesk"
+             [placeholder]="'Search Lilly.com'"
+              />
+    </mat-form-field>
+    </div>
+  </div>
+</ng-template>

@@ -3,150 +3,146 @@
 
 $h: calc.$cb !default;
 $base-sct-min-height-desk-0: (
-        query-height: 768px,
-        offset-y: 1.25rem,
-        height-wrap: 19.5rem,
-        img-width: 17rem,
+  query-height: 768px,
+  offset-y: 1.25rem,
+  height-wrap: 19.5rem,
+  img-width: 17rem,
 ) !default;
 
 $base-sct-min-height-desk-1: (
-        query-height: 920px,
-        offset-y: 1.5rem,
-        height-wrap: 20.75rem,
-        img-width: 17rem,
+  query-height: 920px,
+  offset-y: 1.5rem,
+  height-wrap: 20.75rem,
+  img-width: 17rem,
 ) !default;
 
 $base-sct-min-height-desk: (
-        1: $base-sct-min-height-desk-1,
-        0: $base-sct-min-height-desk-0,
+  1: $base-sct-min-height-desk-1,
+  0: $base-sct-min-height-desk-0,
 ) !default;
 
 $init: (
-        cst-display: block,
-        cst-min-h: 0,
-        cst-bg-clr: transparent,
-        cst-clr: var(--#{calc.$cb}body-clr),
-        cst-margin-bottom: 0,
-        cst-offset-x: 0,
-        cst-offset-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-700),
-                lg: var(--#{calc.$cb}space-800),
-                xl: var(--#{calc.$cb}space-900),
-        )),
-        cst-template-narrow-areas: (
-                media-query-up: (
-                        xs: ' "#{calc.templateRow((4, "in"))}" ',
-                        md: ' "#{calc.templateRow((8, "in"))}" ',
-                        lg: ' "#{calc.templateRow((12, "in"))}" ',
-                        xl: ' "#{calc.templateRow((1, "0", 10, "in"))}" ',
-                )
-        ),
-        cst-template-areas: (media-query-up: (
-                xs: ' "#{calc.templateRow((4, "in"))}" ',
-                md: ' "#{calc.templateRow((8, "in"))}" ',
-                lg: ' "#{calc.templateRow((12, "in"))}" ',
-        )),
-        cst-contnet-offset-x: 0,
-        cst-contnet-offset-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-100),
-                md: var(--#{calc.$cb}space-100),
-                lg: var(--#{calc.$cb}space-200),
-        )),
-        cst-grid-align-items: start,
-        cst-grid-justify-content: start,
-        cst-font-size: (media-query-up: (
-                xs: var(--#{calc.$cb}font-size-base),
-        )),
-        cst-title-align: (media-query-up: (
-                xs: start,
-        )),
-        cst-title-margin-t: (media-query-up: (
-                xs: var(--#{calc.$cb}space-0),
-        )),
-        cst-in-margin-y: (media-query-up: (
-                xs: var(--#{calc.$cb}block-offset-y),
-        )),
-        cst-header-gap: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-        )),
-        cst-content-gap: var(--#{calc.$cb}cst-header-gap),
-        cst-offset-add-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-500),
-                xl: var(--#{calc.$cb}space-600),
-        )),
-        cst-in-custom-margin-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-                lg: var(--#{calc.$cb}space-700),
-                xl: var(--#{calc.$cb}space-900),
-        )),
-        cst-header-custom-gap: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-        )),
-        cst-header-gap-lg: (media-query-up: (
-                xs: var(--#{calc.$cb}space-500),
-                xl: var(--#{calc.$cb}space-600),
-        )),
-        media-display: grid,
-        media-align-items: stretch,
-        media-justify-content:start,
-        media-object-fit: cover,
-        media-object-position: center center,
-        media-def-w: (media-query-up: (
-                xs: 100%,
-                md: 100%,
-                lg: 34rem,
-                xl: 40.688rem,
-        )),
-        media-prom-h: (media-query-up: (
-                xs: 17rem,
-                md: 18rem,
-                lg: 24rem,
-                xl: 28rem,
-        )),
-        media-def-h: (media-query-up: (
-                xs: 16rem,
-                md: 17rem,
-                lg: 18.75rem,
-        )),
-        media-w: (media-query-up: (
-                xs: 100%
-        )),
-        media-h: (media-query-up: (
-                xs: auto
-        )),
-        media-radius: 0,
-        media-margin: 0,
-        block-offset-lg-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-400),
-                sm: var(--#{calc.$cb}space-500)
-        )),
-        block-offset-md-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-300),
-                sm: var(--#{calc.$cb}space-600)
-        )),
-        block-offset-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-300),
-        )),
-        block-offset-sm-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-250),
-                sm: var(--#{calc.$cb}space-300)
-        )),
-        block-offset-xs-y: (media-query-up: (
-                xs: var(--#{calc.$cb}space-150),
-                sm: var(--#{calc.$cb}space-200)
-        )),
-        block-offset-action-y: (
-                media-query-up: (
-                        xs: var(--#{calc.$cb}block-offset-y),
-                        lg: var(--#{calc.$cb}space-400)
-                )
-        ),
-        block-text-align: (
-                media-query-up: (
-                        xs: start,
-                )
-        ),
-        title-under-width: 4rem,
+  cst-display: block,
+  cst-min-h: 0,
+  cst-bg-clr: transparent,
+  cst-clr: var(--#{calc.$cb}body-clr),
+  cst-margin-bottom: 0,
+  cst-offset-x: 0,
+  cst-offset-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-600),
+    xl: var(--#{calc.$cb}space-600),
+  )),
+  cst-offset-y-sm: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    xl: var(--#{calc.$cb}space-700),
+  )),
+  cst-template-narrow-areas: (
+    media-query-up: (
+      xs: ' "#{calc.templateRow((4, "in"))}" ',
+      md: ' "#{calc.templateRow((8, "in"))}" ',
+      lg: ' "#{calc.templateRow((12, "in"))}" ',
+      xl: ' "#{calc.templateRow((1, "0", 10, "in"))}" ',
+    )
+  ),
+  cst-template-areas: (media-query-up: (
+    xs: ' "#{calc.templateRow((4, "in"))}" ',
+    md: ' "#{calc.templateRow((8, "in"))}" ',
+    lg: ' "#{calc.templateRow((12, "in"))}" ',
+  )),
+  cst-contnet-offset-x: 0,
+  cst-contnet-offset-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-1000),
+  )),
+  cst-grid-align-items: start,
+  cst-grid-justify-content: start,
+  cst-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-base),
+  )),
+  cst-header-align: (media-query-up: (
+    xs: center,
+    lg: start,
+  )),
+  cst-title-align: (media-query-up: (
+    xs: var(--#{calc.$cb}cst-header-align),
+  )),
+  cst-title-margin-t: (media-query-up: (
+    xs: var(--#{calc.$cb}space-0),
+  )),
+  cst-title-margin-b: (media-query-up: (
+    xs: var(--#{calc.$cb}space-0),
+  )),
+  cst-in-margin-y: (media-query-up: (
+    xs: calc(var(--#{calc.$cb}cst-offset-y) * 2 ),
+  )),
+  cst-header-gap: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    lg: var(--#{calc.$cb}space-600),
+  )),
+  media-display: grid,
+  media-align-items: stretch,
+  media-justify-content:start,
+  media-object-fit: cover,
+  media-object-position: center center,
+  media-def-w: (media-query-up: (
+    xs: 100%,
+    md: 100%,
+    lg: 34rem,
+    xl: 40.688rem,
+  )),
+  media-prom-h: (media-query-up: (
+    xs: 17rem,
+    md: 18rem,
+    lg: 24rem,
+    xl: 28rem,
+  )),
+  media-def-h: (media-query-up: (
+    xs: 16rem,
+    md: 17rem,
+    lg: 18.75rem,
+  )),
+  media-w: (media-query-up: (
+    xs: 100%
+  )),
+  media-h: (media-query-up: (
+    xs: auto
+  )),
+  media-radius: 0,
+  media-margin: 0,
+  block-offset-lg-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    sm: var(--#{calc.$cb}space-600)
+  )),
+  block-offset-md-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    sm: var(--#{calc.$cb}space-600)
+  )),
+  block-offset-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+  )),
+  block-offset-sm-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-250),
+    sm: var(--#{calc.$cb}space-300)
+  )),
+  block-offset-xs-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-150),
+    sm: var(--#{calc.$cb}space-200)
+  )),
+  block-offset-hero-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-200),
+    lg: var(--#{calc.$cb}space-300),
+  )),
+  block-offset-action-y: (
+    media-query-up: (
+      xs: var(--#{calc.$cb}block-offset-y),
+      lg: var(--#{calc.$cb}space-400)
+    )
+  ),
+  block-text-align: (
+    media-query-up: (
+      xs: start,
+    )
+  ),
+  title-under-width: 4rem,
 ) !default;
 
 :root {
@@ -155,12 +151,13 @@ $init: (
   --#{calc.$cb}cst-intro-h: var(--#{calc.$cb}media-prom-h);
   --base-sect-offset-y: var(--#{calc.$cb}cst-offset-y);
   @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (max-height: map-get(calc.$height-breakpoints, xl)) {
+    --#{$h}cst-header-gap: var(--#{calc.$cb}space-500);
     --#{$h}cst-offset-y: var(--#{calc.$cb}space-700);
   }
   @media screen and (min-width: map-get(calc.$grid-breakpoints, xl)) and (min-height: map-get(calc.$height-breakpoints, xl)) {
-    --#{calc.$cb}cst-offset-add-y: var(--#{calc.$cb}space-900);
-    --#{calc.$cb}cst-in-custom-margin-y: var(--#{calc.$cb}space-1200);
-    --#{calc.$cb}cst-header-gap-lg: var(--#{calc.$cb}space-700);
+    --#{$h}cst-offset-y: var(--#{calc.$cb}space-900);
+    --#{$h}cst-contnet-offset-y: var(--#{calc.$cb}space-1200);
+    --#{$h}cst-offset-y-sm: var(--#{calc.$cb}space-800);
   }
 
 }
@@ -174,14 +171,26 @@ $init: (
   color: var(--#{calc.$cb}cst-clr);
   background-color: var(--#{calc.$cb}cst-bg-clr);
 
+  &--empty-content {
+    .cst__header {
+      margin-bottom: 0;
+
+    }
+  }
+
   &--my-0 {
     --#{calc.$cb}cst-offset-y: 0 !important;
   }
 
   &__content, &__header {
+
     &--container {
       @include calc.make-container();
       max-width: var(--#{calc.$cb}container-max-width-query);
+    }
+
+    &:empty {
+      display: none;
     }
   }
 
@@ -217,7 +226,7 @@ $init: (
 
 
   &__content {
-    font-size: var(--#{calc.$cb}cst-font-size);
+    //font-size: var(--#{calc.$cb}cst-font-size);
     align-items: var(--#{calc.$cb}cst-contnet-align-items);
 
     > * {
@@ -228,7 +237,8 @@ $init: (
   &__header {
     display: grid;
     margin-top: var(--#{calc.$cb}cst-title-margin-t);
-    margin-bottom: var(--#{calc.$cb}cst-in-margin-y);
+    margin-bottom: var(--#{calc.$cb}cst-header-gap);
+    text-align: var(--#{calc.$cb}cst-header-align);
 
     gap: var(--#{calc.$cb}cst-header-gap);
 
@@ -238,44 +248,30 @@ $init: (
     }
   }
 
+  &__label {
+    font: 900 0.75rem / 1 var(--#{calc.$cb}font-sans-extra-wide);
+    text-transform: uppercase;
+  }
 
-  &--custom {
-    display: grid;
 
-    .title {
-      --#{calc.$cb}cst-title-align: center;
+}
+
+.csts--wrapper {
+  > * {
+    &:first-child {
+      .cst {
+        padding-top: var(--#{calc.$cb}cst-in-margin-y);
+      }
     }
 
-    .lilly-logo-subject {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    --#{calc.$cb}cst-header-gap: var(--#{calc.$cb}cst-header-custom-gap);
-    --#{calc.$cb}cst-content-gap: var(--#{calc.$cb}cst-header-custom-gap);
-
-    &.cst--lg:not(.is-results-only) {
-      --#{calc.$cb}cst-header-gap: var(--#{calc.$cb}cst-header-gap-lg);
-      --#{calc.$cb}cst-content-gap: var(--#{calc.$cb}cst-header-gap-lg);
-    }
-
-    &.is--first {
-      padding-top: calc(var(--#{calc.$cb}cst-offset-y) + var(--#{calc.$cb}cst-offset-add-y));
-    }
-
-    --#{calc.$cb}cst-in-margin-y: var(--#{calc.$cb}cst-in-custom-margin-y);
-
-    .cst__header:has(.title.garamond-heading-3-font) {
-      margin-bottom: var(--#{calc.$cb}block-offset-md-y);
-
-        .title.garamond-heading-3-font {
-        @include calc.media-breakpoint-down(sm) {  
-          text-align: start;
-        }
+    &:last-child {
+      .cst {
+        padding-bottom: var(--#{calc.$cb}cst-in-margin-y);
       }
     }
   }
 }
+
 
 .block {
   & > * {
@@ -308,6 +304,10 @@ $init: (
     --#{$h}block-offset-y: var(--#{$h}block-offset-lg-y);
   }
 
+  &.block--hero {
+    --#{$h}block-offset-y: var(--#{$h}block-offset-hero-y);
+  }
+
 
   &:not(.is-grid) > *:not(:last-child), .block__content > *:not(:last-child) {
     margin-bottom: var(--#{calc.$cb}block-offset-y);
@@ -320,6 +320,9 @@ $init: (
   &__text, &__markdown, &__title, &__ref {
     ul {
       @include calc.cb-list();
+    }
+    ol {
+      @include calc.cb-list-num();
     }
 
     p:last-of-type, & > *:last-child {
@@ -346,7 +349,6 @@ $init: (
   height: var(--#{calc.$cb}media-h);
   margin: var(--#{calc.$cb}media-margin);
   max-width: 100%;
-  pointer-events: none;
 
   img, .media__thumb {
     display: block;

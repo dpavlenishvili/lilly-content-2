@@ -1,25 +1,32 @@
 <div class="cst__wrapper">
-    <div class="container">
-        <div class="cst__grid" [ngClass]="gridClass">
-            <div class="cst__grid__in">
-                @if (showHeaderContent) {
-                    <div class="cst__header">
-                        @if (showTitle) {
-                            <div class="cst__label">
-                                <ng-content select="[cst-label]"></ng-content>
-                            </div>
-                            <h2 class="title" [ngClass]="titleClass">
-                                <ng-content select="[cst-title]"></ng-content>
-                            </h2>
-                        }
-                        <ng-content select="[cst-header-content]"></ng-content>
-                    </div>
-                }
-                <div class="cst__content">
-                    <ng-content select="[cst-content]"></ng-content>
-                    <ng-content></ng-content>
-                </div>
-            </div>
-        </div>
-    </div>
+  <!--  <div class="" [ngClass]="containerClass">-->
+  <!--    <div class="cst__grid" [ngClass]="gridClass">-->
+  <!--      <div class="cst__grid__in">-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+
+  @if (showHeaderContent) {
+    <container-wrapper>
+
+      <div class="cst__header">
+        @if (showTitle) {
+          <div class="cst__label">
+            <ng-content select="[cst-label]"></ng-content>
+          </div>
+          <h2 class="title" [ngClass]="titleClass">
+            <ng-content select="[cst-title]"></ng-content>
+          </h2>
+        }
+        <ng-content select="[cst-header-content]"></ng-content>
+      </div>
+    </container-wrapper>
+  }
+  <div class="cst__content">
+
+    <ng-content select="[cst-content]"></ng-content>
+    <ng-content></ng-content>
+  </div>
+
 </div>

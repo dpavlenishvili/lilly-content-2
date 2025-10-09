@@ -1,0 +1,256 @@
+@use "_v3/calc" as calc;
+
+$h: #{calc.$md} !default;
+
+
+$init: (
+        controls-grid-template-columns: (
+                media-query-up: (
+                        xs: 1fr,
+                        lg: repeat(auto-fit, calc(50% - (var(--#{calc.$md}controls-gap) * 0.5))),
+                )
+        ),
+        control-min-height: (
+                media-query-up: (
+                        xs: 3.75rem,
+                        lg: 4.375rem
+                )
+        ),
+        control-input-width: (media-query-up: (
+                xs: 100%,
+        )),
+        // Questionnaire specific overrides
+        questionnaire-label-padding-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-250),
+                lg: var(--#{calc.$cb}space-400),
+        )),
+        questionnaire-label-padding-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-250),
+                lg: var(--#{calc.$cb}space-300),
+        )),
+        questionnaire-label-font-size: (media-query-up: (
+                xs: var(--#{calc.$cb}font-size-base),
+                lg: var(--#{calc.$cb}font-size-150),
+        )),
+        questionnaire-label-border-width: (media-query-up: (
+                xs: 1px,
+                lg: 3px,
+        )),
+        questionnaire-label-border-width-active: (media-query-up: (
+                xs: 2px,
+                lg: 3px,
+        )),
+) !default;
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+::ng-deep {
+
+  .quest-multi-list, .quest-single-list {
+    @include calc.make-row(0);
+    gap: var(--#{calc.$md}controls-gap);
+    justify-content: center;
+    width: var(--#{$h}control-input-width);
+    max-width: 100%;
+
+  }
+
+
+  //test
+
+  .quest-single-list .mat-mdc-radio-button, .quest-multi-list .mat-mdc-checkbox {
+    --label-padding-x: var(--#{calc.$md}control-label-padding-x);
+    --label-padding-y: var(--#{calc.$md}control-label-padding-y);
+    --gap: 0;
+    display: grid;
+
+    align-items: center;
+    white-space: normal;
+
+    background-color: transparent;
+    @include calc.transition(all .015s ease-in);
+
+    .mdc-form-field {
+      height: 100%;
+    }
+
+    .mdc-label {
+      border: var(--#{calc.$md}control-label-border-width) solid var(--#{calc.$md}control-border-clr);
+      border-radius: var(--#{calc.$md}control-radius);
+      color: var(--#{calc.$md}control-clr);
+      background-color: var(--#{calc.$md}control-bg-clr);
+      min-height: var(--#{calc.$md}control-min-height);
+      height: auto;
+      transition: all 0.015s ease-in;
+      box-shadow: var(--#{calc.$md}control-shadow);
+      font-size: 1em;
+    }
+  }
+
+  .quest-single-list {
+    .mat-mdc-radio-button {
+
+      .mdc-form-field {
+        > .mdc-radio {
+          display: none;
+        }
+
+        > .mdc-label {
+          align-items: center;
+          padding-left: var(--label-padding-x);
+        }
+      }
+
+      &.mat-mdc-radio-checked, &.mat-mdc-radio-checked:focus-visible {
+        --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-active);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-active);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-active);
+        --#{calc.$md}control-shadow: var(--#{calc.$md}control-shadow-active);
+        --#{calc.$md}control-label-border-width: var(--#{calc.$md}control-label-border-width-active);
+      }
+
+      &:not(&.mat-mdc-radio-checked):not(&.is-invalid):hover {
+        --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-hover);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-hover);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-hover);
+        --#{calc.$md}control-shadow: var(--#{calc.$md}control-shadow-hover);
+      }
+
+      &:focus-visible {
+        box-shadow: var(--#{calc.$md}control-shadow-focus);
+      }
+
+      &.is-invalid, &.mat-error {
+        --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-error);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-error);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-error);
+      }
+    }
+
+    &.is-wrong {
+      .mat-mdc-radio-button {
+        &.mat-mdc-radio-checked, &.mat-mdc-radio-checked:focus-visible {
+          --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-wrong);
+          --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-wrong);
+          --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-wrong);
+          --#{calc.$md}control-shadow: var(--#{calc.$md}control-shadow-active);
+        }
+      }
+    }
+
+    //&--button {
+    //  .mat-mdc-radio-button {
+    //    text-align: center;
+    //    --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-btn-bg-clr);
+    //    --#{calc.$md}control-border-clr: var(--#{calc.$md}control-btn-border-clr);
+    //
+    //    border: var(--#{calc.$md}control-label-border-width) solid var(--#{calc.$md}control-border-clr);
+    //    box-shadow: var(--#{calc.$md}control-shadow);
+    //  }
+    //}
+  }
+
+  .quest-multi-list {
+    .mat-mdc-checkbox {
+
+      .mdc-checkbox {
+        grid-column: -1 / 1;
+        grid-row: 1 / -1;
+        margin-left: .5rem !important;
+        display: none;
+      }
+
+      > .mdc-label {
+        align-items: center;
+        padding-left: var(--label-padding-x);
+      }
+
+      .mdc-form-field {
+        align-items: center;
+      }
+
+
+      //.mdc-form-field > .mdc-label {
+      //
+      //  //padding-left: calc(var(--label-offset) + var(--label-padding-x));
+      //}
+
+      &-checked, &-checked:focus-visible {
+        -#{calc.$md}control-clr: var(--#{calc.$md}control-clr-active);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-active);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-active);
+        --#{calc.$md}control-shadow: var(--#{calc.$md}control-shadow-active);
+        --#{calc.$md}control-label-border-width: var(--#{calc.$md}control-label-border-width-active);
+      }
+
+      &:not(&-checked):not(&.is-invalid):hover {
+        --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-hover);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-hover);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-hover);
+        --#{calc.$md}control-shadow: var(--#{calc.$md}control-shadow-hover);
+      }
+
+      &:focus-visible {
+        box-shadow: var(--#{calc.$md}control-shadow-focus);
+      }
+
+      &.is-invalid {
+        --#{calc.$md}control-clr: var(--#{calc.$md}control-clr-error);
+        --#{calc.$md}control-bg-clr: var(--#{calc.$md}control-bg-clr-error);
+        --#{calc.$md}control-border-clr: var(--#{calc.$md}control-border-clr-error);
+      }
+    }
+  }
+
+  // Questionnaire specific overrides
+  .cst--questionnaire {
+    --label-border-width: var(--#{$h}questionnaire-label-border-width);
+    --label-border-width-active: var(--#{$h}questionnaire-label-border-width-active);
+    
+    .quest-multi-list, .quest-single-list {
+      gap: var(--#{calc.$cb}space-300);
+    }
+
+    .quest-single-list .mat-mdc-radio-button,
+    .quest-multi-list .mat-mdc-checkbox {
+      --label-padding-x: var(--#{$h}questionnaire-label-padding-x);
+      --label-padding-y: var(--#{$h}questionnaire-label-padding-y);
+      
+      .mdc-label {
+        border: var(--label-border-width) solid var(--#{calc.$md}control-border-clr);
+        font-size: var(--#{$h}questionnaire-label-font-size);
+      }
+    }
+
+    .questionnaire-it-year {
+      .mat-mdc-form-field {
+        --#{calc.$mdf}border-width: var(--label-border-width);
+        --#{calc.$mdf}radius: var(--#{calc.$md}control-radius);
+        --#{calc.$mdf}border-clr: var(--#{calc.$md}control-border-clr);
+        --#{calc.$mdf}border-clr-focus: var(--#{calc.$md}control-border-clr-hover);
+        --#{calc.$mdf}border-clr-active: var(--#{calc.$md}control-border-clr-active);
+
+        &.mat-focused .mdc-text-field {
+          outline-color: var(--#{calc.$md}control-border-clr-active) !important;
+        }
+      }
+    }
+
+    .card-questionnaire {
+      .card-footer {
+        @include calc.media-breakpoint-down(sm) {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: var(--#{calc.$cb}space-300);
+  
+          .mdc-button {
+            width: 100%
+          }
+      }
+    }
+  }
+  }
+
+}

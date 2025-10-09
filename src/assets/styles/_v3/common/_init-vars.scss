@@ -16,7 +16,7 @@ $init-common: map.merge(abstract.$main-to-css, $theme-colors);
 // material theme
 $mat-app-primary: mat.define-palette(abstract.$primary, main) !default;
 $mat-app-accent: mat.define-palette(abstract.$primary, main) !default;
-$mat-app-warn: mat.define-palette(abstract.$danger, 500) !default;
+$mat-app-warn: mat.define-palette(abstract.$palette-red, 500) !default;
 
 
 //$colors: map.deep-remove($colors, (

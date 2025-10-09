@@ -6,6 +6,7 @@ import {
   CstHeaderContentSlotDirective,
   CstContentSlotDirective, CstMediaSlotDirective
 } from './cst-slots';
+import {ContainerWrapperComponent} from './container-wrapper/container-wrapper.component';
 
 @NgModule({
   imports: [
@@ -14,14 +15,16 @@ import {
     CstTitleSlotDirective,
     CstHeaderContentSlotDirective,
     CstContentSlotDirective,
-    CstMediaSlotDirective
+    CstMediaSlotDirective,
+    ContainerWrapperComponent
   ],
   exports: [
     SectionWrapperComponent,
     CstTitleSlotDirective,
     CstHeaderContentSlotDirective,
     CstContentSlotDirective,
-    CstMediaSlotDirective
+    CstMediaSlotDirective,
+    ContainerWrapperComponent
   ]
 })
 export class SectionWrapperModule { }

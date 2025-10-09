@@ -59,7 +59,11 @@ $init: (
 
     }
 
-
+    .mat-mdc-form-field-infix {
+      @include calc.media-breakpoint-down(lg) {
+        padding: var(--#{calc.$cb}space-250) 0;
+      }
+    }
 
   }
 }
