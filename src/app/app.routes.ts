@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
 import { SeoPageKey } from '@careboxhealth/core';
+import { moduleAccessGuard } from './guards/module-access.guard';
 
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [moduleAccessGuard]
   },
   {
     path: 'modules',
-    loadComponent: () => import('./components/modules/modules.component').then(m => m.ModulesComponent)
+    loadComponent: () => import('./components/modules/modules.component').then(m => m.ModulesComponent),
+    canActivate: [moduleAccessGuard]
   },
   {
     path: 'article',

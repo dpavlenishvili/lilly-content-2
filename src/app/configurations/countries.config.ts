@@ -207,7 +207,7 @@ export const countries = [
     code: 'CZ',
     name: 'CZECHIA',
     title: 'CZECHIA',
-    defaultLanguage: 'en-US',
+    defaultLanguage: 'cs-CZ',
     icon: 'assets/images/languages/glb.png',
     unitOfLength: UnitOfLength.KM
   },

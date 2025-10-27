@@ -1,72 +1,74 @@
 @use "_v3/calc" as calc;
 
+$h: '' !default;
+$init: (
+  padding-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: var(--#{calc.$cb}space-400),
+  )),
+  padding-x: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: var(--#{calc.$cb}space-400),
+  )),
+  block--font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-125),
+  )),
+) !default;
 :host {
+  @include calc.css-initVars($init, $h);
   display: block;
-  margin-top: var(--#{calc.$cb}space-600);
 }
 
 :host ::ng-deep {
-  .block__content {
-    margin: 0 auto;
-    text-align: center;
-    max-width: 90rem;
-    padding: 0 var(--#{calc.$cb}space-400);
-  }
 
-  .block__title {
-    margin-bottom: var(--#{calc.$cb}space-400);
-    text-align: left;
-    
-    p {
-      color: var(--#{calc.$color}neutral-base-060);
-      font-size: var(--#{calc.$cb}font-size-sm);
-      margin-bottom: var(--#{calc.$cb}space-200);
-    }
-  }
-
-  .microsteps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: var(--#{calc.$cb}space-400);
-    margin-bottom: var(--#{calc.$cb}space-500);
-  }
-
-  .microstep-card {
-    background: var(--#{calc.$color}palette-red-005);
-    border-radius: var(--#{calc.$cb}radius-4);
-    padding: var(--#{calc.$cb}space-400);
-    text-align: left;
-    box-shadow: var(--#{calc.$cb}shadow-100);
-
-    .card-label {
-      color: var(--#{calc.$color}neutral-base-060);
-      font-size: var(--#{calc.$cb}font-size-sm);
-      margin-bottom: var(--#{calc.$cb}space-200);
+  .block--micro-steps {
+    > .block__label {
+      font: 900 1rem / 1 var(--#{calc.$cb}font-sans-extra-wide);
+      text-transform: uppercase;
+      letter-spacing: 0.02rem;
     }
 
-    .card-title {
-      font-family: var(--#{calc.$cb}font-family-heading);
-      font-size: var(--#{calc.$cb}font-size-lg);
-      margin-bottom: var(--#{calc.$cb}space-200);
-      color: var(--#{calc.$color}neutral-base-100);
-    }
-
-    .card-text {
-      color: var(--#{calc.$color}neutral-base-080);
-      font-size: var(--#{calc.$cb}font-size-base);
-      line-height: 1.5;
-    }
-  }
-
-  button[mat-flat-button] {
-    min-width: 12rem;
-    margin-top: var(--#{calc.$cb}space-400);
-
-    .btn__grid {
+    > .block__grid {
       display: grid;
-      grid-template-columns: auto auto;
-      align-items: center;
-      gap: var(--#{calc.$cb}space-200);
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      column-gap: var(--#{calc.$cb}grid-column-gap);
+      row-gap: var(--#{calc.$cb}space-300);
+    }
+
+    > .block__ctrl {
+      text-align: center;
+    }
+  }
+
+  .#{calc.$card-class}.card--micro-step {
+    --#{calc.$card}bg: var(--#{calc.$color}palette-red-005);
+    --#{calc.$card}footer-bg: var(--#{calc.$color}lilly-brand-red);
+    --#{calc.$card}radius: var(--#{calc.$cb}radius-2);
+    --#{calc.$card}padding-y: var(--#{$h}padding-y);
+    --#{calc.$card}padding-x: var(--#{$h}padding-x);
+    --#{calc.$card}border-width: 1px;
+    --#{calc.$card}radius-inset: clamp(0px, calc(var(--#{calc.$card}radius) - var(--#{calc.$card}border-width)), var(--#{calc.$card}radius));
+    --#{calc.$card}gap-y: 0;
+    grid-template-rows: 1fr auto;
+
+    .#{calc.$card-class}__body {
+      padding-bottom: var(--#{$h}padding-y);
+    }
+
+    .#{calc.$card-class}__footer {
+      height: 1.1875rem;
+      padding: 0;
+    }
+
+    .block {
+      font-size: var(--#{$h}block--font-size);
+
+      &__label {
+        //font: 900 1rem / 1 var(--#{calc.$cb}font-sans-extra-wide);
+        text-transform: uppercase;
+        letter-spacing: 0.02rem;
+
+      }
     }
   }
 }

@@ -4,12 +4,14 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
   Inject,
   input,
   OnDestroy,
-  OnInit
+  OnInit,
+  output
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { KalturaService } from './kaltura.service';
@@ -22,7 +24,8 @@ declare const window;
 
 const VIDEO_STATE = {
   playing: VideoAnalyticsEvent.PLAY,
-  paused: VideoAnalyticsEvent.PAUSE
+  paused: VideoAnalyticsEvent.PAUSE,
+  ended: VideoAnalyticsEvent.ENDED
 };
 
 const KALTURA_CONFIG = {
@@ -32,6 +35,7 @@ const KALTURA_CONFIG = {
 
 interface IKalturaPlayer {
   addJsListener(event: string, callback: (...args: unknown[]) => void): void;
+  sendNotification(notification: string): void;
 }
 
 @Component({
@@ -46,12 +50,15 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly entryId = input.required<string>();
   readonly partnerId = input<string>(KALTURA_CONFIG.PARTNER_ID);
-  readonly isAutoplay = input<boolean>(false);
+  readonly isPlaying = input<boolean>(false);
   readonly isMuted = input<boolean>(true);
   readonly isLoop = input<boolean>(true);
   readonly title = input.required<string>();
   readonly subsiteName = input.required<string>();
   readonly uiConfigIdInput = input<string>('', { alias: 'uiConfigId' });
+  readonly isAutoplay = input<boolean>(false);
+
+  readonly ended = output<void>();
 
   readonly uiConfigId = computed(() => {
     const value = this.uiConfigIdInput();
@@ -60,11 +67,24 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private protectedElements = new WeakSet<HTMLElement>();
   private readonly destroyRef = inject(DestroyRef);
+  private kalturaPlayerInstance?: IKalturaPlayer;
 
   constructor(@Inject(DOCUMENT) private document: Document,
               private kalturaService: KalturaService,
               private elementRef: ElementRef,
               private mediaContentAnalytics: MediaContentService) {
+    effect(() => {
+      const shouldPlay = this.isPlaying();
+      const player = this.kalturaPlayerInstance;
+
+      if (!player) return;
+
+      if (shouldPlay) {
+        player.sendNotification('doPlay');
+      } else {
+        player.sendNotification('doPause');
+      }
+    });
   }
 
   public ngOnInit(): void {
@@ -92,7 +112,8 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
           ...this.muteConfiguration
         },
         entry_id: this.entryId(),
-        readyCallback: this.addEventHandler.bind(this)
+        readyCallback: this.addEventHandler.bind(this),
+        endedCallback: () => this.sendAnalytic('ended'),
       });
     });
   }
@@ -110,9 +131,18 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private addEventHandler(): void {
     const player = this.document.getElementById(this.playerId) as unknown as IKalturaPlayer;
+    this.kalturaPlayerInstance = player;
 
     player.addJsListener('playerStateChange', (playerState: string) => {
       this.sendAnalytic(playerState);
+    });
+
+    player.addJsListener('playerPlayEnd', () => {
+      this.sendAnalytic('ended');
+    });
+
+    player.addJsListener('onEndedDone', () => {
+      this.sendAnalytic('ended');
     });
 
     player.addJsListener('mediaError', () => {
@@ -139,6 +169,16 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.fixAriaValuenowInKaltura(iframe);
+
+      // When player is ready, check if we should be playing and send the command
+      // This handles the case where the component mounts with isPlaying=true but the effect
+      // ran before the player instance was ready
+      const shouldPlay = this.isPlaying();
+      if (shouldPlay) {
+        requestAnimationFrame(() => {
+          player.sendNotification('doPlay');
+        });
+      }
     });
   }
 
@@ -190,6 +230,10 @@ export class KalturaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private sendAnalytic(videoState: string): void {
     const analysedState = VIDEO_STATE[videoState];
+
+    if (analysedState === VideoAnalyticsEvent.ENDED) {
+      this.ended.emit();
+    }
 
     if (analysedState) {
       this.mediaContentAnalytics.sendMediaAnalytics(analysedState, this.subsiteName(), this.title());

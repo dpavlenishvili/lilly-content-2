@@ -1,46 +1,57 @@
 @use '_v3/calc' as calc;
 
+$h: '';
+$init: (
+  cst-bg: (media-query-up: (
+    xs: transparent,
+    sm: var(--#{calc.$color}palette-red-005),
+  )),
+  grid-columns: (media-query-up: (
+    xs: 1fr,
+    sm: repeat(2, 1fr),
+    lg: repeat(4, 1fr),
+  )),
+  opt-title-font: (media-query-up: (
+    xs: '100 2.5rem / 1.25 var(--#{calc.$cb}font-family-serif)',
+    lg: '400 1.5rem / 1.25 var(--#{calc.$cb}body-font-family)',
+  )),
+  opt-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-125),
+  )),
+);
+
 :host {
+  @include calc.css-initVars($init, $h);
   display: block;
 }
 
 :host ::ng-deep {
-  .cst {
-    text-align: center;
-  }
-
-  .block__title {
-    text-align: center;
-    p {
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: var(--#{calc.$cb}space-200);
-    }
-    .h2-garamond-heading {
-      margin: 0 auto var(--#{calc.$cb}space-400);
-      max-width: 48rem;
-    }
-  }
-
-  .block__action {
-    display: flex;
-    justify-content: center;
-    gap: var(--#{calc.$cb}space-200);
-    margin-top: var(--#{calc.$cb}space-400);
+  .cst.cst--save-later {
+    background: var(--#{$h}cst-bg);
+    --#{calc.$cb}cst-header-align: center;
+    --#{calc.$cb}cst-title-align: center;
   }
 
   .options {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--#{calc.$cb}space-500);
-    margin-top: var(--#{calc.$cb}space-600);
+    grid-template-columns: var(--#{$h}grid-columns);
+    column-gap: var(--#{calc.$cb}space-800);
+    row-gap: var(--#{calc.$cb}space-600);
   }
 
-  .option {
-    display: grid;
-    justify-items: start;
-    text-align: left;
-    gap: var(--#{calc.$cb}space-200);
+  .block--option {
+    .media {
+      --#{calc.$cb}media-w: 3rem;
+      --#{calc.$cb}media-h: 3rem;
+      --#{calc.$cb}media-object-fit: contain;
+
+    }
+    .block__title {
+      font: var(--#{$h}opt-title-font);
+    }
+    .block__text {
+      font-size: var(--#{$h}opt-font-size);
+    }
   }
 }
 

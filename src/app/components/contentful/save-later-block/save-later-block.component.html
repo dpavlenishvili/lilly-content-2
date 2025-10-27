@@ -1,32 +1,39 @@
-<div class="cst">
-    <div class="cst__grid is-narrow">
-        <div class="cst__grid__in">
-            <div class="block">
-                <div class="block__title">
-                    <h2 class="h2-garamond-heading">{{ saveLaterBlockFields()?.heading }}</h2>
-                </div>
-                <div class="block__action">
-                    @if (saveLaterBlockFields()?.button?.fields) {
-                    <button mat-flat-button color="primary" (click)="onDownload()">
-                        {{ saveLaterBlockFields()?.button?.fields?.text }}
-                    </button>
-                    }
-                </div>
-                <div class="options">
-                    @for (option of saveLaterBlockFields()?.options; track option.sys.id) {
-                    <div class="option">
-                        <div class="option__media">
-                            <img [src]="option?.fields?.icon?.fields?.file?.url" [alt]="option?.fields?.altText || ''"
-                                loading="lazy" decoding="async" />
-                        </div>
-                        <div class="option__content">
-                            <div class="option__title">{{ option?.fields?.title }}</div>
-                            <div class="option__text" [innerHTML]="option?.fields?.description | mdToHtml"></div>
-                        </div>
-                    </div>
-                    }
-                </div>
+<cst-wrapper class="cst--save-later" [headerGridClass]="'is-full'" [showLabel]="false">
+  <ng-container cst-title>
+    {{ saveLaterBlockFields()?.heading }}
+  </ng-container>
+  <ng-container cst-header-content>
+    @if (saveLaterBlockFields()?.button?.fields) {
+
+        <div class="block__ctrl">
+          <button mat-flat-button color="primary" (click)="onDownload()">
+            <div class="btn__grid">
+              <div>{{ saveLaterBlockFields()?.button?.fields?.text }}</div>
+              <mat-icon svgIcon="download"></mat-icon>
             </div>
+
+          </button>
         </div>
+
+    }
+  </ng-container>
+  <container-wrapper [gridClass]="'is-full'">
+
+    <div class="options">
+      @for (option of saveLaterBlockFields()?.options; track option.sys.id) {
+        <div class="block  block--option block--sm">
+          <div class="block__media">
+          <div class="media">
+            <img [src]="option?.fields?.icon?.fields?.file?.url" [alt]="option?.fields?.altText || ''"
+                 loading="lazy" decoding="async"/>
+          </div>
+          </div>
+          <div class="block__content">
+            <div class="block__title">{{ option?.fields?.title }}</div>
+            <div class="block__text" [innerHTML]="option?.fields?.description | mdToHtml"></div>
+          </div>
+        </div>
+      }
     </div>
-</div>
+  </container-wrapper>
+</cst-wrapper>

@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import {Component,  HostBinding, ChangeDetectionStrategy, input} from '@angular/core';
 import { NgClass } from '@angular/common';
 import {
   CstContentSlotDirective,
@@ -25,15 +25,20 @@ import {ContainerWrapperComponent} from './container-wrapper/container-wrapper.c
 
 })
 export class SectionWrapperComponent {
-  @Input() showTitle = true;
-  @Input() showHeaderContent = true;
-  @Input() hostClass: string = 'cst--custom';
-  @Input() hostSizeClass: string = 'cst--lg';
-  @Input() titleClass: string = 'garamond-heading-1-font';
-  @Input() gridClass: string = 'is-narrow';
-  @Input() containerClass: string = 'container';
+
+  showTitle= input<boolean>(true);
+  showHeaderContent= input<boolean>(true);
+
+  hostClass = input<string>('cst--custom');
+  hostSizeClass = input<string>('cst--lg');
+
+  titleClass = input<string>('garamond-heading-1-font');
+  headerGridClass = input<string>('is-narrow');
+  containerClass = input<string>('container');
+
+  showLabel= input<boolean>(true);
   @HostBinding('class')
   get hostClasses(): string {
-    return `cst${this.hostClass ? ' ' + this.hostClass : ''}${this.hostSizeClass ? ' ' + this.hostSizeClass : ''}`;
+    return `cst${this.hostClass() ? ' ' + this.hostClass() : ''}${this.hostSizeClass() ? ' ' + this.hostSizeClass() : ''}`;
   }
 }

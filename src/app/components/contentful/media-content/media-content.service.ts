@@ -30,9 +30,6 @@ export class MediaContentService {
 
     case MediaContentType.YOUTUBE:
       return widgetFields.youtubeId;
-
-    case MediaContentType.SPOTIFY:
-      return widgetFields.spotifyId;
     }
   }
 }

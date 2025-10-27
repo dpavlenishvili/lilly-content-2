@@ -7,14 +7,5 @@
 :root {
   @include calc.css-initVars(ft.$init, calc.$md);
 
-  .theme--dark {
-    --#{calc.$cb}fg-strong: var(--#{calc.$cb}fg-inverse-strong);
-    --#{calc.$cb}body-clr: var(--#{calc.$cb}fg-inverse-strong);
-    --#{calc.$cb}cst-clr: var(--#{calc.$cb}fg-inverse-strong);
-    --#{calc.$cb}link-clr: var( --#{calc.$color}brand-base-005);
-    --#{calc.$cb}link-hover-clr: var( --#{calc.$color}palette-red-010);
-    --#{calc.$cb}danger: var( --#{calc.$color}brand-base-010);
-    --#{calc.$cb}fg-enrolling: var(--#{calc.$color}palette-teal-030);
-    --mat-divider-color: var(--#{calc.$color}palette-transparent-white-030);
-  }
+
 }

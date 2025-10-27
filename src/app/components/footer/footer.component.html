@@ -21,8 +21,7 @@
 <ng-template #logo>
   @if (footerFields()?.logoImage?.fields?.file?.url) {
     <a class="brand disable-user-select"
-       [href]="footerFields()?.logoLink?.fields?.url"
-       (click)="onLinkClick(footerFields()?.logoLink, $event)"
+       [routerLink]="['/']"
        routerLinkActive="home"
        [attr.aria-label]="footerFields()?.logoImage?.fields?.title"
        tabindex="0">

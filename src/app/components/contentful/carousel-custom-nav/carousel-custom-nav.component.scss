@@ -3,7 +3,6 @@
 :host ::ng-deep {
   .carousel-navigation {
     width: 100%;
-    margin-top: var(--cb-space-400);
 
     &__desktop {
       @include calc.media-breakpoint-down(lg) {

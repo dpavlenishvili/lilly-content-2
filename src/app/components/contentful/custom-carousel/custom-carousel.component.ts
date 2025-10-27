@@ -1,6 +1,4 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   computed,
   contentChild,
@@ -43,7 +41,7 @@ export const DEFAULT_BREAKPOINTS: CarouselBreakpoints = {
     CarouselCustomNavComponent
   ],
 })
-export class CustomCarouselComponent implements AfterViewInit {
+export class CustomCarouselComponent {
   readonly items = input([]);
   readonly maxVisibleCards = input<number>(3);
   readonly customCarouselStyleClass = input<string>('');
@@ -59,8 +57,12 @@ export class CustomCarouselComponent implements AfterViewInit {
 
   readonly carouselWasLoaded = signal<boolean>(false);
   readonly currentSlideIndex = signal<number>(0);
-  readonly currentSlideBy = signal<number>(1);
+  readonly currentSlideBy = signal<number>(this.getSlideByFromWidth());
   readonly visibleSlides = signal<number>(1);
+
+  // Track the current page index directly instead of deriving from startPosition
+  // This fixes the issue where partially-filled last slides report incorrect startPosition
+  readonly currentPageIndex = signal<number>(0);
 
   readonly totalSlides = computed(() => this.items().length);
 
@@ -70,25 +72,22 @@ export class CustomCarouselComponent implements AfterViewInit {
     return Math.max(1, Math.ceil(total / slideBy));
   });
 
-  readonly currentPage = computed(() => {
-    const current = this.currentSlideIndex();
-    const slideBy = this.currentSlideBy();
-    return Math.floor(current / slideBy);
-  });
+  readonly currentPage = computed(() => this.currentPageIndex());
 
   readonly paginationPages = computed(() => {
     return Array(this.totalPages()).fill(0);
   });
 
   readonly progressPercentage = computed(() => {
-    const total = this.totalSlides();
-    const visible = this.visibleSlides();
-    const current = this.currentSlideIndex();
+    const totalPagesCount = this.totalPages();
+    const currentPageIndex = this.currentPage();
 
-    if (total <= visible) return 100;
+    // If there's only one page, show 100% filled
+    if (totalPagesCount <= 1) return 100;
 
-    const maxIndex = total - visible;
-    return Math.min(100, (current / maxIndex) * 100);
+    // Calculate progress based on pages/slides, not individual items
+    // Add 1 to currentPageIndex so the first page shows as filled (e.g., 25% for 4 total pages)
+    return Math.min(100, ((currentPageIndex + 1) / totalPagesCount) * 100);
   });
 
   readonly isPrevDisabled = computed(() => this.currentPage() <= 0);
@@ -140,7 +139,6 @@ export class CustomCarouselComponent implements AfterViewInit {
       : defaultOptions;
   });
 
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
@@ -149,11 +147,11 @@ export class CustomCarouselComponent implements AfterViewInit {
       if (currentItems && currentItems.length) {
         this.carouselWasLoaded.set(true);
         this.currentSlideIndex.set(0);
+        this.currentPageIndex.set(0);
       } else {
         this.carouselWasLoaded.set(false);
       }
-      this.cdr.markForCheck();
-    }, {allowSignalWrites: true});
+    }, { allowSignalWrites: true });
 
     fromEvent(window, 'resize')
       .pipe(
@@ -166,25 +164,31 @@ export class CustomCarouselComponent implements AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    if (this.carouselWasLoaded()) {
-      setTimeout(() => {
-        const resizeEvent = new Event('resize');
-        window.dispatchEvent(resizeEvent);
-      }, 0);
-    }
-  }
-
   onCarouselChanged(event: SlidesOutputData): void {
-    if (event.startPosition !== undefined) {
-      this.currentSlideIndex.set(event.startPosition);
-    }
+    const slideByValue = this.getSlideByFromWidth();
+    this.currentSlideBy.set(slideByValue);
 
     const visibleCount = event.slides?.length || 1;
     this.visibleSlides.set(visibleCount);
 
-    const slideByValue = this.getSlideByFromWidth();
-    this.currentSlideBy.set(slideByValue);
+    if (event.startPosition !== undefined) {
+      this.currentSlideIndex.set(event.startPosition);
+
+      // Calculate the correct page index
+      // For partially-filled last slides, Owl Carousel may report a different startPosition
+      // to keep the viewport full, so we need to detect if we're on the last page
+      const totalItems = this.items().length;
+      const startPos = event.startPosition;
+      const isLastPage = startPos + slideByValue >= totalItems;
+
+      if (isLastPage) {
+        const totalPagesCount = Math.ceil(totalItems / slideByValue);
+        this.currentPageIndex.set(totalPagesCount - 1);
+      } else {
+        const calculatedPage = Math.floor(startPos / slideByValue);
+        this.currentPageIndex.set(calculatedPage);
+      }
+    }
 
     this.carouselChanged.emit(event);
   }
@@ -209,8 +213,8 @@ export class CustomCarouselComponent implements AfterViewInit {
 
     if (diff === 0) return;
 
-    const iterations = Math.abs(diff);
     const carousel = this.owlCar();
+    const iterations = Math.abs(diff);
 
     if (diff > 0) {
       for (let i = 0; i < iterations; i++) {
@@ -225,6 +229,7 @@ export class CustomCarouselComponent implements AfterViewInit {
 
   toSlide(position: string): void {
     this.owlCar()?.to(position);
+    this.currentPageIndex.set(0);
   }
 
   private getSlideByFromWidth(): number {

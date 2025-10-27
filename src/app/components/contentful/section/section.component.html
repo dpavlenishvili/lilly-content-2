@@ -29,21 +29,21 @@
     @switch (widget?.sys?.contentType?.sys?.id) {
       @case ('imageTileWidget') {
         <lilly-content-image-tile-widget class="widget--image-tile"
-                                         [imageTileWidgetFields]="widget?.fields"></lilly-content-image-tile-widget>
+                                         [imageTileWidgetFields]="widget?.fields"/>
       }
       @case ('accordionWidget') {
-        <lilly-content-accordion-widget class="widget--accordion" [accordionWidgetFields]="widget?.fields">
-        </lilly-content-accordion-widget>
+        <lilly-content-accordion-widget class="widget--accordion" [accordionWidgetFields]="widget?.fields"/>
       }
       @case ('textWidget') {
-        <lilly-text-widget class="widget--text" [textWidgetFields]="widget?.fields"></lilly-text-widget>
+        <lilly-text-widget class="widget--text" [textWidgetFields]="widget?.fields"/>
       }
       @case ('modulesNavigationBar') {
         <lilly-content-modules-navigation-bar class="widget--navbar"
-                                              [modulesNavigationBarFields]="widget?.fields"></lilly-content-modules-navigation-bar>
+                                              [modulesNavigationBarFields]="filterModulesNav(widget?.fields)"
+                                              [wrapped]="false"/>
       }
       @case ('resourcesWidget') {
-        <lilly-content-resources-widget [resourcesWidgetFields]="widget?.fields"></lilly-content-resources-widget>
+        <lilly-content-resources-widget [resourcesWidgetFields]="widget?.fields"/>
       }
     }
   }

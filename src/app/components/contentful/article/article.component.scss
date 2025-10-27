@@ -1,50 +1,135 @@
 @use '_v3/calc' as calc;
 
+$h: '';
+$init: (
+  padding-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-1),
+    lg: var(--#{calc.$cb}space-300),
+  )),
+  padding-x: (media-query-up: (
+    xs: var(--#{calc.$cb}space-1),
+    lg: var(--#{calc.$cb}space-300),
+  )),
+  radius: (media-query-up: (
+    xs: var(--#{calc.$cb}radius-2),
+    md: var(--#{calc.$cb}radius-3),
+  )),
+  media-h: (media-query-up: (
+    xs: 16.1875rem,
+    lg: 18.75rem,
+  )),
+  media-w: (media-query-up: (
+    xs: 100%,
+    md: 20rem,
+    lg: 23.75rem,
+  )),
+  grid-template-columns: (media-query-up: (
+    xs: 1fr,
+    md: auto 1fr,
+  )),
+);
+
 :host {
   display: block;
 }
 
 :host {
-  .article {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: var(--#{calc.$cb}space-400);
-    padding: var(--#{calc.$cb}space-400);
-    border-radius: 12px;
-    transition: background-color 200ms ease-in-out;
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .#{calc.$card-class}.article {
+      cursor: pointer;
+      border-radius: var(--#{$h}radius);
+      --#{calc.$card}gap-y: 0;
+      padding: var(--#{$h}padding-y) var(--#{$h}padding-x);
+      margin: calc(var(--#{$h}padding-y) * -1) calc(var(--#{$h}padding-x) * -1);
+      grid-template-columns: var(--#{$h}grid-template-columns);
+      column-gap: var(--#{calc.$cb}space-800);
+      row-gap: var(--#{calc.$cb}space-400);
+
+      .#{calc.$card-class}__body {
+        display: grid;
+        grid-template-rows: 1fr auto;
+
+        .block__label {
+          font-size: 0.875rem;
+          font-style: normal;
+          letter-spacing: 0.1875rem;
+          text-transform: uppercase;
+        }
+
+        .block__categories {
+          @include calc.make-row(var(--#{calc.$cb}space-100));
+
+          & > * {
+            @include calc.make-col-auto();
+          }
+          .#{calc.$tag-class} {
+            --#{calc.$tag}font-size: .875rem;
+            --#{calc.$tag}fg: rgba(var(--#{calc.$cb}body-clr-rgb), .7);
+            --#{calc.$tag}border-color: rgba(var(--#{calc.$cb}body-clr-rgb), .5);
+          }
+        }
+      }
+
+
+      > .media {
+        --#{calc.$cb}media-h: var(--#{$h}media-h);
+        --#{calc.$cb}media-w: var(--#{$h}media-w);
+        --#{calc.$cb}media-radius: var(--#{$h}radius);
+      }
+
+      &:hover {
+        background-color: var(--#{calc.$cb}white);
+      }
+
+      &:focus-within {
+        outline: 2px solid var(--#{calc.$cb}color-neutral-base-040);
+        outline-offset: 2px;
+      }
+    }
   }
 
-  &:hover .article,
-  &:focus-within .article {
-    background-color: var(--#{calc.$color}palette-red-005);
-    cursor: pointer;
-  }
+  //.article {
+  //  display: grid;
+  //  grid-template-columns: 320px 1fr;
+  //  gap: var(--#{calc.$cb}space-400);
+  //  padding: var(--#{calc.$cb}space-400);
+  //  border-radius: 12px;
+  //  transition: background-color 200ms ease-in-out;
+  //}
+  //
+  //&:hover .article,
+  //&:focus-within .article {
+  //  background-color: var(--#{calc.$color}palette-red-005);
+  //  cursor: pointer;
+  //}
+  //
+  //.article__media img {
+  //  width: 100%;
+  //  height: auto;
+  //  display: block;
+  //  border-radius: 8px;
+  //}
+  //
+  //.article__categories {
+  //  margin-top: var(--#{calc.$cb}space-300);
+  //  display: flex;
+  //  gap: var(--#{calc.$cb}space-200);
+  //}
+  //
+  //.chip {
+  //  padding: 6px 12px;
+  //  border-radius: 20px;
+  //  border: 1px solid var(--#{calc.$color}palette-neutral-200);
+  //  font-size: 12px;
+  //}
 
-  .article__media img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-  }
-
-  .article__categories {
-    margin-top: var(--#{calc.$cb}space-300);
-    display: flex;
-    gap: var(--#{calc.$cb}space-200);
-  }
-
-  .chip {
-    padding: 6px 12px;
-    border-radius: 20px;
-    border: 1px solid var(--#{calc.$color}palette-neutral-200);
-    font-size: 12px;
-  }
-
-  .article__divider {
-    height: 1px;
-    background-color: var(--#{calc.$color}palette-neutral-200);
-    margin: var(--#{calc.$cb}space-400) 0;
-  }
+  //.article__divider {
+  //  height: 1px;
+  //  background-color: var(--#{calc.$color}palette-neutral-200);
+  //  margin: var(--#{calc.$cb}space-400) 0;
+  //}
 }
 
 

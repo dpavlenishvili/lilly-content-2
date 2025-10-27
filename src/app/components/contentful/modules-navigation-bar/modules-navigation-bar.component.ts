@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, effect, HostBinding, Input, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, HostBinding, inject,  input, signal} from '@angular/core';
 import { IModule, IModulesNavigationBarFields } from '../models/contentful';
 import {
   OneRowNavigationComponent
@@ -16,6 +16,13 @@ import {
   ContainerWrapperComponent
 } from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
 
+import {SectionWrapperModule} from '../../../shared-features/ui/components/section-wrapper/section-wrapper.module';
+import {NgTemplateOutlet} from '@angular/common';
+import { Router } from '@angular/router';
+import { ModulesStateService } from '../../../services/modules-state.service';
+import { RoutePaths } from '../../../constants/routes';
+import { HelperService } from 'src/app/services/helper.service';
+
 @Component({
   selector: 'lilly-content-modules-navigation-bar',
   templateUrl: './modules-navigation-bar.component.html',
@@ -31,27 +38,56 @@ import {
     WeekPlannerNavigationBarComponent,
     VideoCarouselBlockComponent,
     ArticlesBlockComponent,
-    ContainerWrapperComponent
+    ContainerWrapperComponent,
+    SectionWrapperModule,
+    NgTemplateOutlet
   ],
   standalone: true
 })
 export class ModulesNavigationBarComponent {
+  private readonly router = inject(Router);  
+  private readonly modulesState = inject(ModulesStateService);
+  private readonly helper = inject(HelperService);
+  
   readonly modulesNavigationBarFields = input<IModulesNavigationBarFields | undefined>();
   readonly fields = computed(() => this.modulesNavigationBarFields());
   readonly selectedMenuItem = signal<IModule | null>(null);
-  @Input() hostClass: string = 'widget--navbar';
+  wrapped = input<boolean>(true);
+  hostClass = input<string>('widget--navbar');
+
   constructor() {
     effect(() => {
       const fields = this.modulesNavigationBarFields();
-      this.selectedMenuItem.set(fields?.menu?.[0] ?? null);
+      const selectedModule = this.modulesState.selectedModule();
+      const menuItem = selectedModule || fields?.menu?.[0] || null;
+      this.selectedMenuItem.set(menuItem);
     }, { allowSignalWrites: true });
   }
 
   onMenuItemClick(item: IModule): void {
     this.selectedMenuItem.set(item);
+    this.modulesState.setSelectedModule(item);
+    const moduleSlug = item?.fields?.slug;
+    if (!moduleSlug) {
+      return;
+    }
+    const currentUrl = this.router.url;
+    const isModulesPage = currentUrl.startsWith(RoutePaths.Modules);
+    
+    if (!isModulesPage) {
+      return;
+    }
+    
+    const selectedDay = this.modulesState.getSelectedDaySlug(moduleSlug);
+    const params = this.modulesState.buildModuleQueryParams(moduleSlug, selectedDay);
+    
+    this.router.navigate([RoutePaths.Modules], {
+      queryParams: this.helper.addAccessToQueryParams(params) ?? params
+    });
   }
+  
   @HostBinding('class')
   get hostClasses(): string {
-    return `${this.hostClass ? ' ' + this.hostClass : ''}`;
+    return `${this.hostClass() ? ' ' + this.hostClass() : ''}`;
   }
 }

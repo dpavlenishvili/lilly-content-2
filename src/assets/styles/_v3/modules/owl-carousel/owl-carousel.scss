@@ -30,7 +30,11 @@ owl-carousel-o {
         position: absolute;
         opacity: 1;
         border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
+        &:hover,&:focus {
+          background-color: var(--#{calc.$cb}white);
+          color: currentColor;
+        }
 
         &:after {
           content: "";
@@ -54,7 +58,7 @@ owl-carousel-o {
       }
 
       .owl-prev {
-        left: -0.1rem;
+        left: -1.5rem;
 
         &:after {
           transform: translate(-25%, -50%) rotate(-45deg);
@@ -62,7 +66,7 @@ owl-carousel-o {
       }
 
       .owl-next {
-        right: -0.1rem;
+        right: -1.5rem;
 
         &:after {
           transform: translate(-75%, -50%) rotate(135deg);

@@ -1,48 +1,63 @@
 @if (video()) {
-  <div
-    class="video-card"
+  <cb-card
+    class="card--media theme--dark"
     tabindex="0"
     role="button"
     [attr.aria-label]="video()?.fields?.title">
 
-    @if (!isPlaying()) {
-      <img
-        class="video-card__image"
-        [src]="video()?.fields?.thumbnail?.fields?.file?.url"
-        [alt]="video()?.fields?.title"
-        loading="lazy"
-        decoding="async"/>
-    } @else {
-      <lilly-media-content
-        [mediaType]="video().fields?.video?.fields?.displayMedia"
-        [mediaId]="mediaId()"
-        [uiConfigId]="uiConfigId()"
-        [subsiteName]="video().fields?.categoryLabel"
-        [title]="video().fields?.title"
-        [videoConfig]="video().fields?.video?.fields?.videoConfig"
-      ></lilly-media-content>
-    }
-
-    <div class="video-card__category">{{ video()?.fields?.categoryLabel }}</div>
-
-    <div class="video-card__footer">
-      <div class="video-card__title">
-        @if (video()?.fields?.icon?.fields?.file?.url) {
-          <img
-            class="video-card__icon"
-            [src]="video()?.fields?.icon?.fields?.file?.url"
-            [alt]="video()?.fields?.icon?.fields?.description"
-            loading="lazy"/>
-        }
-        <span>{{ video()?.fields?.title }}</span>
+    <cb-card-body class="">
+      <cb-tag [filled]="true">{{ video()?.fields?.categoryLabel }}</cb-tag>
+      <!--      <div class="video-card__category">{{ video()?.fields?.categoryLabel }}</div>-->
+    </cb-card-body>
+    <cb-card-footer>
+      <div>
+        <cb-prop [value]="true" [thumb]="video()?.fields?.icon?.fields?.file?.url ? true : false">
+          <ng-container thumb>
+            @if (video()?.fields?.icon?.fields?.file?.url) {
+              <div class="media">
+                <img
+                  class=""
+                  [src]="video()?.fields?.icon?.fields?.file?.url"
+                  [alt]="video()?.fields?.icon?.fields?.description"
+                  loading="lazy"/>
+              </div>
+            }
+          </ng-container>
+          <div>{{ video()?.fields?.title }}</div>
+        </cb-prop>
       </div>
+      <div>
+        <button
+          mat-icon-button
+          class="video-card__play-btn"
+          (click)="togglePlay($event)"
+          [attr.aria-label]="isPlaying() ? pauseVideoLabel : playVideoLabel">
+          <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>
+        </button>
+      </div>
+    </cb-card-footer>
 
-      <button
-        class="video-card__play-btn"
-        (click)="togglePlay($event)"
-        [attr.aria-label]="isPlaying() ? pauseVideoLabel : playVideoLabel">
-        <mat-icon [svgIcon]="isPlaying() ? 'pause' : 'play'"></mat-icon>
-      </button>
+    <div class="media">
+      @if (showThumbnail()) {
+        <img
+          class="video-card__image"
+          [src]="video()?.fields?.thumbnail?.fields?.file?.url"
+          [alt]="video()?.fields?.title"
+          loading="lazy"
+          decoding="async"/>
+      } @else {
+        <lilly-media-content
+          [mediaType]="video().fields?.video?.fields?.displayMedia"
+          [mediaId]="mediaId()"
+          [uiConfigId]="uiConfigId()"
+          [subsiteName]="video().fields?.categoryLabel"
+          [title]="video().fields?.title"
+          [videoConfig]="video().fields?.video?.fields?.videoConfig"
+          [isPlaying]="isPlaying()"
+          (videoEnded)="onVideoEnded()"
+        ></lilly-media-content>
+      }
     </div>
-  </div>
+
+  </cb-card>
 }

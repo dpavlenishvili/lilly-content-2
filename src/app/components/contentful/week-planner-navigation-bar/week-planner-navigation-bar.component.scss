@@ -1,14 +1,68 @@
-@use '../../../../assets/styles/_v3/calc' as calc;
+@use "_v3/calc" as calc;
 //@import "../../../../assets/styles/_v3/modules/nav-tabs";
+$selector: #{calc.$tabs-class} !default;
+:host {
+  ::ng-deep {
+    .#{$selector}.#{calc.$tabs-class--week-planner-class} {
+      display: block;
+      width: 100%;
+      .label--external {
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .#{$selector}__container {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        > * {
+          display: grid;
+          width: 100%;
+        }
+      }
+      .#{$selector}__content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
 
-:host ::ng-deep {
-  .menu-area {
-    display: grid;
-    gap: var(--#{calc.$cb}cst-contnet-offset-y);
+      }
+      .#{$selector}__item {
+        display: flex;
+        padding: 2.5rem 2rem;
+        font-size: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 0;
+        border-width:0;
+        border-bottom-width: 3px;
+        border-style: solid;
+        &:not(.selected) {
+          @include calc.btn-mixins-button-override($overrides: (
+            fg: rgba(33, 33, 33, 0.72),
+            border: rgba(33, 33, 33, 0.12),
+            hover: (
+              fg: var(--#{calc.$color}neutral-base-0960),
+            )
+          ));
+        }
+
+        &.selected{
+          font-weight: var(--#{calc.$cb}font-weight-bold);
+          @include calc.btn-mixins-button-override($overrides: (
+            fg: var(--#{calc.$cb}primary),
+            border: var(--#{calc.$cb}primary),
+          ));
+        }
+      }
+
+    }
+    .menu-area {
+      display: grid;
+      gap: var(--#{calc.$cb}cst-contnet-offset-y);
 
 
-    &__content {
-      margin-top: var(--#{calc.$cb}cst-contnet-offset-y);
+      &__content {
+        //margin-top: var(--#{calc.$cb}cst-contnet-offset-y);
+      }
     }
   }
 }

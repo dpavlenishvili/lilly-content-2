@@ -5,6 +5,17 @@ $init: (
     xs: none,
     lg: inline-flex,
   )),
+  hero-card-title-font: (media-query-up: (
+    xs: '400 1.5rem / 1.25 var(--#{calc.$cb}font-family-serif)',
+    lg: '400 2rem / 1.25 var(--#{calc.$cb}font-family-serif)',
+  )),
+  hero-card-font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-xs),
+    lg: var(--#{calc.$cb}font-size-base),
+  )),
+  hero-card-btn-width: (media-query-up: (
+    xs: 12.89rem,
+  )),
 );
 
 $h: '' !default;
@@ -12,6 +23,22 @@ $h: '' !default;
   @include calc.css-initVars($init, $h);
 
   ::ng-deep {
+    .block.block--hero-card {
+      .title {
+        font: var(--#{$h}hero-card-title-font);
+      }
+      .block__text{
+        font-size: var(--#{$h}hero-card-font-size);
+      }
+
+      .block__ctrl {
+        #{calc.$btn-selector} {
+          width: auto;
+          min-width: var(--#{$h}hero-card-btn-width) !important;
+        }
+      }
+    }
+
     #{calc.$btn-selector} {
       &.btn--scroll {
         display: var(--#{$h}btn-scrolll-display);

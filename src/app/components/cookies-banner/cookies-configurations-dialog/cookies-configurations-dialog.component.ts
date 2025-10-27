@@ -7,7 +7,7 @@ import { ClientRoutes } from '../../../common/client-routes';
 import { HelperService } from 'src/app/services/helper.service';
 import { CookieConsentService, CookiePermissions, LanguageCode } from '@careboxhealth/core';
 import { OrderableMatDialog, HideForRegionsDirective, ShowForRegionsDirective } from '@careboxhealth/layout1-shared';
-import { externalRoutes } from 'src/app/configurations/links';
+
 import { MatButton } from '@angular/material/button';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +30,6 @@ export class CookiesConfigurationsDialogComponent extends OrderableMatDialog imp
   showMoreThird = false;
 
   readonly clientRoutes: Record<string, string> = ClientRoutes;
-  readonly externalRoutes: Record<string, string> = externalRoutes;
   readonly Language: typeof LanguageCode = LanguageCode;
 
   public readonly dialogRef: MatDialogRef<CookiesConfigurationsDialogComponent> = inject(MatDialogRef<CookiesConfigurationsDialogComponent>);

@@ -1,31 +1,115 @@
 @use '_v3/calc' as calc;
-@use '_v3/modules/layouts/cst-calc' as intro;
 
-@include intro.cst-configure(
-  $class-name: #{calc.$cst--intro-class},
-  $h: #{calc.$cst--intro-prefix},
-  $content-media-bg-enabled: true,
-  $mwdia-bg-enabled: false,
-  $overlay-under-header: false,
-  $media-grid-row: (media-query-up: (
-    xs: '1 / -1',
-  ))
+$h: '' !default;
+$init: (
+  padding-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-1000),
+    lg: var(--#{calc.$cb}space-800),
+  )),
+  padding-x: (media-query-up: (
+    xs: var(--#{calc.$cb}space-300),
+    lg: var(--#{calc.$cb}space-400),
+  )),
+  min-h: (media-query-up: (
+    xs: 37rem,
+    lg: 36.3125rem,
+  )),
+  radius: (media-query-up: (
+    xs: var(--#{calc.$cb}radius-4),
+    lg: var(--#{calc.$cb}radius-8),
+  )),
+  align-items: (media-query-up: (
+    xs: end,
+    lg: center,
+  )),
+  title-font: (media-query-up: (
+    xs: '300 3rem / 1.1 var(--#{calc.$cb}font-family-serif)',
+    lg: '300 6rem / 1.1 var(--#{calc.$cb}font-family-serif)',
+  )),
 );
 
-:host ::ng-deep {
-  .#{calc.$cst--intro-class} {
-    .block {
-      &__title {
-        .label {
-          color: var(--#{calc.$cb}white);
+
+:host {
+  @include calc.css-initVars($init, $h);
+
+  ::ng-deep {
+    .#{calc.$card-class}.card--cover {
+
+      --#{calc.$card}bg: var(--#{calc.$color}neutral-base-080);
+      --#{calc.$card}fg: var(--#{calc.$cb}fg-strong);
+      --#{calc.$card}radius: var(--#{$h}radius);
+
+      --#{calc.$card}gap-y: 0;
+      min-height: var(--#{$h}min-h);
+
+      .#{calc.$card-class}__body {
+        display: grid;
+        grid-template-areas: "c";
+        grid-template-columns: 1fr;
+        align-items: var(--#{$h}align-items);
+
+
+        > .block {
+          grid-area: c;
+          z-index: 1;
+          padding: var(--#{$h}padding-y) var(--#{$h}padding-x);
+          .title {
+            font: var(--#{$h}title-font);
+            letter-spacing: -0.025em;
+            line-height: var(--#{calc.$typography}garamond-heading-1-line-height);
+            max-width: 50rem;
+          }
+          .block__label {
+            font: 900 1rem / 1 var(--#{calc.$cb}font-sans-extra-wide);
+            text-transform: uppercase;
+            letter-spacing: 0.02rem;
+          }
         }
+
+        > .media {
+          display: grid;
+          position: relative;
+          grid-column: -1 / 1;
+          grid-row: -1 / 1;
+          z-index: 0;
+          --#{calc.$cb}media-w: 100%;
+          --#{calc.$cb}media-h: 100%;
+          --#{calc.$cb}media-radius: var(--#{$h}radius);
+
+          & > *, &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--#{$h}radius);
+          }
+          &:after {
+            content: '';
+            background: linear-gradient(270deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.80) 100%);
+            opacity: 0.8;
+          }
+        }
+
       }
 
-      &__heading {
-        h1 {
-          color: var(--#{calc.$cb}white);
-        }
-      }
+
     }
+
+    //.#{calc.$cst--intro-class} {
+    //  .block {
+    //    &__title {
+    //      .label {
+    //        color: var(--#{calc.$cb}white);
+    //      }
+    //    }
+    //
+    //    &__heading {
+    //      h1 {
+    //        color: var(--#{calc.$cb}white);
+    //      }
+    //    }
+    //  }
+    //}
   }
 }

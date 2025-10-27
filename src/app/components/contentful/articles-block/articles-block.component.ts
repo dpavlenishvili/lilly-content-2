@@ -4,11 +4,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HelperService } from '../../../services/helper.service';
 import { ArticleComponent } from '../article/article.component';
+import {
+  SectionWrapperComponent
+} from '../../../shared-features/ui/components/section-wrapper/section-wrapper.component';
+import {CstHeaderContentSlotDirective} from '../../../shared-features/ui/components/section-wrapper/cst-slots';
+import {
+  ContainerWrapperComponent
+} from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
 
 @Component({
   selector: 'lilly-content-articles-block',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, ArticleComponent],
+  imports: [MatButtonModule, MatIconModule, ArticleComponent, SectionWrapperComponent, CstHeaderContentSlotDirective, ContainerWrapperComponent],
   templateUrl: './articles-block.component.html',
   styleUrls: ['./articles-block.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

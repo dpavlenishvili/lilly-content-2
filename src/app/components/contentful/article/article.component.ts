@@ -3,6 +3,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { IArticle } from '../models/contentful';
 import { HelperService } from '../../../services/helper.service';
 import { LinkBehavior } from '@careboxhealth/core';
+import {CbCardModule} from '../../../shared-features/ui/components/cb-card/src/app/shared/card';
+import {CbTagComponent} from '../../../shared-features/ui/components/cb-tag/cb-tag.component';
 
 @Component({
   selector: 'lilly-content-article',
@@ -10,7 +12,7 @@ import { LinkBehavior } from '@careboxhealth/core';
   styleUrls: ['./article.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatDividerModule]
+  imports: [MatDividerModule, CbCardModule, CbTagComponent]
 })
 export class ArticleComponent {
   readonly article = input.required<IArticle>();

@@ -1,36 +1,26 @@
 @use '_v3/calc' as calc;
-
+$h: '' !default;
+$init: (
+  block--font-size: (media-query-up: (
+    xs: var(--#{calc.$cb}font-size-125),
+  ))
+);
 :host {
+  @include calc.css-initVars($init, $h);
   display: block;
 }
 
 :host ::ng-deep {
-  .cst {
-    --#{calc.$cb}cst-bg-clr: var(--#{calc.$color}palette-red-005);
+  .widget--benifits {
+    padding: var(--#{calc.$cb}cst-contnet-offset-y) 0;
+    background-color: var(--#{calc.$color}palette-red-005);
   }
-
-  .block__title {
-    p {
+  .block {
+    font-size: var(--#{$h}block--font-size);
+    &__label {
+      font: 900 0.875rem / 1 var(--#{calc.$cb}font-sans-extra-wide);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: var(--#{calc.$cb}space-200);
+      letter-spacing: 0.02rem;
     }
-  }
-
-  .block__action {
-    text-align: center;
-
-    button[mat-flat-button] {
-      mat-icon {
-        color: currentColor;
-      }
-    }
-  }
-
-  .btn__grid {
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
-    gap: var(--#{calc.$cb}space-200);
   }
 }

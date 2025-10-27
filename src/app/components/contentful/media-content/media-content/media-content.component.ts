@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import { MediaContentType } from '../media-content-type.enum';
 import { VideoComponent } from '../video/video.component';
 import { KalturaComponent } from '../kaltura/kaltura.component';
 import { YoutubeComponent } from '../youtube/youtube.component';
-import { SpotifyComponent } from '../spotify/spotify.component';
 
 @Component({
   selector: 'lilly-media-content',
@@ -13,8 +12,7 @@ import { SpotifyComponent } from '../spotify/spotify.component';
   imports: [
     VideoComponent,
     KalturaComponent,
-    YoutubeComponent,
-    SpotifyComponent
+    YoutubeComponent
   ],
   standalone: true
 })
@@ -24,8 +22,10 @@ export class MediaContentComponent {
   readonly uiConfigId = input<string>();  // This one just for Kaltura
   readonly subsiteName = input<string>();
   readonly title = input<string>();
-  readonly backgroundColor = input<string>('#de3626'); // This one just for Spotify
   readonly videoConfig = input<Record<string, never>>();
+  readonly isPlaying = input<boolean>();
+
+  readonly videoEnded = output<void>();
 
   public readonly isAutoplay = signal(false);
   public readonly isMuted = signal(true);
@@ -36,6 +36,7 @@ export class MediaContentComponent {
   constructor() {
     effect(() => {
       const value = this.videoConfig();
+
       if (!value) return;
 
       if ('autoplay' in value) {
@@ -49,6 +50,10 @@ export class MediaContentComponent {
       if ('loop' in value) {
         this.isLoop.set(value.loop);
       }
-    });
+    }, { allowSignalWrites: true });
+  }
+
+  onVideoEnded(): void {
+    this.videoEnded.emit();
   }
 }

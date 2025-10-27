@@ -7,15 +7,16 @@
   <!--  </div>-->
 
 
-  @if (showHeaderContent) {
-    <container-wrapper>
-
+  @if (showHeaderContent()) {
+    <container-wrapper [gridClass]="headerGridClass()">
       <div class="cst__header">
-        @if (showTitle) {
+        @if (showTitle()) {
+          @if (showLabel()) {
           <div class="cst__label">
             <ng-content select="[cst-label]"></ng-content>
           </div>
-          <h2 class="title" [ngClass]="titleClass">
+          }
+          <h2 class="title" [ngClass]="titleClass()">
             <ng-content select="[cst-title]"></ng-content>
           </h2>
         }

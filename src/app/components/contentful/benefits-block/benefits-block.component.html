@@ -1,24 +1,26 @@
-<div class="cst" id="benefits">
-  <div class="cst__grid is-narrow">
-    <div class="cst__grid__in">
-      <div class="block">
-        <div class="block__title">
-          <p class="font-size-sm font-weight-bold">{{ benefitsBlockFields()?.label }}</p>
-        </div>
-        <h2 class="h2-garamond-heading">{{ benefitsBlockFields()?.title }}</h2>
-        <div class="block__text" [innerHTML]="benefitsBlockFields()?.bodyText | mdToHtml"></div>
-        @if (benefitsBlockFields()?.button?.fields) {
-          <div class="block__action">
-            <button mat-flat-button color="primary" (click)="onDownload()">
-              <div class="btn__grid">
-                <div>{{ benefitsBlockFields()?.button?.fields?.text }}</div>
-                <mat-icon svgIcon="arrow-down"></mat-icon>
-              </div>
-            </button>
-          </div>
-        }
-      </div>
-    </div>
-  </div>
-</div>
+<div class="widget--benifits" id="benefits">
+  <container-wrapper>
 
+    <div class="block block--lg">
+      <div class="block__label">
+    {{ benefitsBlockFields()?.label }}
+      </div>
+      <div class="block__title">
+        <h2 class="h2-garamond-heading title">{{ benefitsBlockFields()?.title }}</h2>
+      </div>
+      <div class="block__text" [innerHTML]="benefitsBlockFields()?.bodyText | mdToHtml"></div>
+
+      @if (benefitsBlockFields()?.button?.fields) {
+        <div class="block__action text-center">
+          <button mat-flat-button color="primary" (click)="onDownload()">
+            <div class="btn__grid">
+              <div>{{ benefitsBlockFields()?.button?.fields?.text }}</div>
+              <mat-icon svgIcon="download"></mat-icon>
+            </div>
+          </button>
+        </div>
+      }
+    </div>
+
+  </container-wrapper>
+</div>

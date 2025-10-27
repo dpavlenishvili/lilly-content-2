@@ -1,23 +1,23 @@
 @use "_v3/calc" as calc;
 
-$h: '' !default;
-$selector: 'nav--tabs' !default;
+$h: #{calc.$tabs} !default;
+$selector: #{calc.$tabs-class} !default;
 $init: (
-        display-mobile: (media-query-up: (
-                xs: none,
-                lg: block,
-        )),
+        //display-mobile: (media-query-up: (
+        //        xs: none,
+        //        lg: block,
+        //)),
 ) !default;
 
 :host ::ng-deep {
-  .#{$selector} {
+  .#{$selector}:not(.#{calc.$tabs-class--week-planner-class}) {
     display: flex;
     justify-content: center;
     @include calc.css-initVars($init, $h);
 
-    &.mobile-hidden {
-      display: var(--#{$h}display-mobile);
-    }
+    //&.mobile-hidden {
+    //  display: var(--#{$h}display-mobile);
+    //}
 
     z-index: 9;
 

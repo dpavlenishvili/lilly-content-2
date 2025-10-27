@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const configuration: Record<string, any> = {
   accessGroupCode: 'LILLY21',
-  appSource: 'lilly',
+  appSource: 'lilly-content',
   partnerModules: 'LILLY21',
   applicationCode: 'lilly21',
   privacyProtection: 'GDPR',

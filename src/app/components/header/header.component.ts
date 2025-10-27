@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ClientRoutes } from '../../common/client-routes';
 import { LanguageObj, LanguageService } from '../../services/language.service';
@@ -10,8 +10,9 @@ import { HeaderHeightDirective } from '../../directives/header-height.directive'
 import { LogoSubjectComponent } from '../logo-subject/logo-subject.component';
 import { OverlayTriggerDirective } from '../../directives/overlay-trigger.directive';
 import { AppIconRegistry } from '../../services/app-icon-registry.service';
-import { PageContextService } from '../../services/page-context.service';
-import {SearchHeaderComponent} from './search-header/search-header.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs/operators';
+import { RouterLinkWithAccessDirective } from '../../directives/router-link-with-access.directive';
 
 
 @Component({
@@ -21,6 +22,7 @@ import {SearchHeaderComponent} from './search-header/search-header.component';
   imports: [
     RouterLink,
     RouterLinkActive,
+    RouterLinkWithAccessDirective,
     NgTemplateOutlet,
     NgClass,
     LanguageSwitcherComponent,
@@ -33,7 +35,6 @@ import {SearchHeaderComponent} from './search-header/search-header.component';
     LogoSubjectComponent,
     LanguageSwitcherComponent,
     OverlayTriggerDirective,
-    SearchHeaderComponent
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -59,9 +60,7 @@ export class LillyHeaderComponent implements OnInit {
   public readonly languageService: LanguageService = inject(LanguageService);
   protected readonly router: Router = inject(Router);
   private readonly iconRegistry: AppIconRegistry = inject(AppIconRegistry);
-  private readonly pageContext: PageContextService = inject(PageContextService);
-
-  readonly pageName = this.pageContext.pageName;
+  private readonly destroyRef = inject(DestroyRef);
 
 
   constructor() {
@@ -69,8 +68,12 @@ export class LillyHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe(val => {
-      if (val instanceof NavigationStart) {
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter((e): e is NavigationStart => e instanceof NavigationStart)
+      )
+      .subscribe(() => {
         this.isHeaderMenuCollapsed.set(true);
         if (this.isFloatMobileMenuOpen()) {
           this.toggleMenuMobile();
@@ -78,8 +81,7 @@ export class LillyHeaderComponent implements OnInit {
         if (this.isFloatMenuOpen()) {
           this.toggleMenu();
         }
-      }
-    });
+      });
   }
 
   registerIcons(): void {

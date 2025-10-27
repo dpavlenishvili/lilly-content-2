@@ -1,32 +1,73 @@
 @use '_v3/calc' as calc;
+$h: '';
 
+$init: (
+  cst-bg: (media-query-up: (
+    xs: transparent,
+    lg: 'linear-gradient(180deg, rgba(248, 234, 232, 0.45) 5.66%, #FCFCFC 81.01%)',
+
+  )),
+  title-font: (media-query-up: (
+    xs: '400 3rem / 1.25 var(--#{calc.$cb}font-family-serif)',
+    lg: '700 5rem / 1.05 var(--#{calc.$cb}font-sans-narrow)',
+
+  )),
+  sub-title-font: (media-query-up: (
+    xs: '400 3rem / 1.25 var(--#{calc.$cb}font-family-serif)',
+    lg: '400 5rem / 1.05 var(--#{calc.$cb}font-family-serif)',
+
+  )),
+
+  articles-offset-y: (media-query-up: (
+    xs: var(--#{calc.$cb}space-400),
+    sm: var(--#{calc.$cb}space-500),
+    lg: var(--#{calc.$cb}space-600),
+  )),
+
+);
 :host {
+  @include calc.css-initVars($init, $h);
   display: block;
 }
 
 :host ::ng-deep {
-  .block__title {
-    p {
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: var(--#{calc.$cb}space-200);
-    }
-  }
+  .cst.cst--articles {
+    --#{calc.$cb}cst-header-align: center;
+    --#{calc.$cb}cst-title-align: center;
+    background:var(--#{$h}cst-bg);
 
-  .btn__grid {
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
-    gap: var(--#{calc.$cb}space-200);
+    .cst__header {
+      .title {
+        font: var(--#{$h}title-font);
+        letter-spacing: -0.025rem;
+      }
+      .block__subtitle {
+        font: var(--#{$h}sub-title-font);
+        letter-spacing: -0.025rem;
+        font-style: italic;
+        text-align: var(--#{calc.$cb}cst-header-align);
+      }
+    }
   }
 
   .articles__list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--#{calc.$cb}space-200);
+    gap: 0;
+    & > * {
+      display: grid;
+      padding-top: var(--#{$h}articles-offset-y);
+      padding-bottom: var(--#{$h}articles-offset-y);
+      border-top: 1px solid var(--#{calc.$cb}divider);
+      &:last-child {
+        border-bottom: 1px solid var(--#{calc.$cb}divider);
+      }
+    }
   }
 
 }
+
+
 
 
 

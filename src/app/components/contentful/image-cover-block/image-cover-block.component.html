@@ -1,23 +1,21 @@
-<div class="cst cst--intro sb-max-width">
-  <div class="cst__grid">
-    <div class="cst__media">
+<container-wrapper>
+  <cb-card class="card--cover theme--dark">
+    <cb-card-body class="">
+
+      <div class="block block--lg">
+        <div class="block__label">
+          {{ imageCoverBlockFields()?.label }}
+        </div>
+
+        <div class="block__title theme--dark">
+          <h2 class="title">{{ imageCoverBlockFields()?.heading }}</h2>
+        </div>
+      </div>
       <div class="media">
         <img [src]="imageCoverBlockFields()?.background?.fields?.file?.url"
              [alt]="imageCoverBlockFields()?.altText">
       </div>
-    </div>
-    <div class="cst__grid__in">
-      <div class="cst__content cst__content--container">
-        <div class="block">
-          <div class="block__title">
-            <p class="label">{{ imageCoverBlockFields()?.label }}</p>
-          </div>
+    </cb-card-body>
 
-          <div class="block__heading">
-            <h1>{{imageCoverBlockFields()?.heading}}</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  </cb-card>
+</container-wrapper>

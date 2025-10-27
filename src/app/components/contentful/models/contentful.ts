@@ -78,6 +78,9 @@ export interface IArticlePageFields {
   /** Title */
   title: string;
 
+  /** Key */
+  key: string;
+
   /** Publish Date */
   publishDate: string;
 
@@ -97,16 +100,13 @@ export interface IArticlePageFields {
   body: string;
 
   /** FAQ */
-  faq: IAccordionWidget[];
+  faq: IFrequentlyAskedQuestions;
 
   /** Feedback */
   feedback?: IFeedback | undefined;
 
   /** References */
   references: ITextWidget;
-
-  /** Key */
-  key: string;
 }
 
 export interface IArticlePage extends Entry<IArticlePageFields> {
@@ -295,6 +295,9 @@ export interface IDayProgramFields {
   /** Tab Name */
   tabName: string;
 
+  /** Slug */
+  slug?: string | undefined;
+
   /** Label */
   label: string;
 
@@ -374,9 +377,6 @@ export interface IFooterFields {
   /** Logo Image */
   logoImage: Asset;
 
-  /** Logo Link */
-  logoLink?: ILink | undefined;
-
   /** Logo Image Alt */
   logoImageAlt: string;
 
@@ -414,6 +414,32 @@ export interface IFooter extends Entry<IFooterFields> {
     contentType: {
       sys: {
         id: 'footer';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IFrequentlyAskedQuestionsFields {
+  /** Title */
+  title: string;
+
+  /** Items */
+  items: IAccordionWidget[];
+}
+
+export interface IFrequentlyAskedQuestions
+  extends Entry<IFrequentlyAskedQuestionsFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'frequentlyAskedQuestions';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -464,9 +490,6 @@ export interface IHeroSection extends Entry<IHeroSectionFields> {
 }
 
 export interface IHomePageFields {
-  /** Page Name */
-  pageName: string;
-
   /** Entry Name */
   entryName: string;
 
@@ -790,6 +813,9 @@ export interface IModuleFields {
   /** Key */
   key: string;
 
+  /** Slug */
+  slug: string;
+
   /** Title */
   title: string;
 
@@ -855,9 +881,6 @@ export interface IModulesNavigationBar
 }
 
 export interface IModulesPageFields {
-  /** Page Name */
-  pageName: string;
-
   /** Entry Name */
   entryName: string;
 
@@ -1285,6 +1308,7 @@ export type CONTENT_TYPE =
   | 'dayProgram'
   | 'feedback'
   | 'footer'
+  | 'frequentlyAskedQuestions'
   | 'heroSection'
   | 'homePage'
   | 'icon'
@@ -1321,6 +1345,7 @@ export type IEntry =
   | IDayProgram
   | IFeedback
   | IFooter
+  | IFrequentlyAskedQuestions
   | IHeroSection
   | IHomePage
   | IIcon
@@ -1345,6 +1370,6 @@ export type IEntry =
   | IVideoMediaConfig
   | IWeekPlannerNavigation;
 
-export type LOCALE_CODE = 'en-US' | 'es-US';
+export type LOCALE_CODE = 'en-US' | 'es-US' | 'cs-CZ';
 
 export type CONTENTFUL_DEFAULT_LOCALE_CODE = 'en-US';

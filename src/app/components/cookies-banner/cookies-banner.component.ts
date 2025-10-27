@@ -23,7 +23,6 @@ import {
 import { ComponentType } from '@angular/cdk/portal';
 import { NEVADA_CITIES, WASHINGTON_CITIES } from '../../constants/cities';
 import { MatButton } from '@angular/material/button';
-import { externalRoutes } from '../../configurations/links';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -49,7 +48,6 @@ export class CookiesBannerComponent implements OnInit {
   }
 
   public visible = false;
-  public readonly externalRoutes: Record<string, string> = externalRoutes;
   public readonly LinkTarget = LinkTarget;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
@@ -113,7 +111,7 @@ export class CookiesBannerComponent implements OnInit {
   showUSACookieBanner(): void {
     const DialogComponent: ComponentType<
       UsaCookieConfigurationDialogSettingsComponent
-      | UsaCookieConfigurationDialogHomeComponent> = this.cookieConsentService.accepted 
+      | UsaCookieConfigurationDialogHomeComponent> = this.cookieConsentService.accepted
         ? UsaCookieConfigurationDialogSettingsComponent
         : UsaCookieConfigurationDialogHomeComponent;
     this.dialog.open(DialogComponent, {

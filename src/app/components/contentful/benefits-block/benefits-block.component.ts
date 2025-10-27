@@ -3,6 +3,7 @@ import { IBenefitsBlockFields } from '../models/contentful';
 import { AppMaterialModule } from '../../../shared-features/material/material.module';
 import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
 import { HelperService } from 'src/app/services/helper.service';
+import {SectionWrapperModule} from '../../../shared-features/ui/components/section-wrapper/section-wrapper.module';
 
 @Component({
   selector: 'lilly-content-benefits-block',
@@ -11,18 +12,19 @@ import { HelperService } from 'src/app/services/helper.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AppMaterialModule,
-    MdToHtmlPipe
+    MdToHtmlPipe,
+    SectionWrapperModule
   ],
   standalone: true
 })
 export class BenefitsBlockComponent {
   readonly benefitsBlockFields = input.required<IBenefitsBlockFields>();
-  private readonly helperService = inject(HelperService); 
-  
+  private readonly helperService = inject(HelperService);
+
   onDownload (): void {
     const fileUrl = this.benefitsBlockFields()?.file?.fields?.file?.url;
     const fileName = this.benefitsBlockFields()?.file?.fields?.file?.fileName;
-    
+
     this.helperService.downloadFile(fileUrl, fileName);
   }
 }

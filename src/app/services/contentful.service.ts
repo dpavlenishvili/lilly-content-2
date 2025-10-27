@@ -4,8 +4,8 @@ import { LanguageService } from '../services/language.service';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ContentfulService, GlobalSeoService } from '@careboxhealth/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { IMetaAndShare } from '../components/contentful/models/contentful';
 
 
@@ -13,6 +13,7 @@ import { IMetaAndShare } from '../components/contentful/models/contentful';
   providedIn: 'root'
 })
 export class ExtendedContentfulService extends ContentfulService {
+  private cache = {};
   /* eslint-disable @typescript-eslint/no-explicit-any */
   constructor(
     private languageService: LanguageService,
@@ -22,12 +23,28 @@ export class ExtendedContentfulService extends ContentfulService {
     super(environment);
   }
 
-  getEntries(payload): any {
-    return super.getEntries(payload, this.languageService.selected.cmsCode);
+  getEntries(payload): Observable<any> {
+    const id = JSON.stringify(payload);
+    if (this.cache[id]) {
+      return of(this.cache[id]);
+    }
+    return super.getEntries(payload, this.languageService.selected.cmsCode).pipe(
+      tap(response => {
+        this.cache[id] = response;
+      })
+    );
   }
 
-  getEntry(entryId, payload = {}) {
-    return super.getEntry(entryId, this.languageService.selected.cmsCode, payload);
+  getEntry(entryId, payload = {}): Observable<any> {
+    const id = `${JSON.stringify(payload)}-${entryId}`;
+    if (this.cache[id]) {
+      return of(this.cache[id]);
+    }
+    return super.getEntry(entryId, this.languageService.selected.cmsCode, payload).pipe(
+      tap(response => {
+        this.cache[id] = response;
+      })
+    );
   }
 
   getEntryByKey<T>(contentType: string, key: string): Observable<T> {

@@ -1,0 +1,90 @@
+@use "_v3/calc" as calc;
+
+$h: #{calc.$card} !default;
+
+$init: (
+        display: grid,
+        bg: transparent,
+        fg: initial,
+        radius: (media-query-up: (
+                xs: var(--#{calc.$cb}radius-0),
+        )),
+        radius-inset: clamp(0px, calc(var(--#{$h}radius) - var(--#{$h}border-width)), var(--#{$h}radius)),
+        border-color: transparent,
+        border-width: (media-query-up: (
+                xs: 0,
+        )),
+        border-divide-width: 0,
+        border-divide-color:  transparent,
+        shadow: none,
+          padding-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-0),
+        )),
+        padding-x: (media-query-up: (
+                xs: var(--#{calc.$cb}space-0),
+        )),
+        gap-y: (media-query-up: (
+                xs: var(--#{calc.$cb}space-100),
+                lg: var(--#{calc.$cb}space-200)
+        )),
+        header-bg: transparent,
+        body-bg: transparent,
+        footer-bg: transparent,
+) !default;
+
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  & {
+    position: relative;
+    display: var(--#{$h}display);
+    background: var(--#{$h}bg);
+    color: var(--#{$h}fg);
+    border-radius: var(--#{$h}radius);
+    border: var(--#{$h}border-width) solid var(--#{$h}border-color);
+    box-shadow: var(--#{$h}shadow);
+
+    & > * {
+
+      padding-left: var(--#{$h}padding-x);
+      padding-right: var(--#{$h}padding-x);
+    }
+
+    & > *:not(:first-child) {
+      padding-top: var(--#{$h}gap-y);
+      border-top:  var(--#{$h}border-divide-width) solid var(--#{$h}border-divide-color);
+    }
+
+    & > *:not(:last-child) {
+      padding-bottom: var(--#{$h}gap-y);
+    }
+
+    & > *:first-child {
+      padding-top: var(--#{$h}padding-y);
+      border-radius: var(--#{$h}radius-inset) var(--#{$h}radius-inset) 0 0;
+    }
+
+    & > *:last-child {
+      padding-bottom: var(--#{$h}padding-y);
+      border-radius: 0 0 var(--#{$h}radius-inset) var(--#{$h}radius-inset);
+    }
+
+  }
+
+  .#{calc.$card-class}__header {
+    display: block;
+    background-color: var(--#{$h}header-bg);
+  }
+
+  .#{calc.$card-class}__body {
+    display: block;
+    background-color: var(--#{$h}body-bg);
+  }
+
+  .#{calc.$card-class}__footer {
+    display: block;
+    background-color: var(--#{$h}footer-bg);
+  }
+}

@@ -18,21 +18,30 @@
     mat-icon-button
     class="nav__btn"
   >
-    <mat-icon svgIcon="search"></mat-icon>
+    <mat-icon svgIcon="search"/>
   </button>
 </div>
 
 <ng-template #searchDesktopT>
   <div class="h-overlay__search">
-    <div><mat-icon svgIcon="search"/></div>
-    <label for="inputDesk" i18n>Search Lilly</label>
+    <div>
+      <mat-icon svgIcon="search"/>
+    </div>
+    <label for="inputDesk" i18n="@@header.search_label">Search Lilly</label>
     <div class="form-group">
-    <mat-form-field class="has-out-hint" appearance="fill">
-      <input matInput
-             id="inputDesk"
-             [placeholder]="'Search Lilly.com'"
-              />
-    </mat-form-field>
+      <mat-form-field class="has-out-hint" appearance="fill">
+        <input matInput
+               id="inputDesk"
+               [placeholder]="'Search Lilly.com'"
+        />
+      </mat-form-field>
+    </div>
+    <div class="form-submit">
+      <button mat-icon-button color="primary" class="btn--submit"
+              [disabled]="true"
+      >
+        <mat-icon svgIcon="search"/>
+      </button>
     </div>
   </div>
 </ng-template>

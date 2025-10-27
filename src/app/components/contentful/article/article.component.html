@@ -1,5 +1,5 @@
-<div class="article" role="button" tabindex="0" (click)="goToLink(article())">
-  <div class="article__media">
+<cb-card class="article" role="button" tabindex="0" (click)="goToLink(article())">
+  <div class="media">
     <img
       [src]="article()?.fields?.image?.fields?.file?.url"
       [alt]="article()?.fields?.altText || ''"
@@ -7,16 +7,22 @@
       decoding="async"
     />
   </div>
-  <div class="article__content">
-    <p class="font-size-sm font-weight-bold">{{ article()?.fields?.label }}</p>
-    <h3 class="h3-garamond-heading">{{ article()?.fields?.title }}</h3>
-    <div class="article__categories">
-      @for (category of article()?.fields?.categories; track $index) {
-        <span class="chip">{{ category }}</span>
-      }
+  <cb-card-body class="block block--lg">
+    <div class="block__content">
+      <div class="block__label">{{ article()?.fields?.label }}</div>
+      <div class="block__title">
+        <h3 class="title">{{ article()?.fields?.title }}</h3>
+      </div>
     </div>
-  </div>
-</div>
-<mat-divider class="article__divider" aria-hidden="true"></mat-divider>
+    @if (article()?.fields?.categories?.length > 0) {
+      <div class="block__categories">
+        @for (category of article()?.fields?.categories; track $index) {
+          <cb-tag class="chip" [filled]="true">{{ category }}</cb-tag>
+        }
+      </div>
+    }
+  </cb-card-body>
+</cb-card>
+
 
 

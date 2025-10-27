@@ -30,17 +30,19 @@ $init: (
   }
 
   .nav--tabs {
-    .nav--tabs__container.show-desktop-only {
-      display: var(--#{$h}show-desktop-only);
-    }
 
-    .show-mobile-only {
-      display: var(--#{$h}show-mobile-only);
-
-    }
 
     .form-group {
       width: 100%;
     }
+  }
+
+  .show-desktop-only {
+    display: var(--#{$h}show-desktop-only);
+  }
+
+  .show-mobile-only {
+    display: var(--#{$h}show-mobile-only);
+
   }
 }

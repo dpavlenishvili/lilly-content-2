@@ -1,0 +1,112 @@
+@use '_v3/calc' as calc;
+
+$h: #{calc.$tag} !default;
+$tag: #{calc.$tag-class} !default;
+
+$init: (
+        display: inline-flex,
+        grid-display: grid,
+        align-items: center,
+        justify-content: start,
+        offset-x: .75rem,
+        offset-y: .15rem,
+        icon-size: .875em,
+        line-height: 1.001,
+        min-height: 1.5em,
+        font-size: 1em,
+        font-family: var(--#{calc.$cb}font-font-family),
+        font-weight: var(--#{calc.$cb}font-weight-normal),
+        text-transform: normal,
+        border-width: 1px,
+        radius: .9em,
+        gap-x: .9em,
+        hole-size: .65em,
+        fg: currentColor,
+        bg: transparent,
+        border-color:  var(--#{calc.$cb}stroke-strong) ,
+
+) !default;
+
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+
+}
+:host {
+}
+
+:host ::ng-deep {
+  & {
+    display: var(--#{$h}display);
+    color: var(--#{$h}fg);
+    max-width: 100%;
+
+  }
+
+  .#{$tag}__grid {
+    position: relative;
+    display: var(--#{$h}grid-display);
+    grid-auto-flow: column;
+    align-items: var(--#{$h}align-items);
+    justify-content: var(--#{$h}justify-content);
+    line-height: var(--#{$h}line-height);
+    min-height: var(--#{$h}min-height);
+
+
+    font-size: var(--#{$h}font-size);
+    font-family: var(--#{$h}font-family);
+    text-transform: var(--#{$h}text-transform);
+    font-weight: var(--#{$h}font-weight);
+
+    vertical-align: middle;
+
+
+
+  }
+
+  .#{$tag}__content {
+    @include calc.make-row(var(--#{$h}gap-x));
+    align-items: center;
+
+    &, & > * {
+      min-width: 0;
+    }
+
+  }
+
+  .#{$tag}__label {
+    @include calc.make-col();
+
+    > * {
+      @include calc.truncate();
+      white-space: nowrap;
+    }
+
+
+  }
+
+  .#{$tag}__icon {
+    @include calc.make-col-auto();
+    align-self: center;
+    display: flex;
+
+    .mat-icon, cb-icon {
+      @include calc.square(var(--#{$h}icon-size));
+    }
+  }
+
+
+}
+
+:host.#{$tag}--uppercased {
+  text-transform: uppercase;
+}
+
+:host.#{$tag}--filled ::ng-deep {
+  background: var(--#{$h}bg);
+  border-radius: var(--#{$h}radius);
+  padding: var(--#{$h}offset-y) var(--#{$h}offset-x);
+  border-width: var(--#{$h}border-width);
+  border-style: solid;
+  border-color: var(--#{$h}border-color);
+}
+

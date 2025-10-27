@@ -18,8 +18,7 @@ $init: (
     &.#{$overlay}--mobile {
     }
 
-     &.#{$overlay}--desk-search.#{$overlay}--float {
-
+    &.#{$overlay}--desk-search.#{$overlay}--float {
 
 
       > .#{$overlay}__search {
@@ -34,17 +33,30 @@ $init: (
           @include calc.make-col-auto();
 
         }
+
         & > .form-group {
           display: grid;
           align-items: center;
           @include calc.make-col();
         }
+
+
+        .form-submit, .form-group{
+          display: grid;
+          align-items: center;
+        }
+
         #{calc.$mdf-selector} {
           --#{calc.$mdf}min-height: var(--#{$h}tool-item-h);
           --#{calc.$mdf}border-width: 0;
-          --#{calc.$mdf}radius:  var(--#{$h}tool-radius);
-          --#{calc.$mdf}bg:  hsla(0, 0%, 100%, 0.15);
+          --#{calc.$mdf}radius: var(--#{calc.$cb}radius-1);
+          --#{calc.$mdf}bg: hsla(0, 0%, 100%, 0.15);
           --#{calc.$mdf}active-bg: hsla(0, 0%, 100%, 0.20);
+        }
+
+        #{calc.$btn-selector } {
+          --#{calc.$btn}icon-button-size: var(--#{$h}tool-item-h);
+          border-radius: var(--#{calc.$cb}radius-1);
         }
 
       }

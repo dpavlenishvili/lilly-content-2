@@ -149,7 +149,7 @@
 
           footer-template-columns: (media-query-up: (
                   xs: 1fr,
-                  lg: 1fr auto
+                  lg: 1fr minmax(18rem, 19.375rem)
           ))
   ) !default;
 

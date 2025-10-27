@@ -6,11 +6,13 @@ import { MdToHtmlPipe } from '../../../pipes/md-to-html.pipe';
 import { MicrostepsBlockComponent } from '../microsteps-block/microsteps-block.component';
 import { ImageCoverBlockComponent } from '../image-cover-block/image-cover-block.component';
 import { BenefitsBlockComponent } from '../benefits-block/benefits-block.component';
+import {SectionWrapperModule} from '../../../shared-features/ui/components/section-wrapper/section-wrapper.module';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'lilly-content-day-program-block',
   standalone: true,
-  imports: [MdToHtmlPipe, MicrostepsBlockComponent, ImageCoverBlockComponent, BenefitsBlockComponent],
+  imports: [MdToHtmlPipe, MicrostepsBlockComponent, ImageCoverBlockComponent, BenefitsBlockComponent, SectionWrapperModule, MatButtonModule],
   templateUrl: './day-program-block.component.html',
   styleUrls: ['./day-program-block.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,7 +25,7 @@ export class DayProgramBlockComponent {
 
   onActionClick(icon: IIcon): void {
     const fileUrl = this.fields()?.file?.fields?.file?.url;
-    
+
     switch (icon?.fields?.type) {
     case 'print':
       if (fileUrl) {

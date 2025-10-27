@@ -28,14 +28,16 @@
       }
       <div class="block__text description" [innerHTML]="imageTileWidgetFields()?.description | mdToHtml"></div>
       @if (!imageTileWidgetFields()?.hideButton && imageTileWidgetFields()?.buttonText && imageTileWidgetFields()?.buttonLink) {
-        <button mat-flat-button color="primary" (click)="goToLink()">
-          <div class="btn__grid">
-            <div>
-              {{ imageTileWidgetFields()?.buttonText }}
+        <div class="block__ctrl">
+          <button mat-flat-button color="primary" (click)="goToLink()">
+            <div class="btn__grid">
+              <div>
+                {{ imageTileWidgetFields()?.buttonText }}
+              </div>
+              <mat-icon svgIcon="arrow_forward"></mat-icon>
             </div>
-            <mat-icon svgIcon="arrow_forward"></mat-icon>
-          </div>
-        </button>
+          </button>
+        </div>
       }
     </div>
   </div>

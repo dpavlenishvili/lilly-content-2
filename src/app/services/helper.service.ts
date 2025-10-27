@@ -12,6 +12,7 @@ import { LinkTarget, HelperService as SharedHelperService } from '@careboxhealth
 import { BehaviorSubject } from 'rxjs';
 import { Location, LocationStrategy, ViewportScroller } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { QueryParams } from '../constants/query-params';
 
 const ROUTES_SEPARATOR = '/';
 
@@ -42,6 +43,16 @@ export class HelperService {
   private readonly location: Location = inject(Location);
   private readonly sanitizer: DomSanitizer = inject(DomSanitizer);
   protected locationStrategy = inject(LocationStrategy);
+
+  public addAccessToQueryParams(queryParams: Params = {}): Params | null {
+    const currentAccess = this.router.parseUrl(this.router.url).queryParams[QueryParams.Access];
+  
+    if (!currentAccess || queryParams[QueryParams.Access]) {
+      return null;
+    }
+  
+    return { [QueryParams.Access]: currentAccess, ...queryParams };
+  }
 
   goToLink(link: string, linkBehavior: LinkBehavior | string, analyticsObj?: {[key: string]: unknown}): void {
     this.sendAnalytics(analyticsObj, analyticsObj?.actionsArr[0]);
@@ -74,28 +85,34 @@ export class HelperService {
 
     // It means that url doesn't include query params and hash
     if (linkSegments.length === 1) {
-      void this.router.navigate(routes);
+      void this.router.navigate(routes, { 
+        queryParams: this.addAccessToQueryParams()
+      });
       return;
     }
-
     // It means that url includes query params and hash
     if (linkSegments.length === 3) {
+      const params = this.parseQueryParams(linkSegments[1]);
       void this.router.navigate(routes, {
-        queryParams: this.parseQueryParams(linkSegments[1]),
+        queryParams: this.addAccessToQueryParams(params) ?? params,
         fragment: linkSegments[2]
       });
       return;
     }
-
     // It means that url includes query params
     if (link.includes('?')) {
-      void this.router.navigate(routes, { queryParams: this.parseQueryParams(linkSegments[1]) });
+      const params = this.parseQueryParams(linkSegments[1]);
+      void this.router.navigate(routes, { 
+        queryParams: this.addAccessToQueryParams(params) ?? params
+      });
       return;
     }
-
     // It means that url includes hash
     if (link.includes('#')) {
-      void this.router.navigate(routes, { fragment: linkSegments[1] });
+      void this.router.navigate(routes, { 
+        fragment: linkSegments[1], 
+        queryParams: this.addAccessToQueryParams()
+      });
       return;
     }
   }

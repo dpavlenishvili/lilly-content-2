@@ -13,7 +13,7 @@ $init: (
 
   ::ng-deep {
     ul {
-      @include calc.cb-list(0, 1em, var(--#{calc.$cb}primary));
+      @include calc.cb-list(0, 1em, var(--#{calc.$cb}body-clr));
       margin: 0 0 1rem;
 
       li p {

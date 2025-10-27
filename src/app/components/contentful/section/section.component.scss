@@ -18,6 +18,10 @@ $init: (
     xs: 1fr,
     md: repeat(2, minmax(200px, 1fr)),
   )),
+  widget--image-tile-break-w: (media-query-up: (
+    xs: calc(100dvw - (var(--#{calc.$cb}container-margin) * 2)),
+    xl: calc(var(--#{calc.$cb}container-max-width-query) - (var(--#{calc.$cb}container-max-width-query) / 12 * 2) - (var(--#{calc.$cb}container-margin) * 2)),
+  )),
 ) !default;
 
 :host {
@@ -61,15 +65,15 @@ $init: (
 
   ::ng-deep {
     .cst.cst--custom {
-      &:not(.cst--without-title ) {
-        .widget-container {
-          & > *:first-child {
-            &.widget--text {
-              //margin-top: var(--#{$h}text-widget-margin-top);
-            }
-          }
-        }
-      }
+      //&:not(.cst--without-title ) {
+      //  .widget-container {
+      //    & > *:first-child {
+      //      &.widget--text {
+      //        //margin-top: var(--#{$h}text-widget-margin-top);
+      //      }
+      //    }
+      //  }
+      //}
 
       &.cst--empty-content {
         .widget--text {
@@ -112,9 +116,20 @@ $init: (
 
     .widget--image-tile + .widget--image-tile {
       display: block;
-      border-top: 2px solid var(--#{calc.$color}neutral-base-020);
+      position:relative;
       margin-top: var(--#{calc.$cb}cst-in-margin-y);
       padding-top: var(--#{calc.$cb}cst-in-margin-y);
+      &:before {
+        content: '';
+        display:block;
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: var(--#{$h}widget--image-tile-break-w);
+        border-top: 2px solid var(--#{calc.$color}neutral-base-020);
+      }
+
     }
 
     .widget--text + .widget--accordion {

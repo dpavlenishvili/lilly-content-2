@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild } from '@angular/core';
 import { IVideoCarouselBlockFields, IVideoCategoryTab } from '../models/contentful';
-import { MatButton } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -14,6 +14,8 @@ import { CustomCarouselComponent } from '../custom-carousel/custom-carousel.comp
 import { CarouselCustomNavComponent } from '../carousel-custom-nav/carousel-custom-nav.component';
 import { RouterLinkActive } from '@angular/router';
 
+import {SectionWrapperModule} from '../../../shared-features/ui/components/section-wrapper/section-wrapper.module';
+
 export const VIDEO_CAROUSEL_BREAKPOINTS = {
   MOBILE: 600,
   TABLET: 992
@@ -26,7 +28,7 @@ export const VIDEO_CAROUSEL_BREAKPOINTS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatButton,
+    MatButtonModule,
     MatIcon,
     MatFormField,
     MatSelect,
@@ -35,7 +37,8 @@ export const VIDEO_CAROUSEL_BREAKPOINTS = {
     VideoCardComponent,
     CustomCarouselComponent,
     CarouselCustomNavComponent,
-    RouterLinkActive
+    RouterLinkActive,
+    SectionWrapperModule
   ]
 })
 export class VideoCarouselBlockComponent {

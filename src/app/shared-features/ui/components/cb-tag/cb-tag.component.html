@@ -1,0 +1,38 @@
+<div class="cb-tag__grid">
+  <div class="cb-tag__content">
+    @if (dotted) {
+      <i class="cb-tag__hole" aria-hidden="true"></i>
+    }
+    @if (icon && iconPosition === 'start') {
+      <div class="cb-tag__icon">
+        <ng-container *ngTemplateOutlet="icon"></ng-container>
+      </div>
+    }
+
+    <div class="cb-tag__label">
+      <div class="cb-tag__label__text">
+        <ng-content></ng-content>
+        @if (text) {
+          <ng-container>{{ text }}</ng-container>
+        }
+      </div>
+    </div>
+
+    @if (icon && iconPosition === 'end') {
+      <div class="cb-tag__icon">
+        <ng-container *ngTemplateOutlet="icon"></ng-container>
+      </div>
+    }
+  </div>
+
+  @if (removable) {
+    <button type="button"
+            class="cb-tag__close"
+            aria-label="Remove tag"
+            i18n-aria-label="@@tag.remove_tag_arialabel"
+            tabindex="-1"
+            (click)="onRemoveClick($event)" data-cb-id="RmrKeMQbi48w">
+      &times;
+    </button>
+  }
+</div>

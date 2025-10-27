@@ -1,11 +1,5 @@
 <div class="subject__thumb">
-    <mat-icon svgIcon="lilly" aria-label="Lilly Logo" i18n-aria-label="@@logo-subject.lilly_logo_arialabel"></mat-icon>
+  <a [routerLink]="['/']" aria-label="Lilly Logo" i18n-aria-label="@@logo-subject.lilly_logo_arialabel">
+    <mat-icon svgIcon="lilly"></mat-icon>
+  </a>
 </div>
-@if (!hideText()) {
-  <div class="subject__text">
-    <div class="subject__text__inner">
-      {{text()}}
-    </div>
-  </div>
-}
-

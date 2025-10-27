@@ -64,6 +64,10 @@ $cst--hero-prefix:  hero-- !default;
 
 $carousel: #{$cb}carousel- !default;
 $widget--image-tile: #{$cb}wdget--image-tile- !default;
+// tabs
+$tabs: #{$cb}tabs- !default;
+$tabs-class: nav--tabs !default;
+$tabs-class--week-planner-class: #{$tabs-class}--week-planner !default;
 
 // scss-docs-start grid-breakpoints
 //$wrap-max-width: 1460px  !default;

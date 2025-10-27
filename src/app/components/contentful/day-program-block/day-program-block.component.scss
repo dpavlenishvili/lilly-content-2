@@ -3,48 +3,44 @@
 $h: '' !default;
 
 $init: (
-        block--area-font-size: (media-query-up: (xs: var(--#{calc.$cb}font-size-lg), lg: var(--#{calc.$cb}font-size-125))),
-        block--area-title-font-size: (media-query-up: (xs: calc(var(--#{calc.$cb}font-size-base) * 2.25), md: calc(var(--#{calc.$cb}font-size-base) * 3))),
-        ) !default;
+ header-font-size: (media-query-up: (
+   xs: var(--#{calc.$cb}font-size-125)
+ )),
+) !default;
 
 :host {
-        @include calc.css-initVars($init, $h);
+  @include calc.css-initVars($init, $h);
 }
 
 :host ::ng-deep {
-  .block { font-size: var(--#{$h}block--area-font-size); }
+  .cst--day-program {
+    .cst__header {
+      --#{calc.$cb}cst-header-align: center;
+      --#{calc.$cb}cst-title-align: center;
+      --#{calc.$cb}block-text-align: center;
 
-  .block__content {
-    grid-area: c;
-    margin: 0 auto;
-    text-align: center;
-  }
+      .title {
+        font-style: italic;
+      }
 
-  .block__content a { display: inline-flex; }
-
-  .block__content .description {
-    max-width: 40.5rem;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .block__media { grid-area: m; }
-
-  .block__actions {
-    margin-top: var(--#{calc.$cb}space-300);
-    display: flex;
-    justify-content: center;
-    gap: var(--#{calc.$cb}space-200);
-
-    .action-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
+      .block {
+        max-width: 54.1875rem;
+        margin: 0 auto;
+        font-size: var(--#{$h}header-font-size);
+      }
     }
-  }
+    .cst__content {
+      > * {
+        & + * {
+          display: block;
+          //margin-top: var(--#{calc.$cb}cst-in-margin-y);
+          margin-top: var(--#{calc.$cb}cst-contnet-offset-y);
 
-  .block__title .h2-garamond-heading { 
-    font-size: var(--#{$h}block--area-title-font-size); 
+          //&.widget--navbar {
+          //  margin-top: var(--#{calc.$cb}cst-contnet-offset-y);
+          //}
+        }
+      }
+    }
   }
 }

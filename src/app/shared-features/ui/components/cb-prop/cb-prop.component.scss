@@ -1,0 +1,98 @@
+@use '_v3/calc' as calc;
+
+$h: #{calc.$prop} !default;
+
+$init: (
+        display: block,
+        align-items: center,
+        justify-content: flex-start,
+        offset-x: 0,
+        offset-y: 0,
+  //
+        grid-display: grid,
+        grid-auto-flow: column,
+        grid-align-items: center,
+        grid-justify-content: start,
+        grid-gap: .8em,
+  //
+        contnet-display: flex,
+        contnet-display-align-items: flex-start,
+        contnet-justify-content: flex-start,
+  //
+
+        label-color: currentColor,
+        label-font-weight: inherit,
+        label-suffix: ':\00a0',
+        value-color: inherit,
+        value-font-weight: inherit,
+        line-height: inherit,
+        icon-size: (media-query-up: (
+                xs: 1.2rem,
+        )),
+        icon-color: currentColor,
+) !default;
+
+::ng-deep :root {
+  @include calc.css-initVars($init, $h);
+}
+
+:host ::ng-deep {
+  & {
+    display: var(--#{$h}display);
+    align-items: var(--#{$h}align-items);
+    justify-content: var(--#{$h}justify-content);
+    padding: var(--#{$h}offset-y) var(--#{$h}offset-x);
+    line-height: var(--#{$h}line-height);
+
+    .#{calc.$prop-class}__grid {
+      display: var(--#{$h}grid-display);
+      gap: var(--#{$h}grid-gap);
+      align-items: var(--#{$h}grid-align-items);
+      justify-content: var(--#{$h}grid-justify-content);
+      grid-auto-flow: var(--#{$h}grid-auto-flow);
+    }
+
+    .#{calc.$prop-class}__content {
+      display: var(--#{$h}contnet-display);
+      align-items: var(--#{$h}contnet-display-align-items);
+      justify-content: var(--#{$h}contnet-justify-content);
+      flex-wrap: wrap;
+
+      > * {
+        @include calc.make-col-auto();
+        max-width: 100%;
+      }
+    }
+
+    .#{calc.$prop-class}__label {
+      color: var(--#{$h}label-color);
+      font-weight: var(--#{$h}label-font-weight);
+      > * {
+        &:after {
+          content:  ':\00a0';
+        }
+      }
+    }
+
+    .#{calc.$prop-class}__value {
+      color: var(--#{$h}value-color);
+      font-weight: var(--#{$h}value-font-weight);
+    }
+
+    .#{calc.$prop-class}__icon, .#{calc.$prop-class}__thumb {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+    }
+    .#{calc.$prop-class}__icon {
+
+
+      .mat-icon {
+        color: var(--#{$h}icon-color);
+        @include calc.square(var(--#{$h}icon-size));
+      }
+
+    }
+
+  }
+}

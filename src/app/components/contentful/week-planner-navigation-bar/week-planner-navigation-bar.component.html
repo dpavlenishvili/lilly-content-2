@@ -1,35 +1,42 @@
-<div class="block menu-area">
-    <div class="nav--tabs nav--tabs--week-planner is-nav-desktop">
+<div class="menu-area">
+  <container-wrapper>
+    <div class="show-desktop-only">
+      <div class="nav--tabs nav--tabs--week-planner">
+        <div class="label--external">{{ fields()?.mobileDropdownLabel }}</div>
         <div class="nav--tabs__container" id="nav-cont-elements">
-            <lilly-one-row-navigation>
-                <div class="nav--tabs__content">
-                    @for (item of weekPlannerNavigationBarFields()?.days; track item.sys.id) {
-                    <button mat-button class="nav--tabs__item"
+
+          <lilly-one-row-navigation>
+            <div class="nav--tabs__content">
+              @for (item of weekPlannerNavigationBarFields()?.days; track item.sys.id) {
+                <button mat-button class="nav--tabs__item"
                         [attr.aria-selected]="item?.sys.id === selectedMenuItem()?.sys.id"
                         [class.selected]="item?.sys.id === selectedMenuItem()?.sys.id"
                         [attr.aria-label]="item?.fields?.tabName" (click)="onMenuItemClick(item)" tabindex="0">
-                        <span>{{ item?.fields?.tabName }}</span>
-                    </button>
-                    }
-                </div>
-            </lilly-one-row-navigation>
+                  <span>{{ item?.fields?.tabName }}</span>
+                </button>
+              }
+            </div>
+          </lilly-one-row-navigation>
         </div>
+      </div>
     </div>
-
-    <div class="form-group is-nav-mobile">
+    <div class="show-mobile-only">
+      <div class="form-group">
         <div class="label--external">{{ fields()?.mobileDropdownLabel }}</div>
         <mat-form-field class="research-areas-dropdown has-out-hint">
-            <mat-select [value]="selectedMenuItem()" (selectionChange)="onMenuItemClick($event.value)">
-                @for (item of fields()?.days; track item.sys.id) {
-                <mat-option [value]="item">{{ item?.fields?.tabName }}</mat-option>
-                }
-            </mat-select>
+          <mat-select [value]="selectedMenuItem()" (selectionChange)="onMenuItemClick($event.value)">
+            @for (item of fields()?.days; track item.sys.id) {
+              <mat-option [value]="item">{{ item?.fields?.tabName }}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
+      </div>
     </div>
-    @if (selectedMenuItem()?.fields) {
-        <div class="selected-content">
-            <lilly-content-day-program-block
-                [dayProgramBlockFields]="selectedMenuItem()?.fields"></lilly-content-day-program-block>
-        </div>
-        }
+  </container-wrapper>
+  @if (selectedMenuItem()?.fields) {
+    <div class="menu-area__content">
+      <lilly-content-day-program-block
+        [dayProgramBlockFields]="selectedMenuItem()?.fields"></lilly-content-day-program-block>
+    </div>
+  }
 </div>

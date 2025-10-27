@@ -1,43 +1,46 @@
-<div class="cst">
-  <div class="cst__grid is-narrow">
-    <div class="cst__grid__in">
-      <div class="block">
-        <div class="block__title">
-          <p class="font-size-sm font-weight-bold">{{ fields()?.label }}</p>
-          <h2 class="h2-garamond-heading">{{ fields()?.heading }}</h2>
-        </div>
-
-        @if (fields()?.topButton?.fields) {
-          <div class="block__action block__action--top">
-            <button mat-flat-button color="primary" (click)="goToLink(fields()?.topButton)">
-              <div class="btn__grid">
-                <div>{{ fields()?.topButton?.fields?.text }}</div>
-                <mat-icon svgIcon="arrow-right"></mat-icon>
-              </div>
-            </button>
-          </div>
-        }
-
-        <div class="articles__list">
-          @for (article of fields()?.articlesList; track article?.sys?.id) {
-            <lilly-content-article [article]="article"></lilly-content-article>
-          }
-        </div>
-
-        @if (fields()?.bottomButton?.fields) {
-          <div class="block__action block__action--bottom">
-            <button mat-flat-button color="primary" (click)="goToLink(fields()?.bottomButton)">
-              <div class="btn__grid">
-                <div>{{ fields()?.bottomButton?.fields?.text }}</div>
-                <mat-icon svgIcon="arrow-right"></mat-icon>
-              </div>
-            </button>
-          </div>
-        }
+<cst-wrapper class="cst--articles"  [showTitle]="false">
+  <ng-container cst-header-content>
+    @if (fields()?.label) {
+      <div class="cst__label">
+        {{ fields()?.label }}
+      </div>
+    }
+    <div class="block block--xs">
+      <div class="block__title">
+        <h1 class="title">
+          {{ fields()?.heading }}
+        </h1>
       </div>
     </div>
-  </div>
-</div>
+    <div class="block__ctrl">
+      <button mat-stroked-button color="primary" (click)="goToLink(fields()?.topButton)">
+        <div class="btn__grid">
+          <div>{{ fields()?.topButton?.fields?.text }}</div>
+          <mat-icon svgIcon="arrow_forward"></mat-icon>
+        </div>
+      </button>
+    </div>
+  </ng-container>
 
+  <container-wrapper>
+    <div class="block block--lg">
+      <div class="articles__list">
+        @for (article of fields()?.articlesList; track article?.sys?.id) {
+          <lilly-content-article [article]="article"></lilly-content-article>
+        }
+      </div>
 
+      @if (fields()?.bottomButton?.fields) {
+        <div class="block__crl">
+          <button mat-stroked-button color="primary" (click)="goToLink(fields()?.bottomButton)">
+            <div class="btn__grid">
+              <div>{{ fields()?.bottomButton?.fields?.text }}</div>
+              <mat-icon svgIcon="arrow_forward"></mat-icon>
+            </div>
+          </button>
+        </div>
+      }
+    </div>
+  </container-wrapper>
+</cst-wrapper>
 

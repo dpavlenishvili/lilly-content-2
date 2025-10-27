@@ -36,7 +36,10 @@ export function bootstrap(): Promise<void>  {
       provideRouter(
         routes,
         withPreloading(SelectiveWithDelayPreloadingStrategy),
-        withInMemoryScrolling({ anchorScrolling: 'enabled' }),
+        withInMemoryScrolling({
+          anchorScrolling: 'enabled',
+          scrollPositionRestoration: 'top'
+        }),
       ),
       provideHttpClient(withInterceptorsFromDi()),
       provideAnimations()

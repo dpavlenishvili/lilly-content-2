@@ -1,5 +1,11 @@
-<lilly-content-hero-section [heroFields]="modulesPage()?.fields?.heroSection?.fields"></lilly-content-hero-section>
+<lilly-content-hero-section [heroFields]="modulesPage()?.fields?.heroSection?.fields"
+                            [scrollID]="'content'"
+/>
+<div class="csts--wrapper" id="content">
 
-<lilly-content-modules-navigation-bar [modulesNavigationBarFields]="modulesPage()?.fields?.modulesNavigation?.fields"></lilly-content-modules-navigation-bar>
+  <lilly-content-modules-navigation-bar
+    [modulesNavigationBarFields]="filteredNavigationFields()"/>
 
-<lilly-content-save-later-block [saveLaterBlockFields]="modulesPage()?.fields?.saveLaterBlock?.fields"></lilly-content-save-later-block>
+  <lilly-content-save-later-block
+    [saveLaterBlockFields]="modulesPage()?.fields?.saveLaterBlock?.fields"/>
+</div>

@@ -3,7 +3,6 @@ import { MatDialogRef, MatDialogContent, MatDialogActions } from '@angular/mater
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieConsentService } from '@careboxhealth/core';
 import { CookiePermissions } from '@careboxhealth/core';
-import { externalRoutes } from '../../../../configurations/links';
 import { Subject } from 'rxjs';
 import { OrderableMatDialog, LinkTarget } from '@careboxhealth/layout1-shared';
 import { ClientRoutes } from '../../../../common/client-routes';
@@ -12,6 +11,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AppIconRegistry } from '../../../../services/app-icon-registry.service';
+import { RouterLinkWithAccessDirective } from '../../../../directives/router-link-with-access.directive';
 
 @Component({
   selector: 'lilly-content-usa-cookie-configuration-dialog-settings',
@@ -24,6 +24,7 @@ import { AppIconRegistry } from '../../../../services/app-icon-registry.service'
     ReactiveFormsModule,
     MatDialogContent,
     RouterLink,
+    RouterLinkWithAccessDirective,
     MatIcon,
     MatSlideToggle,
     MatDialogActions,
@@ -36,7 +37,6 @@ export class UsaCookieConfigurationDialogSettingsComponent extends OrderableMatD
   private saveSettingClickSubject = new Subject();
   saveSettingClick$ = this.saveSettingClickSubject.asObservable();
 
-  public readonly externalRoutes: Record<string, string> = externalRoutes;
   public readonly ClientRoutes: Record<string, string> = ClientRoutes;
   public readonly LinkTarget = LinkTarget;
 

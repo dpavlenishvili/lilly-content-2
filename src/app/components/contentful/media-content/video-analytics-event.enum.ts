@@ -1,5 +1,6 @@
 export enum VideoAnalyticsEvent {
   PAUSE = 'SubsiteVideoPaused',
   PLAY = 'SubsiteVideoPlayed',
-  ERROR = 'SubsiteVideoError'
+  ERROR = 'SubsiteVideoError',
+  ENDED = 'SubsiteVideoEnded'
 }

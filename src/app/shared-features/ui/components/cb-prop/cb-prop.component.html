@@ -1,0 +1,31 @@
+<div class="cb-prop__grid">
+  @if (icon) {
+    <div class="cb-prop__icon">
+      <mat-icon [svgIcon]="icon"></mat-icon>
+    </div>
+  }
+  @if (thumb) {
+    <!--    <ng-container *ngTemplateOutlet="thumb"></ng-container>-->
+    <div class="cb-prop__thumb">
+      <ng-content select="[thumb]"></ng-content>
+    </div>
+  }
+  <div class="cb-prop__content">
+    @if (label) {
+      <div class="cb-prop__label">
+        <div>
+          <!--          <ng-container *ngTemplateOutlet="label"></ng-container>-->
+          <ng-content select="[label]"></ng-content>
+        </div>
+      </div>
+    }
+    @if (value) {
+      <div class="cb-prop__value">
+        <div>
+          <!--          <ng-container *ngTemplateOutlet="value"></ng-container>-->
+          <ng-content></ng-content>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input} from '@angular/core';
 import { ImageTileWidgetComponent } from '../image-tile-widget/image-tile-widget.component';
 import { AccordionWidgetComponent } from '../accordion-widget/accordion-widget.component';
 import { ModulesNavigationBarComponent } from '../modules-navigation-bar/modules-navigation-bar.component';
@@ -7,11 +7,12 @@ import { ResourcesWidgetComponent } from '../resources-widget/resources-widget.c
 import {
   SectionWrapperComponent
 } from '../../../shared-features/ui/components/section-wrapper/section-wrapper.component';
-import { ISection } from '../models/contentful';
+import { IModulesNavigationBarFields, ISection } from '../models/contentful';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {
   ContainerWrapperComponent
 } from '../../../shared-features/ui/components/section-wrapper/container-wrapper/container-wrapper.component';
+import { ModuleAccessService } from '../../../services/module-access.service';
 
 @Component({
   selector: 'lilly-content-section',
@@ -32,10 +33,16 @@ import {
   standalone: true
 })
 export class SectionComponent {
+  private readonly moduleAccess = inject(ModuleAccessService);
   readonly section = input.required<ISection>();
 
   readonly showTitle = computed(() => {
     const section = this.section();
     return !!section?.fields?.title && !section?.fields?.hideTitle;
   });
+
+  filterModulesNav(widgetFields: IModulesNavigationBarFields | undefined): IModulesNavigationBarFields | undefined {
+    if (!widgetFields?.menu) return widgetFields;
+    return { ...widgetFields, menu: this.moduleAccess.filterModules(widgetFields.menu) };
+  }
 }

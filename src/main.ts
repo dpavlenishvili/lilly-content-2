@@ -13,8 +13,6 @@ import {
 import { appAllConfigs } from './app/configurations/app-all-configs';
 import { applyWidgetTranslations } from '@careboxhealth/layout1-shared';
 import { Environment } from './app/enums/environment.enum';
-import { setLinks } from './app/configurations/links';
-import { linksAll } from './app/configurations/links-all';
 
 if (environment.production) {
   enableProdMode();
@@ -25,8 +23,6 @@ const currentLanguage: string = getCurrentLanguage()?.replace('_', '-');
 // Set app configuration which is based on the current language
 setConfiguration(appAllConfigs[currentLanguage]);
 
-// Set app list of links which is based on the current language
-setLinks(linksAll[currentLanguage]);
 
 // Initialize translations
 // The translations will be loaded from the server side and stored in the session storage

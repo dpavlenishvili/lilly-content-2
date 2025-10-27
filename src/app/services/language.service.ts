@@ -23,7 +23,7 @@ export class LanguageObj {
   get countyCode(): string {
     return this.key.split('-')[1];
   }
-  
+
   constructor(public label: string, public value: string, public key: string, public icon: string, public link: string, public cmsCode: LOCALE_CODE) {
   }
 }
@@ -51,6 +51,7 @@ export class LanguageService {
     this.languagesBank = [
       new LanguageObj('United States (English)', 'en-US', 'en-US', 'en-US', `${locationService.origin}/en-US`, 'en-US'),
       new LanguageObj('United States (Español)', 'es-US', 'es-US', 'es-US', `${locationService.origin}/es-US`, 'es-US'),
+      new LanguageObj('Czechia (Čeština)', 'cs-CZ', 'cs-CZ', 'cs-CZ', `${locationService.origin}/cs-CZ`, 'cs-CZ'),
     ];
     this.initLanguages();
     this.getSelectLang();

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component,  input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -13,6 +13,7 @@ import {NgClass} from '@angular/common';
 })
 export class ContainerWrapperComponent {
   wrapped = input<boolean>(true);
-  @Input() gridClass: string = 'is-narrow';
-  @Input() containerClass: string = 'container';
+  gridClass = input<string>('is-narrow');
+  containerClass = input<string>('container');
+
 }

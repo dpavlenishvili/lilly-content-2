@@ -11,6 +11,6 @@ export const environment: EnvironmentConfig = {
   contentfulEnvironment: 'content',
   contentfulAccessToken: 'orzg0E_06pk0sYLJnxfvxHiMPbva9okOMu6BhKvvl4I',
   contentfulHostUrl: 'preview.contentful.com',
-  locales: ['en-US'],
+  locales: ['en-US', 'es-US', 'cs-CZ'],
 };
 

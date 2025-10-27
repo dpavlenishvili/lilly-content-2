@@ -11,5 +11,5 @@ export const environment: EnvironmentConfig = {
   contentfulEnvironment: 'content',
   contentfulAccessToken: 'FmP-TboO_Tr2RYF-D9Az7KkE-SOgjvd9jJTse6I8x40',
   contentfulHostUrl: 'contentful.careboxhealth.com',
-  locales: ['en-US'],
+  locales: ['en-US', 'es-US', 'cs-CZ'],
 };

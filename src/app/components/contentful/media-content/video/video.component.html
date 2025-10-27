@@ -11,6 +11,7 @@
          (loadeddata)="isAutoplay() && videoElement.play()"
          (play)="play()"
          (pause)="pause()"
+         (ended)="onEnded()"
          [title]="title()">
     <source [src]="video()?.videoSrc" (error)="error()"/>
   </video>

@@ -1,26 +1,37 @@
-<div class="block__content">
-  <div class="block__title">
-    <p>{{ fields()?.label }}</p>
-  </div>
+<container-wrapper [gridClass]="'is-full'">
+  <div class="block block--micro-steps block--lg">
+    <div class="block__label">
+      <p>{{ fields()?.label }}</p>
+    </div>
 
-  <div class="microsteps-grid">
-    @for (card of fields()?.microstepsCard; track card.sys.id) {
-      <div class="microstep-card">
-        @if (card.fields.label) {
-          <p class="card-label">{{ card.fields.label }}</p>
-        }
-        <h2 class="card-title">{{ card.fields.title }}</h2>
-        <div class="card-text" [innerHTML]="card.fields.bodyText | mdToHtml"></div>
+    <div class="block__grid microsteps-grid">
+      @for (card of fields()?.microstepsCard; track card.sys.id) {
+        <cb-card class="card--micro-step">
+          <cb-card-body class="block block--lg">
+
+            @if (card.fields.label) {
+              <div class="block__label">{{ card.fields.label }}</div>
+            }
+            <div class="block__title">
+              <h2 class="title h4"><strong>{{ card.fields.title }}</strong></h2>
+            </div>
+            <div class="block__text" [innerHTML]="card.fields.bodyText | mdToHtml"></div>
+
+          </cb-card-body>
+          <cb-card-footer/>
+        </cb-card>
+      }
+    </div>
+
+    @if (fields()?.button?.fields) {
+      <div class="block__ctrl">
+      <button mat-stroked-button color="primary" (click)="onButtonClick(fields()?.button)">
+        <div class="btn__grid">
+          <div>{{ fields()?.button?.fields?.text }}</div>
+          <mat-icon svgIcon="arrow-down"></mat-icon>
+        </div>
+      </button>
       </div>
     }
   </div>
-
-  @if (fields()?.button?.fields) {
-    <button mat-flat-button color="primary" (click)="onButtonClick(fields()?.button)">
-      <div class="btn__grid">
-        <div>{{ fields()?.button?.fields?.text }}</div>
-        <mat-icon svgIcon="arrow-down"></mat-icon>
-      </div>
-    </button>
-  }
-</div>
+</container-wrapper>

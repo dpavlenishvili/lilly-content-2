@@ -5,13 +5,14 @@ import { FooterComponent } from '@careboxhealth/layout1-shared';
 import { CookieBannerService } from '../../services/cookie-banner.service';
 import { environment } from '../../../environments/environment';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconAnchor } from '@angular/material/button';
 import { ExtendedContentfulService } from '../../services/contentful.service';
 import { IFooter, IFooterFields, ILink } from '../contentful/models/contentful';
 import { MdToHtmlPipe } from '../../pipes/md-to-html.pipe';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { RouterLinkWithAccessDirective } from '../../directives/router-link-with-access.directive';
 
 @Component({
   selector: 'lilly-content-footer',
@@ -22,7 +23,9 @@ import { map } from 'rxjs/operators';
     NgTemplateOutlet,
     RouterLinkActive,
     MatIconAnchor,
-    MdToHtmlPipe
+    MdToHtmlPipe,
+    RouterLink,
+    RouterLinkWithAccessDirective
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -55,6 +58,7 @@ export class LocalFooterComponent extends FooterComponent {
   }
 
   onLinkClick(link: ILink, event?: Event): void {
+    event?.preventDefault();
     event?.stopPropagation();
     this.helperService.goToLink(link?.fields?.url, link?.fields?.linkBehavior);
   }

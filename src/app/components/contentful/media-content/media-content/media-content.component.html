@@ -4,33 +4,33 @@
             @case (MediaContentType.VIDEO) {
                 <lilly-video [videoUrl]="mediaId()"
                              [isAutoplay]="isAutoplay()"
+                             [isPlaying]="isPlaying()"
                              [isLoop]="isLoop()"
                              [isMuted]="isMuted()"
                              [subsiteName]="subsiteName()"
-                             [title]="title()"></lilly-video>
+                             [title]="title()"
+                             (ended)="onVideoEnded()"></lilly-video>
             }
             @case (MediaContentType.KALTURA) {
                 <lilly-kaltura [entryId]="mediaId()"
                                [uiConfigId]="uiConfigId()"
                                [isAutoplay]="isAutoplay()"
+                               [isPlaying]="isPlaying()"
                                [isLoop]="isLoop()"
                                [isMuted]="isMuted()"
                                [subsiteName]="subsiteName()"
-                               [title]="title()"></lilly-kaltura>
+                               [title]="title()"
+                               (ended)="onVideoEnded()"></lilly-kaltura>
             }
             @case (MediaContentType.YOUTUBE) {
                 <lilly-youtube [youtubeId]="mediaId()"
                                [isAutoplay]="isAutoplay()"
+                               [isPlaying]="isPlaying()"
                                [isLoop]="isLoop()"
                                [isMuted]="isMuted()"
                                [subsiteName]="subsiteName()"
-                               [title]="title()"></lilly-youtube>
-            }
-            @case (MediaContentType.SPOTIFY) {
-                <lilly-spotify [backgroundColor]="backgroundColor()"
-                               [entryId]="mediaId()"
-                               [subsiteName]="subsiteName()"
-                               [title]="title()"></lilly-spotify>
+                               [title]="title()"
+                               (ended)="onVideoEnded()"></lilly-youtube>
             }
         }
     }
